@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '26_news.dart';
+import '../26_news.dart';
 
 class Jobexecute extends StatelessWidget {
   @override

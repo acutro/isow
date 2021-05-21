@@ -18,10 +18,11 @@ class _RecivedWarningState extends State<RecivedWarning> {
     jsonData["data"].forEach((f) {
       Warning employee = Warning(
           id: f["id"],
+          issue: f["issue"],
           position: f["position"],
-          person: f["person"],
+          person: f["to"],
           content: f["content"],
-          created_at: f["created_at"]);
+          createdAt: f["created_at"]);
       employees.add(employee);
     });
     return employees;
@@ -139,7 +140,7 @@ class _RecivedWarningState extends State<RecivedWarning> {
                                             0.0, 0.0, .0, 0.0),
                                         child: Center(
                                           child: Text(
-                                            snapshot.data[index].position,
+                                            snapshot.data[index].person,
                                             style: TextStyle(
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.bold,
@@ -163,7 +164,7 @@ class _RecivedWarningState extends State<RecivedWarning> {
                                             0.0, 0.0, 0.0, 0.0),
                                         child: Center(
                                           child: Text(
-                                            snapshot.data[index].person,
+                                            snapshot.data[index].position,
                                             style: TextStyle(
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.bold,
@@ -191,7 +192,8 @@ class _RecivedWarningState extends State<RecivedWarning> {
                                         //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
                                         child: Center(
                                           child: Text(
-                                            snapshot.data[index].id,
+                                            snapshot.data[index].createdAt
+                                                .substring(0, 10),
                                             style: TextStyle(
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.bold,
@@ -205,21 +207,40 @@ class _RecivedWarningState extends State<RecivedWarning> {
                                 Container(
                                   child: Expanded(
                                     child: SingleChildScrollView(
-                                      child: Container(
-                                        margin: EdgeInsets.all(10.0),
-                                        child:
-                                            Text(snapshot.data[index].content),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.all(5.0),
+                                            child: Text(
+                                              snapshot.data[index].issue,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  height: 1.5),
+                                            ),
+                                          ),
+                                          Divider(),
+                                          Container(
+                                            margin: EdgeInsets.all(10.0),
+                                            child: Text(
+                                              snapshot.data[index].content,
+                                              style: TextStyle(
+                                                  fontSize: 13, height: 1.5),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  margin:
-                                      EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 0.0),
-                                  alignment: Alignment.centerLeft,
-                                  height: 20.0,
-                                  child: Text(snapshot.data[index].created_at),
-                                ),
+                                // Container(
+                                //   margin:
+                                //       EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 0.0),
+                                //   alignment: Alignment.centerLeft,
+                                //   height: 20.0,
+                                //   child: Text(snapshot.data[index].createdAt),
+                                // ),
                               ],
                             ),
                           );
@@ -238,9 +259,16 @@ class _RecivedWarningState extends State<RecivedWarning> {
 class Warning {
   final String id;
   final String position;
+  final String issue;
   final String person;
   final String content;
-  final String created_at;
+  final String createdAt;
 
-  Warning({this.id, this.position, this.person, this.content, this.created_at});
+  Warning(
+      {this.id,
+      this.position,
+      this.issue,
+      this.person,
+      this.content,
+      this.createdAt});
 }

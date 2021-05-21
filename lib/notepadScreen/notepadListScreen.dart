@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class NotepadList extends StatefulWidget {
   // final String email;
@@ -23,6 +24,35 @@ class _MyApp extends State<NotepadList> {
         listFacts = mapResponse['data'];
         print("{$listFacts}");
       });
+    }
+  }
+
+  Future deleteNotepad(
+    String id,
+  ) async {
+    var data = {'id': id};
+    http.Response response;
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/Notepad/delete',
+        body: (data));
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: "Deleted Successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      Fluttertoast.showToast(
+          msg: "Something went wrong",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
   }
 
@@ -109,6 +139,7 @@ class _MyApp extends State<NotepadList> {
                           listFacts[index]["date"],
                           listFacts[index]["requirements"],
                           'https://googleflutter.com/sample_image.jpg',
+                          listFacts[index]["id"],
                         );
                       },
                       child: Card(
@@ -150,7 +181,11 @@ class _MyApp extends State<NotepadList> {
                                         listFacts[index]["date"],
                                       ),
                                       trailing: InkWell(
-                                          onTap: () {},
+                                          onTap: () {
+                                            deleteNotepad(
+                                                listFacts[index]["id"]);
+                                            fetchData();
+                                          },
                                           child: Icon(
                                             Icons.delete,
                                             color: Colors.red[400],
@@ -172,9 +207,36 @@ class _MyApp extends State<NotepadList> {
   }
 }
 
-showDialogFunc(context, title, date, requirment, path) {
-  //  String formatDate(DateTime date) =>
-  //     new DateFormat("dd MMMM yyyy").format(date);
+showDialogFunc(context, title, date, requirment, path, id) {
+  Future deleteNotepad(
+    String id,
+  ) async {
+    var data = {'id': id};
+    http.Response response;
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/Notepad/delete',
+        body: (data));
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: "Deleted Successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      Fluttertoast.showToast(
+          msg: "Something went wrong",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
+
   return showDialog(
     context: context,
     builder: (context) {
@@ -226,7 +288,11 @@ showDialogFunc(context, title, date, requirment, path) {
                                     fontWeight: FontWeight.bold, height: 1.5),
                               ),
                               trailing: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    deleteNotepad(id);
+
+                                    Navigator.pop(context);
+                                  },
                                   child: Icon(
                                     Icons.delete,
                                     color: Colors.red[400],
@@ -241,44 +307,6 @@ showDialogFunc(context, title, date, requirment, path) {
                 SizedBox(
                   height: 5,
                 ),
-                // Column(
-                //   children: [
-                //     Row(
-                //       mainAxisSize: MainAxisSize.max,
-                //       children: [
-                //         Align(
-                //             alignment: Alignment.centerLeft,
-                //             child: Icon(
-                //               Icons.notes,
-                //               size: 20,
-                //             )),
-                //         Text(
-                //           "  " + title,
-                //           style: TextStyle(
-                //               fontSize: 14.0, fontWeight: FontWeight.bold),
-                //         ),
-                //       ],
-                //     ),
-                //     SizedBox(
-                //       height: 5,
-                //     ),
-                // Row(
-                //   mainAxisSize: MainAxisSize.max,
-                //   children: [
-                //     Align(
-                //         alignment: Alignment.centerLeft,
-                //         child: Icon(Icons.calendar_today, size: 15)),
-                //     Text(
-                //       date,
-                //       style: TextStyle(
-                //         fontSize: 12.0,
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                //     Divider(),
-                //   ],
-                // ),
                 Divider(),
                 new Expanded(
                   flex: 1,

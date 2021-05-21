@@ -3,7 +3,7 @@ import 'package:isow/26_news.dart';
 import '27_weatherreport.dart';
 import 'orientation_screen/12_Orientation.dart';
 import '14_feedback.dart';
-import '15_issuewarning.dart';
+import 'WarningLetterScreens/15_issuewarning.dart';
 import '18_emergency.dart';
 import '4_signup.dart';
 import 'page8rigalert.dart';

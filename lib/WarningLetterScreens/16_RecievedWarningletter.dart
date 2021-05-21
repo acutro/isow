@@ -11,7 +11,7 @@ class RecivedWarning extends StatefulWidget {
 class _RecivedWarningState extends State<RecivedWarning> {
   Future<List<Warning>> _getEmployee() async {
     var empData = await http
-        .get("http://isow.acutrotech.com/index.php/api/warningLetter/list");
+        .get("http://isow.acutrotech.com/index.php/api/WarningLetter/list");
     Map jsonData = json.decode(empData.body);
 
     List<Warning> employees = [];

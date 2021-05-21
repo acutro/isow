@@ -219,56 +219,12 @@ class _NotepadState extends State<Notepad> {
                                 Expanded(
                                   child: Container(
                                     margin: EdgeInsets.fromLTRB(
-                                        10.0, 5.0, 10.0, 0.0),
-                                    height: 40.0,
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        hintText: 'ID',
-                                        hintStyle:
-                                            TextStyle(color: Colors.white),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Container(
-                                    margin: EdgeInsets.fromLTRB(
                                         10.0, 5.0, 5.0, 0.0),
                                     height: 40.0,
                                     child: TextField(
                                       controller: _nameController,
                                       decoration: InputDecoration(
                                         hintText: 'Name',
-                                        hintStyle:
-                                            TextStyle(color: Colors.white),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        10.0, 5.0, 10.0, 0.0),
-                                    height: 40.0,
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        hintText: 'Position',
                                         hintStyle:
                                             TextStyle(color: Colors.white),
                                         enabledBorder: OutlineInputBorder(

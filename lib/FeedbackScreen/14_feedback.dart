@@ -1,6 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class FeedbackCounter extends StatelessWidget {
+class FeedbackCounter extends StatefulWidget {
+  @override
+  _FeedbackCounterState createState() => _FeedbackCounterState();
+}
+
+class _FeedbackCounterState extends State<FeedbackCounter> {
+  Future upFeedback(
+    String content,
+    String opinion,
+  ) async {
+    var data = {
+      'content': content,
+      'opinion': opinion,
+      'userId': '15',
+    };
+    http.Response response;
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/Feedback/create',
+        body: (data));
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: "Feedback Added Successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      Fluttertoast.showToast(
+          msg: "Failed try again",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
+
+  TextEditingController _feedbackController = new TextEditingController();
+  TextEditingController _opinionController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +73,9 @@ class FeedbackCounter extends StatelessWidget {
                     child: Center(
                       child: TextFormField(
                         cursorColor: Theme.of(context).cursorColor,
-                        initialValue: 'Opinion and Issue?',
+                        // initialValue: 'Opinion and Issue?',
                         maxLength: 20,
+                        controller: _opinionController,
                         decoration: InputDecoration(
                           // icon: Icon(Icons.favorite),
                           labelText: '''What's Empoloyers''',
@@ -88,15 +133,23 @@ class FeedbackCounter extends StatelessWidget {
                         Expanded(
                           child: SingleChildScrollView(
                             child: Container(
-                                margin: EdgeInsets.all(10.0),
-                                child: Text(
-                                    '''Lorem ipsum dolor sit amet, consectetuer adipiscing elit, seddiam nonummy nibh euismod tincidunt ut laoreet dolore magnaaliquam erat volutpat. Ut wisi enim ad minim veniam, quisnostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquipdiam nonummy nibh euismod tincidunt ut laoreet dolore magnaaliquam erat volutpat. Ut wisi enim ad minim veniam, quisnostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquipex ea commodo consequat. Duis autem vel eum iriure dolor inLorem ipsum dolor sit amet, consectetuer adipiscing elit, seddiam nonummy nibh euismod tincidunt ut laoreet dolore magnaaliquam erat volutpat. Ut wisi enim ad minim veniam, quisnostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ''')),
+                              alignment: Alignment.topLeft,
+                              margin: EdgeInsets.all(10.0),
+                              child: new TextField(
+                                decoration: new InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                ),
+                                autofocus: false,
+                                maxLines: null,
+                                controller: _feedbackController,
+                                keyboardType: TextInputType.text,
+                              ),
+                            ),
                           ),
-                        ),
-                        Container(
-                          alignment: Alignment.bottomLeft,
-                          margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 10.0),
-                          child: Text('4:20'),
                         ),
                       ],
                     ),
@@ -130,12 +183,26 @@ class FeedbackCounter extends StatelessWidget {
                               TextStyle(color: Colors.white.withOpacity(1.0)),
                         ),
                       ),
-                      // onTap: () {
-                      //   Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(builder: (context) => Mscreen()),
-                      //   );
-                      // },
+                      onTap: () {
+                        if (_opinionController.text == "" ||
+                            _feedbackController.text == "") {
+                          Fluttertoast.showToast(
+                              msg: "Please enter Opinion and Feedback",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        } else {
+                          upFeedback(
+                            _feedbackController.text,
+                            _opinionController.text,
+                          );
+                          _feedbackController.text = "";
+                          _opinionController.text = "";
+                        }
+                      },
                     ),
                   ),
                 ),

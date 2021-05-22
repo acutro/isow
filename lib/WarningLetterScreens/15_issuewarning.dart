@@ -34,11 +34,9 @@ class _WarningletterState extends State<Warningletter> {
     }
   }
 
-  Future fetchUsers(
-    int id,
-  ) async {
+  Future fetchUsers() async {
     var data = {
-      'roleId': id.toString(),
+      'roleId': roleValue.toString(),
     };
     http.Response response;
     response = await http.post(
@@ -147,7 +145,7 @@ class _WarningletterState extends State<Warningletter> {
           setState(() {
             roleError = false;
             roleValue = value;
-
+            fetchUsers();
             print("$roleValue id of compny");
           });
           // print(companyValue.runtimeType);
@@ -217,7 +215,6 @@ class _WarningletterState extends State<Warningletter> {
   @override
   void initState() {
     super.initState();
-    fetchUsers(5);
     fetchData();
   }
 

@@ -76,7 +76,7 @@ class HomeScreenState extends State<HomeScreen> {
                                 ),
                                 SizedBox(height: 5.0),
                                 Text(
-                                  'Newyork',
+                                  'New york',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -498,7 +498,7 @@ class HomeScreenState extends State<HomeScreen> {
                       children: <Widget>[
                         Container(
                           child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/7.png'),
+                            backgroundImage: AssetImage('assets/9.png'),
                             radius: 39.0,
                           ),
                           margin: EdgeInsets.all(10),
@@ -560,7 +560,7 @@ class HomeScreenState extends State<HomeScreen> {
                       children: <Widget>[
                         Container(
                           child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/9.png'),
+                            backgroundImage: AssetImage('assets/7.png'),
                             radius: 39.0,
                           ),
                           //onTap: () {},

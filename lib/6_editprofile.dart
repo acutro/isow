@@ -81,7 +81,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      'name : $aname',
+                                      'Name : $aname',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
@@ -89,7 +89,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                     ),
                                     SizedBox(height: 5.0),
                                     Text(
-                                      'Newyork',
+                                      'New york',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
@@ -122,7 +122,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                           shape: CircleBorder(),
                         ),
                         title: Text(
-                          'name : $aname',
+                          'Name : $aname',
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -188,7 +188,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                           shape: CircleBorder(),
                         ),
                         title: Text(
-                          'Work\n$awork',
+                          'Work\n' +
+                              '${awork[0].toUpperCase()}${awork.substring(1)}',
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,

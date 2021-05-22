@@ -178,7 +178,8 @@ class _MyApp extends State<NotepadList> {
                                         ),
                                       ),
                                       title: Text(
-                                        listFacts[index]["name"],
+                                        '${listFacts[index]["name"][0].toUpperCase()}${listFacts[index]["name"].substring(1)}',
+                                        //  listFacts[index]["name"],
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             height: 1.5),
@@ -302,7 +303,8 @@ showDialogFunc(context, title, date, requirment, path, id) {
                                 ),
                               ),
                               title: Text(
-                                title,
+                                '${title[0].toUpperCase()}${title.substring(1)}',
+                                // title,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, height: 1.5),
                               ),
@@ -337,7 +339,9 @@ showDialogFunc(context, title, date, requirment, path, id) {
                   child: new SingleChildScrollView(
                     //  padding: EdgeInsets.all(8),
                     scrollDirection: Axis.vertical, //.horizontal
-                    child: new Text(requirment,
+                    child: new Text(
+                        '${requirment[0].toUpperCase()}${requirment.substring(1)}',
+                        // requirment,
                         style: TextStyle(
                           height: 1.5,
                           color: Colors.black,

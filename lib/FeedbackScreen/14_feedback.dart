@@ -11,11 +11,10 @@ class FeedbackCounter extends StatefulWidget {
 class _FeedbackCounterState extends State<FeedbackCounter> {
   Future upFeedback(
     String content,
-    String opinion,
   ) async {
     var data = {
       'content': content,
-      'opinion': opinion,
+      'opinion': 'mm',
       'userId': '15',
     };
     http.Response response;
@@ -44,7 +43,7 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
   }
 
   TextEditingController _feedbackController = new TextEditingController();
-  TextEditingController _opinionController = new TextEditingController();
+  // TextEditingController _opinionController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,23 +70,36 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                   child: Container(
                     margin: EdgeInsets.fromLTRB(0.0, 40.0, 10.0, 0.0),
                     child: Center(
-                      child: TextFormField(
-                        cursorColor: Theme.of(context).cursorColor,
-                        // initialValue: 'Opinion and Issue?',
-                        maxLength: 20,
-                        controller: _opinionController,
-                        decoration: InputDecoration(
-                          // icon: Icon(Icons.favorite),
-                          labelText: '''What's Empoloyers''',
-                          labelStyle: TextStyle(
-                            color: Color(0xFF6200EE),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFF6200EE)),
-                          ),
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Whats Employers\n',
+                            ),
+                            TextSpan(
+                                text: 'Opinion and Issues?',
+                                style: TextStyle(fontSize: 24)),
+                          ],
                         ),
                       ),
                     ),
+
+                    //  TextFormField(
+                    //   cursorColor: Theme.of(context).cursorColor,
+                    //   // initialValue: 'Opinion and Issue?',
+                    //   maxLength: 20,
+                    //   controller: _opinionController,
+                    //   decoration: InputDecoration(
+                    //     // icon: Icon(Icons.favorite),
+                    //     labelText: '''What's Empoloyers''',
+                    //     labelStyle: TextStyle(
+                    //       color: Color(0xFF6200EE),
+                    //     ),
+                    //     enabledBorder: UnderlineInputBorder(
+                    //       borderSide: BorderSide(color: Color(0xFF6200EE)),
+                    //     ),
+                    //   ),
+                    // ),
                   ),
                 ),
               ],
@@ -184,10 +196,9 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                         ),
                       ),
                       onTap: () {
-                        if (_opinionController.text == "" ||
-                            _feedbackController.text == "") {
+                        if (_feedbackController.text == "") {
                           Fluttertoast.showToast(
-                              msg: "Please enter Opinion and Feedback",
+                              msg: "Please enter Feedback",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                               timeInSecForIosWeb: 1,
@@ -197,10 +208,8 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                         } else {
                           upFeedback(
                             _feedbackController.text,
-                            _opinionController.text,
                           );
                           _feedbackController.text = "";
-                          _opinionController.text = "";
                         }
                       },
                     ),

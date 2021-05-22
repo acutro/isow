@@ -15,6 +15,7 @@ import 'JobHandOverScreen/23_job.dart';
 import 'package:http/http.dart';
 import '6_editprofile.dart';
 import 'contacts/contact.dart';
+import '2_signinpage.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -191,8 +192,11 @@ class HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   onTap: () {
-// Here you can give your route to navigate
-                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SigninScreen()),
+                                        (Route<dynamic> route) => false);
                                   },
                                 ),
                               ],
@@ -202,14 +206,6 @@ class HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-//     } else if (snapshot.hasError) {
-//       return Text("${snapshot.error}");
-//     }
-//
-//     // By default, show a loading spinner.
-//     return Center(child: CircularProgressIndicator());
-//   },
-// ),
                 ),
               );
             } else {
@@ -226,8 +222,23 @@ class HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           Icon(Icons.headset_mic),
-          Icon(Icons.logout),
+          SizedBox(
+            width: 5,
+          ),
+          GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => SigninScreen()),
+                    (Route<dynamic> route) => false);
+              },
+              child: Icon(Icons.logout)),
+          SizedBox(
+            width: 5,
+          ),
           Icon(Icons.more_vert),
+          SizedBox(
+            width: 5,
+          ),
         ],
       ),
       body: SingleChildScrollView(

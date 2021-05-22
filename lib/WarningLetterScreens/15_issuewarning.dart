@@ -12,7 +12,7 @@ class Warningletter extends StatefulWidget {
 class _WarningletterState extends State<Warningletter> {
   TextEditingController _reasonController = new TextEditingController();
 
-  TextEditingController issueController = new TextEditingController();
+  // TextEditingController issueController = new TextEditingController();
   int roleValue;
   bool roleError = false;
   int userValue;
@@ -62,7 +62,6 @@ class _WarningletterState extends State<Warningletter> {
 
   Future postWarning(
     String content,
-    String issue,
     String toid,
   ) async {
     var data = {
@@ -70,7 +69,7 @@ class _WarningletterState extends State<Warningletter> {
       'empId': '56574',
       'fromId': '2',
       'toId': toid,
-      'issue': issue,
+      'issue': 'issue',
     };
     http.Response response;
     response = await http.post(
@@ -235,8 +234,10 @@ class _WarningletterState extends State<Warningletter> {
               child: Column(
                 children: <Widget>[
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Container(
+                        alignment: Alignment.centerRight,
                         margin: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
                         child: Icon(
                           Icons.list_alt_sharp,
@@ -244,29 +245,40 @@ class _WarningletterState extends State<Warningletter> {
                           color: Color(0xff4fc4f2),
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(0.0, 40.0, 10.0, 0.0),
-                          child: Center(
-                            child: TextFormField(
-                              cursorColor: Theme.of(context).cursorColor,
-                              //initialValue: 'Opinion and Issue?',
-                              maxLength: 20,
-                              controller: issueController,
-                              decoration: InputDecoration(
-                                // icon: Icon(Icons.favorite),
-                                labelText: 'Issue',
-                                labelStyle: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff4fc4f2),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0.0, 40.0, 10.0, 0.0),
+                        child: Center(
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: 'Issue ',
+                                    style: TextStyle(fontSize: 30)),
+                                TextSpan(
+                                  text: 'Warning Letter',
                                 ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xff4fc4f2)),
-                                ),
-                              ),
+                              ],
                             ),
                           ),
+
+                          //  TextFormField(
+                          //   cursorColor: Theme.of(context).cursorColor,
+                          //   //initialValue: 'Opinion and Issue?',
+                          //   maxLength: 20,
+                          //   controller: issueController,
+                          //   decoration: InputDecoration(
+                          //     // icon: Icon(Icons.favorite),
+                          //     labelText: 'Issue',
+                          //     labelStyle: TextStyle(
+                          //       fontWeight: FontWeight.bold,
+                          //       color: Color(0xff4fc4f2),
+                          //     ),
+                          //     enabledBorder: UnderlineInputBorder(
+                          //       borderSide:
+                          //           BorderSide(color: Color(0xff4fc4f2)),
+                          //     ),
+                          //   ),
+                          // ),
                         ),
                       ),
                     ],
@@ -409,10 +421,9 @@ class _WarningletterState extends State<Warningletter> {
                                     backgroundColor: Colors.red,
                                     textColor: Colors.white,
                                     fontSize: 16.0);
-                              } else if (issueController.text == "" ||
-                                  _reasonController.text == "") {
+                              } else if (_reasonController.text == "") {
                                 Fluttertoast.showToast(
-                                    msg: "Enter Issue and Reason",
+                                    msg: "Enter Reason",
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.BOTTOM,
                                     timeInSecForIosWeb: 1,
@@ -421,11 +432,10 @@ class _WarningletterState extends State<Warningletter> {
                                     fontSize: 16.0);
                               } else {
                                 postWarning(_reasonController.text,
-                                    issueController.text, userValue.toString());
+                                    userValue.toString());
 
                                 setState(() {
                                   _reasonController.text = "";
-                                  issueController.text = "";
                                 });
                               }
                             },

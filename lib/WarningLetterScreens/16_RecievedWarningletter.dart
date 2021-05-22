@@ -81,25 +81,16 @@ class _RecivedWarningState extends State<RecivedWarning> {
                           child: Container(
                             margin: EdgeInsets.fromLTRB(0.0, 40.0, 10.0, 0.0),
                             child: Center(
-                              child: TextFormField(
-                                cursorColor: Theme.of(context).cursorColor,
-                                //initialValue: 'Opinion and Issue?',
-                                maxLength: 20,
-                                decoration: InputDecoration(
-                                  // icon: Icon(Icons.favorite),
-                                  labelText: 'Recived',
-                                  labelStyle: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    //color: Color(0xff49A5FF),
-                                  ),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xff4fc4f2),
-                                    ),
-                                  ),
-                                ),
+                                child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                      text: 'Recieved ',
+                                      style: TextStyle(fontSize: 24)),
+                                  TextSpan(text: 'Warning Letter'),
+                                ],
                               ),
-                            ),
+                            )),
                           ),
                         ),
                       ],

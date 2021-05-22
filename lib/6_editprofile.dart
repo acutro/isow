@@ -282,7 +282,7 @@ Future<Note> fetchNote() async {
       print(details['name']);
       return Note(
         name: details['name'] as String,
-        userId: details['userId'] as String,
+        userId: details['empId'] as String,
         email: details['email'] as String,
         work: details['work'] as String,
         mob_num: details['mob_num'] as String,
@@ -307,7 +307,7 @@ class Note {
   factory Note.fromJson(Map<String, String> json) {
     return Note(
       name: json['name'],
-      userId: json['userid'],
+      userId: json['empId'],
       email: json['email'],
       work: json['work'],
       mob_num: json['mob_num'],

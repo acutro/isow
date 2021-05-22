@@ -112,6 +112,7 @@ class _JobhandoversState extends State<Jobhandovers> {
         },
         iconEnabledColor: Colors.white,
         value: roleValue,
+        dropdownColor: Color(0xff49A5FF),
         isExpanded: true,
         underline: Container(
           height: 0,
@@ -134,7 +135,7 @@ class _JobhandoversState extends State<Jobhandovers> {
                   padding: EdgeInsets.only(left: 12),
                   child: Text(
                     answer["userRoles"],
-                    style: TextStyle(color: Colors.black38, fontSize: 14),
+                    style: TextStyle(color: Colors.white, fontSize: 14),
                   ),
                 ),
               );
@@ -170,6 +171,7 @@ class _JobhandoversState extends State<Jobhandovers> {
               onTap: () {
                 FocusScope.of(context).requestFocus(new FocusNode());
               },
+              dropdownColor: Color(0xff49A5FF),
               iconEnabledColor: Colors.white,
               value: userValue,
               isExpanded: true,
@@ -203,7 +205,7 @@ class _JobhandoversState extends State<Jobhandovers> {
                         padding: EdgeInsets.only(left: 12),
                         child: Text(
                           answer["name"],
-                          style: TextStyle(color: Colors.black38, fontSize: 14),
+                          style: TextStyle(color: Colors.white, fontSize: 14),
                         ),
                       ),
                     );
@@ -398,7 +400,7 @@ class _JobhandoversState extends State<Jobhandovers> {
                                       height: 45.0,
                                       child: TextField(
                                         controller: _descriptionController,
-                                        style: TextStyle(color: Colors.black38),
+                                        style: TextStyle(color: Colors.white),
                                         decoration: InputDecoration(
                                           hintText: 'Job Description',
                                           hintStyle:
@@ -425,7 +427,7 @@ class _JobhandoversState extends State<Jobhandovers> {
                                       child: TextField(
                                         controller: _durationController,
                                         keyboardType: TextInputType.number,
-                                        style: TextStyle(color: Colors.black38),
+                                        style: TextStyle(color: Colors.white),
                                         decoration: InputDecoration(
                                           hintText: 'Duration in Hour',
                                           hintStyle:

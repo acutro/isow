@@ -34,7 +34,7 @@ class _MyApp extends State<Contact> {
 
       return pathf;
     } else {
-      pathf = 'https://picsum.photos/250?image=9';
+      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
       return pathf;
     }
   }
@@ -114,6 +114,7 @@ class _MyApp extends State<Contact> {
                                     name: listFacts[index]["name"],
                                     id: listFacts[index]["id"].toString(),
                                     work: listFacts[index]["work"],
+                                    ppath: listFacts[index]["profile_pic"],
                                   )),
                         );
                       },
@@ -132,7 +133,9 @@ class _MyApp extends State<Contact> {
                                   ListTile(
                                     leading: CircleAvatar(
                                       child: ClipOval(
-                                          child: Image.network(getpath("yhj"),
+                                          child: Image.network(
+                                              getpath(listFacts[index]
+                                                  ["profile_pic"]),
                                               width: 80,
                                               height: 80,
                                               fit: BoxFit.fill)),

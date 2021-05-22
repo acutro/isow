@@ -454,7 +454,10 @@ class _NotepadState extends State<Notepad> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NotepadList()),
+                      );
                     },
                     child: Container(
                       margin: EdgeInsets.fromLTRB(2.5, 0.0, 20.0, 0.0),

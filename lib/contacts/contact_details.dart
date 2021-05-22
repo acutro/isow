@@ -7,8 +7,15 @@ class ContactDetail extends StatefulWidget {
   final String work;
   final String name;
   final String id;
+  final String ppath;
   ContactDetail(
-      {Key key, @required this.email, this.mob, this.work, this.name, this.id})
+      {Key key,
+      @required this.email,
+      this.mob,
+      this.work,
+      this.name,
+      this.id,
+      this.ppath})
       : super(key: key);
   @override
   _ContactDetail createState() => _ContactDetail();
@@ -22,7 +29,7 @@ class _ContactDetail extends State<ContactDetail> {
 
       return pathf;
     } else {
-      pathf = 'https://picsum.photos/250?image=9';
+      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
       return pathf;
     }
   }
@@ -54,7 +61,7 @@ class _ContactDetail extends State<ContactDetail> {
                 borderRadius: BorderRadius.circular(100000),
                 child: CircleAvatar(
                   radius: 80,
-                  child: Image.network(getpath("yhj"),
+                  child: Image.network(getpath(widget.ppath),
                       height: 300, width: 300, fit: BoxFit.cover),
                 ),
               ),

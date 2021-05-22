@@ -11,7 +11,7 @@ class OrientationMaterialScreen extends StatefulWidget {
 class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
   Future<List<Employee>> _getEmployee() async {
     var empData = await http.get(
-        "`http://isow.acutrotech.com/index.php`/api/orientation/materialList");
+        "http://isow.acutrotech.com/index.php/api/orientation/materialList");
     Map jsonData = json.decode(empData.body);
 
     List<Employee> employees = [];
@@ -24,6 +24,12 @@ class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
       employees.add(employee);
     });
     return employees;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getEmployee();
   }
 
   @override

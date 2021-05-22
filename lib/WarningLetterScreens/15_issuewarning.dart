@@ -437,37 +437,7 @@ class _WarningletterState extends State<Warningletter> {
                   SizedBox(height: 20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(100.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 6.0,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: InkWell(
-                          child: Center(
-                            child: Icon(
-                              Icons.add_outlined,
-                              color: Colors.black54,
-                              size: 50.0,
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RecivedWarning()),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+                    children: <Widget>[],
                   ),
                 ],
               ),

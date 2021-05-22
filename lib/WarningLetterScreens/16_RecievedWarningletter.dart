@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import '15_issuewarning.dart';
 
 class RecivedWarning extends StatefulWidget {
   @override
@@ -251,6 +252,19 @@ class _RecivedWarningState extends State<RecivedWarning> {
                 );
               }
             }),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Warningletter()),
+          );
+        },
+        icon: Icon(
+          Icons.add,
+          size: 30,
+        ),
+        label: Text("ADD"),
       ),
     );
   }

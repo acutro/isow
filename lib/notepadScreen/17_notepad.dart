@@ -81,12 +81,22 @@ class _NotepadState extends State<Notepad> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
         backgroundColor: Color(0xff49A5FF),
         title: Text(' Notepad'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(top: 10.0),
@@ -223,6 +233,7 @@ class _NotepadState extends State<Notepad> {
                                     height: 40.0,
                                     child: TextField(
                                       controller: _nameController,
+                                      style: TextStyle(color: Colors.white),
                                       decoration: InputDecoration(
                                         hintText: 'Name',
                                         hintStyle:
@@ -243,79 +254,149 @@ class _NotepadState extends State<Notepad> {
                               children: <Widget>[
                                 Expanded(
                                   child: Container(
-                                    height: 40.0,
-                                    margin: EdgeInsets.fromLTRB(
-                                        10.0, 5.0, 10.0, 0.0),
-                                    //alignment: Alignment.centerRight,
+                                    margin: EdgeInsets.all(10.0),
                                     decoration: BoxDecoration(
-                                      color: Color(0xff49A5FF),
-                                      borderRadius: BorderRadius.circular(50.0),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black12,
-                                          blurRadius: 6.0,
-                                          offset: Offset(0, 2),
+                                        color: Color(0xff49A5FF),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        border: Border.all(color: Colors.white)
+                                        // boxShadow: [
+                                        //   BoxShadow(
+                                        //     color: Colors.black26,
+                                        //     blurRadius: 6.0,
+                                        //     offset: Offset(0, 2),
+                                        //   ),
+                                        // ],
                                         ),
-                                      ],
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                    height: 230.0,
+                                    //width: 300.0,
+                                    //color: Colors.redAccent,
+                                    // child: Container(
+                                    child: Column(
                                       children: <Widget>[
                                         Container(
+                                          alignment: Alignment.topLeft,
+                                          margin: EdgeInsets.fromLTRB(
+                                              10.0, 10.0, 0.0, 0.0),
                                           child: Text(
-                                            '  Requirements',
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            'Requirments',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                         ),
-                                        Container(
-                                            child: Row(
-                                          children: <Widget>[
-                                            FlatButton(
-                                              minWidth: 1.0,
-                                              onPressed: () {
-                                                setState(
-                                                  () {
-                                                    rowno.add(1);
-                                                  },
-                                                );
-                                              },
-                                              child: Icon(
-                                                Icons.add_circle_outline_sharp,
-                                                color: Colors.white,
+                                        Expanded(
+                                          child: SingleChildScrollView(
+                                            child: Container(
+                                              margin: EdgeInsets.all(10.0),
+                                              child: new TextField(
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                                decoration: new InputDecoration(
+                                                  border: InputBorder.none,
+                                                  focusedBorder:
+                                                      InputBorder.none,
+                                                  enabledBorder:
+                                                      InputBorder.none,
+                                                  errorBorder: InputBorder.none,
+                                                  disabledBorder:
+                                                      InputBorder.none,
+                                                ),
+                                                autofocus: false,
+                                                maxLines: null,
+                                                controller:
+                                                    _requirmentController,
+                                                keyboardType:
+                                                    TextInputType.text,
                                               ),
                                             ),
-                                            // SizedBox(
-                                            //   width: 10.0,
-                                            // ),
-                                            FlatButton(
-                                              minWidth: 1.0,
-                                              onPressed: () {
-                                                setState(
-                                                  () {
-                                                    rowno.remove(1);
-                                                  },
-                                                );
-                                              },
-                                              child: Icon(
-                                                Icons.remove_circle_outline,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 10.0,
-                                            )
-                                          ],
-                                        ))
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            for (var i in rowno)
-                              createrow(_requirmentController),
+
+                            // Row(
+                            //   children: <Widget>[
+                            //     Expanded(
+                            //       child: Container(
+                            //         height: 40.0,
+                            //         margin: EdgeInsets.fromLTRB(
+                            //             10.0, 5.0, 10.0, 0.0),
+                            //         //alignment: Alignment.centerRight,
+                            //         decoration: BoxDecoration(
+                            //           color: Color(0xff49A5FF),
+                            //           borderRadius: BorderRadius.circular(50.0),
+                            //           boxShadow: [
+                            //             BoxShadow(
+                            //               color: Colors.black12,
+                            //               blurRadius: 6.0,
+                            //               offset: Offset(0, 2),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //         child: Row(
+                            //           mainAxisAlignment:
+                            //               MainAxisAlignment.spaceBetween,
+                            //           children: <Widget>[
+                            //             Container(
+                            //               child: Text(
+                            //                 '  Requirements',
+                            //                 style:
+                            //                     TextStyle(color: Colors.white),
+                            //               ),
+                            //             ),
+                            //             Container(
+                            //                 child: Row(
+                            //               children: <Widget>[
+                            //                 FlatButton(
+                            //                   minWidth: 1.0,
+                            //                   onPressed: () {
+                            //                     setState(
+                            //                       () {
+                            //                         rowno.add(1);
+                            //                       },
+                            //                     );
+                            //                   },
+                            //                   child: Icon(
+                            //                     Icons.add_circle_outline_sharp,
+                            //                     color: Colors.white,
+                            //                   ),
+                            //                 ),
+                            //                 // SizedBox(
+                            //                 //   width: 10.0,
+                            //                 // ),
+                            //                 FlatButton(
+                            //                   minWidth: 1.0,
+                            //                   onPressed: () {
+                            //                     setState(
+                            //                       () {
+                            //                         rowno.remove(1);
+                            //                       },
+                            //                     );
+                            //                   },
+                            //                   child: Icon(
+                            //                     Icons.remove_circle_outline,
+                            //                     color: Colors.white,
+                            //                   ),
+                            //                 ),
+                            //                 SizedBox(
+                            //                   width: 10.0,
+                            //                 )
+                            //               ],
+                            //             ))
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+                            // for (var i in rowno)
+                            //   createrow(_requirmentController),
                           ],
                         ),
                       ),
@@ -373,10 +454,7 @@ class _NotepadState extends State<Notepad> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NotepadList()),
-                      );
+                      Navigator.pop(context);
                     },
                     child: Container(
                       margin: EdgeInsets.fromLTRB(2.5, 0.0, 20.0, 0.0),
@@ -392,7 +470,7 @@ class _NotepadState extends State<Notepad> {
                       //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
                       child: Center(
                         child: Text(
-                          'View',
+                          'Cancel',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,

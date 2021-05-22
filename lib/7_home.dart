@@ -3,11 +3,11 @@ import 'package:isow/26_news.dart';
 import '27_weatherreport.dart';
 import 'orientation_screen/12_Orientation.dart';
 import 'FeedbackScreen/14_feedback.dart';
-import 'WarningLetterScreens/15_issuewarning.dart';
+import 'WarningLetterScreens/16_RecievedWarningletter.dart';
 import '18_emergency.dart';
 import '4_signup.dart';
 import 'page8rigalert.dart';
-import 'notepadScreen/17_notepad.dart';
+import 'notepadScreen/notepadListScreen.dart';
 import '19_services.dart';
 import '21_jobdescriptionissuer.dart';
 import '25_offers.dart';
@@ -420,7 +420,7 @@ class HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Warningletter()),
+                            builder: (context) => RecivedWarning()),
                       );
                     },
                     child: Stack(
@@ -450,7 +450,7 @@ class HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Notepad()),
+                        MaterialPageRoute(builder: (context) => NotepadList()),
                       );
                     },
                     child: Stack(

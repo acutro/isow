@@ -33,6 +33,15 @@ class _ContactDetail extends State<ContactDetail> {
       appBar: AppBar(
         title: Text(widget.name),
         actions: [],
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Container(
         child: Column(

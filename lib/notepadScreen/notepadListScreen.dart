@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
+import '17_notepad.dart';
 
 class NotepadList extends StatefulWidget {
   // final String email;
@@ -90,12 +91,17 @@ class _MyApp extends State<NotepadList> {
           title: Text(
             "Notepad",
             style: TextStyle(
-              color: Colors.white70,
+              color: Colors.white,
             ),
           ),
-          leading: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white38,
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
           ),
           actions: [
             Icon(
@@ -202,6 +208,19 @@ class _MyApp extends State<NotepadList> {
                   },
                 ),
               ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Notepad()),
+            );
+          },
+          icon: Icon(
+            Icons.add,
+            size: 30,
+          ),
+          label: Text("ADD"),
+        ),
       ),
     );
   }

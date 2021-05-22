@@ -57,14 +57,19 @@ class _MyApp extends State<Contact> {
       home: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Contact us",
+            "Contacts",
             style: TextStyle(
-              color: Colors.white70,
+              color: Colors.white,
             ),
           ),
-          leading: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white38,
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
           ),
           actions: [
             Icon(

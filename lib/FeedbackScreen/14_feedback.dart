@@ -37,8 +37,8 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
+          backgroundColor: Colors.red[100],
+          textColor: Colors.red[800],
           fontSize: 16.0);
     }
   }
@@ -191,8 +191,8 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                               timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                              textColor: Colors.white,
+                              backgroundColor: Colors.blue[100],
+                              textColor: Colors.blue,
                               fontSize: 16.0);
                         } else {
                           upFeedback(
@@ -209,39 +209,34 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
               ],
             ),
             SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(100.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 6.0,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: InkWell(
-                    child: Center(
-                      child: Icon(
-                        Icons.add_outlined,
-                        color: Colors.black54,
-                        size: 50.0,
-                      ),
-                    ),
-                    // onTap: () {
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(builder: (context) => Mscreen()),
-                    //   );
-                    // },
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: <Widget>[
+            //     Container(
+            //       decoration: BoxDecoration(
+            //         color: Colors.white,
+            //         borderRadius: BorderRadius.circular(100.0),
+            //         boxShadow: [
+            //           BoxShadow(
+            //             color: Colors.black12,
+            //             blurRadius: 6.0,
+            //             offset: Offset(0, 2),
+            //           ),
+            //         ],
+            //       ),
+            //       child: InkWell(
+            //         child: Center(
+            //           child: Icon(
+            //             Icons.add_outlined,
+            //             color: Colors.black54,
+            //             size: 50.0,
+            //           ),
+            //         ),
+
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),

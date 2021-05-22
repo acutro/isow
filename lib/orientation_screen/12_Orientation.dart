@@ -32,65 +32,85 @@ class OrientationScreenState extends State<OrientationScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Card(
-                    margin: const EdgeInsets.all(0.0),
-                    color: Colors.indigo,
-                    child: new Container(
-                      height: 400,
-                      width: 1000,
-                      child: new Container(
-                        margin: const EdgeInsets.all(30.0),
-                        child: Expanded(
-                            child: Row(
-                          children: <Widget>[
-                            Flexible(
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Information About',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 15.0),
-                                    ),
-                                    Text(
-                                      'COMPANY',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 20.0),
-                                    ),
-                                    SizedBox(height: 30),
-                                    Text(
-                                      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut.",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 10.0),
-                                    ),
-                                  ]),
-                            ),
-                          ],
-                        )),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(10),
+              height: 300,
+              decoration: BoxDecoration(color: Colors.blue),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'COMPANY',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0),
+                  ),
+                  SizedBox(height: 30),
+                  Expanded(
+                    child: Container(
+                      child: Text(
+                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut.",
+                        style: TextStyle(
+                            color: Colors.white, fontSize: 12.0, height: 1.5),
                       ),
                     ),
                   ),
                 ],
               ),
-              Column(
+
+              // child: Column(
+              //   children: <Widget>[
+              //     new Container(
+              //       margin: const EdgeInsets.all(30.0),
+              //       child: Expanded(
+              //           child: Row(
+              //         children: <Widget>[
+              //           Flexible(
+              //             child: Column(
+              //                 crossAxisAlignment: CrossAxisAlignment.start,
+              //                 children: <Widget>[
+              //                   Text(
+              //                     'Information About',
+              //                     style: TextStyle(
+              //                         fontWeight: FontWeight.bold,
+              //                         color: Colors.white,
+              //                         fontSize: 15.0),
+              //                   ),
+              //                   Text(
+              //                     'COMPANY',
+              //                     style: TextStyle(
+              //                         fontWeight: FontWeight.bold,
+              //                         color: Colors.white,
+              //                         fontSize: 20.0),
+              //                   ),
+              //                   SizedBox(height: 30),
+              //                   Text(
+              //                     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut.",
+              //                     style: TextStyle(
+              //                         color: Colors.white,
+              //                         fontSize: 12.0,
+              //                         height: 1.5),
+              //                   ),
+              //                 ]),
+              //           ),
+              //         ],
+              //       )),
+              //     ),
+              //   ],
+              // ),
+            ),
+            Container(
+              child: Column(
                 children: <Widget>[
                   Card(
                     margin: const EdgeInsets.all(0.0),
                     color: Color(0xFF4fc4f2),
                     child: new Container(
                       height: 500,
-                      width: 1000,
+                      width: double.infinity,
                       child: new Container(
                         child: Column(children: <Widget>[
                           SizedBox(height: 70),
@@ -120,6 +140,8 @@ class OrientationScreenState extends State<OrientationScreen> {
                                       margin: EdgeInsets.all(10),
                                     ),
                                     Positioned(
+                                      height: 10,
+                                      left: 40,
                                       bottom: 0,
                                       child: Text(
                                         'Rigs',
@@ -153,6 +175,7 @@ class OrientationScreenState extends State<OrientationScreen> {
                                       margin: EdgeInsets.all(10),
                                     ),
                                     Positioned(
+                                      left: 27,
                                       bottom: 0,
                                       child: Text(
                                         'Materials',
@@ -173,8 +196,8 @@ class OrientationScreenState extends State<OrientationScreen> {
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

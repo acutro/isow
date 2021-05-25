@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:isow/7_home.dart';
 import '3_forgotpswd.dart';
 import '4_signup.dart';
-import '6_editprofile.dart';
+import '../6_editprofile.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -62,13 +62,13 @@ class SigninScreenState extends State<SigninScreen> {
       // drawer: AppDrawer(),
 
       appBar: AppBar(
-        leading: new IconButton(
-          icon: new Icon(
-            Icons.menu,
-            color: Color(0xFF4fc4f2),
-          ),
-          onPressed: () {},
-        ),
+        // leading: new IconButton(
+        //   icon: new Icon(
+        //     Icons.menu,
+        //     color: Color(0xFF4fc4f2),
+        //   ),
+        //   onPressed: () {},
+        // ),
         title: Center(
           child: Text(
             'Sign In',
@@ -78,12 +78,12 @@ class SigninScreenState extends State<SigninScreen> {
             ),
           ),
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Icon(Icons.more_vert),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: EdgeInsets.symmetric(horizontal: 16),
+        //     child: Icon(Icons.more_vert),
+        //   ),
+        // ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -98,7 +98,7 @@ class SigninScreenState extends State<SigninScreen> {
             Container(
               child: Text(
                 '\n'
-                'welcome\n',
+                'Welcome\n',
                 style: TextStyle(fontSize: 25, color: Color(0xFF4fc4f2)),
               ),
             ),
@@ -123,41 +123,67 @@ class SigninScreenState extends State<SigninScreen> {
             Container(
               padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 19.0),
               child: Text(
-                'Please enter Employee ID and Password',
-                style: TextStyle(fontSize: 10, color: Colors.black),
+                'Please enter Email ID and Password',
+                style: TextStyle(fontSize: 12, color: Colors.black),
               ),
             ),
             Form(
               key: _formKey,
               child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0.0, 1.0), //(x,y)
+                      blurRadius: 6.0,
+                    ),
+                  ],
+                ),
                 margin: new EdgeInsets.symmetric(horizontal: 20.0),
-                padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 19.0),
+
+                /// padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 19.0),
                 child: TextFormField(
                   controller: _emailController,
-                  decoration: InputDecoration(
+                  decoration: new InputDecoration(
                     prefixIcon: Icon(
                       Icons.person,
                       color: Color(0xFF4fc4f2),
                     ),
-                    border: OutlineInputBorder(
-                        // width: 0.0 produces a thin "hairline" border
-                        borderRadius: BorderRadius.all(Radius.circular(90.0)),
-                        borderSide: BorderSide(color: Colors.white)
-                        //borderSide: const BorderSide(),
-                        ),
-                    hintStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 10,
-                        fontFamily: "WorkSansLight"),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.only(
+                        left: 15, bottom: 11, top: 11, right: 15),
+                    hintText: 'Email-ID',
                     filled: true,
                     fillColor: Colors.white24,
-                    hintText: 'Email-ID',
+                    hintStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                        fontFamily: "WorkSansLight"),
                   ),
                 ),
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
             Container(
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 19.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0.0, 1.0), //(x,y)
+                    blurRadius: 6.0,
+                  ),
+                ],
+              ),
               margin: new EdgeInsets.symmetric(horizontal: 20.0),
               child: TextFormField(
                 style: TextStyle(
@@ -165,17 +191,25 @@ class SigninScreenState extends State<SigninScreen> {
                 ),
                 controller: _passwordController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: new InputDecoration(
                   prefixIcon: Icon(
                     Icons.lock_open_outlined,
                     color: Color(0xFF4fc4f2),
                   ),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                    Radius.circular((90.0)),
-                  )),
-                  hintText: "Password",
-                  hintStyle: TextStyle(color: Colors.black54, fontSize: 15),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  contentPadding:
+                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                  hintText: 'Password',
+                  filled: true,
+                  fillColor: Colors.white24,
+                  hintStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontFamily: "WorkSansLight"),
                 ),
               ),
             ),
@@ -211,13 +245,13 @@ class SigninScreenState extends State<SigninScreen> {
               child: Row(
                 children: <Widget>[
                   Text(
-                    'New one',
+                    'New one ?',
                     textAlign: TextAlign.left,
                   ),
                   FlatButton(
                     textColor: Color(0xFF4fc4f2),
                     child: Text(
-                      'signup',
+                      'Signup',
                       textAlign: TextAlign.right,
                       style: TextStyle(fontSize: 14),
                     ),

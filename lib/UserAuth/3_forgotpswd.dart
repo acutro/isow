@@ -11,17 +11,26 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
         title: Center(
           child: Text(
             'Forgot Password',
           ),
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Icon(Icons.more_vert),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: EdgeInsets.symmetric(horizontal: 16),
+        //     child: Icon(Icons.more_vert),
+        //   ),
+        // ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -52,34 +61,48 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
             Container(
               padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 19.0),
               child: Text(
-                'Please enter Employee Email ID',
+                'Please enter your E-mail ID',
                 style: TextStyle(fontSize: 10, color: Colors.black),
               ),
             ),
             Container(
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 19.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0.0, 1.0), //(x,y)
+                    blurRadius: 6.0,
+                  ),
+                ],
+              ),
               margin: new EdgeInsets.symmetric(horizontal: 20.0),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: new InputDecoration(
                   prefixIcon: Icon(
                     Icons.email_outlined,
                     color: Color(0xFF4fc4f2),
                   ),
-                  border: OutlineInputBorder(
-                      // width: 0.0 produces a thin "hairline" border
-                      borderRadius: BorderRadius.all(Radius.circular(90.0)),
-                      borderSide: BorderSide(color: Colors.white24)
-                      //borderSide: const BorderSide(),
-                      ),
-                  hintStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 10,
-                      fontFamily: "WorkSansLight"),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  contentPadding:
+                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                  hintText: 'Email-ID',
                   filled: true,
                   fillColor: Colors.white24,
-                  hintText: 'E-mail ID',
+                  hintStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontFamily: "WorkSansLight"),
                 ),
               ),
+            ),
+            SizedBox(
+              height: 20,
             ),
             Container(
               height: 50.0,
@@ -111,6 +134,7 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
             ),
             Container(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     'Back to',
@@ -133,7 +157,6 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                     },
                   )
                 ],
-                mainAxisAlignment: MainAxisAlignment.center,
               ),
             ),
           ],

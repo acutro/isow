@@ -5,17 +5,17 @@ import 'orientation_screen/12_Orientation.dart';
 import 'FeedbackScreen/14_feedback.dart';
 import 'WarningLetterScreens/16_RecievedWarningletter.dart';
 import '18_emergency.dart';
-import '4_signup.dart';
+import 'UserAuth/2_signinpage.dart';
 import 'page8rigalert.dart';
 import 'notepadScreen/notepadListScreen.dart';
 import '19_services.dart';
-import '21_jobdescriptionissuer.dart';
+import 'JobDescription/jobDescriptionList.dart';
 import '25_offers.dart';
-import 'JobHandOverScreen/23_job.dart';
+import 'JobHandOverScreen/jobHandoverList.dart';
 import 'package:http/http.dart';
 import '6_editprofile.dart';
 import 'contacts/contact.dart';
-import '2_signinpage.dart';
+import 'UserAuth/4_signup.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -553,7 +553,7 @@ class HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Jobdescription()),
+                            builder: (context) => JobDescriptionList()),
                       );
                     },
                     child: Stack(
@@ -584,7 +584,8 @@ class HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Jobhandovers()),
+                        MaterialPageRoute(
+                            builder: (context) => JobHandOverList()),
                       );
                     },
                     child: Stack(children: <Widget>[

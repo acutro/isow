@@ -20,13 +20,13 @@ class _MyApp extends State<JobHandOverList> {
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/UserRoles/usersList',
+        'http://isow.acutrotech.com/index.php/api/JobDescription/singleList',
         body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
-        listResponse = mapResponse['data'];
-        print("{$listResponse}");
+        listFacts = mapResponse['data'];
+        print("{$listFacts}");
       });
     } else {
       Fluttertoast.showToast(

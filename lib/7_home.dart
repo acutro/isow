@@ -16,6 +16,7 @@ import 'package:http/http.dart';
 import '6_editprofile.dart';
 import 'contacts/contact.dart';
 import 'UserAuth/4_signup.dart';
+import 'JobDescription/JobDescriptionTab.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -553,7 +554,7 @@ class HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => JobDescriptionList()),
+                            builder: (context) => JobDescriptionTab()),
                       );
                     },
                     child: Stack(

@@ -84,237 +84,146 @@ class _MyApp extends State<JobDescriptionList> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Job Description',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Job Description",
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-            ),
-          ),
-          actions: [
-            Icon(
-              Icons.headset_mic,
-              color: Colors.white38,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Icon(
-              Icons.logout,
-              color: Colors.white38,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Icon(
-              Icons.menu,
-              color: Colors.white38,
-            ),
-          ],
-        ),
-        body: mapResponse == null
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Stack(
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(right: 30.0),
-                              decoration: BoxDecoration(
-                                color: Color(0xff49A5FF),
-                                borderRadius: BorderRadius.circular(50.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black38,
-                                    blurRadius: 10.0,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              height: 80.0,
-                              width: 80.0,
-                              child: Icon(
-                                Icons.contact_mail_outlined,
-                                size: 40.0,
-                                color: Colors.white,
-                              ),
+    return Scaffold(
+      // appBar: AppBar(
+      //   title: Text(
+      //     "Job Description",
+      //     style: TextStyle(
+      //       color: Colors.white,
+      //     ),
+      //   ),
+      //   leading: GestureDetector(
+      //     onTap: () {
+      //       Navigator.pop(context);
+      //     },
+      //     child: Icon(
+      //       Icons.arrow_back_ios,
+      //       color: Colors.white,
+      //     ),
+      //   ),
+      //   actions: [
+      //     Icon(
+      //       Icons.headset_mic,
+      //       color: Colors.white38,
+      //     ),
+      //     SizedBox(
+      //       width: 5,
+      //     ),
+      //     Icon(
+      //       Icons.logout,
+      //       color: Colors.white38,
+      //     ),
+      //     SizedBox(
+      //       width: 5,
+      //     ),
+      //     Icon(
+      //       Icons.menu,
+      //       color: Colors.white38,
+      //     ),
+      //   ],
+      // ),
+      body: mapResponse == null
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Container(
+              decoration:
+                  BoxDecoration(color: Color(0xFF4fc4f2).withOpacity(0.2)),
+              height: MediaQuery.of(context).size.height,
+              width: double.infinity,
+              child: listFacts.length == 0
+                  ? Text("No Issued Jobs")
+                  : ListView.builder(
+                      itemCount: listFacts.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        // final Message chat = chats[index];
+                        return GestureDetector(
+                          onTap: () {
+                            showDialogFunc(
+                              context,
+                              listFacts[index]["assignedBy"],
+                              listFacts[index]["assignedTo"],
+                              listFacts[index]["sender"],
+                              listFacts[index]["duration"],
+                              listFacts[index]["job_description"],
+                            );
+                          },
+                          child: Card(
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(right: 30.0),
-                              height: 100.0,
-                              width: 90.0,
-                              alignment: Alignment.bottomCenter,
-                              child: Text('Issuer'),
-                            ),
-                          ],
-                        ),
-                        Stack(
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(left: 30.0),
-                              decoration: BoxDecoration(
-                                color: Color(0xff49A5FF),
-                                borderRadius: BorderRadius.circular(100.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black38,
-                                    blurRadius: 10.0,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 15,
+                                vertical: 8,
                               ),
-                              height: 80.0,
-                              width: 80.0,
-                              child: InkWell(
-                                child: Icon(
-                                  Icons.settings,
-                                  size: 40.0,
-                                  color: Colors.white,
-                                ),
-                                onTap: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    // MaterialPageRoute(builder: (context) => Warningletter()),
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            JobExecutedList()),
-                                  );
-                                },
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 30.0),
-                              height: 100.0,
-                              width: 90.0,
-                              alignment: Alignment.bottomCenter,
-                              child: Text('Execute'),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Color(0xFF4fc4f2).withOpacity(0.2)),
-                      height: MediaQuery.of(context).size.height,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        itemCount: listFacts.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          // final Message chat = chats[index];
-                          return GestureDetector(
-                            onTap: () {
-                              showDialogFunc(
-                                context,
-                                listFacts[index]["assignedBy"],
-                                listFacts[index]["assignedTo"],
-                                listFacts[index]["sender"],
-                                listFacts[index]["duration"],
-                                listFacts[index]["job_description"],
-                              );
-                            },
-                            child: Card(
-                              elevation: 3,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 15,
-                                  vertical: 8,
-                                ),
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.90,
-                                      padding: EdgeInsets.all(3),
-                                      child: Column(
-                                        children: <Widget>[
-                                          ListTile(
-                                            leading: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xFF4fc4f2),
-                                              child: Text(
-                                                listFacts[index]["assignedBy"]
-                                                    .substring(0, 1),
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    fontSize: 20),
-                                              ),
-                                            ),
-                                            title: Text(
-                                              '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}',
-                                              //  listFacts[index]["name"],
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.90,
+                                    padding: EdgeInsets.all(3),
+                                    child: Column(
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: CircleAvatar(
+                                            backgroundColor: Color(0xFF4fc4f2),
+                                            child: Text(
+                                              listFacts[index]["assignedBy"]
+                                                  .substring(0, 1),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  height: 1.5),
+                                                  color: Colors.white,
+                                                  fontSize: 20),
                                             ),
-                                            subtitle: Text(
-                                              listFacts[index]["duration"],
-                                            ),
-                                            trailing: InkWell(
-                                                onTap: () {
-                                                  executeJob(
-                                                    listFacts[index]["id"],
-                                                  );
-                                                  fetchIssued();
-                                                },
-                                                child: Icon(
-                                                  Icons.next_plan,
-                                                  color: Colors.blue[400],
-                                                )),
                                           ),
-                                        ],
-                                      ),
+                                          title: Text(
+                                            '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}',
+                                            //  listFacts[index]["name"],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                height: 1.5),
+                                          ),
+                                          subtitle: Text(
+                                            listFacts[index]["duration"],
+                                          ),
+                                          trailing: GestureDetector(
+                                            onTap: () {
+                                              executeJob(
+                                                listFacts[index]["id"],
+                                              );
+                                              fetchIssued();
+                                            },
+                                            child: Column(
+                                              children: [
+                                                Icon(
+                                                  Icons.next_plan,
+                                                  size: 30,
+                                                  color: Colors.blue[400],
+                                                ),
+                                                Text(
+                                                  "Execute",
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.blue[400],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     ),
-                  ],
-                ),
-              ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Jobdescription()),
-            );
-          },
-          icon: Icon(
-            Icons.add,
-            size: 30,
-          ),
-          label: Text("ADD"),
-        ),
-      ),
+            ),
     );
   }
 }

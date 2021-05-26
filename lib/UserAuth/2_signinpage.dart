@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:isow/7_home.dart';
 import '3_forgotpswd.dart';
 import '4_signup.dart';
-import '../6_editprofile.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:toast/toast.dart';
 
 class SigninScreen extends StatefulWidget {
   @override
@@ -39,14 +37,15 @@ class SigninScreenState extends State<SigninScreen> {
       setState(() {
         error = true;
       });
-      Fluttertoast.showToast(
-          msg: "Enter valid credentials",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+
+      Toast.show(
+        "Enter valid credentials",
+        context,
+        duration: Toast.LENGTH_SHORT,
+        gravity: Toast.BOTTOM,
+        backgroundColor: Colors.white,
+        textColor: Colors.red[400],
+      );
     }
   }
 
@@ -257,14 +256,14 @@ class SigninScreenState extends State<SigninScreen> {
                     ),
                     onPressed: () {
                       if (error == true) {
-                        Fluttertoast.showToast(
-                            msg: "This is Center Short Toast",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
+                        Toast.show(
+                          "Enter valid credentials",
+                          context,
+                          duration: Toast.LENGTH_SHORT,
+                          gravity: Toast.BOTTOM,
+                          backgroundColor: Colors.white,
+                          textColor: Colors.red[400],
+                        );
                       } else {
                         Navigator.push(
                           context,
@@ -286,14 +285,11 @@ class SigninScreenState extends State<SigninScreen> {
                 onPressed: () {
                   if (_emailController.text == "" ||
                       _passwordController.text == "") {
-                    Fluttertoast.showToast(
-                        msg: "Please Enter Email and Password",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.red,
-                        textColor: Colors.white,
-                        fontSize: 16.0);
+                    Toast.show("Please Enter Email and Password", context,
+                        duration: Toast.LENGTH_SHORT,
+                        gravity: Toast.BOTTOM,
+                        textColor: Color(0xff49A5FF),
+                        backgroundColor: Colors.white);
                   } else {
                     getLogin(_emailController.text, _passwordController.text);
                   }

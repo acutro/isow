@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '24_jobhandovers.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:toast/toast.dart';
 import '23_job.dart';
 
 class Jobtransfer extends StatefulWidget {
@@ -52,14 +52,11 @@ class _JobhandoversState extends State<Jobtransfer> {
         print("{$userList}");
       });
     } else {
-      Fluttertoast.showToast(
-          msg: "Enter valid credentials",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Toast.show("Enter valid credentials", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
     }
   }
 
@@ -78,23 +75,17 @@ class _JobhandoversState extends State<Jobtransfer> {
         'http://isow.acutrotech.com/index.php/api/JobDescription/create',
         body: (data));
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-          msg: "Handover job successfully ",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Toast.show("Handover job successfully", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
     } else {
-      Fluttertoast.showToast(
-          msg: "Failed",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Toast.show("Failed", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
     }
   }
 
@@ -482,24 +473,19 @@ class _JobhandoversState extends State<Jobtransfer> {
                           ),
                           onTap: () {
                             if (userValue == null) {
-                              Fluttertoast.showToast(
-                                  msg: "Select from Dropdown",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0);
+                              Toast.show("Select from Dropdown", context,
+                                  duration: Toast.LENGTH_SHORT,
+                                  gravity: Toast.BOTTOM,
+                                  textColor: Colors.red,
+                                  backgroundColor: Colors.white);
                             } else if (_descriptionController.text == "" ||
                                 _durationController.text == "") {
-                              Fluttertoast.showToast(
-                                  msg: "Enter Description and Duration",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0);
+                              Toast.show(
+                                  "Enter Description and Duration", context,
+                                  duration: Toast.LENGTH_SHORT,
+                                  gravity: Toast.BOTTOM,
+                                  textColor: Colors.red,
+                                  backgroundColor: Colors.white);
                             } else {
                               postWarning(
                                 userValue.toString(),

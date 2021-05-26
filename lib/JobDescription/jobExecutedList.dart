@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:toast/toast.dart';
 import '21_jobdescriptionissuer.dart';
 import 'package:isow/JobDescription/jobDescriptionList.dart';
 
@@ -16,7 +16,7 @@ class _MyApp extends State<JobExecutedList> {
   List listResponse;
   Map mapResponse;
   List<dynamic> listFacts;
-
+  bool jobError = false;
   Future fetchIssued() async {
     var data = {
       'assignedTo': '3',
@@ -29,17 +29,17 @@ class _MyApp extends State<JobExecutedList> {
       setState(() {
         mapResponse = jsonDecode(response.body);
         listFacts = mapResponse['data'];
+        jobError = false;
         print("{$listFacts}");
       });
     } else {
-      Fluttertoast.showToast(
-          msg: "Something went Wrong",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      jobError = true;
+
+      Toast.show("Something went Wrong", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
     }
   }
 
@@ -93,7 +93,7 @@ class _MyApp extends State<JobExecutedList> {
       //     ),
       //   ],
       // ),
-      body: mapResponse == null
+      body: jobError == true || mapResponse == null
           ? Center(
               child: CircularProgressIndicator(),
             )
@@ -102,79 +102,93 @@ class _MyApp extends State<JobExecutedList> {
                   BoxDecoration(color: Color(0xFF4fc4f2).withOpacity(0.2)),
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
-              child: ListView.builder(
-                itemCount: listFacts.length,
-                itemBuilder: (BuildContext context, int index) {
-                  // final Message chat = chats[index];
-                  return GestureDetector(
-                    onTap: () {
-                      showDialogFunc(
-                        context,
-                        listFacts[index]["assignedBy"],
-                        listFacts[index]["assignedTo"],
-                        listFacts[index]["sender"],
-                        listFacts[index]["duration"],
-                        listFacts[index]["job_description"],
-                      );
-                    },
-                    child: Card(
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 8,
-                        ),
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.90,
-                              padding: EdgeInsets.all(3),
-                              child: Column(
+              child: listFacts.length == 0
+                  ? Center(child: Text("No Executed Jobs"))
+                  : ListView.builder(
+                      itemCount: listFacts.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        // final Message chat = chats[index];
+                        return GestureDetector(
+                          onTap: () {
+                            showDialogFunc(
+                              context,
+                              listFacts[index]["assignedBy"],
+                              listFacts[index]["assignedTo"],
+                              listFacts[index]["sender"],
+                              listFacts[index]["duration"],
+                              listFacts[index]["job_description"],
+                            );
+                          },
+                          child: Card(
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 15,
+                                vertical: 8,
+                              ),
+                              child: Row(
                                 children: <Widget>[
-                                  ListTile(
-                                    leading: CircleAvatar(
-                                      backgroundColor: Color(0xFF4fc4f2),
-                                      child: Text(
-                                        listFacts[index]["assignedBy"]
-                                            .substring(0, 1),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontSize: 20),
-                                      ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.90,
+                                    padding: EdgeInsets.all(3),
+                                    child: Column(
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: CircleAvatar(
+                                            backgroundColor: Color(0xFF4fc4f2),
+                                            child: Text(
+                                              listFacts[index]["assignedBy"]
+                                                  .substring(0, 1),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                  fontSize: 20),
+                                            ),
+                                          ),
+                                          title: Text(
+                                            '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}',
+                                            //  listFacts[index]["name"],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                height: 1.5),
+                                          ),
+                                          subtitle: Text(
+                                            listFacts[index]["duration"],
+                                          ),
+                                          trailing: GestureDetector(
+                                            onTap: () {},
+                                            child: Column(
+                                              children: [
+                                                Icon(
+                                                  Icons.refresh_outlined,
+                                                  size: 30,
+                                                  color: Colors.blue[400],
+                                                ),
+                                                Text(
+                                                  "Handover",
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.blue[400],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    title: Text(
-                                      '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}',
-                                      //  listFacts[index]["name"],
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          height: 1.5),
-                                    ),
-                                    subtitle: Text(
-                                      listFacts[index]["duration"],
-                                    ),
-                                    trailing: InkWell(
-                                        onTap: () {
-                                          fetchIssued();
-                                        },
-                                        child: Icon(
-                                          Icons.next_plan,
-                                          color: Colors.blue[400],
-                                        )),
                                   ),
                                 ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             ),
     );
   }

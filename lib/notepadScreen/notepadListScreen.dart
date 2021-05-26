@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
 import '17_notepad.dart';
+import 'package:toast/toast.dart';
 
 class NotepadList extends StatefulWidget {
   // final String email;
@@ -37,23 +37,17 @@ class _MyApp extends State<NotepadList> {
         'http://isow.acutrotech.com/index.php/api/Notepad/delete',
         body: (data));
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-          msg: "Deleted Successfully",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Toast.show("Deleted Successfully", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.green[600],
+          backgroundColor: Colors.white);
     } else {
-      Fluttertoast.showToast(
-          msg: "Something went wrong",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Toast.show("Something went wrong", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
     }
   }
 
@@ -237,23 +231,17 @@ showDialogFunc(context, title, date, requirment, path, id) {
         'http://isow.acutrotech.com/index.php/api/Notepad/delete',
         body: (data));
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-          msg: "Deleted Successfully",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Toast.show("Deleted Successfully", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.green[600],
+          backgroundColor: Colors.white);
     } else {
-      Fluttertoast.showToast(
-          msg: "Something went wrong",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Toast.show("Something went wrong", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
     }
   }
 

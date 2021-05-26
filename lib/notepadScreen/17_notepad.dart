@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'notepadListScreen.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:toast/toast.dart';
 
 class Notepad extends StatefulWidget {
   @override
@@ -26,23 +26,17 @@ class _NotepadState extends State<Notepad> {
         'http://isow.acutrotech.com/index.php/api/Notepad/create',
         body: (data));
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-          msg: "Added Successfully",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Toast.show("Added Successfully", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.green[600],
+          backgroundColor: Colors.white);
     } else {
-      Fluttertoast.showToast(
-          msg: "Enter valid credentials",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Toast.show("Enter valid credentials", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
     }
   }
 
@@ -413,14 +407,11 @@ class _NotepadState extends State<Notepad> {
                       if (_datetime == "" ||
                           _nameController.text == "" ||
                           _requirmentController.text == "") {
-                        Fluttertoast.showToast(
-                            msg: "Enter all Details",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
+                        Toast.show("Enter all Details", context,
+                            duration: Toast.LENGTH_SHORT,
+                            gravity: Toast.BOTTOM,
+                            textColor: Color(0xff49A5FF),
+                            backgroundColor: Colors.white);
                       } else {
                         upNotepad(_nameController.text,
                             _requirmentController.text, _datetime.toString());

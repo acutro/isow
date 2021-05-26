@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:toast/toast.dart';
 
 class FeedbackCounter extends StatefulWidget {
   @override
@@ -22,23 +22,17 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
         'http://isow.acutrotech.com/index.php/api/Feedback/create',
         body: (data));
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-          msg: "Feedback Added Successfully",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Toast.show("Feedback Added Successfully", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.green[600],
+          backgroundColor: Colors.white);
     } else {
-      Fluttertoast.showToast(
-          msg: "Failed try again",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red[100],
-          textColor: Colors.red[800],
-          fontSize: 16.0);
+      Toast.show("Failed try again", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
     }
   }
 
@@ -197,14 +191,11 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                       ),
                       onTap: () {
                         if (_feedbackController.text == "") {
-                          Fluttertoast.showToast(
-                              msg: "Please enter Feedback",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.blue[100],
-                              textColor: Colors.blue,
-                              fontSize: 16.0);
+                          Toast.show("Please enter Feedback", context,
+                              duration: Toast.LENGTH_SHORT,
+                              gravity: Toast.BOTTOM,
+                              textColor: Color(0xff49A5FF),
+                              backgroundColor: Colors.white);
                         } else {
                           upFeedback(
                             _feedbackController.text,

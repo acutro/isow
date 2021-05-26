@@ -3,51 +3,27 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
 import '21_jobdescriptionissuer.dart';
-import 'package:isow/JobDescription/jobExecutedList.dart';
+import 'package:isow/JobDescription/jobDescriptionList.dart';
 
-class JobDescriptionList extends StatefulWidget {
+class JobHandoverList extends StatefulWidget {
   // final String email;
   // Contact({Key key, @required this.email}) : super(key: key);
   @override
   _MyApp createState() => _MyApp();
 }
 
-class _MyApp extends State<JobDescriptionList> {
+class _MyApp extends State<JobHandoverList> {
   List listResponse;
   Map mapResponse;
   List<dynamic> listFacts;
   bool jobError = false;
-
-  Future executeJob(
-    String id,
-  ) async {
-    var data = {'id': id, 'status': '1'};
-    http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobExecute/execute',
-        body: (data));
-    if (response.statusCode == 200) {
-      Toast.show("Executed Successfully", context,
-          duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          textColor: Colors.green[600],
-          backgroundColor: Colors.white);
-    } else {
-      Toast.show("Something went Wrong", context,
-          duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          textColor: Colors.red,
-          backgroundColor: Colors.white);
-    }
-  }
-
   Future fetchIssued() async {
     var data = {
       'assignedTo': '3',
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobDescription/singleList',
+        'http://isow.acutrotech.com/index.php/api/JobExecute/singleList',
         body: (data));
     if (response.statusCode == 200) {
       setState(() {
@@ -127,7 +103,7 @@ class _MyApp extends State<JobDescriptionList> {
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
               child: listFacts.length == 0
-                  ? Center(child: Text("No Issued Jobs"))
+                  ? Center(child: Text("No Hndoverd Jobs"))
                   : ListView.builder(
                       itemCount: listFacts.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -183,63 +159,22 @@ class _MyApp extends State<JobDescriptionList> {
                                           subtitle: Text(
                                             listFacts[index]["duration"],
                                           ),
-                                          trailing: Container(
-                                            width: 120,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                          trailing: GestureDetector(
+                                            onTap: () {},
+                                            child: Column(
                                               children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    executeJob(
-                                                      listFacts[index]["id"],
-                                                    );
-                                                    fetchIssued();
-                                                  },
-                                                  child: Column(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.refresh_outlined,
-                                                        size: 30,
-                                                        color: Colors.blue[400],
-                                                      ),
-                                                      Text(
-                                                        "Handover",
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          color:
-                                                              Colors.blue[400],
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
+                                                Icon(
+                                                  Icons.check,
+                                                  size: 30,
+                                                  color: Colors.green[400],
                                                 ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    executeJob(
-                                                      listFacts[index]["id"],
-                                                    );
-                                                    fetchIssued();
-                                                  },
-                                                  child: Column(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.handyman_outlined,
-                                                        size: 30,
-                                                        color: Colors.blue[400],
-                                                      ),
-                                                      Text(
-                                                        "Execute",
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          color:
-                                                              Colors.blue[400],
-                                                        ),
-                                                      )
-                                                    ],
+                                                Text(
+                                                  "Accept",
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.green[400],
                                                   ),
-                                                ),
+                                                )
                                               ],
                                             ),
                                           ),

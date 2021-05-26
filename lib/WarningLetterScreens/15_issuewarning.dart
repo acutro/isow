@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '16_RecievedWarningletter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:toast/toast.dart';
 
 class Warningletter extends StatefulWidget {
   @override
@@ -49,14 +49,14 @@ class _WarningletterState extends State<Warningletter> {
         print("{$userList}");
       });
     } else {
-      Fluttertoast.showToast(
-          msg: "Enter valid credentials",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Toast.show(
+        "Something went wrong",
+        context,
+        duration: Toast.LENGTH_SHORT,
+        gravity: Toast.BOTTOM,
+        backgroundColor: Colors.white,
+        textColor: Colors.red[400],
+      );
     }
   }
 
@@ -76,23 +76,17 @@ class _WarningletterState extends State<Warningletter> {
         'http://isow.acutrotech.com/index.php/api/WarningLetter/create',
         body: (data));
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-          msg: "Warning Letter sends successfull",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Toast.show("Warning Letter sends successfull", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.green[600],
+          backgroundColor: Colors.white);
     } else {
-      Fluttertoast.showToast(
-          msg: "Failed",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      Toast.show("Failed", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
     }
   }
 
@@ -413,23 +407,17 @@ class _WarningletterState extends State<Warningletter> {
                             ),
                             onTap: () {
                               if (userValue == null) {
-                                Fluttertoast.showToast(
-                                    msg: "Select from Dropdown",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.BOTTOM,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.red,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
+                                Toast.show("Select from Dropdown", context,
+                                    duration: Toast.LENGTH_SHORT,
+                                    gravity: Toast.BOTTOM,
+                                    textColor: Color(0xff49A5FF),
+                                    backgroundColor: Colors.white);
                               } else if (_reasonController.text == "") {
-                                Fluttertoast.showToast(
-                                    msg: "Enter Reason",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.BOTTOM,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.red,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
+                                Toast.show("Enter Reason", context,
+                                    duration: Toast.LENGTH_SHORT,
+                                    gravity: Toast.BOTTOM,
+                                    textColor: Color(0xff49A5FF),
+                                    backgroundColor: Colors.white);
                               } else {
                                 postWarning(_reasonController.text,
                                     userValue.toString());

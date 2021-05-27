@@ -88,26 +88,24 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : Stack(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: <Color>[
-                          Color(0xffF7A940),
-                          Color(0xffFEBC32),
-                          Color(0xff47BED8),
-                          Color(0xff36B9EA)
-                        ],
-                      ),
-                    ),
+          : SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: <Color>[
+                      Color(0xffF7A940),
+                      Color(0xffFEBC32),
+                      Color(0xff47BED8),
+                      Color(0xff36B9EA)
+                    ],
                   ),
                 ),
-                Column(
-                  children: <Widget>[
+                child: Column(
+                  children: [
                     Row(
                       children: <Widget>[
                         Container(
@@ -173,19 +171,13 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
                         ),
                       ],
                     ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(20.0, 25.0, 20.0, 20.0),
-                            height: 2.0,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
                     SizedBox(
-                      height: 30.0,
+                      height: 5,
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(20.0, 25.0, 20.0, 20.0),
+                      height: 2.0,
+                      color: Colors.white,
                     ),
                     Row(
                       children: <Widget>[
@@ -263,7 +255,7 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: 30.0,
+                      height: 60,
                     ),
                     Row(
                       children: <Widget>[
@@ -310,6 +302,9 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 30,
+                    ),
                     Row(
                       children: <Widget>[
                         Expanded(
@@ -337,7 +332,7 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
                     )
                   ],
                 ),
-              ],
+              ),
             ),
     );
   }

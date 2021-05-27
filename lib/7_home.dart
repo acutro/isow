@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:isow/26_news.dart';
-import '27_weatherreport.dart';
+import 'whetherScreens/27_weatherreport.dart';
 import 'orientation_screen/12_Orientation.dart';
 import 'FeedbackScreen/14_feedback.dart';
 import 'WarningLetterScreens/16_RecievedWarningletter.dart';

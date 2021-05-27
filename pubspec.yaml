@@ -35,6 +35,8 @@ dependencies:
   url_launcher: ^6.0.3
   # add this line to your dependencies
   toast: ^0.1.5
+  geocoder: ^0.2.1
+  geolocator: ^5.3.2+2
 
 dev_dependencies:
   flutter_test:

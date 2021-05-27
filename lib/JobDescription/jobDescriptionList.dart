@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:toast/toast.dart';
 import '21_jobdescriptionissuer.dart';
 import 'package:isow/JobDescription/jobExecutedList.dart';
+import 'jobHandover.dart';
 
 class JobDescriptionList extends StatefulWidget {
   // final String email;
@@ -192,10 +193,13 @@ class _MyApp extends State<JobDescriptionList> {
                                               children: [
                                                 GestureDetector(
                                                   onTap: () {
-                                                    executeJob(
-                                                      listFacts[index]["id"],
+                                                    Navigator.push(
+                                                      context,
+                                                      // MaterialPageRoute(builder: (context) => Warningletter()),
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              JobHandover()),
                                                     );
-                                                    fetchIssued();
                                                   },
                                                   child: Column(
                                                     children: [
@@ -227,14 +231,15 @@ class _MyApp extends State<JobDescriptionList> {
                                                       Icon(
                                                         Icons.handyman_outlined,
                                                         size: 30,
-                                                        color: Colors.blue[400],
+                                                        color:
+                                                            Colors.green[400],
                                                       ),
                                                       Text(
                                                         "Execute",
                                                         style: TextStyle(
                                                           fontSize: 12,
                                                           color:
-                                                              Colors.blue[400],
+                                                              Colors.green[400],
                                                         ),
                                                       )
                                                     ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
+import 'feedbackList.dart';
 
 class FeedbackCounter extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
     var data = {
       'content': content,
       'opinion': 'mm',
-      'userId': '15',
+      'userId': '5',
     };
     http.Response response;
     response = await http.post(
@@ -201,6 +202,11 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                             _feedbackController.text,
                           );
                           _feedbackController.text = "";
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FeedbackList()),
+                          );
                         }
                       },
                     ),

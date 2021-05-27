@@ -164,6 +164,7 @@ class _MyApp extends State<NotepadList> {
                                         backgroundColor: Color(0xFF4fc4f2),
                                         child: Text(
                                           listFacts[index]["name"]
+                                              .toUpperCase()
                                               .substring(0, 1),
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
@@ -283,7 +284,7 @@ showDialogFunc(context, title, date, requirment, path, id) {
                               leading: CircleAvatar(
                                 backgroundColor: Color(0xFF4fc4f2),
                                 child: Text(
-                                  title.substring(0, 1),
+                                  title.toUpperCase().substring(0, 1),
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,

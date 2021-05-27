@@ -17,13 +17,14 @@ class _MyApp extends State<JobHandoverList> {
   Map mapResponse;
   List<dynamic> listFacts;
   bool jobError = false;
+  int id = 0;
   Future fetchIssued() async {
     var data = {
-      'assignedTo': '3',
+      'toId': '5',
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobExecute/singleList',
+        'http://isow.acutrotech.com/index.php/api/JobRequest/singleList',
         body: (data));
     if (response.statusCode == 200) {
       setState(() {
@@ -50,6 +51,55 @@ class _MyApp extends State<JobHandoverList> {
     fetchIssued();
 
     super.initState();
+  }
+
+  Widget selectStatus(int idd) {
+    return Container(
+      width: 120,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: () {},
+            child: Column(
+              children: [
+                Icon(
+                  Icons.close_rounded,
+                  size: 30,
+                  color: Colors.red[400],
+                ),
+                Text(
+                  "Handover",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.red[400],
+                  ),
+                )
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: () {},
+            child: Column(
+              children: [
+                Icon(
+                  Icons.check,
+                  size: 30,
+                  color: Colors.green[400],
+                ),
+                Text(
+                  "Accept",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.green[400],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   // This widget is the root of your application.
@@ -141,7 +191,7 @@ class _MyApp extends State<JobHandoverList> {
                                           leading: CircleAvatar(
                                             backgroundColor: Color(0xFF4fc4f2),
                                             child: Text(
-                                              listFacts[index]["assignedBy"]
+                                              listFacts[index]["sender"]
                                                   .substring(0, 1),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
@@ -159,25 +209,7 @@ class _MyApp extends State<JobHandoverList> {
                                           subtitle: Text(
                                             listFacts[index]["duration"],
                                           ),
-                                          trailing: GestureDetector(
-                                            onTap: () {},
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  Icons.check,
-                                                  size: 30,
-                                                  color: Colors.green[400],
-                                                ),
-                                                Text(
-                                                  "Accept",
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.green[400],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
+                                          trailing: selectStatus(1),
                                         ),
                                       ],
                                     ),
@@ -251,14 +283,6 @@ showDialogFunc(context, by, to, byName, duration, description) {
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.black45),
                               ),
-                              trailing: InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Icon(
-                                    Icons.delete,
-                                    color: Colors.red[400],
-                                  )),
                             ),
                           ],
                         ),

@@ -2,29 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
-import '21_jobdescriptionissuer.dart';
-import 'package:isow/JobDescription/jobDescriptionList.dart';
-import 'jobHandover.dart';
+import '14_feedback.dart';
 
-class JobExecutedList extends StatefulWidget {
+class FeedbackList extends StatefulWidget {
   // final String email;
   // Contact({Key key, @required this.email}) : super(key: key);
   @override
   _MyApp createState() => _MyApp();
 }
 
-class _MyApp extends State<JobExecutedList> {
+class _MyApp extends State<FeedbackList> {
   List listResponse;
   Map mapResponse;
   List<dynamic> listFacts;
   bool jobError = false;
   Future fetchIssued() async {
     var data = {
-      'assignedTo': '3',
+      'id': '5',
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobExecute/singleList',
+        'http://isow.acutrotech.com/index.php/api/Feedback/singleList',
         body: (data));
     if (response.statusCode == 200) {
       setState(() {
@@ -57,43 +55,43 @@ class _MyApp extends State<JobExecutedList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(
-      //     "Job Description",
-      //     style: TextStyle(
-      //       color: Colors.white,
-      //     ),
-      //   ),
-      //   leading: GestureDetector(
-      //     onTap: () {
-      //       Navigator.pop(context);
-      //     },
-      //     child: Icon(
-      //       Icons.arrow_back_ios,
-      //       color: Colors.white,
-      //     ),
-      //   ),
-      //   actions: [
-      //     Icon(
-      //       Icons.headset_mic,
-      //       color: Colors.white38,
-      //     ),
-      //     SizedBox(
-      //       width: 5,
-      //     ),
-      //     Icon(
-      //       Icons.logout,
-      //       color: Colors.white38,
-      //     ),
-      //     SizedBox(
-      //       width: 5,
-      //     ),
-      //     Icon(
-      //       Icons.menu,
-      //       color: Colors.white38,
-      //     ),
-      //   ],
-      // ),
+      appBar: AppBar(
+        title: Text(
+          "Feedback",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
+        actions: [
+          Icon(
+            Icons.headset_mic,
+            color: Colors.white38,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Icon(
+            Icons.logout,
+            color: Colors.white38,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Icon(
+            Icons.menu,
+            color: Colors.white38,
+          ),
+        ],
+      ),
       body: jobError == true || mapResponse == null
           ? Center(
               child: CircularProgressIndicator(),
@@ -113,11 +111,8 @@ class _MyApp extends State<JobExecutedList> {
                           onTap: () {
                             showDialogFunc(
                               context,
-                              listFacts[index]["assignedBy"],
-                              listFacts[index]["assignedTo"],
-                              listFacts[index]["sender"],
-                              listFacts[index]["duration"],
-                              listFacts[index]["job_description"],
+                              listFacts[index]["created_at"],
+                              listFacts[index]["content"],
                             );
                           },
                           child: Card(
@@ -142,8 +137,7 @@ class _MyApp extends State<JobExecutedList> {
                                           leading: CircleAvatar(
                                             backgroundColor: Color(0xFF4fc4f2),
                                             child: Text(
-                                              listFacts[index]["assignedBy"]
-                                                  .substring(0, 1),
+                                              'F',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.white,
@@ -151,40 +145,20 @@ class _MyApp extends State<JobExecutedList> {
                                             ),
                                           ),
                                           title: Text(
-                                            '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}',
+                                            "Feedback",
+                                            // '${listFacts[index]["created_at"][0].toUpperCase()}${listFacts[index]["created_at"].substring(1)}',
                                             //  listFacts[index]["name"],
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 height: 1.5),
                                           ),
                                           subtitle: Text(
-                                            listFacts[index]["duration"],
+                                            listFacts[index]["content"]
+                                                .substring(0, 40),
                                           ),
-                                          trailing: GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  // MaterialPageRoute(builder: (context) => Warningletter()),
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          JobHandover()));
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  Icons.refresh_outlined,
-                                                  size: 30,
-                                                  color: Colors.blue[400],
-                                                ),
-                                                Text(
-                                                  "Handover",
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.blue[400],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
+                                          trailing: Text(
+                                            listFacts[index]["created_at"]
+                                                .substring(0, 10),
                                           ),
                                         ),
                                       ],
@@ -198,11 +172,24 @@ class _MyApp extends State<JobExecutedList> {
                       },
                     ),
             ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FeedbackCounter()),
+          );
+        },
+        icon: Icon(
+          Icons.add,
+          size: 30,
+        ),
+        label: Text("Feedback"),
+      ),
     );
   }
 }
 
-showDialogFunc(context, by, to, byName, duration, description) {
+showDialogFunc(context, date, description) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -241,7 +228,7 @@ showDialogFunc(context, by, to, byName, duration, description) {
                               leading: CircleAvatar(
                                 backgroundColor: Color(0xFF4fc4f2),
                                 child: Text(
-                                  byName.substring(0, 1),
+                                  'F',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -249,24 +236,24 @@ showDialogFunc(context, by, to, byName, duration, description) {
                                 ),
                               ),
                               title: Text(
-                                '${byName[0].toUpperCase()}${byName.substring(1)}',
+                                'Feedback',
                                 // title,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, height: 1.5),
                               ),
                               subtitle: Text(
-                                duration,
+                                date,
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.black45),
                               ),
-                              trailing: InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Icon(
-                                    Icons.delete,
-                                    color: Colors.red[400],
-                                  )),
+                              // trailing: InkWell(
+                              //     onTap: () {
+                              //       Navigator.pop(context);
+                              //     },
+                              //     child: Icon(
+                              //       Icons.delete,
+                              //       color: Colors.red[400],
+                              //     )),
                             ),
                           ],
                         ),

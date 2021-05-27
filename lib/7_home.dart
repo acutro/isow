@@ -17,6 +17,7 @@ import '6_editprofile.dart';
 import 'contacts/contact.dart';
 import 'UserAuth/4_signup.dart';
 import 'JobDescription/JobDescriptionTab.dart';
+import 'FeedbackScreen/feedbackList.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -400,8 +401,7 @@ class HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => FeedbackCounter()),
+                        MaterialPageRoute(builder: (context) => FeedbackList()),
                       );
                     },
                     child: Stack(

@@ -5,12 +5,13 @@ import 'rigDetailScreen.dart';
 class RigDetailScreen extends StatefulWidget {
   static const routeName = "rig-screen";
   final List<dynamic> rigList;
-
+  final int flag;
   final int id;
 
   RigDetailScreen({
     Key key,
     @required this.rigList,
+    this.flag,
     this.id,
   }) : super(key: key);
   @override
@@ -54,11 +55,19 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
             },
             itemCount: widget.rigList.length,
             itemBuilder: (BuildContext context, int index) {
-              return DirectoryView(
-                  index,
-                  widget.rigList[index]["rigId"],
-                  widget.rigList[index]["rigName"],
-                  widget.rigList[index]["details"]);
+              if (widget.flag == 0) {
+                return DirectoryView(
+                    index,
+                    widget.rigList[index]["rigId"],
+                    widget.rigList[index]["rigName"],
+                    widget.rigList[index]["details"]);
+              } else {
+                return DirectoryView(
+                    index,
+                    widget.rigList[index]["materialId"],
+                    widget.rigList[index]["name"],
+                    widget.rigList[index]["details"]);
+              }
             },
           ),
         ]));

@@ -18,7 +18,7 @@ class _MyApp extends State<FeedbackList> {
   bool jobError = false;
   Future fetchIssued() async {
     var data = {
-      'id': '5',
+      'userId': '5',
     };
     http.Response response;
     response = await http.post(
@@ -153,8 +153,11 @@ class _MyApp extends State<FeedbackList> {
                                                 height: 1.5),
                                           ),
                                           subtitle: Text(
-                                            listFacts[index]["content"]
-                                                .substring(0, 40),
+                                            listFacts[index]["content"].length >
+                                                    40
+                                                ? listFacts[index]["content"]
+                                                    .substring(0, 40)
+                                                : listFacts[index]["content"],
                                           ),
                                           trailing: Text(
                                             listFacts[index]["created_at"]

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'rigDetailpage.dart';
 
 class OrientationMaterialScreen extends StatefulWidget {
   @override
@@ -9,6 +10,8 @@ class OrientationMaterialScreen extends StatefulWidget {
 }
 
 class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
+  List<dynamic> mineralList;
+
   Future<List<Employee>> _getEmployee() async {
     var empData = await http.get(
         "http://isow.acutrotech.com/index.php/api/orientation/materialList");
@@ -22,6 +25,9 @@ class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
           name: f["name"],
           details: f["details"]);
       employees.add(employee);
+      setState(() {
+        mineralList = jsonData["data"];
+      });
     });
     return employees;
   }
@@ -38,7 +44,7 @@ class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            'Orientation_Materials',
+            'Orientation Materials',
           ),
         ),
         actions: [
@@ -86,7 +92,16 @@ class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
                           color: Color(0xFF4fc4f2),
                           textColor: Colors.white,
                           child: Text('More Details'),
-                          onPressed: () => {},
+                          onPressed: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RigDetailScreen(
+                                      rigList: mineralList,
+                                      id: index,
+                                      flag: 1)),
+                            ),
+                          },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(20),

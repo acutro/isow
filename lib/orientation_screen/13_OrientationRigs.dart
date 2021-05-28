@@ -36,7 +36,7 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            'Orientation_Materials',
+            'Orientation Rigs',
           ),
         ),
         actions: [
@@ -66,62 +66,62 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                RigDetailScreen(rigList: rigList, id: index)),
-                      );
-                    },
-                    child: Container(
-                      child: ListTile(
-                          leading: Image.network(
-                            'https://googleflutter.com/sample_image.jpg',
-                            width: 150.0,
-                            height: 150.0,
-                          ),
-                          title: Column(
-                            children: [
-                              Row(
-                                children: <Widget>[
-                                  Text(
-                                    snapshot.data[index].rigId,
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                    ),
+                  return Container(
+                    child: ListTile(
+                        leading: Image.network(
+                          'https://googleflutter.com/sample_image.jpg',
+                          width: 150.0,
+                          height: 150.0,
+                        ),
+                        title: Column(
+                          children: [
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  snapshot.data[index].rigId,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
                                   ),
-                                ],
-                              ),
-                              SizedBox(height: 10.0),
-                              Row(
-                                children: <Widget>[
-                                  Text(
-                                    snapshot.data[index].rigName,
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          subtitle: RaisedButton(
-                            color: Color(0xFF4fc4f2),
-                            textColor: Colors.white,
-                            child: Text('More Details'),
-                            onPressed: () => {},
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                              ),
+                                ),
+                              ],
                             ),
-                          )),
-                    ),
+                            SizedBox(height: 10.0),
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  snapshot.data[index].rigName,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        subtitle: RaisedButton(
+                          color: Color(0xFF4fc4f2),
+                          textColor: Colors.white,
+                          child: Text('More Details'),
+                          onPressed: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RigDetailScreen(
+                                        rigList: rigList,
+                                        id: index,
+                                        flag: 0,
+                                      )),
+                            ),
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                        )),
                   );
                 },
               );

@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'newsListing.dart';
 
-class News extends StatelessWidget {
+class News extends StatefulWidget {
+  @override
+  _NewsState createState() => _NewsState();
+}
+
+class _NewsState extends State<News> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,84 +79,72 @@ class News extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 30.0,
-                        width: MediaQuery.of(context).size.width / 3.3,
-                        color: Color(0xff49A5FF),
-                        child: Center(
-                            child: Text(
-                          'Today News',
-                          style: TextStyle(color: Colors.white),
-                        )),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 3.3,
-                        height: 80.0,
-                        color: Color(0xff0E4D92),
-                        child: Center(
-                            child: Text('News',
-                                style: TextStyle(color: Colors.white))),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 30.0,
-                        width: MediaQuery.of(context).size.width / 3.3,
-                        color: Color(0xff49A5FF),
-                        child: Center(
-                            child: Text(
-                          'Today News',
-                          style: TextStyle(color: Colors.white),
-                        )),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 3.3,
-                        height: 80.0,
-                        color: Color(0xff0E4D92),
-                        child: Center(
-                            child: Text('News',
-                                style: TextStyle(color: Colors.white))),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 30.0,
-                        width: MediaQuery.of(context).size.width / 3.3,
-                        color: Color(0xff49A5FF),
-                        child: Center(
-                            child: Text(
-                          'Today News',
-                          style: TextStyle(color: Colors.white),
-                        )),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 3.3,
-                        height: 80.0,
-                        color: Color(0xff0E4D92),
-                        child: Center(
-                            child: Text('News',
-                                style: TextStyle(color: Colors.white))),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+            Container(
+              height: MediaQuery.of(context).size.height / 4,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 10,
+                itemBuilder: (BuildContext context, int index) {
+                  // final Message chat = chats[index];
+                  return GestureDetector(
+                    child: Row(
+                      children: [
+                        Card(
+                          elevation: 5,
+                          shadowColor: Color(0xff0E4D92),
+                          color: Color(0xff0E4D92),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                height: 30.0,
+                                width: MediaQuery.of(context).size.width / 2,
+                                color: Color(0xff49A5FF),
+                                child: Center(
+                                    child: Text(
+                                  'Today News',
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2,
+                                height:
+                                    MediaQuery.of(context).size.height / 5.3,
+                                color: Color(0xff0E4D92),
+                                child: Center(
+                                    child: Text('News',
+                                        style: TextStyle(color: Colors.white))),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
-            SizedBox(height: 30.0),
+            Container(
+              padding: EdgeInsets.all(10),
+              alignment: Alignment.centerRight,
+              child: RaisedButton(
+                color: Color(0xFF4fc4f2),
+                textColor: Colors.white,
+                child: Text('More News..'),
+                onPressed: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NewsListing()),
+                  ),
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+              ),
+            ),
             Row(
               children: <Widget>[
                 Container(
@@ -212,8 +206,7 @@ class News extends StatelessWidget {
                           Container(
                             width: MediaQuery.of(context).size.width / 3,
                             height: 80.0,
-                            child:
-                                Image.asset('assets/images/teambuilding.jpg'),
+                            child: Image.asset('assets/images/team.png'),
                           ),
                         ],
                       ),
@@ -236,7 +229,7 @@ class News extends StatelessWidget {
                           Container(
                             width: MediaQuery.of(context).size.width / 3,
                             height: 80.0,
-                            child: Image.asset('assets/images/sports.jpg'),
+                            child: Image.asset('assets/images/sports.png'),
                           ),
                         ],
                       ),
@@ -259,7 +252,7 @@ class News extends StatelessWidget {
                           Container(
                             width: MediaQuery.of(context).size.width / 3,
                             height: 80.0,
-                            child: Image.asset('assets/images/tourr.jpg'),
+                            child: Image.asset('assets/images/tour.png'),
                           ),
                         ],
                       ),

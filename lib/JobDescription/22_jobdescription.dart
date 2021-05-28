@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../26_news.dart';
-
 class Jobexecute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -77,11 +75,11 @@ class Jobexecute extends StatelessWidget {
                           color: Colors.white,
                         ),
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            // MaterialPageRoute(builder: (context) => Warningletter()),
-                            MaterialPageRoute(builder: (context) => News()),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   // MaterialPageRoute(builder: (context) => Warningletter()),
+                          //   MaterialPageRoute(builder: (context) => News()),
+                          // );
                         },
                       ),
                     ),

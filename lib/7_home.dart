@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:isow/26_news.dart';
+import 'package:isow/NewsScreens/26_news.dart';
 import 'whetherScreens/27_weatherreport.dart';
 import 'orientation_screen/12_Orientation.dart';
-import 'FeedbackScreen/14_feedback.dart';
 import 'WarningLetterScreens/16_RecievedWarningletter.dart';
 import '18_emergency.dart';
 import 'UserAuth/2_signinpage.dart';
 import 'page8rigalert.dart';
 import 'notepadScreen/notepadListScreen.dart';
 import '19_services.dart';
-import 'JobDescription/jobDescriptionList.dart';
-import '25_offers.dart';
+import 'OffersScreens/25_offers.dart';
 import 'JobHandOverScreen/jobHandoverList.dart';
-import 'package:http/http.dart';
 import '6_editprofile.dart';
 import 'contacts/contact.dart';
 import 'UserAuth/4_signup.dart';
@@ -615,7 +612,8 @@ class HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => offers()),
+                        MaterialPageRoute(
+                            builder: (context) => OfferMainScreen()),
                       );
                     },
                     child: Stack(

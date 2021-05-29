@@ -7,8 +7,9 @@ import 'offerListing.dart';
 class NewsListingMain extends StatefulWidget {
   final List<dynamic> offerList;
   final String path;
+  final String title;
 
-  NewsListingMain({Key key, @required this.offerList, this.path})
+  NewsListingMain({Key key, @required this.offerList, this.path, this.title})
       : super(key: key);
   @override
   _MyApp createState() => _MyApp();
@@ -21,7 +22,7 @@ class _MyApp extends State<NewsListingMain> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Offers",
+          widget.title,
           style: TextStyle(
             color: Colors.white,
           ),
@@ -77,6 +78,7 @@ class _MyApp extends State<NewsListingMain> {
                                   builder: (context) => RigDetailScreen(
                                         rigList: widget.offerList,
                                         id: index,
+                                        title: widget.title,
                                       )),
                             );
                           },

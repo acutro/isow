@@ -7,12 +7,10 @@ class RigDetailScreen extends StatefulWidget {
   final List<dynamic> rigList;
 
   final int id;
+  final String title;
 
-  RigDetailScreen({
-    Key key,
-    @required this.rigList,
-    this.id,
-  }) : super(key: key);
+  RigDetailScreen({Key key, @required this.rigList, this.id, this.title})
+      : super(key: key);
   @override
   _RigDetailScreenState createState() => _RigDetailScreenState();
 }
@@ -40,6 +38,43 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
     pageController = PageController(initialPage: widget.id);
 
     return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Activities",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
+          ),
+          actions: [
+            Icon(
+              Icons.headset_mic,
+              color: Colors.white38,
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Icon(
+              Icons.logout,
+              color: Colors.white38,
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Icon(
+              Icons.menu,
+              color: Colors.white38,
+            ),
+          ],
+        ),
         backgroundColor: Colors.white,
         body: Stack(children: [
           PageView.builder(

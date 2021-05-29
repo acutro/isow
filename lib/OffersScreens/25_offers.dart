@@ -79,6 +79,7 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
                                                     listFacts, '1'),
                                                 path:
                                                     'assets/images/health.png',
+                                                title: "Health Offers",
                                               )),
                                     );
                                   },
@@ -119,6 +120,7 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
                                                       listFacts, '2'),
                                                   path:
                                                       'assets/images/plane.png',
+                                                  title: "Travel Offers",
                                                 )),
                                       );
                                     },
@@ -159,6 +161,7 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
                                                       listFacts, '3'),
                                                   path:
                                                       'assets/images/shopping.png',
+                                                  title: "Shoping Offers",
                                                 )),
                                       );
                                     },
@@ -197,6 +200,7 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
                                                 offerList: chooseCtogory(
                                                     listFacts, '4'),
                                                 path: 'assets/images/food.png',
+                                                title: "Food Offers",
                                               )),
                                     );
                                   },

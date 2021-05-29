@@ -160,32 +160,32 @@ class _MyApp extends State<JobExecutedList> {
                                           subtitle: Text(
                                             listFacts[index]["duration"],
                                           ),
-                                          trailing: GestureDetector(
-                                            onTap: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     // MaterialPageRoute(builder: (context) => Warningletter()),
-                                              //     MaterialPageRoute(
-                                              //         builder: (context) =>
-                                              //             JobHandover()));
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  Icons.file_download_done,
-                                                  size: 30,
-                                                  color: Colors.green[400],
-                                                ),
-                                                Text(
-                                                  "Completed",
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.green[400],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
+                                          // trailing: GestureDetector(
+                                          //   onTap: () {
+                                          //     Navigator.push(
+                                          //         context,
+                                          //         // MaterialPageRoute(builder: (context) => Warningletter()),
+                                          //         MaterialPageRoute(
+                                          //             builder: (context) =>
+                                          //                 JobHandover()));
+                                          //   },
+                                          //   child: Column(
+                                          //     children: [
+                                          //       Icon(
+                                          //         Icons.file_download_done,
+                                          //         size: 30,
+                                          //         color: Colors.green[400],
+                                          //       ),
+                                          //       Text(
+                                          //         "Completed",
+                                          //         style: TextStyle(
+                                          //           fontSize: 12,
+                                          //           color: Colors.blue[400],
+                                          //         ),
+                                          //       )
+                                          //     ],
+                                          //   ),
+                                          // ),
                                         ),
                                       ],
                                     ),
@@ -259,14 +259,14 @@ showDialogFunc(context, by, to, byName, duration, description) {
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.black45),
                               ),
-                              trailing: InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Icon(
-                                    Icons.delete,
-                                    color: Colors.red[400],
-                                  )),
+                              // trailing: InkWell(
+                              //     onTap: () {
+                              //       Navigator.pop(context);
+                              //     },
+                              //     child: Icon(
+                              //       Icons.delete,
+                              //       color: Colors.red[400],
+                              //     )),
                             ),
                           ],
                         ),

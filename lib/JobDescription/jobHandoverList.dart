@@ -44,12 +44,11 @@ class _MyApp extends State<JobHandoverList> {
     }
   }
 
-  Future handoverStatus(
-      String id, String status, String handStatus, String jobid) async {
+  Future handoverStatus(String status, String handStatus, String jobid) async {
     var data = {
       'jobId': jobid,
       'handoverStatus': status,
-      'id': id,
+      'id': jobid,
       'handover_status': handStatus
     };
     http.Response response;
@@ -57,7 +56,7 @@ class _MyApp extends State<JobHandoverList> {
         'http://isow.acutrotech.com/index.php/api/JobHandover/handoverstatus',
         body: (data));
     if (response.statusCode == 200) {
-      Toast.show("Executed Successfully", context,
+      Toast.show("Status changed Successfully", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
@@ -100,7 +99,7 @@ class _MyApp extends State<JobHandoverList> {
     }
   }
 
-  Widget selectStatus(String idd, String jobid) {
+  Widget selectStatus(String jobid) {
     return Container(
       width: 100,
       child: Row(
@@ -108,7 +107,7 @@ class _MyApp extends State<JobHandoverList> {
         children: [
           GestureDetector(
             onTap: () {
-              handoverStatus(idd, '2', '0', jobid);
+              handoverStatus('2', '0', jobid);
               fetchIssued();
             },
             child: Column(
@@ -130,7 +129,7 @@ class _MyApp extends State<JobHandoverList> {
           ),
           GestureDetector(
             onTap: () {
-              handoverStatus(idd, '1', '1', jobid);
+              handoverStatus('1', '1', jobid);
               fetchIssued();
             },
             child: Column(
@@ -266,7 +265,6 @@ class _MyApp extends State<JobHandoverList> {
                                                       ["handoverStatus"] ==
                                                   '0'
                                               ? selectStatus(
-                                                  listFacts[index]["id"],
                                                   listFacts[index]["jobId"],
                                                 )
                                               : status(listFacts[index]

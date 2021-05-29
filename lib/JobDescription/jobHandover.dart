@@ -58,7 +58,7 @@ class _JobdescriptionState extends State<JobHandover> {
         print("{$userList}");
       });
     } else {
-      Toast.show("Enter valid credentials", context,
+      Toast.show("List is Empty", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.red,
@@ -136,6 +136,7 @@ class _JobdescriptionState extends State<JobHandover> {
         }).toList(),
         onChanged: (value) {
           setState(() {
+            fetchUsers(value);
             roleError = false;
             roleValue = value;
 
@@ -208,7 +209,7 @@ class _JobdescriptionState extends State<JobHandover> {
   @override
   void initState() {
     super.initState();
-    fetchUsers(5);
+
     fetchData();
   }
 
@@ -218,7 +219,7 @@ class _JobdescriptionState extends State<JobHandover> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color(0xff49A5FF),
-        title: Text(' Job Description'),
+        title: Text(' Job Handover'),
         centerTitle: true,
       ),
       body: mapResponse == null

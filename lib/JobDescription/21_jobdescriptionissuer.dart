@@ -52,7 +52,7 @@ class _JobdescriptionState extends State<Jobdescription> {
         print("{$userList}");
       });
     } else {
-      Toast.show("Enter valid credentials", context,
+      Toast.show("List is Empty", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.red,
@@ -136,6 +136,7 @@ class _JobdescriptionState extends State<Jobdescription> {
         }).toList(),
         onChanged: (value) {
           setState(() {
+            fetchUsers(value);
             roleError = false;
             roleValue = value;
 
@@ -208,7 +209,7 @@ class _JobdescriptionState extends State<Jobdescription> {
   @override
   void initState() {
     super.initState();
-    fetchUsers(5);
+
     fetchData();
   }
 

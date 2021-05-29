@@ -37,7 +37,7 @@ class _MyApp extends State<ActivityListing> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "News",
+          "Activities",
           style: TextStyle(
             color: Colors.white,
           ),
@@ -197,7 +197,7 @@ showDialogFunc(context, title, description, date) {
                               leading: CircleAvatar(
                                 backgroundColor: Color(0xFF4fc4f2),
                                 child: Text(
-                                  'N',
+                                  'A',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,

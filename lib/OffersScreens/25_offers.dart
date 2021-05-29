@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
 import 'offerListing.dart';
+import 'offerListingMain.dart';
 
 class OfferMainScreen extends StatefulWidget {
   @override
@@ -73,10 +74,11 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => RigDetailScreen(
-                                                rigList: chooseCtogory(
+                                          builder: (context) => NewsListingMain(
+                                                offerList: chooseCtogory(
                                                     listFacts, '1'),
-                                                id: 0,
+                                                path:
+                                                    'assets/images/health.png',
                                               )),
                                     );
                                   },
@@ -112,10 +114,11 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                RigDetailScreen(
-                                                  rigList: chooseCtogory(
+                                                NewsListingMain(
+                                                  offerList: chooseCtogory(
                                                       listFacts, '2'),
-                                                  id: 0,
+                                                  path:
+                                                      'assets/images/plane.png',
                                                 )),
                                       );
                                     },
@@ -151,10 +154,11 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                RigDetailScreen(
-                                                  rigList: chooseCtogory(
+                                                NewsListingMain(
+                                                  offerList: chooseCtogory(
                                                       listFacts, '3'),
-                                                  id: 0,
+                                                  path:
+                                                      'assets/images/shopping.png',
                                                 )),
                                       );
                                     },
@@ -189,10 +193,10 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => RigDetailScreen(
-                                                rigList: chooseCtogory(
+                                          builder: (context) => NewsListingMain(
+                                                offerList: chooseCtogory(
                                                     listFacts, '4'),
-                                                id: 0,
+                                                path: 'assets/images/food.png',
                                               )),
                                     );
                                   },

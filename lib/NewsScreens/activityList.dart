@@ -3,19 +3,35 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
 
-class NewsListing extends StatefulWidget {
-  final List<dynamic> newsList;
-
-  NewsListing({
-    Key key,
-    @required this.newsList,
-  }) : super(key: key);
+class ActivityListing extends StatefulWidget {
   @override
   _MyApp createState() => _MyApp();
 }
 
-class _MyApp extends State<NewsListing> {
-  // This widget is the root of your application.
+class _MyApp extends State<ActivityListing> {
+  List listResponse;
+  Map mapResponse;
+  List<dynamic> listFacts;
+  Future fetchData() async {
+    http.Response response;
+    response = await http
+        .get('http://isow.acutrotech.com/index.php/api/Activities/list');
+    if (response.statusCode == 200) {
+      setState(() {
+        mapResponse = jsonDecode(response.body);
+        listFacts = mapResponse['data'];
+        print("{$listFacts}");
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    fetchData();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,34 +72,34 @@ class _MyApp extends State<NewsListing> {
           ),
         ],
       ),
-      body: widget.newsList == null
+      body: mapResponse == null
           ? Center(
               child: CircularProgressIndicator(),
             )
           : Container(
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
-              child: widget.newsList.length == 0
+              child: listFacts.length == 0
                   ? Center(child: Text("No News Available"))
                   : ListView.builder(
-                      itemCount: widget.newsList.length,
+                      itemCount: listFacts.length,
                       itemBuilder: (BuildContext context, int index) {
                         // final Message chat = chats[index];
                         return GestureDetector(
                           onTap: () {
                             showDialogFunc(
                               context,
-                              widget.newsList[index]["title"],
-                              widget.newsList[index]["description"],
+                              listFacts[index]["title"],
+                              listFacts[index]["description"],
+                              listFacts[index]["created_date"],
                             );
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                                color: int.parse(widget.newsList[index]["id"]) %
-                                            2 ==
-                                        0
-                                    ? Color(0xFF4fc4f2).withOpacity(0.2)
-                                    : Colors.white),
+                                color:
+                                    int.parse(listFacts[index]["id"]) % 2 == 0
+                                        ? Color(0xFF4fc4f2).withOpacity(0.2)
+                                        : Colors.white),
                             padding: EdgeInsets.symmetric(
                               horizontal: 15,
                               vertical: 8,
@@ -108,7 +124,7 @@ class _MyApp extends State<NewsListing> {
                                           ),
                                         ),
                                         title: Text(
-                                          widget.newsList[index]["title"],
+                                          listFacts[index]["title"],
                                           // '${listFacts[index]["created_at"][0].toUpperCase()}${listFacts[index]["created_at"].substring(1)}',
                                           //  listFacts[index]["name"],
                                           style: TextStyle(
@@ -116,14 +132,12 @@ class _MyApp extends State<NewsListing> {
                                               height: 1.5),
                                         ),
                                         subtitle: Text(
-                                          widget.newsList[index]["description"]
+                                          listFacts[index]["description"]
                                                       .length >
                                                   40
-                                              ? widget.newsList[index]
-                                                      ["description"]
+                                              ? listFacts[index]["description"]
                                                   .substring(0, 40)
-                                              : widget.newsList[index]
-                                                  ["description"],
+                                              : listFacts[index]["description"],
                                         ),
                                         // trailing: Text(
                                         //   listFacts[index]["description"]
@@ -144,7 +158,7 @@ class _MyApp extends State<NewsListing> {
   }
 }
 
-showDialogFunc(context, date, description) {
+showDialogFunc(context, title, description, date) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -191,14 +205,14 @@ showDialogFunc(context, date, description) {
                                 ),
                               ),
                               title: Text(
-                                date,
+                                title,
                                 // title,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               subtitle: Text(
-                                "Mumbai. 12 May 2020",
+                                date,
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.black45),
                               ),

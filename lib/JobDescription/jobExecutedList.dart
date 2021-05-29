@@ -20,11 +20,11 @@ class _MyApp extends State<JobExecutedList> {
   bool jobError = false;
   Future fetchIssued() async {
     var data = {
-      'assignedTo': '3',
+      'assignedTo': '5',
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobExecute/singleList',
+        'http://isow.acutrotech.com/index.php/api/JobExecute/userexecutedList',
         body: (data));
     if (response.statusCode == 200) {
       setState(() {
@@ -162,25 +162,25 @@ class _MyApp extends State<JobExecutedList> {
                                           ),
                                           trailing: GestureDetector(
                                             onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  // MaterialPageRoute(builder: (context) => Warningletter()),
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          JobHandover()));
+                                              // Navigator.push(
+                                              //     context,
+                                              //     // MaterialPageRoute(builder: (context) => Warningletter()),
+                                              //     MaterialPageRoute(
+                                              //         builder: (context) =>
+                                              //             JobHandover()));
                                             },
                                             child: Column(
                                               children: [
                                                 Icon(
-                                                  Icons.refresh_outlined,
+                                                  Icons.file_download_done,
                                                   size: 30,
-                                                  color: Colors.blue[400],
+                                                  color: Colors.green[400],
                                                 ),
                                                 Text(
-                                                  "Handover",
+                                                  "Completed",
                                                   style: TextStyle(
                                                     fontSize: 12,
-                                                    color: Colors.blue[400],
+                                                    color: Colors.green[400],
                                                   ),
                                                 )
                                               ],

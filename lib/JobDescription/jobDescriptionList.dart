@@ -22,7 +22,7 @@ class _MyApp extends State<JobDescriptionList> {
   Future executeJob(
     String id,
   ) async {
-    var data = {'id': id, 'status': '1'};
+    var data = {'id': id, 'executeStatus': '1'};
     http.Response response;
     response = await http.post(
         'http://isow.acutrotech.com/index.php/api/JobExecute/execute',
@@ -44,11 +44,11 @@ class _MyApp extends State<JobDescriptionList> {
 
   Future fetchIssued() async {
     var data = {
-      'assignedTo': '3',
+      'assignedTo': '5',
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobDescription/singleList',
+        'http://isow.acutrotech.com/index.php/api/JobIssue/singleuserissueList',
         body: (data));
     if (response.statusCode == 200) {
       setState(() {
@@ -198,13 +198,24 @@ class _MyApp extends State<JobDescriptionList> {
                                                       // MaterialPageRoute(builder: (context) => Warningletter()),
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              JobHandover()),
+                                                              JobHandover(
+                                                                jid: listFacts[
+                                                                        index]
+                                                                    ["id"],
+                                                                dec: listFacts[
+                                                                        index][
+                                                                    "job_description"],
+                                                                dur: listFacts[
+                                                                        index][
+                                                                    "duration"],
+                                                              )),
                                                     );
                                                   },
                                                   child: Column(
                                                     children: [
                                                       Icon(
-                                                        Icons.refresh_outlined,
+                                                        Icons
+                                                            .transfer_within_a_station,
                                                         size: 30,
                                                         color: Colors.blue[400],
                                                       ),
@@ -260,6 +271,19 @@ class _MyApp extends State<JobDescriptionList> {
                       },
                     ),
             ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Jobdescription()),
+          );
+        },
+        icon: Icon(
+          Icons.add,
+          size: 30,
+        ),
+        label: Text("Issue"),
+      ),
     );
   }
 }

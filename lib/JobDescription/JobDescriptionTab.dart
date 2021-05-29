@@ -55,8 +55,10 @@ class JobDescriptionTab extends StatelessWidget {
               ),
               Tab(
                   child: Text("Execute"),
-                  icon: Icon(Icons.settings_applications, size: 30)),
-              Tab(child: Text("Handover"), icon: Icon(Icons.refresh, size: 30)),
+                  icon: Icon(Icons.handyman_outlined, size: 30)),
+              Tab(
+                  child: Text("Handover"),
+                  icon: Icon(Icons.transfer_within_a_station, size: 30)),
               // Tab(icon: Icon(Icons.directions_car)),
             ],
           ),
@@ -69,19 +71,6 @@ class JobDescriptionTab extends StatelessWidget {
 
             // Icon(Icons.directions_car, size: 350),
           ],
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Jobdescription()),
-            );
-          },
-          icon: Icon(
-            Icons.add,
-            size: 30,
-          ),
-          label: Text("Issue"),
         ),
       ),
     );

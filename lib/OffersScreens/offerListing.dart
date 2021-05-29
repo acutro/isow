@@ -53,10 +53,13 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
             itemCount: widget.rigList.length,
             itemBuilder: (BuildContext context, int index) {
               return DirectoryView(
-                  index,
-                  widget.rigList[index]["category_id"].toString(),
-                  widget.rigList[index]["title"],
-                  widget.rigList[index]["description"]);
+                index,
+                widget.rigList[index]["category_id"].toString(),
+                widget.rigList[index]["title"],
+                widget.rigList[index]["description"],
+                widget.rigList[index]["image_url"],
+                widget.rigList[index]["end_date"],
+              );
             },
           ),
         ]));

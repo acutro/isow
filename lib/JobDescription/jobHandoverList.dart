@@ -24,7 +24,7 @@ class _MyApp extends State<JobHandoverList> {
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobRequest/singleList',
+        'http://isow.acutrotech.com/index.php/api/JobHandover/userhandoveredList',
         body: (data));
     if (response.statusCode == 200) {
       setState(() {
@@ -44,7 +44,32 @@ class _MyApp extends State<JobHandoverList> {
     }
   }
 
-  getColor(String str) {}
+  Future handoverStatus(
+      String id, String status, String handStatus, String jobid) async {
+    var data = {
+      'jobId': jobid,
+      'handoverStatus': status,
+      'id': id,
+      'handover_status': handStatus
+    };
+    http.Response response;
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/JobHandover/handoverstatus',
+        body: (data));
+    if (response.statusCode == 200) {
+      Toast.show("Executed Successfully", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.green[600],
+          backgroundColor: Colors.white);
+    } else {
+      Toast.show("Something went Wrong", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
+    }
+  }
 
   @override
   void initState() {
@@ -53,23 +78,48 @@ class _MyApp extends State<JobHandoverList> {
     super.initState();
   }
 
-  Widget selectStatus(int idd) {
+  Widget status(String id) {
+    if (id == '1') {
+      return Container(
+        alignment: Alignment.center,
+        width: 100,
+        child: Text(
+          "Accepted",
+          style: TextStyle(color: Colors.green),
+        ),
+      );
+    } else {
+      return Container(
+        alignment: Alignment.center,
+        width: 100,
+        child: Text(
+          "Rejected",
+          style: TextStyle(color: Colors.red),
+        ),
+      );
+    }
+  }
+
+  Widget selectStatus(String idd, String jobid) {
     return Container(
-      width: 120,
+      width: 100,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              handoverStatus(idd, '2', '0', jobid);
+              fetchIssued();
+            },
             child: Column(
               children: [
                 Icon(
-                  Icons.close_rounded,
+                  Icons.cancel,
                   size: 30,
                   color: Colors.red[400],
                 ),
                 Text(
-                  "Handover",
+                  "Reject",
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.red[400],
@@ -79,11 +129,14 @@ class _MyApp extends State<JobHandoverList> {
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              handoverStatus(idd, '1', '1', jobid);
+              fetchIssued();
+            },
             child: Column(
               children: [
                 Icon(
-                  Icons.check,
+                  Icons.check_circle,
                   size: 30,
                   color: Colors.green[400],
                 ),
@@ -209,7 +262,15 @@ class _MyApp extends State<JobHandoverList> {
                                           subtitle: Text(
                                             listFacts[index]["duration"],
                                           ),
-                                          trailing: selectStatus(1),
+                                          trailing: listFacts[index]
+                                                      ["handoverStatus"] ==
+                                                  '0'
+                                              ? selectStatus(
+                                                  listFacts[index]["id"],
+                                                  listFacts[index]["jobId"],
+                                                )
+                                              : status(listFacts[index]
+                                                  ["handoverStatus"]),
                                         ),
                                       ],
                                     ),

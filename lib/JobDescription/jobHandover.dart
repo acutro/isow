@@ -6,6 +6,12 @@ import 'dart:convert';
 import 'package:toast/toast.dart';
 
 class JobHandover extends StatefulWidget {
+  final String jid;
+  final String dec;
+  final String dur;
+
+  JobHandover({Key key, @required this.jid, this.dec, this.dur})
+      : super(key: key);
   @override
   _JobdescriptionState createState() => _JobdescriptionState();
 }
@@ -60,23 +66,17 @@ class _JobdescriptionState extends State<JobHandover> {
     }
   }
 
-  Future postJob(
-    String id,
-    String description,
-    String duration,
+  Future handoverJob(
+    String toid,
+    String jobid,
   ) async {
-    var data = {
-      'assignedBy': '7',
-      'assignedTo': '3',
-      'job_description': description,
-      'duration': duration
-    };
+    var data = {'jobId': jobid, 'fromId': '3', 'toId': '5'};
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobDescription/create',
+        'http://isow.acutrotech.com/index.php/api/JobHandover/handovercreate',
         body: (data));
     if (response.statusCode == 200) {
-      Toast.show("Job added successfully", context,
+      Toast.show("Job Handoverd successfull", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
@@ -115,7 +115,7 @@ class _JobdescriptionState extends State<JobHandover> {
         hint: Padding(
           padding: const EdgeInsets.only(left: 12),
           child: Text(
-            "Position",
+            "To Position",
             style: TextStyle(
               fontSize: 14,
               color: Colors.white,
@@ -174,7 +174,7 @@ class _JobdescriptionState extends State<JobHandover> {
               hint: Padding(
                 padding: const EdgeInsets.only(left: 12),
                 child: Text(
-                  "Person",
+                  "To Person",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.white,
@@ -237,38 +237,6 @@ class _JobdescriptionState extends State<JobHandover> {
                       Stack(
                         children: <Widget>[
                           Container(
-                            margin: EdgeInsets.only(right: 30.0),
-                            decoration: BoxDecoration(
-                              color: Color(0xff49A5FF),
-                              borderRadius: BorderRadius.circular(50.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black38,
-                                  blurRadius: 10.0,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            height: 80.0,
-                            width: 80.0,
-                            child: Icon(
-                              Icons.contact_mail_outlined,
-                              size: 40.0,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(right: 30.0),
-                            height: 100.0,
-                            width: 90.0,
-                            alignment: Alignment.bottomCenter,
-                            child: Text('Issuer'),
-                          ),
-                        ],
-                      ),
-                      Stack(
-                        children: <Widget>[
-                          Container(
                             margin: EdgeInsets.only(left: 30.0),
                             decoration: BoxDecoration(
                               color: Color(0xff49A5FF),
@@ -285,17 +253,17 @@ class _JobdescriptionState extends State<JobHandover> {
                             width: 80.0,
                             child: InkWell(
                               child: Icon(
-                                Icons.settings,
+                                Icons.transfer_within_a_station,
                                 size: 40.0,
                                 color: Colors.white,
                               ),
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  // MaterialPageRoute(builder: (context) => Warningletter()),
-                                  MaterialPageRoute(
-                                      builder: (context) => Jobexecute()),
-                                );
+                                // Navigator.push(
+                                //   context,
+
+                                //   MaterialPageRoute(
+                                //       builder: (context) => Jobexecute()),
+                                // );
                               },
                             ),
                           ),
@@ -304,7 +272,7 @@ class _JobdescriptionState extends State<JobHandover> {
                             height: 100.0,
                             width: 90.0,
                             alignment: Alignment.bottomCenter,
-                            child: Text('Execute'),
+                            child: Text('Handover'),
                           ),
                         ],
                       ),
@@ -317,7 +285,7 @@ class _JobdescriptionState extends State<JobHandover> {
                     children: <Widget>[
                       Expanded(
                         child: Container(
-                          height: 285.0,
+                          padding: EdgeInsets.all(10),
                           margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                           decoration: BoxDecoration(
                             color: Color(0xff49A5FF),
@@ -385,23 +353,19 @@ class _JobdescriptionState extends State<JobHandover> {
                                 children: <Widget>[
                                   Expanded(
                                     child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      alignment: Alignment.centerLeft,
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
                                       margin: EdgeInsets.fromLTRB(
                                           10.0, 10.0, 10.0, 0.0),
-                                      height: 45.0,
-                                      child: TextField(
-                                        controller: _descriptionController,
-                                        style: TextStyle(color: Colors.black38),
-                                        decoration: InputDecoration(
-                                          hintText: 'Job Description',
-                                          hintStyle:
-                                              TextStyle(color: Colors.white),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10.0)),
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
-                                          ),
-                                        ),
+                                      child: Text(
+                                        widget.dec,
+                                        maxLines: null,
+                                        style: TextStyle(color: Colors.white),
                                       ),
                                     ),
                                   ),
@@ -411,24 +375,19 @@ class _JobdescriptionState extends State<JobHandover> {
                                 children: <Widget>[
                                   Expanded(
                                     child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      alignment: Alignment.centerLeft,
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
                                       margin: EdgeInsets.fromLTRB(
                                           10.0, 10.0, 10.0, 0.0),
-                                      height: 45.0,
-                                      child: TextField(
-                                        controller: _durationController,
-                                        keyboardType: TextInputType.number,
-                                        style: TextStyle(color: Colors.black38),
-                                        decoration: InputDecoration(
-                                          hintText: 'Duration in Hour',
-                                          hintStyle:
-                                              TextStyle(color: Colors.white),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10.0)),
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
-                                          ),
-                                        ),
+                                      child: Text(
+                                        widget.dur,
+                                        maxLines: null,
+                                        style: TextStyle(color: Colors.white),
                                       ),
                                     ),
                                   ),
@@ -479,25 +438,9 @@ class _JobdescriptionState extends State<JobHandover> {
                                   gravity: Toast.BOTTOM,
                                   textColor: Color(0xff49A5FF),
                                   backgroundColor: Colors.white);
-                            } else if (_descriptionController.text == "" ||
-                                _durationController.text == "") {
-                              Toast.show(
-                                  "Enter Description and Duration", context,
-                                  duration: Toast.LENGTH_SHORT,
-                                  gravity: Toast.BOTTOM,
-                                  textColor: Color(0xff49A5FF),
-                                  backgroundColor: Colors.white);
                             } else {
-                              postJob(
-                                userValue.toString(),
-                                _descriptionController.text,
-                                _durationController.text,
-                              );
+                              handoverJob(userValue.toString(), widget.jid);
 
-                              setState(() {
-                                _descriptionController.text = "";
-                                _durationController.text = "";
-                              });
                               Navigator.push(
                                   context,
                                   // MaterialPageRoute(builder: (context) => Warningletter()),

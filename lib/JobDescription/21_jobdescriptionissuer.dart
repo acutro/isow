@@ -67,13 +67,13 @@ class _JobdescriptionState extends State<Jobdescription> {
   ) async {
     var data = {
       'assignedBy': '7',
-      'assignedTo': '3',
+      'assignedTo': '5',
       'job_description': description,
       'duration': duration
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobDescription/create',
+        'http://isow.acutrotech.com/index.php/api/JobIssue/create',
         body: (data));
     if (response.statusCode == 200) {
       Toast.show("Job added successfully", context,
@@ -218,7 +218,7 @@ class _JobdescriptionState extends State<Jobdescription> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color(0xff49A5FF),
-        title: Text(' Job Description'),
+        title: Text(' Issue a Job'),
         centerTitle: true,
       ),
       body: mapResponse == null
@@ -262,52 +262,52 @@ class _JobdescriptionState extends State<Jobdescription> {
                             height: 100.0,
                             width: 90.0,
                             alignment: Alignment.bottomCenter,
-                            child: Text('Issuer'),
+                            child: Text('Issue a Job'),
                           ),
                         ],
                       ),
-                      Stack(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(left: 30.0),
-                            decoration: BoxDecoration(
-                              color: Color(0xff49A5FF),
-                              borderRadius: BorderRadius.circular(100.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black38,
-                                  blurRadius: 10.0,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            height: 80.0,
-                            width: 80.0,
-                            child: InkWell(
-                              child: Icon(
-                                Icons.settings,
-                                size: 40.0,
-                                color: Colors.white,
-                              ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  // MaterialPageRoute(builder: (context) => Warningletter()),
-                                  MaterialPageRoute(
-                                      builder: (context) => Jobexecute()),
-                                );
-                              },
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 30.0),
-                            height: 100.0,
-                            width: 90.0,
-                            alignment: Alignment.bottomCenter,
-                            child: Text('Execute'),
-                          ),
-                        ],
-                      ),
+                      // Stack(
+                      //   children: <Widget>[
+                      //     Container(
+                      //       margin: EdgeInsets.only(left: 30.0),
+                      //       decoration: BoxDecoration(
+                      //         color: Color(0xff49A5FF),
+                      //         borderRadius: BorderRadius.circular(100.0),
+                      //         boxShadow: [
+                      //           BoxShadow(
+                      //             color: Colors.black38,
+                      //             blurRadius: 10.0,
+                      //             offset: Offset(0, 2),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       height: 80.0,
+                      //       width: 80.0,
+                      //       child: InkWell(
+                      //         child: Icon(
+                      //           Icons.settings,
+                      //           size: 40.0,
+                      //           color: Colors.white,
+                      //         ),
+                      //         onTap: () {
+                      //           Navigator.push(
+                      //             context,
+                      //             // MaterialPageRoute(builder: (context) => Warningletter()),
+                      //             MaterialPageRoute(
+                      //                 builder: (context) => Jobexecute()),
+                      //           );
+                      //         },
+                      //       ),
+                      //     ),
+                      //     Container(
+                      //       margin: EdgeInsets.only(left: 30.0),
+                      //       height: 100.0,
+                      //       width: 90.0,
+                      //       alignment: Alignment.bottomCenter,
+                      //       child: Text('Execute'),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                   SizedBox(

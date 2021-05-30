@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '22_jobdescription.dart';
 import 'JobDescriptionTab.dart';
@@ -6,6 +8,9 @@ import 'dart:convert';
 import 'package:toast/toast.dart';
 
 class Jobdescription extends StatefulWidget {
+  final String userId;
+
+  Jobdescription({Key key, @required this.userId}) : super(key: key);
   @override
   _JobdescriptionState createState() => _JobdescriptionState();
 }
@@ -66,8 +71,8 @@ class _JobdescriptionState extends State<Jobdescription> {
     String duration,
   ) async {
     var data = {
-      'assignedBy': '7',
-      'assignedTo': '5',
+      'assignedBy': widget.userId,
+      'assignedTo': id,
       'job_description': description,
       'duration': duration
     };
@@ -81,6 +86,12 @@ class _JobdescriptionState extends State<Jobdescription> {
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
           backgroundColor: Colors.white);
+      Timer(
+          Duration(seconds: 1),
+          () => Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => JobDescriptionTab()),
+              ));
     } else {
       Toast.show("Failed", context,
           duration: Toast.LENGTH_SHORT,
@@ -499,12 +510,8 @@ class _JobdescriptionState extends State<Jobdescription> {
                                 _descriptionController.text = "";
                                 _durationController.text = "";
                               });
-                              Navigator.push(
-                                context,
-                                // MaterialPageRoute(builder: (context) => Warningletter()),
-                                MaterialPageRoute(
-                                    builder: (context) => JobDescriptionTab()),
-                              );
+                              // Navigator.pop(context);
+
                             }
                           },
                         ),

@@ -15,8 +15,12 @@ import 'contacts/contact.dart';
 import 'UserAuth/4_signup.dart';
 import 'JobDescription/JobDescriptionTab.dart';
 import 'FeedbackScreen/feedbackList.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
+  // final String userId;
+
+  // HomeScreen({Key key, @required this.userId}) : super(key: key);
   @override
   HomeScreenState createState() => HomeScreenState();
 }
@@ -190,7 +194,10 @@ class HomeScreenState extends State<HomeScreen> {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  onTap: () {
+                                  onTap: () async {
+                                    final SharedPreferences sharedPreferences =
+                                        await SharedPreferences.getInstance();
+                                    sharedPreferences.remove('userId');
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) =>
@@ -583,36 +590,6 @@ class HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => JobHandOverList()),
-                      );
-                    },
-                    child: Stack(children: <Widget>[
-                      Container(
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/10.png'),
-                          radius: 39.0,
-                        ),
-                        //onTap: () {},
-                        margin: EdgeInsets.all(10),
-                      ),
-                      SizedBox(height: 10),
-                      Positioned(
-                        bottom: 0,
-                        child: Text(
-                          'Job Hand Overs',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 10.0),
-                        ),
-                      ),
-                    ]),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
                             builder: (context) => OfferMainScreen()),
                       );
                     },
@@ -687,13 +664,13 @@ class HomeScreenState extends State<HomeScreen> {
                             radius: 39.0,
                           ),
                           //onTap: () {},
-                          margin: EdgeInsets.fromLTRB(75.0, 0.0, 0.0, 0.0),
+                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
                         ),
                         SizedBox(height: 10),
                         Positioned(
                           bottom: 0,
                           child: Text(
-                            'Weather Report',
+                            'Weather',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
@@ -703,28 +680,27 @@ class HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 40),
                 ]),
-            Column(
-              children: <Widget>[
-                Card(
-                  margin: const EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 30.0),
-                  child: Container(
-                    height: 150.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(15),
-                        bottomLeft: Radius.circular(15),
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15),
-                      ),
-                      gradient: LinearGradient(
-                          colors: [Color(0xFF4fc4f2), Colors.blue]),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            // Column(
+            //   children: <Widget>[
+            //     Card(
+            //       margin: const EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 30.0),
+            //       child: Container(
+            //         height: 150.0,
+            //         decoration: BoxDecoration(
+            //           borderRadius: BorderRadius.only(
+            //             bottomRight: Radius.circular(15),
+            //             bottomLeft: Radius.circular(15),
+            //             topLeft: Radius.circular(15),
+            //             topRight: Radius.circular(15),
+            //           ),
+            //           gradient: LinearGradient(
+            //               colors: [Color(0xFF4fc4f2), Colors.blue]),
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ]),
         ),
       ),

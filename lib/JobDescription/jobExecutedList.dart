@@ -5,22 +5,34 @@ import 'package:toast/toast.dart';
 import '21_jobdescriptionissuer.dart';
 import 'package:isow/JobDescription/jobDescriptionList.dart';
 import 'jobHandover.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class JobExecutedList extends StatefulWidget {
-  // final String email;
-  // Contact({Key key, @required this.email}) : super(key: key);
   @override
   _MyApp createState() => _MyApp();
 }
 
 class _MyApp extends State<JobExecutedList> {
+  String sid;
+  bool error = true;
+  Future getValidation() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String id = sharedPreferences.getString('userId');
+    setState(() {
+      sid = id;
+      fetchIssued(id);
+      error = false;
+    });
+  }
+
   List listResponse;
   Map mapResponse;
   List<dynamic> listFacts;
   bool jobError = false;
-  Future fetchIssued() async {
+  Future fetchIssued(String sessid) async {
     var data = {
-      'assignedTo': '5',
+      'assignedTo': sessid,
     };
     http.Response response;
     response = await http.post(
@@ -48,9 +60,8 @@ class _MyApp extends State<JobExecutedList> {
 
   @override
   void initState() {
-    fetchIssued();
-
     super.initState();
+    getValidation();
   }
 
   // This widget is the root of your application.

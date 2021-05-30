@@ -5,7 +5,12 @@ import '22_jobdescription.dart';
 import '21_jobdescriptionissuer.dart';
 import 'jobHandoverList.dart';
 
-class JobDescriptionTab extends StatelessWidget {
+class JobDescriptionTab extends StatefulWidget {
+  @override
+  _JobDescriptionTabState createState() => _JobDescriptionTabState();
+}
+
+class _JobDescriptionTabState extends State<JobDescriptionTab> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

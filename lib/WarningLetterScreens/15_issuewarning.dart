@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '16_RecievedWarningletter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Warningletter extends StatefulWidget {
   @override
@@ -13,6 +16,20 @@ class _WarningletterState extends State<Warningletter> {
   TextEditingController _reasonController = new TextEditingController();
 
   // TextEditingController issueController = new TextEditingController();
+
+  String sid;
+  bool error = true;
+  Future getValidation() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String id = sharedPreferences.getString('userId');
+    setState(() {
+      sid = id;
+
+      error = false;
+    });
+  }
+
   int roleValue;
   bool roleError = false;
   int userValue;
@@ -63,11 +80,12 @@ class _WarningletterState extends State<Warningletter> {
   Future postWarning(
     String content,
     String toid,
+    String userId,
   ) async {
     var data = {
       'content': content,
       'empId': '56574',
-      'fromId': '2',
+      'fromId': userId,
       'toId': toid,
       'issue': 'issue',
     };
@@ -81,6 +99,12 @@ class _WarningletterState extends State<Warningletter> {
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
           backgroundColor: Colors.white);
+      Timer(
+          Duration(seconds: 2),
+          () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RecivedWarning()),
+              ));
     } else {
       Toast.show("Failed", context,
           duration: Toast.LENGTH_SHORT,
@@ -208,6 +232,7 @@ class _WarningletterState extends State<Warningletter> {
   @override
   void initState() {
     super.initState();
+    getValidation();
     fetchData();
   }
 
@@ -420,7 +445,7 @@ class _WarningletterState extends State<Warningletter> {
                                     backgroundColor: Colors.white);
                               } else {
                                 postWarning(_reasonController.text,
-                                    userValue.toString());
+                                    userValue.toString(), sid);
 
                                 setState(() {
                                   _reasonController.text = "";

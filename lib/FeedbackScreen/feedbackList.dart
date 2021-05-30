@@ -3,22 +3,34 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
 import '14_feedback.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FeedbackList extends StatefulWidget {
-  // final String email;
-  // Contact({Key key, @required this.email}) : super(key: key);
   @override
   _MyApp createState() => _MyApp();
 }
 
 class _MyApp extends State<FeedbackList> {
+  String sid;
+  bool error = true;
+  Future getValidation() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String id = sharedPreferences.getString('userId');
+    setState(() {
+      sid = id;
+      fetchIssued(id);
+      error = false;
+    });
+  }
+
   List listResponse;
   Map mapResponse;
   List<dynamic> listFacts;
   bool jobError = false;
-  Future fetchIssued() async {
+  Future fetchIssued(String siid) async {
     var data = {
-      'userId': '5',
+      'userId': siid,
     };
     http.Response response;
     response = await http.post(
@@ -46,7 +58,7 @@ class _MyApp extends State<FeedbackList> {
 
   @override
   void initState() {
-    fetchIssued();
+    getValidation();
 
     super.initState();
   }
@@ -102,7 +114,7 @@ class _MyApp extends State<FeedbackList> {
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
               child: listFacts.length == 0
-                  ? Center(child: Text("No Executed Jobs"))
+                  ? Center(child: Text("No Feedback found"))
                   : ListView.builder(
                       itemCount: listFacts.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -177,9 +189,12 @@ class _MyApp extends State<FeedbackList> {
             ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => FeedbackCounter()),
+            MaterialPageRoute(
+                builder: (context) => FeedbackCounter(
+                      userId: sid,
+                    )),
           );
         },
         icon: Icon(

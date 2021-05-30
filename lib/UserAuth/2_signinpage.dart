@@ -4,6 +4,8 @@ import '3_forgotpswd.dart';
 import '4_signup.dart';
 import 'package:http/http.dart' as http;
 import 'package:toast/toast.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SigninScreen extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class SigninScreenState extends State<SigninScreen> {
   bool error = true;
   List listResponse;
   Map mapResponse;
+  String userId;
   List<dynamic> listFacts;
   Future getLogin(String uname, String pass) async {
     var data = {'email': uname, 'password': pass};
@@ -24,15 +27,17 @@ class SigninScreenState extends State<SigninScreen> {
         body: (data));
     if (response.statusCode == 200) {
       setState(() {
-        //  mapResponse = jsonDecode(response.body);
+        mapResponse = jsonDecode(response.body);
+        userId = mapResponse['data']['userId'];
         //   listFacts = mapResponse['data'];
+        print(userId);
         error = false;
-        // print("{$listFacts}");
+        sharedSet(userId);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
       });
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
     } else {
       setState(() {
         error = true;
@@ -47,6 +52,12 @@ class SigninScreenState extends State<SigninScreen> {
         textColor: Colors.red[400],
       );
     }
+  }
+
+  sharedSet(String idd) async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    sharedPreferences.setString('userId', idd);
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -282,7 +293,7 @@ class SigninScreenState extends State<SigninScreen> {
             Container(
               height: 50.0,
               child: RaisedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_emailController.text == "" ||
                       _passwordController.text == "") {
                     Toast.show("Please Enter Email and Password", context,
@@ -325,35 +336,4 @@ class SigninScreenState extends State<SigninScreen> {
       ),
     );
   }
-
-//   Future loginUser() async {
-//     try {
-//       setState(() {
-//         visible = true;
-//       });
-//       // url to registration php script
-//       //json maping user entered details
-
-//       String email = _emailController.text;
-//       String password = _passwordController.text;
-
-//       var url = "http://isow.acutrotech.com/index.php/api/users/login";
-//       var data = {'email': email, 'password': password};
-//       var response = await http.post(url, body: (data));
-//       var message = json.decode(response.body);
-//       //Sign in once more
-//       if (message["status"]) {
-//         print("login Successful");
-//         setState(() {
-//           visible = false;
-//         });
-//       } else {
-//         setState(() {
-//           visible = false;
-//         });
-//       }
-//     } catch (e) {
-//       print(e);
-//    }
-  // }
 }

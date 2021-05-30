@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '22_jobdescription.dart';
 import 'JobDescriptionTab.dart';
@@ -6,11 +8,12 @@ import 'dart:convert';
 import 'package:toast/toast.dart';
 
 class JobHandover extends StatefulWidget {
+  final String userId;
   final String jid;
   final String dec;
   final String dur;
 
-  JobHandover({Key key, @required this.jid, this.dec, this.dur})
+  JobHandover({Key key, @required this.userId, this.jid, this.dec, this.dur})
       : super(key: key);
   @override
   _JobdescriptionState createState() => _JobdescriptionState();
@@ -67,20 +70,27 @@ class _JobdescriptionState extends State<JobHandover> {
   }
 
   Future handoverJob(
+    String fromId,
     String toid,
     String jobid,
   ) async {
-    var data = {'jobId': jobid, 'fromId': '3', 'toId': '5'};
+    var data = {'jobId': jobid, 'fromId': fromId, 'toId': toid};
     http.Response response;
     response = await http.post(
         'http://isow.acutrotech.com/index.php/api/JobHandover/handovercreate',
         body: (data));
     if (response.statusCode == 200) {
-      Toast.show("Job Handoverd successfull", context,
+      Toast.show("Job Handoverd successfully", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
           backgroundColor: Colors.white);
+      Timer(
+          Duration(seconds: 1),
+          () => Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => JobDescriptionTab()),
+              ));
     } else {
       Toast.show("Failed", context,
           duration: Toast.LENGTH_SHORT,
@@ -440,14 +450,16 @@ class _JobdescriptionState extends State<JobHandover> {
                                   textColor: Color(0xff49A5FF),
                                   backgroundColor: Colors.white);
                             } else {
-                              handoverJob(userValue.toString(), widget.jid);
-
-                              Navigator.push(
-                                  context,
-                                  // MaterialPageRoute(builder: (context) => Warningletter()),
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          JobDescriptionTab()));
+                              handoverJob(widget.userId, userValue.toString(),
+                                  widget.jid);
+                              //  Navigator.pop(context);
+                              // Navigator.push(
+                              //     context,
+                              //     // MaterialPageRoute(builder: (context) => Warningletter()),
+                              //     MaterialPageRoute(
+                              //         builder: (context) => JobDescriptionTab(
+                              //               userId: widget.userId,
+                              //             )));
                             }
                           },
                         ),

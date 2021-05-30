@@ -18,12 +18,12 @@ class _RecivedWarningState extends State<RecivedWarning> {
     List<Warning> employees = [];
     jsonData["data"].forEach((f) {
       Warning employee = Warning(
-          id: f["id"],
-          issue: f["issue"],
-          position: f["position"],
-          person: f["to"],
-          content: f["content"],
-          createdAt: f["created_at"]);
+          id: f["id"] ?? "",
+          issue: f["issue"] ?? "",
+          position: f["position"] ?? "",
+          person: f["to"] ?? "",
+          content: f["content"] ?? "",
+          createdAt: f["created_at"] ?? "");
       employees.add(employee);
     });
     return employees;

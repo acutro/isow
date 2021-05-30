@@ -5,15 +5,28 @@ import 'package:toast/toast.dart';
 import '21_jobdescriptionissuer.dart';
 import 'package:isow/JobDescription/jobExecutedList.dart';
 import 'jobHandover.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class JobDescriptionList extends StatefulWidget {
-  // final String email;
-  // Contact({Key key, @required this.email}) : super(key: key);
   @override
   _MyApp createState() => _MyApp();
 }
 
 class _MyApp extends State<JobDescriptionList> {
+  String sid;
+  bool error = true;
+  Future getValidation() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String id = sharedPreferences.getString('userId');
+    setState(() {
+      sid = id;
+
+      error = false;
+      fetchIssued(id);
+    });
+  }
+
   List listResponse;
   Map mapResponse;
   List<dynamic> listFacts;
@@ -42,9 +55,9 @@ class _MyApp extends State<JobDescriptionList> {
     }
   }
 
-  Future fetchIssued() async {
+  Future fetchIssued(String sessId) async {
     var data = {
-      'assignedTo': '5',
+      'assignedTo': sessId,
     };
     http.Response response;
     response = await http.post(
@@ -72,9 +85,8 @@ class _MyApp extends State<JobDescriptionList> {
 
   @override
   void initState() {
-    fetchIssued();
-
     super.initState();
+    getValidation();
   }
 
   // This widget is the root of your application.
@@ -193,12 +205,13 @@ class _MyApp extends State<JobDescriptionList> {
                                               children: [
                                                 GestureDetector(
                                                   onTap: () {
-                                                    Navigator.push(
+                                                    Navigator.pushReplacement(
                                                       context,
                                                       // MaterialPageRoute(builder: (context) => Warningletter()),
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               JobHandover(
+                                                                userId: sid,
                                                                 jid: listFacts[
                                                                         index]
                                                                     ["id"],
@@ -235,7 +248,7 @@ class _MyApp extends State<JobDescriptionList> {
                                                     executeJob(
                                                       listFacts[index]["id"],
                                                     );
-                                                    fetchIssued();
+                                                    fetchIssued(sid);
                                                   },
                                                   child: Column(
                                                     children: [
@@ -273,9 +286,10 @@ class _MyApp extends State<JobDescriptionList> {
             ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => Jobdescription()),
+            MaterialPageRoute(
+                builder: (context) => Jobdescription(userId: sid)),
           );
         },
         icon: Icon(

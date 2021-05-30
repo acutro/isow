@@ -4,23 +4,35 @@ import 'dart:convert';
 import 'package:toast/toast.dart';
 import '21_jobdescriptionissuer.dart';
 import 'package:isow/JobDescription/jobDescriptionList.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class JobHandoverList extends StatefulWidget {
-  // final String email;
-  // Contact({Key key, @required this.email}) : super(key: key);
   @override
   _MyApp createState() => _MyApp();
 }
 
 class _MyApp extends State<JobHandoverList> {
+  String sid;
+  bool error = true;
+  Future getValidation() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String id = sharedPreferences.getString('userId');
+    setState(() {
+      sid = id;
+      fetchIssued(id);
+      error = false;
+    });
+  }
+
   List listResponse;
   Map mapResponse;
   List<dynamic> listFacts;
   bool jobError = false;
   int id = 0;
-  Future fetchIssued() async {
+  Future fetchIssued(String sessid) async {
     var data = {
-      'toId': '5',
+      'toId': sessid,
     };
     http.Response response;
     response = await http.post(
@@ -72,9 +84,8 @@ class _MyApp extends State<JobHandoverList> {
 
   @override
   void initState() {
-    fetchIssued();
-
     super.initState();
+    getValidation();
   }
 
   Widget status(String id) {
@@ -108,7 +119,7 @@ class _MyApp extends State<JobHandoverList> {
           GestureDetector(
             onTap: () {
               handoverStatus('2', '0', jobid);
-              fetchIssued();
+              fetchIssued(sid);
             },
             child: Column(
               children: [
@@ -130,7 +141,7 @@ class _MyApp extends State<JobHandoverList> {
           GestureDetector(
             onTap: () {
               handoverStatus('1', '1', jobid);
-              fetchIssued();
+              fetchIssued(sid);
             },
             child: Column(
               children: [
@@ -205,7 +216,7 @@ class _MyApp extends State<JobHandoverList> {
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
               child: listFacts.length == 0
-                  ? Center(child: Text("No Hndoverd Jobs"))
+                  ? Center(child: Text("No Handoverd Jobs"))
                   : ListView.builder(
                       itemCount: listFacts.length,
                       itemBuilder: (BuildContext context, int index) {

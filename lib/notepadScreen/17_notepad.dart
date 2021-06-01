@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -5,18 +7,22 @@ import 'notepadListScreen.dart';
 import 'package:toast/toast.dart';
 
 class Notepad extends StatefulWidget {
+  final String userId;
+
+  Notepad({Key key, @required this.userId}) : super(key: key);
   @override
   _NotepadState createState() => _NotepadState();
 }
 
 class _NotepadState extends State<Notepad> {
   Future upNotepad(
+    String userIdd,
     String name,
     String requirment,
     String date,
   ) async {
     var data = {
-      'userId': "aa",
+      'userId': userIdd,
       'name': name,
       'requirements': requirment,
       'date': date,
@@ -31,6 +37,12 @@ class _NotepadState extends State<Notepad> {
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
           backgroundColor: Colors.white);
+      Timer(
+          Duration(seconds: 1),
+          () => Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => NotepadList()),
+              ));
     } else {
       Toast.show("Enter valid credentials", context,
           duration: Toast.LENGTH_SHORT,
@@ -413,7 +425,7 @@ class _NotepadState extends State<Notepad> {
                             textColor: Color(0xff49A5FF),
                             backgroundColor: Colors.white);
                       } else {
-                        upNotepad(_nameController.text,
+                        upNotepad(widget.userId, _nameController.text,
                             _requirmentController.text, _datetime.toString());
                         _nameController.text = "";
                         _requirmentController.text = "";
@@ -445,7 +457,7 @@ class _NotepadState extends State<Notepad> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => NotepadList()),
                       );

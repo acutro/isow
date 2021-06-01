@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfileScreen extends StatefulWidget {
+  final String userId;
+
+  EditProfileScreen({Key key, @required this.userId}) : super(key: key);
   @override
   EditProfileScreenState createState() => EditProfileScreenState();
 }
@@ -14,7 +18,20 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    note = fetchNote();
+    getValidation();
+  }
+
+  String sid;
+  bool error = true;
+  Future getValidation() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String id = sharedPreferences.getString('userId');
+    setState(() {
+      sid = id;
+      note = fetchNote(id);
+      error = false;
+    });
   }
 
   @override
@@ -39,7 +56,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: SingleChildScrollView(
         child: FutureBuilder<Note>(
-          future: fetchNote(),
+          future: fetchNote(widget.userId),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               var aname = snapshot.data.name;
@@ -88,13 +105,13 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                           fontSize: 15.0),
                                     ),
                                     SizedBox(height: 5.0),
-                                    Text(
-                                      'New york',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 14.0),
-                                    ),
+                                    // Text(
+                                    //   'New york',
+                                    //   style: TextStyle(
+                                    //       fontWeight: FontWeight.bold,
+                                    //       color: Colors.white,
+                                    //       fontSize: 14.0),
+                                    // ),
                                   ],
                                 )
                               ],
@@ -263,11 +280,11 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   }
 }
 
-Future<Note> fetchNote() async {
+Future<Note> fetchNote(String sidd) async {
   try {
     // var id;
     Map<String, String> body = {
-      'id': '13',
+      'id': sidd,
     };
     var response = await http.post(
         'http://isow.acutrotech.com/index.php/api/users/profile',

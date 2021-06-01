@@ -34,20 +34,20 @@ class Rigalert extends StatelessWidget {
                   colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 50.0),
-        child: FloatingActionButton(
-          // onPressed: () {
-          //   Navigator.push(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => RigAlert2()),
-          //   );
-          // },
-          child: const Icon(Icons.arrow_downward),
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black54,
-        ),
-      ),
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(bottom: 50.0),
+      //   child: FloatingActionButton(
+      // onPressed: () {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => RigAlert2()),
+      //   );
+      // },
+      //   child: const Icon(Icons.arrow_downward),
+      //   backgroundColor: Colors.white,
+      //   foregroundColor: Colors.black54,
+      // ),
+      // ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

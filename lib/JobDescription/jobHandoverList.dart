@@ -225,6 +225,7 @@ class _MyApp extends State<JobHandoverList> {
                           onTap: () {
                             showDialogFunc(
                               context,
+                              listFacts[index]["id"],
                               listFacts[index]["assignedBy"],
                               listFacts[index]["assignedTo"],
                               listFacts[index]["sender"],
@@ -254,8 +255,7 @@ class _MyApp extends State<JobHandoverList> {
                                           leading: CircleAvatar(
                                             backgroundColor: Color(0xFF4fc4f2),
                                             child: Text(
-                                              listFacts[index]["sender"]
-                                                  .substring(0, 1),
+                                              listFacts[index]["id"],
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.white,
@@ -263,14 +263,27 @@ class _MyApp extends State<JobHandoverList> {
                                             ),
                                           ),
                                           title: Text(
-                                            '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}',
-                                            //  listFacts[index]["name"],
+                                            listFacts[index]["job_description"]
+                                                        .length >
+                                                    28
+                                                ? listFacts[index]
+                                                            ["job_description"]
+                                                        .substring(0, 28) +
+                                                    "..."
+                                                : listFacts[index]
+                                                    ["job_description"],
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                height: 1.5),
+                                                height: 1.3,
+                                                fontSize: 14),
                                           ),
                                           subtitle: Text(
-                                            listFacts[index]["duration"],
+                                            "Handovered by :  " +
+                                                '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
+                                                "\n" +
+                                                "Duration             :   " +
+                                                listFacts[index]["duration"] +
+                                                " hr",
                                           ),
                                           trailing: listFacts[index]
                                                       ["handoverStatus"] ==
@@ -296,7 +309,7 @@ class _MyApp extends State<JobHandoverList> {
   }
 }
 
-showDialogFunc(context, by, to, byName, duration, description) {
+showDialogFunc(context, id, by, to, byName, duration, description) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -335,7 +348,7 @@ showDialogFunc(context, by, to, byName, duration, description) {
                               leading: CircleAvatar(
                                 backgroundColor: Color(0xFF4fc4f2),
                                 child: Text(
-                                  byName.substring(0, 1),
+                                  id,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -343,13 +356,14 @@ showDialogFunc(context, by, to, byName, duration, description) {
                                 ),
                               ),
                               title: Text(
-                                '${byName[0].toUpperCase()}${byName.substring(1)}',
+                                "By " +
+                                    '${byName.toUpperCase()}${byName.substring(1)}',
                                 // title,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, height: 1.5),
                               ),
                               subtitle: Text(
-                                duration,
+                                "Duration   :   " + duration + " hr",
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.black45),
                               ),

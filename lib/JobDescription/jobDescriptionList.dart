@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -46,6 +48,10 @@ class _MyApp extends State<JobDescriptionList> {
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
           backgroundColor: Colors.white);
+      Timer(
+        Duration(seconds: 1),
+        () => fetchIssued(sid),
+      );
     } else {
       Toast.show("Something went Wrong", context,
           duration: Toast.LENGTH_SHORT,
@@ -149,6 +155,7 @@ class _MyApp extends State<JobDescriptionList> {
                           onTap: () {
                             showDialogFunc(
                               context,
+                              listFacts[index]["id"],
                               listFacts[index]["assignedBy"],
                               listFacts[index]["assignedTo"],
                               listFacts[index]["sender"],
@@ -159,11 +166,11 @@ class _MyApp extends State<JobDescriptionList> {
                           child: Card(
                             elevation: 3,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
+                              borderRadius: BorderRadius.circular(5.0),
                             ),
                             child: Container(
                               padding: EdgeInsets.symmetric(
-                                horizontal: 15,
+                                horizontal: 2,
                                 vertical: 8,
                               ),
                               child: Row(
@@ -171,15 +178,14 @@ class _MyApp extends State<JobDescriptionList> {
                                   Container(
                                     width: MediaQuery.of(context).size.width *
                                         0.90,
-                                    padding: EdgeInsets.all(3),
+                                    // padding: EdgeInsets.all(2),
                                     child: Column(
                                       children: <Widget>[
                                         ListTile(
                                           leading: CircleAvatar(
                                             backgroundColor: Color(0xFF4fc4f2),
                                             child: Text(
-                                              listFacts[index]["assignedBy"]
-                                                  .substring(0, 1),
+                                              listFacts[index]["id"],
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.white,
@@ -187,14 +193,28 @@ class _MyApp extends State<JobDescriptionList> {
                                             ),
                                           ),
                                           title: Text(
-                                            '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}',
-                                            //  listFacts[index]["name"],
+                                            listFacts[index]["job_description"]
+                                                        .length >
+                                                    28
+                                                ? listFacts[index]
+                                                            ["job_description"]
+                                                        .substring(0, 28) +
+                                                    "..."
+                                                : listFacts[index]
+                                                    ["job_description"],
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                height: 1.5),
+                                                height: 1.3,
+                                                fontSize: 14),
                                           ),
                                           subtitle: Text(
-                                            listFacts[index]["duration"],
+                                            "Issued by :  " +
+                                                '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
+                                                "\n" +
+                                                "Duration   :   " +
+                                                listFacts[index]["duration"],
+                                            style: TextStyle(
+                                                height: 1.5, fontSize: 12),
                                           ),
                                           trailing: Container(
                                             width: 120,
@@ -205,23 +225,45 @@ class _MyApp extends State<JobDescriptionList> {
                                               children: [
                                                 GestureDetector(
                                                   onTap: () {
-                                                    Navigator.pushReplacement(
-                                                      context,
-                                                      // MaterialPageRoute(builder: (context) => Warningletter()),
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              JobHandover(
-                                                                userId: sid,
-                                                                jid: listFacts[
-                                                                        index]
-                                                                    ["id"],
-                                                                dec: listFacts[
-                                                                        index][
-                                                                    "job_description"],
-                                                                dur: listFacts[
-                                                                        index][
-                                                                    "duration"],
-                                                              )),
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          AlertDialog(
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        title:
+                                                            Text("Handover?"),
+                                                        content: Text(
+                                                            "Do you want to Handover this job?"),
+                                                        actions: [
+                                                          FlatButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child:
+                                                                  Text("No")),
+                                                          FlatButton(
+                                                              onPressed: () {
+                                                                Navigator
+                                                                    .pushReplacement(
+                                                                  context,
+                                                                  // MaterialPageRoute(builder: (context) => Warningletter()),
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              JobHandover(
+                                                                                userId: sid,
+                                                                                jid: listFacts[index]["id"],
+                                                                                dec: listFacts[index]["job_description"],
+                                                                                dur: listFacts[index]["duration"],
+                                                                              )),
+                                                                );
+                                                              },
+                                                              child:
+                                                                  Text("Yes"))
+                                                        ],
+                                                      ),
                                                     );
                                                   },
                                                   child: Column(
@@ -245,10 +287,40 @@ class _MyApp extends State<JobDescriptionList> {
                                                 ),
                                                 GestureDetector(
                                                   onTap: () {
-                                                    executeJob(
-                                                      listFacts[index]["id"],
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          AlertDialog(
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        title: Text("Execute?"),
+                                                        content: Text(
+                                                            "Do you want to Execute?"),
+                                                        actions: [
+                                                          FlatButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child:
+                                                                  Text("No")),
+                                                          FlatButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                                executeJob(
+                                                                  listFacts[
+                                                                          index]
+                                                                      ["id"],
+                                                                );
+                                                                fetchIssued(
+                                                                    sid);
+                                                              },
+                                                              child:
+                                                                  Text("Yes"))
+                                                        ],
+                                                      ),
                                                     );
-                                                    fetchIssued(sid);
                                                   },
                                                   child: Column(
                                                     children: [
@@ -302,7 +374,7 @@ class _MyApp extends State<JobDescriptionList> {
   }
 }
 
-showDialogFunc(context, by, to, byName, duration, description) {
+showDialogFunc(context, id, by, to, byName, duration, description) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -341,7 +413,7 @@ showDialogFunc(context, by, to, byName, duration, description) {
                               leading: CircleAvatar(
                                 backgroundColor: Color(0xFF4fc4f2),
                                 child: Text(
-                                  byName.substring(0, 1),
+                                  id,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -349,24 +421,25 @@ showDialogFunc(context, by, to, byName, duration, description) {
                                 ),
                               ),
                               title: Text(
-                                '${byName[0].toUpperCase()}${byName.substring(1)}',
+                                "By " +
+                                    '${byName.toUpperCase()}${byName.substring(1)}',
                                 // title,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, height: 1.5),
                               ),
                               subtitle: Text(
-                                duration,
+                                "Duration   :   " + duration + " hr",
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.black45),
                               ),
-                              trailing: InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Icon(
-                                    Icons.delete,
-                                    color: Colors.red[400],
-                                  )),
+                              // trailing: InkWell(
+                              //     onTap: () {
+                              //       Navigator.pop(context);
+                              //     },
+                              //     child: Icon(
+                              //       Icons.delete,
+                              //       color: Colors.red[400],
+                              //     )),
                             ),
                           ],
                         ),

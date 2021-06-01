@@ -64,7 +64,13 @@ class SigninScreenState extends State<SigninScreen> {
 
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
+  void _viewPass() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
+  bool _obscureText = true;
 //var finalname=EditProfileScreenState.name;
   @override
   Widget build(BuildContext context) {
@@ -200,8 +206,17 @@ class SigninScreenState extends State<SigninScreen> {
                   color: Colors.black54,
                 ),
                 controller: _passwordController,
-                obscureText: true,
+                obscureText: _obscureText,
                 decoration: new InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      _viewPass();
+                    },
+                    child: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                      color: Color(0xFF4fc4f2),
+                    ),
+                  ),
                   prefixIcon: Icon(
                     Icons.lock_open_outlined,
                     color: Color(0xFF4fc4f2),

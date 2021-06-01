@@ -65,7 +65,7 @@ class _MyApp extends State<NewsListingMain> {
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
               child: widget.offerList.length == 0
-                  ? Center(child: Text("No News Available"))
+                  ? Center(child: Text("No Offers Available"))
                   : ListView.builder(
                       itemCount: widget.offerList.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -76,9 +76,9 @@ class _MyApp extends State<NewsListingMain> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => RigDetailScreen(
+                                        title: widget.title,
                                         rigList: widget.offerList,
                                         id: index,
-                                        title: widget.title,
                                       )),
                             );
                           },

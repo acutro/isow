@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '17_notepad.dart';
 import 'package:toast/toast.dart';
+import 'package:isow/Widgects/alertBox.dart';
 
 class NotepadList extends StatefulWidget {
   // final String email;
@@ -12,25 +16,50 @@ class NotepadList extends StatefulWidget {
 }
 
 class _MyApp extends State<NotepadList> {
+  String sid;
+  bool error = true;
+  Future getValidation() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String id = sharedPreferences.getString('userId');
+    setState(() {
+      sid = id;
+      fetchData(id);
+      error = false;
+    });
+  }
+
   List listResponse;
   Map mapResponse;
+  bool jobError = false;
   List<dynamic> listFacts;
-  Future fetchData() async {
+  Future fetchData(String id) async {
+    var data = {
+      'userId': id,
+    };
     http.Response response;
-    response =
-        await http.get('http://isow.acutrotech.com/index.php/api/Notepad/list');
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/Notepad/singleList',
+        body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
         listFacts = mapResponse['data'];
+        jobError = false;
         print("{$listFacts}");
       });
+    } else {
+      jobError = true;
+
+      Toast.show("Something went Wrong", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
     }
   }
 
-  Future deleteNotepad(
-    String id,
-  ) async {
+  Future deleteNotepad(String id, String ssid) async {
     var data = {'id': id};
     http.Response response;
     response = await http.post(
@@ -42,6 +71,10 @@ class _MyApp extends State<NotepadList> {
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
           backgroundColor: Colors.white);
+      Timer(
+        Duration(seconds: 1),
+        () => fetchData(ssid),
+      );
     } else {
       Toast.show("Something went wrong", context,
           duration: Toast.LENGTH_SHORT,
@@ -50,8 +83,6 @@ class _MyApp extends State<NotepadList> {
           backgroundColor: Colors.white);
     }
   }
-
-  getColor(String str) {}
 
   getpath(String path) {
     var pathf;
@@ -67,9 +98,8 @@ class _MyApp extends State<NotepadList> {
 
   @override
   void initState() {
-    fetchData();
-
     super.initState();
+    getValidation();
   }
 
   // This widget is the root of your application.
@@ -118,7 +148,7 @@ class _MyApp extends State<NotepadList> {
             ),
           ],
         ),
-        body: mapResponse == null
+        body: jobError == true || mapResponse == null
             ? Center(
                 child: CircularProgressIndicator(),
               )
@@ -127,88 +157,122 @@ class _MyApp extends State<NotepadList> {
                     BoxDecoration(color: Color(0xFF4fc4f2).withOpacity(0.2)),
                 height: MediaQuery.of(context).size.height,
                 width: double.infinity,
-                child: ListView.builder(
-                  itemCount: listFacts.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    // final Message chat = chats[index];
-                    return GestureDetector(
-                      onTap: () {
-                        showDialogFunc(
-                          context,
-                          listFacts[index]["name"],
-                          listFacts[index]["date"],
-                          listFacts[index]["requirements"],
-                          'https://googleflutter.com/sample_image.jpg',
-                          listFacts[index]["id"],
-                        );
-                      },
-                      child: Card(
-                        elevation: 3,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 8,
-                          ),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.90,
-                                padding: EdgeInsets.all(3),
-                                child: Column(
+                child: listFacts.length == 0
+                    ? Center(child: Text("No Notes found"))
+                    : ListView.builder(
+                        itemCount: listFacts.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          // final Message chat = chats[index];
+                          return GestureDetector(
+                            onTap: () {
+                              showDialogFunc(
+                                context,
+                                listFacts[index]["name"],
+                                listFacts[index]["date"],
+                                listFacts[index]["requirements"],
+                                'https://googleflutter.com/sample_image.jpg',
+                                listFacts[index]["id"],
+                              );
+                            },
+                            child: Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                  vertical: 8,
+                                ),
+                                child: Row(
                                   children: <Widget>[
-                                    ListTile(
-                                      leading: CircleAvatar(
-                                        backgroundColor: Color(0xFF4fc4f2),
-                                        child: Text(
-                                          listFacts[index]["name"]
-                                              .toUpperCase()
-                                              .substring(0, 1),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                              fontSize: 20),
-                                        ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.90,
+                                      padding: EdgeInsets.all(3),
+                                      child: Column(
+                                        children: <Widget>[
+                                          ListTile(
+                                            leading: CircleAvatar(
+                                              backgroundColor:
+                                                  Color(0xFF4fc4f2),
+                                              child: Text(
+                                                listFacts[index]["name"]
+                                                    .toUpperCase()
+                                                    .substring(0, 1),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                            title: Text(
+                                              '${listFacts[index]["name"][0].toUpperCase()}${listFacts[index]["name"].substring(1)}',
+                                              //  listFacts[index]["name"],
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  height: 1.5),
+                                            ),
+                                            subtitle: Text(
+                                              listFacts[index]["date"],
+                                            ),
+                                            trailing: InkWell(
+                                                onTap: () {
+                                                  // BuildAlertDialogDelete();
+
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        AlertDialog(
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      title: Text("Delete?"),
+                                                      content: Text(
+                                                          "Do you want to delete?"),
+                                                      actions: [
+                                                        FlatButton(
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: Text("No")),
+                                                        FlatButton(
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                              deleteNotepad(
+                                                                  listFacts[
+                                                                          index]
+                                                                      ["id"],
+                                                                  sid);
+                                                              fetchData(sid);
+                                                            },
+                                                            child: Text("Yes"))
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
+                                                child: Icon(
+                                                  Icons.delete,
+                                                  color: Colors.red[400],
+                                                )),
+                                          ),
+                                        ],
                                       ),
-                                      title: Text(
-                                        '${listFacts[index]["name"][0].toUpperCase()}${listFacts[index]["name"].substring(1)}',
-                                        //  listFacts[index]["name"],
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            height: 1.5),
-                                      ),
-                                      subtitle: Text(
-                                        listFacts[index]["date"],
-                                      ),
-                                      trailing: InkWell(
-                                          onTap: () {
-                                            deleteNotepad(
-                                                listFacts[index]["id"]);
-                                            fetchData();
-                                          },
-                                          child: Icon(
-                                            Icons.delete,
-                                            color: Colors.red[400],
-                                          )),
                                     ),
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
               ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => Notepad()),
+              MaterialPageRoute(builder: (context) => Notepad(userId: sid)),
             );
           },
           icon: Icon(
@@ -302,16 +366,16 @@ showDialogFunc(context, title, date, requirment, path, id) {
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.black45),
                               ),
-                              trailing: InkWell(
-                                  onTap: () {
-                                    deleteNotepad(id);
+                              // trailing: InkWell(
+                              //     onTap: () {
+                              //       deleteNotepad(id);
 
-                                    Navigator.pop(context);
-                                  },
-                                  child: Icon(
-                                    Icons.delete,
-                                    color: Colors.red[400],
-                                  )),
+                              //       Navigator.pop(context);
+                              //     },
+                              //     child: Icon(
+                              //       Icons.delete,
+                              //       color: Colors.red[400],
+                              //     )),
                             ),
                           ],
                         ),

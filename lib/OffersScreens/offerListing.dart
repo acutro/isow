@@ -4,6 +4,7 @@ import 'offers_detail_Screen.dart';
 
 class RigDetailScreen extends StatefulWidget {
   static const routeName = "rig-screen";
+
   final List<dynamic> rigList;
 
   final int id;
@@ -40,7 +41,7 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Activities",
+            widget.title,
             style: TextStyle(
               color: Colors.white,
             ),

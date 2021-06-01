@@ -19,7 +19,14 @@ class DirectoryView extends StatelessWidget {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 312,
+              height: 250,
+              decoration:
+                  new BoxDecoration(color: const Color(0xFF66BB6A), boxShadow: [
+                new BoxShadow(
+                  color: Colors.black54,
+                  blurRadius: 10.0,
+                ),
+              ]),
 
               child: path == null
                   ? Image.asset(
@@ -33,15 +40,17 @@ class DirectoryView extends StatelessWidget {
               //),
             ),
             Container(
-              padding: EdgeInsets.all(5),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               alignment: Alignment.centerLeft,
-              child: Text(rigName, style: const TextStyle(fontSize: 22)),
+              child: Text(rigName,
+                  style: const TextStyle(
+                      fontSize: 22, fontWeight: FontWeight.bold)),
             ),
             Container(
-              padding: EdgeInsets.all(5),
+              padding: EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.centerLeft,
               child: Text(
-                  "Valid till\n" +
+                  "Valid till : " +
                       date.substring(0, 10) +
                       "." +
                       date.substring(10),
@@ -49,7 +58,7 @@ class DirectoryView extends StatelessWidget {
             ),
             Divider(),
             Padding(
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Text(rigDetails,
                   style: const TextStyle(
                       height: 1.6,

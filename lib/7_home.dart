@@ -26,12 +26,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
+  String sid;
+  bool error = true;
+  Future getValidation() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String id = sharedPreferences.getString('userId');
+    setState(() {
+      sid = id;
+      note = fetchNote(id);
+      error = false;
+    });
+  }
+
   @override
   Future<Note> note;
   @override
   void initState() {
     super.initState();
-    note = fetchNote();
+    getValidation();
   }
 
   Widget build(BuildContext context) {
@@ -91,37 +104,6 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(height: 25.0),
-
-//Here you place your menu items
-//                       ListTile(
-//                         contentPadding:
-//                             EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
-//                         leading: MaterialButton(
-//                           onPressed: () {
-//                             Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                 builder: (context) => HomeScreen(),
-//                               ),
-//                             );
-//                           },
-//                           color: Colors.white,
-//                           textColor: Color(0xFF4fc4f2),
-//                           child: Icon(
-//                             Icons.home_outlined,
-//                             size: 25,
-//                           ),
-//                           padding: EdgeInsets.all(16),
-//                           shape: CircleBorder(),
-//                         ),
-//                         title: Text(
-//                           'Home',
-//                           style: TextStyle(
-//                             fontSize: 15,
-//                             color: Colors.white,
-//                           ),
-//                         ),
-//                       ),
                       ListTile(
                         contentPadding:
                             EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
@@ -130,7 +112,8 @@ class HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => EditProfileScreen()),
+                                  builder: (context) =>
+                                      EditProfileScreen(userId: sid)),
                             );
 
 //signup screen
@@ -175,7 +158,6 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(height: 100),
-
                       Container(
                         child: Align(
                           alignment: Alignment.bottomCenter,

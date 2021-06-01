@@ -283,7 +283,12 @@ class _MyApp extends State<JobHandoverList> {
                                                 "\n" +
                                                 "Duration             :   " +
                                                 listFacts[index]["duration"] +
-                                                " hr",
+                                                " hr" +
+                                                "\n" +
+                                                "Handover Date:   " +
+                                                listFacts[index]["issueDate"]
+                                                    .substring(0, 10),
+                                            style: TextStyle(fontSize: 11),
                                           ),
                                           trailing: listFacts[index]
                                                       ["handoverStatus"] ==

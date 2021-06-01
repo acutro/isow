@@ -84,7 +84,6 @@ class _WarningletterState extends State<Warningletter> {
   ) async {
     var data = {
       'content': content,
-      'empId': '56574',
       'fromId': userId,
       'toId': toid,
       'issue': 'issue',

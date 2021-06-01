@@ -151,6 +151,7 @@ class _MyApp extends State<JobExecutedList> {
                                     child: Column(
                                       children: <Widget>[
                                         ListTile(
+                                          contentPadding: EdgeInsets.all(4),
                                           leading: CircleAvatar(
                                             backgroundColor: Color(0xFF4fc4f2),
                                             child: Text(
@@ -173,17 +174,21 @@ class _MyApp extends State<JobExecutedList> {
                                                     ["job_description"],
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                height: 1.3,
+                                                height: 1.5,
                                                 fontSize: 14),
                                           ),
                                           subtitle: Text(
-                                            "Issued by :  " +
+                                            "Executed by :  " +
                                                 '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
                                                 "\n" +
                                                 "Duration   :   " +
-                                                listFacts[index]["duration"],
-                                            style: TextStyle(
-                                                height: 1.5, fontSize: 12),
+                                                listFacts[index]["duration"] +
+                                                " hr" +
+                                                "\n" +
+                                                "Executed Date :   " +
+                                                listFacts[index]["issueDate"]
+                                                    .substring(0, 10),
+                                            style: TextStyle(fontSize: 11),
                                           ),
                                           // trailing: GestureDetector(
                                           //   onTap: () {

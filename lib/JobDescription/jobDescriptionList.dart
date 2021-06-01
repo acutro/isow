@@ -204,7 +204,7 @@ class _MyApp extends State<JobDescriptionList> {
                                                     ["job_description"],
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                height: 1.3,
+                                                height: 1.1,
                                                 fontSize: 14),
                                           ),
                                           subtitle: Text(
@@ -212,12 +212,16 @@ class _MyApp extends State<JobDescriptionList> {
                                                 '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
                                                 "\n" +
                                                 "Duration   :   " +
-                                                listFacts[index]["duration"],
-                                            style: TextStyle(
-                                                height: 1.5, fontSize: 12),
+                                                listFacts[index]["duration"] +
+                                                " hr" +
+                                                "\n" +
+                                                "Issued Date :   " +
+                                                listFacts[index]["issueDate"]
+                                                    .substring(0, 10),
+                                            style: TextStyle(fontSize: 11),
                                           ),
                                           trailing: Container(
-                                            width: 120,
+                                            width: 110,
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment

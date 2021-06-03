@@ -32,6 +32,11 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
     return rig;
   }
 
+  Future<Null> refreshList() async {
+    await Future.delayed(Duration(seconds: 2));
+    _getRiglist();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,82 +59,85 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
                   colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
         ),
       ),
-      body: FutureBuilder(
-          future: _getRiglist(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return Container(
-                child: Center(
-                  child: Text("Loading..."),
-                ),
-              );
-            } else {
-              print(snapshot.data.length);
-              return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    child: ListTile(
-                        leading: Image.network(
-                          'http://isow.acutrotech.com/assets/images/rigs/' +
-                              snapshot.data[index].path,
-                          width: 150.0,
-                          height: 150.0,
-                        ),
-                        title: Column(
-                          children: [
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  snapshot.data[index].rigId,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10.0),
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  snapshot.data[index].rigName,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        subtitle: RaisedButton(
-                          color: Color(0xFF4fc4f2),
-                          textColor: Colors.white,
-                          child: Text('More Details'),
-                          onPressed: () => {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RigDetailScreen(
-                                        rigList: rigList,
-                                        id: index,
-                                        flag: 0,
-                                      )),
-                            ),
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            ),
+      body: RefreshIndicator(
+        onRefresh: refreshList,
+        child: FutureBuilder(
+            future: _getRiglist(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.data == null) {
+                return Container(
+                  child: Center(
+                    child: Text("Loading..."),
+                  ),
+                );
+              } else {
+                print(snapshot.data.length);
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      child: ListTile(
+                          leading: Image.network(
+                            'http://isow.acutrotech.com/assets/images/rigs/' +
+                                snapshot.data[index].path,
+                            width: 150.0,
+                            height: 150.0,
                           ),
-                        )),
-                  );
-                },
-              );
-            }
-          }),
+                          title: Column(
+                            children: [
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    snapshot.data[index].rigId,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10.0),
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    snapshot.data[index].rigName,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          subtitle: RaisedButton(
+                            color: Color(0xFF4fc4f2),
+                            textColor: Colors.white,
+                            child: Text('More Details'),
+                            onPressed: () => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RigDetailScreen(
+                                          rigList: rigList,
+                                          id: index,
+                                          flag: 0,
+                                        )),
+                              ),
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                            ),
+                          )),
+                    );
+                  },
+                );
+              }
+            }),
+      ),
     );
   }
 }

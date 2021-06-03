@@ -56,6 +56,11 @@ class _MyApp extends State<JobHandoverList> {
     }
   }
 
+  Future<Null> refreshList() async {
+    await Future.delayed(Duration(seconds: 2));
+    getValidation();
+  }
+
   Future handoverStatus(String jobid, String userid, String hstatus) async {
     var data = {'jobId': jobid, 'userId': userid, 'handoverStatus': hstatus};
     http.Response response;
@@ -201,111 +206,116 @@ class _MyApp extends State<JobHandoverList> {
       //     ),
       //   ],
       // ),
-      body: jobError == true || mapResponse == null
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Container(
-              decoration:
-                  BoxDecoration(color: Color(0xFF4fc4f2).withOpacity(0.2)),
-              height: MediaQuery.of(context).size.height,
-              width: double.infinity,
-              child: listFacts.length == 0
-                  ? Center(child: Text("No Handoverd Jobs"))
-                  : ListView.builder(
-                      itemCount: listFacts.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // final Message chat = chats[index];
-                        return GestureDetector(
-                          onTap: () {
-                            showDialogFunc(
-                              context,
-                              listFacts[index]["id"],
-                              listFacts[index]["assignedBy"],
-                              listFacts[index]["assignedTo"],
-                              listFacts[index]["sender"],
-                              listFacts[index]["duration"],
-                              listFacts[index]["job_description"],
-                            );
-                          },
-                          child: Card(
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 15,
-                                vertical: 8,
+      body: RefreshIndicator(
+        onRefresh: refreshList,
+        child: jobError == true || mapResponse == null
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                decoration:
+                    BoxDecoration(color: Color(0xFF4fc4f2).withOpacity(0.2)),
+                height: MediaQuery.of(context).size.height,
+                width: double.infinity,
+                child: listFacts.length == 0
+                    ? Center(child: Text("No Handoverd Jobs"))
+                    : ListView.builder(
+                        itemCount: listFacts.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          // final Message chat = chats[index];
+                          return GestureDetector(
+                            onTap: () {
+                              showDialogFunc(
+                                context,
+                                listFacts[index]["id"],
+                                listFacts[index]["assignedBy"],
+                                listFacts[index]["assignedTo"],
+                                listFacts[index]["sender"],
+                                listFacts[index]["duration"],
+                                listFacts[index]["job_description"],
+                              );
+                            },
+                            child: Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.90,
-                                    padding: EdgeInsets.all(3),
-                                    child: Column(
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: CircleAvatar(
-                                            backgroundColor: Color(0xFF4fc4f2),
-                                            child: Text(
-                                              listFacts[index]["id"],
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                  vertical: 8,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.90,
+                                      padding: EdgeInsets.all(3),
+                                      child: Column(
+                                        children: <Widget>[
+                                          ListTile(
+                                            leading: CircleAvatar(
+                                              backgroundColor:
+                                                  Color(0xFF4fc4f2),
+                                              child: Text(
+                                                listFacts[index]["id"],
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                            title: Text(
+                                              listFacts[index][
+                                                              "job_description"]
+                                                          .length >
+                                                      28
+                                                  ? listFacts[index][
+                                                              "job_description"]
+                                                          .substring(0, 28) +
+                                                      "..."
+                                                  : listFacts[index]
+                                                      ["job_description"],
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                  fontSize: 20),
+                                                  height: 1.3,
+                                                  fontSize: 14),
                                             ),
+                                            subtitle: Text(
+                                              "Handovered by :  " +
+                                                  '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
+                                                  "\n" +
+                                                  "Duration             :   " +
+                                                  listFacts[index]["duration"] +
+                                                  " hr" +
+                                                  "\n" +
+                                                  "Handover Date:   " +
+                                                  listFacts[index]["issueDate"]
+                                                      .substring(0, 10),
+                                              style: TextStyle(fontSize: 11),
+                                            ),
+                                            trailing: listFacts[index]
+                                                        ["handoverStatus"] ==
+                                                    '0'
+                                                ? selectStatus(
+                                                    sid,
+                                                    listFacts[index]["jobId"],
+                                                  )
+                                                : status(listFacts[index]
+                                                    ["handoverStatus"]),
                                           ),
-                                          title: Text(
-                                            listFacts[index]["job_description"]
-                                                        .length >
-                                                    28
-                                                ? listFacts[index]
-                                                            ["job_description"]
-                                                        .substring(0, 28) +
-                                                    "..."
-                                                : listFacts[index]
-                                                    ["job_description"],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                height: 1.3,
-                                                fontSize: 14),
-                                          ),
-                                          subtitle: Text(
-                                            "Handovered by :  " +
-                                                '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
-                                                "\n" +
-                                                "Duration             :   " +
-                                                listFacts[index]["duration"] +
-                                                " hr" +
-                                                "\n" +
-                                                "Handover Date:   " +
-                                                listFacts[index]["issueDate"]
-                                                    .substring(0, 10),
-                                            style: TextStyle(fontSize: 11),
-                                          ),
-                                          trailing: listFacts[index]
-                                                      ["handoverStatus"] ==
-                                                  '0'
-                                              ? selectStatus(
-                                                  sid,
-                                                  listFacts[index]["jobId"],
-                                                )
-                                              : status(listFacts[index]
-                                                  ["handoverStatus"]),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-            ),
+                          );
+                        },
+                      ),
+              ),
+      ),
     );
   }
 }

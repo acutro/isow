@@ -16,6 +16,10 @@ class NewsListing extends StatefulWidget {
 }
 
 class _MyApp extends State<NewsListing> {
+  Future<Null> refreshList() async {
+    await Future.delayed(Duration(seconds: 2));
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -57,95 +61,101 @@ class _MyApp extends State<NewsListing> {
           ),
         ],
       ),
-      body: widget.newsList == null
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Container(
-              height: MediaQuery.of(context).size.height,
-              width: double.infinity,
-              child: widget.newsList.length == 0
-                  ? Center(child: Text("No News Available"))
-                  : ListView.builder(
-                      itemCount: widget.newsList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // final Message chat = chats[index];
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NewsScreen(
-                                        title: "News",
-                                        rigList: widget.newsList,
-                                        list: 2,
-                                        id: index,
-                                      )),
-                            );
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: int.parse(widget.newsList[index]["id"]) %
-                                            2 ==
-                                        0
-                                    ? Color(0xFF4fc4f2).withOpacity(0.2)
-                                    : Colors.white),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 15,
-                              vertical: 8,
-                            ),
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.90,
-                                  padding: EdgeInsets.all(3),
-                                  child: Column(
-                                    children: <Widget>[
-                                      ListTile(
-                                        leading: CircleAvatar(
-                                          backgroundColor: Color(0xFF4fc4f2),
-                                          child: Text(
-                                            'N',
+      body: RefreshIndicator(
+        onRefresh: refreshList,
+        child: widget.newsList == null
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                height: MediaQuery.of(context).size.height,
+                width: double.infinity,
+                child: widget.newsList.length == 0
+                    ? Center(child: Text("No News Available"))
+                    : ListView.builder(
+                        itemCount: widget.newsList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          // final Message chat = chats[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NewsScreen(
+                                          title: "News",
+                                          rigList: widget.newsList,
+                                          list: 2,
+                                          id: index,
+                                        )),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color:
+                                      int.parse(widget.newsList[index]["id"]) %
+                                                  2 ==
+                                              0
+                                          ? Color(0xFF4fc4f2).withOpacity(0.2)
+                                          : Colors.white),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 15,
+                                vertical: 8,
+                              ),
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.90,
+                                    padding: EdgeInsets.all(3),
+                                    child: Column(
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: CircleAvatar(
+                                            backgroundColor: Color(0xFF4fc4f2),
+                                            child: Text(
+                                              'N',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                  fontSize: 20),
+                                            ),
+                                          ),
+                                          title: Text(
+                                            widget.newsList[index]["title"],
+                                            // '${listFacts[index]["created_at"][0].toUpperCase()}${listFacts[index]["created_at"].substring(1)}',
+                                            //  listFacts[index]["name"],
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                                fontSize: 20),
+                                                height: 1.5),
                                           ),
+                                          subtitle: Text(
+                                            widget
+                                                        .newsList[index]
+                                                            ["description"]
+                                                        .length >
+                                                    40
+                                                ? widget.newsList[index]
+                                                        ["description"]
+                                                    .substring(0, 40)
+                                                : widget.newsList[index]
+                                                    ["description"],
+                                          ),
+                                          // trailing: Text(
+                                          //   listFacts[index]["description"]
+                                          //       .substring(0, 10),
+                                          // ),
                                         ),
-                                        title: Text(
-                                          widget.newsList[index]["title"],
-                                          // '${listFacts[index]["created_at"][0].toUpperCase()}${listFacts[index]["created_at"].substring(1)}',
-                                          //  listFacts[index]["name"],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              height: 1.5),
-                                        ),
-                                        subtitle: Text(
-                                          widget.newsList[index]["description"]
-                                                      .length >
-                                                  40
-                                              ? widget.newsList[index]
-                                                      ["description"]
-                                                  .substring(0, 40)
-                                              : widget.newsList[index]
-                                                  ["description"],
-                                        ),
-                                        // trailing: Text(
-                                        //   listFacts[index]["description"]
-                                        //       .substring(0, 10),
-                                        // ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-            ),
+                          );
+                        },
+                      ),
+              ),
+      ),
     );
   }
 }

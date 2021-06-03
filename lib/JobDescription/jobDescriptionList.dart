@@ -61,6 +61,11 @@ class _MyApp extends State<JobDescriptionList> {
     }
   }
 
+  Future<Null> refreshList() async {
+    await Future.delayed(Duration(seconds: 2));
+    getValidation();
+  }
+
   Future fetchIssued(String sessId) async {
     var data = {
       'assignedTo': sessId,
@@ -136,230 +141,237 @@ class _MyApp extends State<JobDescriptionList> {
       //     ),
       //   ],
       // ),
-      body: jobError == true || mapResponse == null
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Container(
-              decoration:
-                  BoxDecoration(color: Color(0xFF4fc4f2).withOpacity(0.2)),
-              height: MediaQuery.of(context).size.height,
-              width: double.infinity,
-              child: listFacts.length == 0
-                  ? Center(child: Text("No Issued Jobs"))
-                  : ListView.builder(
-                      itemCount: listFacts.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // final Message chat = chats[index];
-                        return GestureDetector(
-                          onTap: () {
-                            showDialogFunc(
-                              context,
-                              listFacts[index]["id"],
-                              listFacts[index]["assignedBy"],
-                              listFacts[index]["assignedTo"],
-                              listFacts[index]["sender"],
-                              listFacts[index]["duration"],
-                              listFacts[index]["job_description"],
-                            );
-                          },
-                          child: Card(
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 2,
-                                vertical: 8,
+      body: RefreshIndicator(
+        onRefresh: refreshList,
+        child: jobError == true || mapResponse == null
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                decoration:
+                    BoxDecoration(color: Color(0xFF4fc4f2).withOpacity(0.2)),
+                height: MediaQuery.of(context).size.height,
+                width: double.infinity,
+                child: listFacts.length == 0
+                    ? Center(child: Text("No Issued Jobs"))
+                    : ListView.builder(
+                        itemCount: listFacts.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          // final Message chat = chats[index];
+                          return GestureDetector(
+                            onTap: () {
+                              showDialogFunc(
+                                context,
+                                listFacts[index]["id"],
+                                listFacts[index]["assignedBy"],
+                                listFacts[index]["assignedTo"],
+                                listFacts[index]["sender"],
+                                listFacts[index]["duration"],
+                                listFacts[index]["job_description"],
+                              );
+                            },
+                            child: Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0),
                               ),
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.90,
-                                    // padding: EdgeInsets.all(2),
-                                    child: Column(
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: CircleAvatar(
-                                            backgroundColor: Color(0xFF4fc4f2),
-                                            child: Text(
-                                              listFacts[index]["id"],
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 2,
+                                  vertical: 8,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.90,
+                                      // padding: EdgeInsets.all(2),
+                                      child: Column(
+                                        children: <Widget>[
+                                          ListTile(
+                                            leading: CircleAvatar(
+                                              backgroundColor:
+                                                  Color(0xFF4fc4f2),
+                                              child: Text(
+                                                listFacts[index]["id"],
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                            title: Text(
+                                              listFacts[index][
+                                                              "job_description"]
+                                                          .length >
+                                                      28
+                                                  ? listFacts[index][
+                                                              "job_description"]
+                                                          .substring(0, 28) +
+                                                      "..."
+                                                  : listFacts[index]
+                                                      ["job_description"],
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                  fontSize: 20),
+                                                  height: 1.1,
+                                                  fontSize: 14),
                                             ),
-                                          ),
-                                          title: Text(
-                                            listFacts[index]["job_description"]
-                                                        .length >
-                                                    28
-                                                ? listFacts[index]
-                                                            ["job_description"]
-                                                        .substring(0, 28) +
-                                                    "..."
-                                                : listFacts[index]
-                                                    ["job_description"],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                height: 1.1,
-                                                fontSize: 14),
-                                          ),
-                                          subtitle: Text(
-                                            "Issued by :  " +
-                                                '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
-                                                "\n" +
-                                                "Duration   :   " +
-                                                listFacts[index]["duration"] +
-                                                " hr" +
-                                                "\n" +
-                                                "Issued Date :   " +
-                                                listFacts[index]["issueDate"]
-                                                    .substring(0, 10),
-                                            style: TextStyle(fontSize: 11),
-                                          ),
-                                          trailing: Container(
-                                            width: 110,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (context) =>
-                                                          AlertDialog(
-                                                        backgroundColor:
-                                                            Colors.white,
-                                                        title:
-                                                            Text("Handover?"),
-                                                        content: Text(
-                                                            "Do you want to Handover this job?"),
-                                                        actions: [
-                                                          FlatButton(
-                                                              onPressed: () {
-                                                                Navigator.pop(
-                                                                    context);
-                                                              },
-                                                              child:
-                                                                  Text("No")),
-                                                          FlatButton(
-                                                              onPressed: () {
-                                                                Navigator
-                                                                    .pushReplacement(
-                                                                  context,
-                                                                  // MaterialPageRoute(builder: (context) => Warningletter()),
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
-                                                                              JobHandover(
-                                                                                userId: sid,
-                                                                                jid: listFacts[index]["id"],
-                                                                                dec: listFacts[index]["job_description"],
-                                                                                dur: listFacts[index]["duration"],
-                                                                              )),
-                                                                );
-                                                              },
-                                                              child:
-                                                                  Text("Yes"))
-                                                        ],
-                                                      ),
-                                                    );
-                                                  },
-                                                  child: Column(
-                                                    children: [
-                                                      Icon(
-                                                        Icons
-                                                            .transfer_within_a_station,
-                                                        size: 30,
-                                                        color: Colors.blue[400],
-                                                      ),
-                                                      Text(
-                                                        "Handover",
-                                                        style: TextStyle(
-                                                          fontSize: 12,
+                                            subtitle: Text(
+                                              "Issued by :  " +
+                                                  '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
+                                                  "\n" +
+                                                  "Duration   :   " +
+                                                  listFacts[index]["duration"] +
+                                                  " hr" +
+                                                  "\n" +
+                                                  "Issued Date :   " +
+                                                  listFacts[index]["issueDate"]
+                                                      .substring(0, 10),
+                                              style: TextStyle(fontSize: 11),
+                                            ),
+                                            trailing: Container(
+                                              width: 110,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (context) =>
+                                                            AlertDialog(
+                                                          backgroundColor:
+                                                              Colors.white,
+                                                          title:
+                                                              Text("Handover?"),
+                                                          content: Text(
+                                                              "Do you want to Handover this job?"),
+                                                          actions: [
+                                                            FlatButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child:
+                                                                    Text("No")),
+                                                            FlatButton(
+                                                                onPressed: () {
+                                                                  Navigator
+                                                                      .pushReplacement(
+                                                                    context,
+                                                                    // MaterialPageRoute(builder: (context) => Warningletter()),
+                                                                    MaterialPageRoute(
+                                                                        builder: (context) =>
+                                                                            JobHandover(
+                                                                              userId: sid,
+                                                                              jid: listFacts[index]["id"],
+                                                                              dec: listFacts[index]["job_description"],
+                                                                              dur: listFacts[index]["duration"],
+                                                                            )),
+                                                                  );
+                                                                },
+                                                                child:
+                                                                    Text("Yes"))
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Column(
+                                                      children: [
+                                                        Icon(
+                                                          Icons
+                                                              .transfer_within_a_station,
+                                                          size: 30,
                                                           color:
                                                               Colors.blue[400],
                                                         ),
-                                                      )
-                                                    ],
+                                                        Text(
+                                                          "Handover",
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                            color: Colors
+                                                                .blue[400],
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (context) =>
-                                                          AlertDialog(
-                                                        backgroundColor:
-                                                            Colors.white,
-                                                        title: Text("Execute?"),
-                                                        content: Text(
-                                                            "Do you want to Execute?"),
-                                                        actions: [
-                                                          FlatButton(
-                                                              onPressed: () {
-                                                                Navigator.pop(
-                                                                    context);
-                                                              },
-                                                              child:
-                                                                  Text("No")),
-                                                          FlatButton(
-                                                              onPressed: () {
-                                                                Navigator.pop(
-                                                                    context);
-                                                                executeJob(
-                                                                  listFacts[
-                                                                          index]
-                                                                      ["id"],
-                                                                );
-                                                                fetchIssued(
-                                                                    sid);
-                                                              },
-                                                              child:
-                                                                  Text("Yes"))
-                                                        ],
-                                                      ),
-                                                    );
-                                                  },
-                                                  child: Column(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.handyman_outlined,
-                                                        size: 30,
-                                                        color:
-                                                            Colors.green[400],
-                                                      ),
-                                                      Text(
-                                                        "Execute",
-                                                        style: TextStyle(
-                                                          fontSize: 12,
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (context) =>
+                                                            AlertDialog(
+                                                          backgroundColor:
+                                                              Colors.white,
+                                                          title:
+                                                              Text("Execute?"),
+                                                          content: Text(
+                                                              "Do you want to Execute?"),
+                                                          actions: [
+                                                            FlatButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child:
+                                                                    Text("No")),
+                                                            FlatButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  executeJob(
+                                                                    listFacts[
+                                                                            index]
+                                                                        ["id"],
+                                                                  );
+                                                                  fetchIssued(
+                                                                      sid);
+                                                                },
+                                                                child:
+                                                                    Text("Yes"))
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Column(
+                                                      children: [
+                                                        Icon(
+                                                          Icons
+                                                              .handyman_outlined,
+                                                          size: 30,
                                                           color:
                                                               Colors.green[400],
                                                         ),
-                                                      )
-                                                    ],
+                                                        Text(
+                                                          "Execute",
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                            color: Colors
+                                                                .green[400],
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-            ),
+                          );
+                        },
+                      ),
+              ),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.pushReplacement(

@@ -262,15 +262,17 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              getLocation();
-                              Toast.show(
-                                "Updated",
-                                context,
-                                duration: Toast.LENGTH_SHORT,
-                                gravity: Toast.BOTTOM,
-                                backgroundColor: Colors.white,
-                                textColor: Colors.green[400],
-                              );
+                              Timer(Duration(seconds: 1), () {
+                                getLocation();
+                                Toast.show(
+                                  "Updated",
+                                  context,
+                                  duration: Toast.LENGTH_SHORT,
+                                  gravity: Toast.BOTTOM,
+                                  backgroundColor: Colors.white,
+                                  textColor: Colors.green[400],
+                                );
+                              });
                             },
                             child: Stack(
                               children: <Widget>[

@@ -33,6 +33,11 @@ class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
     return employees;
   }
 
+  Future<Null> refreshList() async {
+    await Future.delayed(Duration(seconds: 2));
+    _getEmployee();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -61,61 +66,64 @@ class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
                   colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
         ),
       ),
-      body: FutureBuilder(
-          future: _getEmployee(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return Container(
-                child: Center(
-                  child: Text("Loading..."),
-                ),
-              );
-            } else {
-              print(snapshot.data.length);
-              return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    child: ListTile(
-                        leading: Image.network(
-                          'http://isow.acutrotech.com/assets/images/materials/' +
-                              snapshot.data[index].path,
-                          width: 150.0,
-                          height: 150.0,
-                        ),
-                        title: Text(
-                          snapshot.data[index].name,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
+      body: RefreshIndicator(
+        onRefresh: refreshList,
+        child: FutureBuilder(
+            future: _getEmployee(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.data == null) {
+                return Container(
+                  child: Center(
+                    child: Text("Loading..."),
+                  ),
+                );
+              } else {
+                print(snapshot.data.length);
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      child: ListTile(
+                          leading: Image.network(
+                            'http://isow.acutrotech.com/assets/images/materials/' +
+                                snapshot.data[index].path,
+                            width: 150.0,
+                            height: 150.0,
                           ),
-                        ),
-                        subtitle: RaisedButton(
-                          color: Color(0xFF4fc4f2),
-                          textColor: Colors.white,
-                          child: Text('More Details'),
-                          onPressed: () => {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RigDetailScreen(
-                                      rigList: mineralList,
-                                      id: index,
-                                      flag: 1)),
-                            ),
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(20),
-                              topRight: Radius.circular(20),
+                          title: Text(
+                            snapshot.data[index].name,
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
                             ),
                           ),
-                        )),
-                  );
-                },
-              );
-            }
-          }),
+                          subtitle: RaisedButton(
+                            color: Color(0xFF4fc4f2),
+                            textColor: Colors.white,
+                            child: Text('More Details'),
+                            onPressed: () => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RigDetailScreen(
+                                        rigList: mineralList,
+                                        id: index,
+                                        flag: 1)),
+                              ),
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                            ),
+                          )),
+                    );
+                  },
+                );
+              }
+            }),
+      ),
     );
   }
 }

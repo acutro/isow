@@ -54,7 +54,10 @@ class _MyApp extends State<FeedbackList> {
     }
   }
 
-  getColor(String str) {}
+  Future<Null> refreshList() async {
+    await Future.delayed(Duration(seconds: 2));
+    getValidation();
+  }
 
   @override
   void initState() {
@@ -104,89 +107,94 @@ class _MyApp extends State<FeedbackList> {
           ),
         ],
       ),
-      body: jobError == true || mapResponse == null
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Container(
-              decoration:
-                  BoxDecoration(color: Color(0xFF4fc4f2).withOpacity(0.2)),
-              height: MediaQuery.of(context).size.height,
-              width: double.infinity,
-              child: listFacts.length == 0
-                  ? Center(child: Text("No Feedback found"))
-                  : ListView.builder(
-                      itemCount: listFacts.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // final Message chat = chats[index];
-                        return GestureDetector(
-                          onTap: () {
-                            showDialogFunc(
-                              context,
-                              listFacts[index]["created_at"],
-                              listFacts[index]["content"],
-                            );
-                          },
-                          child: Card(
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 15,
-                                vertical: 8,
+      body: RefreshIndicator(
+        onRefresh: refreshList,
+        child: jobError == true || mapResponse == null
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                decoration:
+                    BoxDecoration(color: Color(0xFF4fc4f2).withOpacity(0.2)),
+                height: MediaQuery.of(context).size.height,
+                width: double.infinity,
+                child: listFacts.length == 0
+                    ? Center(child: Text("No Feedback found"))
+                    : ListView.builder(
+                        itemCount: listFacts.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          // final Message chat = chats[index];
+                          return GestureDetector(
+                            onTap: () {
+                              showDialogFunc(
+                                context,
+                                listFacts[index]["created_at"],
+                                listFacts[index]["content"],
+                              );
+                            },
+                            child: Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.90,
-                                    padding: EdgeInsets.all(3),
-                                    child: Column(
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: CircleAvatar(
-                                            backgroundColor: Color(0xFF4fc4f2),
-                                            child: Text(
-                                              'F',
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                  vertical: 8,
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.90,
+                                      padding: EdgeInsets.all(3),
+                                      child: Column(
+                                        children: <Widget>[
+                                          ListTile(
+                                            leading: CircleAvatar(
+                                              backgroundColor:
+                                                  Color(0xFF4fc4f2),
+                                              child: Text(
+                                                'F',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                            title: Text(
+                                              "Feedback",
+                                              // '${listFacts[index]["created_at"][0].toUpperCase()}${listFacts[index]["created_at"].substring(1)}',
+                                              //  listFacts[index]["name"],
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                  fontSize: 20),
+                                                  height: 1.5),
+                                            ),
+                                            subtitle: Text(
+                                              listFacts[index]["content"]
+                                                          .length >
+                                                      40
+                                                  ? listFacts[index]["content"]
+                                                      .substring(0, 40)
+                                                  : listFacts[index]["content"],
+                                            ),
+                                            trailing: Text(
+                                              listFacts[index]["created_at"]
+                                                  .substring(0, 10),
                                             ),
                                           ),
-                                          title: Text(
-                                            "Feedback",
-                                            // '${listFacts[index]["created_at"][0].toUpperCase()}${listFacts[index]["created_at"].substring(1)}',
-                                            //  listFacts[index]["name"],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                height: 1.5),
-                                          ),
-                                          subtitle: Text(
-                                            listFacts[index]["content"].length >
-                                                    40
-                                                ? listFacts[index]["content"]
-                                                    .substring(0, 40)
-                                                : listFacts[index]["content"],
-                                          ),
-                                          trailing: Text(
-                                            listFacts[index]["created_at"]
-                                                .substring(0, 10),
-                                          ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-            ),
+                          );
+                        },
+                      ),
+              ),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.pushReplacement(

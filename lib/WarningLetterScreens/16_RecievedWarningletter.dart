@@ -37,6 +37,11 @@ class _RecivedWarningState extends State<RecivedWarning> {
     return employees;
   }
 
+  Future<Null> refreshList() async {
+    await Future.delayed(Duration(seconds: 2));
+    _getEmployee();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,212 +64,219 @@ class _RecivedWarningState extends State<RecivedWarning> {
                   colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
         ),
       ),
-      body: Container(
-        margin: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 5.0),
-        height: double.infinity,
-        child: FutureBuilder(
-            future: _getEmployee(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.data == null) {
-                return Container(
-                  child: Center(
-                    child: Text("Loading..."),
-                  ),
-                );
-              } else {
-                print(snapshot.data.length);
-                return Column(
-                  children: [
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
-                          child: Icon(
-                            Icons.sticky_note_2,
-                            size: 90.0,
-                            color: Color(0xff4fc4f2),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(0.0, 40.0, 10.0, 0.0),
-                            child: Center(
-                                child: Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                      text: 'Recieved ',
-                                      style: TextStyle(fontSize: 24)),
-                                  TextSpan(text: 'Warning Letter'),
-                                ],
-                              ),
-                            )),
-                          ),
-                        ),
-                      ],
+      body: RefreshIndicator(
+        onRefresh: refreshList,
+        child: Container(
+          margin: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 5.0),
+          height: double.infinity,
+          child: FutureBuilder(
+              future: _getEmployee(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.data == null) {
+                  return Container(
+                    child: Center(
+                      child: Text("Loading..."),
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              showDialogFunc(
-                                context,
-                                snapshot.data[index].person,
-                                snapshot.data[index].position,
-                                snapshot.data[index].createdAt.substring(0, 10),
-                                snapshot.data[index].content,
-                                snapshot.data[index].issue,
-                              );
-                            },
+                  );
+                } else {
+                  print(snapshot.data.length);
+                  return Column(
+                    children: [
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
+                            child: Icon(
+                              Icons.sticky_note_2,
+                              size: 90.0,
+                              color: Color(0xff4fc4f2),
+                            ),
+                          ),
+                          Expanded(
                             child: Container(
-                              margin:
-                                  EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black26,
-                                    blurRadius: 6.0,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              height: 230.0,
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Container(
+                              margin: EdgeInsets.fromLTRB(0.0, 40.0, 10.0, 0.0),
+                              child: Center(
+                                  child: Text.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                        text: 'Recieved ',
+                                        style: TextStyle(fontSize: 24)),
+                                    TextSpan(text: 'Warning Letter'),
+                                  ],
+                                ),
+                              )),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: () {
+                                showDialogFunc(
+                                  context,
+                                  snapshot.data[index].person,
+                                  snapshot.data[index].position,
+                                  snapshot.data[index].createdAt
+                                      .substring(0, 10),
+                                  snapshot.data[index].content,
+                                  snapshot.data[index].issue,
+                                );
+                              },
+                              child: Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 6.0,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                height: 230.0,
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Container(
+                                            height: 40.0,
+                                            decoration: BoxDecoration(
+                                                color: Color(0xff4fc4f2),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft:
+                                                      Radius.circular(10.0),
+                                                )),
+                                            alignment: Alignment.topLeft,
+                                            margin: EdgeInsets.fromLTRB(
+                                                0.0, 0.0, .0, 0.0),
+                                            child: Center(
+                                              child: Text(
+                                                snapshot.data[index].person,
+                                                style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 2.0,
                                           height: 40.0,
-                                          decoration: BoxDecoration(
+                                          color: Colors.black54,
+                                          //margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            height: 40.0,
+                                            color: Color(0xff4fc4f2),
+                                            alignment: Alignment.topLeft,
+                                            margin: EdgeInsets.fromLTRB(
+                                                0.0, 0.0, 0.0, 0.0),
+                                            child: Center(
+                                              child: Text(
+                                                snapshot.data[index].position,
+                                                style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 2.0,
+                                          height: 40.0,
+                                          color: Colors.black54,
+                                          // margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            height: 40.0,
+                                            decoration: BoxDecoration(
                                               color: Color(0xff4fc4f2),
                                               borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(10.0),
-                                              )),
-                                          alignment: Alignment.topLeft,
-                                          margin: EdgeInsets.fromLTRB(
-                                              0.0, 0.0, .0, 0.0),
-                                          child: Center(
-                                            child: Text(
-                                              snapshot.data[index].person,
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white),
+                                                topRight: Radius.circular(10.0),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 2.0,
-                                        height: 40.0,
-                                        color: Colors.black54,
-                                        //margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          height: 40.0,
-                                          color: Color(0xff4fc4f2),
-                                          alignment: Alignment.topLeft,
-                                          margin: EdgeInsets.fromLTRB(
-                                              0.0, 0.0, 0.0, 0.0),
-                                          child: Center(
-                                            child: Text(
-                                              snapshot.data[index].position,
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 2.0,
-                                        height: 40.0,
-                                        color: Colors.black54,
-                                        // margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          height: 40.0,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xff4fc4f2),
-                                            borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(10.0),
-                                            ),
-                                          ),
-                                          alignment: Alignment.topLeft,
-                                          //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
-                                          child: Center(
-                                            child: Text(
-                                              snapshot.data[index].createdAt
-                                                  .substring(0, 10),
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
-                                    child: Expanded(
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.all(5.0),
+                                            alignment: Alignment.topLeft,
+                                            //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
+                                            child: Center(
                                               child: Text(
-                                                snapshot.data[index].issue,
-                                                textAlign: TextAlign.center,
+                                                snapshot.data[index].createdAt
+                                                    .substring(0, 10),
                                                 style: TextStyle(
-                                                    fontSize: 14,
+                                                    fontSize: 16.0,
                                                     fontWeight: FontWeight.bold,
-                                                    height: 1.5),
+                                                    color: Colors.white),
                                               ),
                                             ),
-                                            Divider(),
-                                            Container(
-                                              margin: EdgeInsets.all(10.0),
-                                              child: Text(
-                                                '${snapshot.data[index].content[0].toUpperCase()}${snapshot.data[index].content.substring(1)}',
-                                                // snapshot.data[index].content,
-                                                style: TextStyle(
-                                                    fontSize: 13, height: 1.5),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      child: Expanded(
+                                        child: SingleChildScrollView(
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.all(5.0),
+                                                child: Text(
+                                                  snapshot.data[index].issue,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      height: 1.5),
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                              Divider(),
+                                              Container(
+                                                margin: EdgeInsets.all(10.0),
+                                                child: Text(
+                                                  '${snapshot.data[index].content[0].toUpperCase()}${snapshot.data[index].content.substring(1)}',
+                                                  // snapshot.data[index].content,
+                                                  style: TextStyle(
+                                                      fontSize: 13,
+                                                      height: 1.5),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  // Container(
-                                  //   margin:
-                                  //       EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 0.0),
-                                  //   alignment: Alignment.centerLeft,
-                                  //   height: 20.0,
-                                  //   child: Text(snapshot.data[index].createdAt),
-                                  // ),
-                                ],
+                                    // Container(
+                                    //   margin:
+                                    //       EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 0.0),
+                                    //   alignment: Alignment.centerLeft,
+                                    //   height: 20.0,
+                                    //   child: Text(snapshot.data[index].createdAt),
+                                    // ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              }
-            }),
+                    ],
+                  );
+                }
+              }),
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {

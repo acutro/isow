@@ -46,25 +46,6 @@ class RigAlertScreenState extends State<RigAlertScreen> {
                             fit: BoxFit.fill,
                           ),
                         ),
-
-                        // child: Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //   children: <Widget>[
-                        //     Column(
-                        //       mainAxisAlignment: MainAxisAlignment.center,
-                        //       crossAxisAlignment: CrossAxisAlignment.start,
-                        //       children: <Widget>[
-                        //         Text(
-                        //           'Create New Employee Account',
-                        //           style: TextStyle(
-                        //               // fontWeight: FontWeight.bold,
-                        //               color: Colors.white,
-                        //               fontSize: 12.0),
-                        //         ),
-                        //       ],
-                        //     )
-                        //   ],
-                        // ),
                       ),
                     ),
                   ),

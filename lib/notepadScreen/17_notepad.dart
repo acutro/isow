@@ -54,11 +54,9 @@ class _NotepadState extends State<Notepad> {
 
   TextEditingController _nameController = new TextEditingController();
   TextEditingController _requirmentController = new TextEditingController();
-
+  DateTime _datetime;
   var Rowno = 3;
   List<int> rowno = [1, 1, 1];
-
-  DateTime _datetime;
 
   Row createrow(TextEditingController tcontrol) {
     return Row(
@@ -213,24 +211,7 @@ class _NotepadState extends State<Notepad> {
                                                 _datetime = date;
                                               });
                                             });
-                                          })
-
-                                      // child: TextField(
-                                      //   decoration: InputDecoration(
-                                      //     hintText: _datetime == null
-                                      //         ? "date"
-                                      //         : _datetime.toString(),
-                                      //     hintStyle:
-                                      //         TextStyle(color: Colors.white),
-                                      //     enabledBorder: OutlineInputBorder(
-                                      //       borderRadius: BorderRadius.all(
-                                      //           Radius.circular(10.0)),
-                                      //       borderSide:
-                                      //           BorderSide(color: Colors.white),
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      ),
+                                          })),
                                 ),
                                 Expanded(
                                   child: Container(

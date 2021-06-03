@@ -5,7 +5,6 @@ import 'orientation_screen/12_Orientation.dart';
 import 'WarningLetterScreens/16_RecievedWarningletter.dart';
 import '18_emergency.dart';
 import 'UserAuth/2_signinpage.dart';
-import 'page8rigalert.dart';
 import 'notepadScreen/notepadListScreen.dart';
 import '19_services.dart';
 import 'OffersScreens/25_offers.dart';
@@ -17,6 +16,7 @@ import 'JobDescription/JobDescriptionTab.dart';
 import 'FeedbackScreen/feedbackList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'rigAlert/alertList.dart';
 //  Icon(
 //                   FontAwesomeIcons.envelope,
 //                   color: odWhite,
@@ -294,7 +294,7 @@ class HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => RigAlert2()),
+                      MaterialPageRoute(builder: (context) => RecivedAlert()),
                     );
                   },
                   child: Column(

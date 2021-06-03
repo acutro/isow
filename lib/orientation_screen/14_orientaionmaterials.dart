@@ -23,7 +23,8 @@ class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
           id: f["id"],
           materialId: f["materialId"],
           name: f["name"],
-          details: f["details"]);
+          details: f["details"],
+          path: f["material_image"]);
       employees.add(employee);
       setState(() {
         mineralList = jsonData["data"];
@@ -77,7 +78,8 @@ class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
                   return Container(
                     child: ListTile(
                         leading: Image.network(
-                          'https://googleflutter.com/sample_image.jpg',
+                          'http://isow.acutrotech.com/assets/images/materials/' +
+                              snapshot.data[index].path,
                           width: 150.0,
                           height: 150.0,
                         ),
@@ -123,6 +125,7 @@ class Employee {
   final String materialId;
   final String name;
   final String details;
+  final String path;
 
-  Employee({this.id, this.materialId, this.name, this.details});
+  Employee({this.id, this.materialId, this.name, this.details, this.path});
 }

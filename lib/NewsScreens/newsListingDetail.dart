@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-class DirectoryView extends StatelessWidget {
+// ignore: must_be_immutable
+class NewsDetailsView extends StatelessWidget {
   final int index;
-  final String rigId;
+  final int list;
   final String rigName;
   final String rigDetails;
   final String path;
-  final int list;
+  String date;
 
-  DirectoryView(this.index, this.rigId, this.rigName, this.rigDetails,
-      this.path, this.list);
+  NewsDetailsView(this.index, this.list, this.rigName, this.rigDetails,
+      this.path, this.date);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,16 +34,15 @@ class DirectoryView extends StatelessWidget {
                         'assets/images/offfer.png',
                         fit: BoxFit.fill,
                       )
-                    : list == 0
+                    : list == 1
                         ? Image.network(
-                            'http://isow.acutrotech.com/assets/images/rigs/$path',
+                            'http://isow.acutrotech.com/assets/images/activities/$path',
                             fit: BoxFit.fill,
                           )
                         : Image.network(
-                            'http://isow.acutrotech.com/assets/images/materials/$path',
+                            'http://isow.acutrotech.com/assets/images/news/$path',
                             fit: BoxFit.fill,
                           )),
-
             Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               alignment: Alignment.centerLeft,
@@ -54,7 +54,10 @@ class DirectoryView extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.centerLeft,
               child: Text(
-                  list == 0 ? "Rig id : " + rigId : "Material id : " + rigId,
+                  "Valid till : " +
+                      date.substring(0, 10) +
+                      "." +
+                      date.substring(10),
                   style: const TextStyle(fontSize: 14, height: 1.5)),
             ),
             Divider(),
@@ -67,38 +70,6 @@ class DirectoryView extends StatelessWidget {
                       fontFamily: "FSSiena",
                       fontSize: 16)),
             )
-
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Row(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Container(
-            //         width: MediaQuery.of(context).size.width * 0.65,
-            //         child: Text(rigName,
-            //             style: const TextStyle(
-            //                 height: 1, fontFamily: "FSSiena", fontSize: 24)),
-            //       ),
-            //       Text(rigId,
-            //           style: const TextStyle(
-            //               height: 1,
-            //               fontFamily: "FSSiena",
-            //               fontSize: 12,
-            //               color: Colors.black54)),
-            //     ],
-            //   ),
-            // ),
-            // SizedBox(height: 40),
-            // Padding(
-            //   padding: const EdgeInsets.all(5.0),
-            //   child: Text(rigDetails,
-            //       style: const TextStyle(
-            //           height: 1.6,
-            //           color: Colors.black,
-            //           fontFamily: "FSSiena",
-            //           fontSize: 16)),
-            // )
           ],
         ),
       ),

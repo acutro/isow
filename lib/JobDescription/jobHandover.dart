@@ -91,6 +91,12 @@ class _JobdescriptionState extends State<JobHandover> {
                 context,
                 MaterialPageRoute(builder: (context) => JobDescriptionTab()),
               ));
+    } else if (response.statusCode == 500) {
+      Toast.show("This job is already assigned to this user", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
     } else {
       Toast.show("Failed", context,
           duration: Toast.LENGTH_SHORT,

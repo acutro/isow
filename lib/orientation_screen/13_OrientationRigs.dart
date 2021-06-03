@@ -18,10 +18,12 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
     List<riglist> rig = [];
     jsonData["data"].forEach((f) {
       riglist employee = riglist(
-          id: f["id"],
-          rigId: f["rigId"],
-          rigName: f["rigName"],
-          details: f["details"]);
+        id: f["id"],
+        rigId: f["rigId"],
+        rigName: f["rigName"],
+        details: f["details"],
+        path: f["rig_image"],
+      );
       rig.add(employee);
       setState(() {
         rigList = jsonData["data"];
@@ -69,7 +71,8 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
                   return Container(
                     child: ListTile(
                         leading: Image.network(
-                          'https://googleflutter.com/sample_image.jpg',
+                          'http://isow.acutrotech.com/assets/images/rigs/' +
+                              snapshot.data[index].path,
                           width: 150.0,
                           height: 150.0,
                         ),
@@ -136,6 +139,7 @@ class riglist {
   final String rigId;
   final String rigName;
   final String details;
+  final String path;
 
-  riglist({this.id, this.rigId, this.rigName, this.details});
+  riglist({this.id, this.rigId, this.rigName, this.details, this.path});
 }

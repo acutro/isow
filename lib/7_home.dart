@@ -16,6 +16,11 @@ import 'UserAuth/4_signup.dart';
 import 'JobDescription/JobDescriptionTab.dart';
 import 'FeedbackScreen/feedbackList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+//  Icon(
+//                   FontAwesomeIcons.envelope,
+//                   color: odWhite,
+//                 ),
 
 class HomeScreen extends StatefulWidget {
   // final String userId;
@@ -279,390 +284,403 @@ class HomeScreenState extends State<HomeScreen> {
               ],
             ),
             SizedBox(height: 30),
+
             Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 30.0,
-                runSpacing: 8.0,
-                // alignment: WrapAlignment.end,
-                // direction: Axis.horizontal,
-                // spacing: 10.0,
-                // runSpacing: 20.0,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RigAlert2()),
-                      );
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/1.png'),
-                            radius: 39.0,
+              alignment: WrapAlignment.center,
+              spacing: 30.0,
+              runSpacing: 15.0,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RigAlert2()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 75,
+                        width: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF4fc4f2), Colors.blue],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
-                          margin: EdgeInsets.all(10),
                         ),
-                        SizedBox(height: 10),
-                        Container(
-                          //margin: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
-                          height: 100.0,
-                          width: 80.0,
-                          alignment: Alignment.bottomCenter,
-                          child: Text('Rig Alert'),
+                        child: FaIcon(
+                          FontAwesomeIcons.broadcastTower,
+                          size: 45,
+                          color: Colors.white,
                         ),
-                      ],
-                    ),
+                        margin: EdgeInsets.all(10),
+                      ),
+                      Text("Rig Alert")
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OrientationScreen()),
-                      );
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/2.png'),
-                            radius: 39.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OrientationScreen()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 75,
+                        width: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF4fc4f2), Colors.blue],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
-                          margin: EdgeInsets.all(10),
                         ),
-                        SizedBox(height: 10),
-                        Container(
-                          //margin: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
-                          height: 100.0,
-                          width: 80.0,
-                          alignment: Alignment.bottomCenter,
-                          child: Text('Orientation'),
+                        child: FaIcon(
+                          FontAwesomeIcons.compass,
+                          size: 50,
+                          color: Colors.white,
                         ),
-                        // Positioned(
-                        //   bottom: 0,
-                        //   child: Text(
-                        //     'Orientation',
-                        //     style: TextStyle(
-                        //         fontWeight: FontWeight.bold,
-                        //         color: Colors.black,
-                        //         fontSize: 10.0),
-                        //   ),
-                        // ),
-                      ],
-                    ),
+                        margin: EdgeInsets.all(10),
+                      ),
+                      Text("Orientation")
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Contact()),
-                      );
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/3.png'),
-                            radius: 39.0,
-                          ),
-                          margin: EdgeInsets.all(10),
-                        ),
-                        SizedBox(height: 10),
-                        Positioned(
-                          bottom: 0,
-                          child: Text(
-                            'Contacts',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 10.0),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Contact()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 75,
+                        width: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF4fc4f2), Colors.blue],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
                         ),
-                      ],
-                    ),
+                        child: FaIcon(
+                          FontAwesomeIcons.users,
+                          size: 50,
+                          color: Colors.white,
+                        ),
+                        margin: EdgeInsets.all(10),
+                      ),
+                      Text("Contacts")
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FeedbackList()),
-                      );
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/4.png'),
-                            radius: 39.0,
-                          ),
-                          margin: EdgeInsets.all(10),
-                        ),
-                        SizedBox(height: 10),
-                        Positioned(
-                          bottom: 0,
-                          child: Text(
-                            'Feed Back',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 10.0),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FeedbackList()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 75,
+                        width: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF4fc4f2), Colors.blue],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
                         ),
-                      ],
-                    ),
+                        child: FaIcon(
+                          FontAwesomeIcons.comments,
+                          size: 50,
+                          color: Colors.white,
+                        ),
+                        margin: EdgeInsets.all(10),
+                      ),
+                      Text("Feed Back")
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RecivedWarning()),
-                      );
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/5.png'),
-                            radius: 39.0,
-                          ),
-                          margin: EdgeInsets.all(10),
-                        ),
-                        SizedBox(height: 10),
-                        Positioned(
-                          bottom: 0,
-                          child: Text(
-                            'Warning Letter',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 10.0),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RecivedWarning()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 75,
+                        width: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF4fc4f2), Colors.blue],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
                         ),
-                      ],
-                    ),
+                        child: FaIcon(
+                          FontAwesomeIcons.envelopeOpenText,
+                          size: 50,
+                          color: Colors.white,
+                        ),
+                        margin: EdgeInsets.all(10),
+                      ),
+                      Text("Warning Letter")
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NotepadList()),
-                      );
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/6.png'),
-                            radius: 39.0,
-                          ),
-                          margin: EdgeInsets.all(10),
-                        ),
-                        SizedBox(height: 10),
-                        Positioned(
-                          bottom: 0,
-                          child: Text(
-                            'Notepad',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 10.0),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NotepadList()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 75,
+                        width: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF4fc4f2), Colors.blue],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
                         ),
-                      ],
-                    ),
+                        child: FaIcon(
+                          FontAwesomeIcons.clipboardList,
+                          size: 50,
+                          color: Colors.white,
+                        ),
+                        margin: EdgeInsets.all(10),
+                      ),
+                      Text("Notepad")
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Emergency()),
-                      );
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/9.png'),
-                            radius: 39.0,
-                          ),
-                          margin: EdgeInsets.all(10),
-                        ),
-                        SizedBox(height: 10),
-                        Positioned(
-                          bottom: 0,
-                          child: Text(
-                            'Emergency',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 10.0),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Emergency()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 75,
+                        width: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF4fc4f2), Colors.blue],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
                         ),
-                      ],
-                    ),
+                        child: FaIcon(
+                          FontAwesomeIcons.ambulance,
+                          size: 45,
+                          color: Colors.white,
+                        ),
+                        margin: EdgeInsets.all(10),
+                      ),
+                      Text("Emergency")
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Services()),
-                      );
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/8.png'),
-                            radius: 39.0,
-                          ),
-                          //onTap: () {},
-                          margin: EdgeInsets.all(10),
-                        ),
-                        SizedBox(height: 10),
-                        Positioned(
-                          bottom: 0,
-                          child: Text(
-                            'Services',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 10.0),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Services()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 75,
+                        width: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF4fc4f2), Colors.blue],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
                         ),
-                      ],
-                    ),
+                        child: FaIcon(
+                          FontAwesomeIcons.personBooth,
+                          size: 45,
+                          color: Colors.white,
+                        ),
+                        margin: EdgeInsets.all(10),
+                      ),
+                      Text("Services")
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => JobDescriptionTab()),
-                      );
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/7.png'),
-                            radius: 39.0,
-                          ),
-                          //onTap: () {},
-                          margin: EdgeInsets.all(10),
-                        ),
-                        SizedBox(height: 10),
-                        Positioned(
-                          bottom: 0,
-                          child: Text(
-                            'Job Description',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 10.0),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => JobDescriptionTab()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 75,
+                        width: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF4fc4f2), Colors.blue],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
                         ),
-                      ],
-                    ),
+                        child: FaIcon(
+                          FontAwesomeIcons.copy,
+                          size: 50,
+                          color: Colors.white,
+                        ),
+                        margin: EdgeInsets.all(10),
+                      ),
+                      Text("Job Description")
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OfferMainScreen()),
-                      );
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/11.png'),
-                            radius: 39.0,
-                          ),
-                          //onTap: () {},
-                          margin: EdgeInsets.all(10),
-                        ),
-                        SizedBox(height: 10),
-                        Positioned(
-                          bottom: 0,
-                          child: Text(
-                            'Offers',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 10.0),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OfferMainScreen()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 75,
+                        width: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF4fc4f2), Colors.blue],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
                         ),
-                      ],
-                    ),
+                        child: FaIcon(
+                          FontAwesomeIcons.tags,
+                          size: 45,
+                          color: Colors.white,
+                        ),
+                        margin: EdgeInsets.all(10),
+                      ),
+                      Text("Offers")
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => News()),
-                      );
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/12.png'),
-                            radius: 39.0,
-                          ),
-                          //onTap: () {},
-                          margin: EdgeInsets.all(10),
-                        ),
-                        SizedBox(height: 10),
-                        Positioned(
-                          bottom: 0,
-                          child: Text(
-                            'News',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 10.0),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => News()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 75,
+                        width: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF4fc4f2), Colors.blue],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
                         ),
-                      ],
-                    ),
+                        child: FaIcon(
+                          FontAwesomeIcons.fileAlt,
+                          size: 50,
+                          color: Colors.white,
+                        ),
+                        margin: EdgeInsets.all(10),
+                      ),
+                      Text("News")
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => WeatherreportScreen()),
-                      );
-                    },
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/13.png'),
-                            radius: 39.0,
-                          ),
-                          //onTap: () {},
-                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
-                        ),
-                        SizedBox(height: 10),
-                        Positioned(
-                          bottom: 0,
-                          child: Text(
-                            'Weather',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 10.0),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WeatherreportScreen()),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 75,
+                        width: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF4fc4f2), Colors.blue],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
                         ),
-                      ],
-                    ),
+                        child: FaIcon(
+                          FontAwesomeIcons.sun,
+                          size: 50,
+                          color: Colors.white,
+                        ),
+                        margin: EdgeInsets.all(10),
+                      ),
+                      Text("Weather")
+                    ],
                   ),
-                ]),
+                ),
+              ],
+            ),
+
             // Column(
             //   children: <Widget>[
             //     Card(

@@ -56,13 +56,8 @@ class _MyApp extends State<JobHandoverList> {
     }
   }
 
-  Future handoverStatus(String status, String handStatus, String jobid) async {
-    var data = {
-      'jobId': jobid,
-      'handoverStatus': status,
-      'id': jobid,
-      'handover_status': handStatus
-    };
+  Future handoverStatus(String jobid, String userid, String hstatus) async {
+    var data = {'jobId': jobid, 'userId': userid, 'handoverStatus': hstatus};
     http.Response response;
     response = await http.post(
         'http://isow.acutrotech.com/index.php/api/JobHandover/handoverstatus',
@@ -110,7 +105,7 @@ class _MyApp extends State<JobHandoverList> {
     }
   }
 
-  Widget selectStatus(String jobid) {
+  Widget selectStatus(String sid, String jobid) {
     return Container(
       width: 100,
       child: Row(
@@ -118,7 +113,7 @@ class _MyApp extends State<JobHandoverList> {
         children: [
           GestureDetector(
             onTap: () {
-              handoverStatus('2', '0', jobid);
+              handoverStatus(jobid, sid, '2');
               fetchIssued(sid);
             },
             child: Column(
@@ -140,7 +135,7 @@ class _MyApp extends State<JobHandoverList> {
           ),
           GestureDetector(
             onTap: () {
-              handoverStatus('1', '1', jobid);
+              handoverStatus(jobid, sid, '1');
               fetchIssued(sid);
             },
             child: Column(
@@ -294,6 +289,7 @@ class _MyApp extends State<JobHandoverList> {
                                                       ["handoverStatus"] ==
                                                   '0'
                                               ? selectStatus(
+                                                  sid,
                                                   listFacts[index]["jobId"],
                                                 )
                                               : status(listFacts[index]

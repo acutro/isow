@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:isow/orientation_screen/13_OrientationRigs.dart';
-import 'rigDetailScreen.dart';
+import 'newsListingDetail.dart';
 
-class RigDetailScreen extends StatefulWidget {
-  static const routeName = "rig-screen";
+class NewsScreen extends StatefulWidget {
+  static const routeName = "news-screen";
+
   final List<dynamic> rigList;
-  final int flag;
+  final int list;
   final int id;
+  final String title;
 
-  RigDetailScreen({
-    Key key,
-    @required this.rigList,
-    this.flag,
-    this.id,
-  }) : super(key: key);
+  NewsScreen({Key key, @required this.rigList, this.list, this.id, this.title})
+      : super(key: key);
   @override
   _RigDetailScreenState createState() => _RigDetailScreenState();
 }
 
-class _RigDetailScreenState extends State<RigDetailScreen> {
+class _RigDetailScreenState extends State<NewsScreen> {
   int pageChanged;
 
   @override
@@ -43,7 +41,7 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            widget.flag == 0 ? 'Orientation Rigs' : 'Orientation Materials',
+            widget.title,
             style: TextStyle(
               color: Colors.white,
             ),
@@ -90,25 +88,14 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
             },
             itemCount: widget.rigList.length,
             itemBuilder: (BuildContext context, int index) {
-              if (widget.flag == 0) {
-                return DirectoryView(
-                  index,
-                  widget.rigList[index]["rigId"],
-                  widget.rigList[index]["rigName"],
-                  widget.rigList[index]["details"],
-                  widget.rigList[index]["rig_image"],
-                  widget.flag,
-                );
-              } else {
-                return DirectoryView(
-                  index,
-                  widget.rigList[index]["materialId"],
-                  widget.rigList[index]["name"],
-                  widget.rigList[index]["details"],
-                  widget.rigList[index]["material_image"],
-                  widget.flag,
-                );
-              }
+              return NewsDetailsView(
+                index,
+                widget.list,
+                widget.rigList[index]["title"],
+                widget.rigList[index]["description"],
+                widget.rigList[index]["image_url"],
+                widget.rigList[index]["created_date"],
+              );
             },
           ),
         ]));

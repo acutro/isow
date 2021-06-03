@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
+import 'newsListingMain.dart';
 
 class NewsListing extends StatefulWidget {
   final List<dynamic> newsList;
@@ -71,10 +72,15 @@ class _MyApp extends State<NewsListing> {
                         // final Message chat = chats[index];
                         return GestureDetector(
                           onTap: () {
-                            showDialogFunc(
+                            Navigator.push(
                               context,
-                              widget.newsList[index]["title"],
-                              widget.newsList[index]["description"],
+                              MaterialPageRoute(
+                                  builder: (context) => NewsScreen(
+                                        title: "News",
+                                        rigList: widget.newsList,
+                                        list: 2,
+                                        id: index,
+                                      )),
                             );
                           },
                           child: Container(
@@ -142,132 +148,4 @@ class _MyApp extends State<NewsListing> {
             ),
     );
   }
-}
-
-showDialogFunc(context, date, description) {
-  return showDialog(
-    context: context,
-    builder: (context) {
-      return Center(
-        child: Material(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-          elevation: 5.0,
-          type: MaterialType.card,
-          child: Container(
-            padding: EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(0.0, 1.0), //(x,y)
-                  blurRadius: 6.0,
-                ),
-              ],
-            ),
-            height: 400,
-            width: 350,
-            child: Column(
-              children: [
-                Container(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: 300,
-                        padding: EdgeInsets.all(3),
-                        child: Column(
-                          children: <Widget>[
-                            ListTile(
-                              leading: CircleAvatar(
-                                backgroundColor: Color(0xFF4fc4f2),
-                                child: Text(
-                                  'N',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 20),
-                                ),
-                              ),
-                              title: Text(
-                                date,
-                                // title,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              subtitle: Text(
-                                "Mumbai. 12 May 2020",
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.black45),
-                              ),
-                              // trailing: InkWell(
-                              //     onTap: () {
-                              //       Navigator.pop(context);
-                              //     },
-                              //     child: Icon(
-                              //       Icons.delete,
-                              //       color: Colors.red[400],
-                              //     )),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Divider(),
-                new Expanded(
-                  flex: 1,
-                  child: new SingleChildScrollView(
-                    //  padding: EdgeInsets.all(8),
-                    scrollDirection: Axis.vertical, //.horizontal
-                    child: new Text(
-                        '${description[0].toUpperCase()}${description.substring(1)}',
-                        // requirment,
-                        style: TextStyle(
-                          height: 1.5,
-                          color: Colors.black,
-                          fontSize: 14,
-                        )),
-                  ),
-                ),
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    new SizedBox(
-                      width: 10.0,
-                      height: 10.0,
-                    ),
-                    new SizedBox(
-                      width: 130.0,
-                      height: 45.0,
-                      child: FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        height: 30,
-                        child: Text(
-                          ' OK ',
-                          style: TextStyle(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    },
-  );
 }

@@ -96,6 +96,7 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
             ),
             Container(
               alignment: Alignment.center,
+              padding: EdgeInsets.all(10),
 
               /// margin: EdgeInsets.all(20.0),
               margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),

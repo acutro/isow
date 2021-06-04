@@ -77,8 +77,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
 
   int endT(DateTime due) {
     int tm;
-    tm = DateTime.now().difference(due).inMicroseconds;
-    //tm = DateTime.now().millisecondsSinceEpoch + 100000000 * 4;
+    tm = due.millisecondsSinceEpoch;
     return tm;
   }
 
@@ -287,10 +286,22 @@ class _RecivedWarningState extends State<RecivedAlert> {
                                                             time) {
                                                       if (time == null) {
                                                         return Text(
-                                                            'Game over');
+                                                          'Rig Alert Expired',
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        );
                                                       }
                                                       return Text(
-                                                          'days: [ ${time.days} ], hours: [ ${time.hours} ], min: [ ${time.min} ], sec: [ ${time.sec} ]');
+                                                        'DD: ${time.days} HH: ${time.hours} MM: ${time.min} SS: ${time.sec} ',
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      );
                                                     },
                                                   ),
                                                   //  Text(
@@ -358,6 +369,12 @@ class _RecivedWarningState extends State<RecivedAlert> {
 }
 
 showDialogFunc(context, person, position, date, content, issue) {
+  int endT(DateTime due) {
+    int tm;
+    tm = due.millisecondsSinceEpoch;
+    return tm;
+  }
+
   return showDialog(
     context: context,
     builder: (context) {
@@ -385,47 +402,64 @@ showDialogFunc(context, person, position, date, content, issue) {
             child: Column(
               children: [
                 Container(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: 300,
-                        padding: EdgeInsets.all(3),
-                        child: Column(
-                          children: <Widget>[
-                            ListTile(
-                              leading: CircleAvatar(
-                                backgroundColor: Color(0xFF4fc4f2),
-                                child: Text(
-                                  person.substring(0, 1),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 20),
-                                ),
-                              ),
-                              title: Text(
-                                '${person[0].toUpperCase()}${person.substring(1)}',
-                                // title,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, height: 1.5),
-                              ),
-                              subtitle: Text(
-                                '${issue[0].toUpperCase()}${issue.substring(1)}',
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.black45),
-                              ),
-                              trailing: Text(
-                                date,
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.black45),
-                              ),
+                  child: Container(
+                    width: 300,
+                    padding: EdgeInsets.all(3),
+                    child: Column(
+                      children: <Widget>[
+                        ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: Color(0xFF4fc4f2),
+                            child: Text(
+                              person.substring(0, 1),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 20),
                             ),
-                          ],
+                          ),
+                          title: Text(
+                            '${person[0].toUpperCase()}${person.substring(1)}',
+                            // title,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, height: 1.5),
+                          ),
+                          subtitle: Text(
+                            '${issue[0].toUpperCase()}${issue.substring(1)}',
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                                TextStyle(fontSize: 12, color: Colors.black45),
+                          ),
+                          trailing: Text(
+                            date,
+                            style:
+                                TextStyle(fontSize: 12, color: Colors.black45),
+                          ),
                         ),
-                      ),
-                    ],
+                        CountdownTimer(
+                          endTime: endT(
+                            DateTime.parse(date),
+                          ),
+                          //  endT(index),
+
+                          widgetBuilder: (_, CurrentRemainingTime time) {
+                            if (time == null) {
+                              return Text(
+                                'Rig Alert Expired',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              );
+                            }
+                            return Text(
+                              'DD: ${time.days} HH: ${time.hours} MM: ${time.min} SS: ${time.sec} ',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(

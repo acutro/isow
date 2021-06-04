@@ -69,9 +69,85 @@ class _RigAlert2State extends State<RigAlert2> {
     }
   }
 
+  int rigValue;
+  bool rigError = false;
+
+  Map mapResponse;
+  List<dynamic> rigList;
+  Future fetchData() async {
+    http.Response response;
+    response = await http
+        .get('http://isow.acutrotech.com/index.php/api/orientation/rigList');
+    if (response.statusCode == 200) {
+      setState(() {
+        mapResponse = jsonDecode(response.body);
+        rigList = mapResponse['data'];
+        print("{$rigList}");
+      });
+    }
+  }
+
+  Widget buildDropDownButton() {
+    return Container(
+      alignment: Alignment.center,
+      height: 58,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Colors.black54, width: 1),
+        borderRadius: BorderRadius.all(Radius.circular(1)),
+      ),
+
+      // color: Color.fromRGBO(221, 193, 135, 0.08),
+      child: DropdownButton(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        iconEnabledColor: Colors.black54,
+        value: rigValue,
+        isExpanded: true,
+        underline: Container(
+          height: 0,
+          color: rigError ? Colors.red : Colors.white,
+        ),
+        hint: Padding(
+          padding: const EdgeInsets.only(left: 12),
+          child: Text(
+            "Position",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.black54,
+            ),
+          ),
+        ),
+        items: (rigList).map<DropdownMenuItem>((answer) {
+          return DropdownMenuItem(
+            value: int.parse(answer["id"]),
+            child: Container(
+              padding: EdgeInsets.only(left: 12),
+              child: Text(
+                answer["rigName"],
+                style: TextStyle(color: Colors.black54, fontSize: 14),
+              ),
+            ),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            rigError = false;
+            rigValue = value;
+
+            print("$rigValue id of compny");
+          });
+          // print(companyValue.runtimeType);
+        },
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
+    fetchData();
     time = TimeOfDay.now();
   }
 
@@ -129,372 +205,378 @@ class _RigAlert2State extends State<RigAlert2> {
       //     child: Icon(Icons.add),
       //   ),
       // ),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            height: 100.0,
-            //width: double.infinity,
-            child: Row(
+      body: mapResponse == null
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView(
               children: <Widget>[
                 Container(
-                  height: 110,
-                  // width: 110,
-                  margin: EdgeInsets.fromLTRB(10.0, 20.0, 5.0, 5.0),
-                  alignment: Alignment.topLeft,
-                  child: Image.asset(
-                    'assets/scn1.PNG',
-                    fit: BoxFit.cover,
+                  margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  height: 100.0,
+                  //width: double.infinity,
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        height: 110,
+                        // width: 110,
+                        margin: EdgeInsets.fromLTRB(10.0, 20.0, 5.0, 5.0),
+                        alignment: Alignment.topLeft,
+                        child: Image.asset(
+                          'assets/scn1.PNG',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      SizedBox(width: SizeConfig.safeBlockHorizontal * 10),
+                      // Container(
+                      //   margin: EdgeInsets.all(5.0),
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.white,
+                      //     borderRadius: BorderRadius.circular(10.0),
+                      //   ),
+                      //   child: Column(
+                      //     children: <Widget>[
+                      //       Container(
+                      //         alignment: Alignment.topLeft,
+                      //         margin: EdgeInsets.fromLTRB(1.0, 10.0, 0.0, 5.0),
+                      //         child: Text(
+                      //           "COUNT DOWN TIME",
+                      //           style: TextStyle(
+                      //             color: Colors.black54,
+                      //             fontSize: 13.0,
+                      //             fontWeight: FontWeight.bold,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       Row(
+                      //         children: <Widget>[
+                      //           Container(
+                      //             width: 35,
+                      //             height: 35,
+                      //             alignment: Alignment.topLeft,
+                      //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
+                      //             //padding: EdgeInsets.all(5),
+
+                      //             child: Text(''),
+                      //             decoration: BoxDecoration(
+                      //                 borderRadius: BorderRadius.circular(5.0),
+                      //                 color: Colors.white,
+                      //                 border: Border.all(
+                      //                   color: Colors.black54,
+                      //                   width: 1,
+                      //                 )),
+                      //           ),
+                      //           SizedBox(width: 10.0),
+                      //           Container(
+                      //             width: 35,
+                      //             height: 35,
+                      //             alignment: Alignment.topLeft,
+                      //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
+                      //             //padding: EdgeInsets.all(5),
+
+                      //             child: Text(''),
+                      //             decoration: BoxDecoration(
+                      //                 borderRadius: BorderRadius.circular(5.0),
+                      //                 color: Colors.white,
+                      //                 border: Border.all(
+                      //                   color: Colors.black54,
+                      //                   width: 1,
+                      //                 )),
+                      //           ),
+                      //           SizedBox(width: 10.0),
+                      //           Container(
+                      //             width: 35,
+                      //             height: 35,
+                      //             alignment: Alignment.topLeft,
+                      //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
+                      //             //padding: EdgeInsets.all(5),
+
+                      //             child: Text(''),
+                      //             decoration: BoxDecoration(
+                      //                 borderRadius: BorderRadius.circular(5.0),
+                      //                 color: Colors.white,
+                      //                 border: Border.all(
+                      //                   color: Colors.black54,
+                      //                   width: 1,
+                      //                 )),
+                      //           ),
+                      //           SizedBox(width: 10.0),
+                      //         ],
+                      //       ),
+                      //       Container(
+                      //         margin: EdgeInsets.fromLTRB(0.0, 0.1, 0.0, 0.0),
+                      //         alignment: Alignment.topLeft,
+                      //         child: Text(
+                      //           "HOURS      MINUTES      SECONDS",
+                      //           style: TextStyle(
+                      //             color: Colors.black,
+                      //             fontSize: 10.0,
+                      //             //fontWeight: FontWeight.bold,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                    ],
                   ),
                 ),
-                SizedBox(width: SizeConfig.safeBlockHorizontal * 10),
+                Row(
+                  children: <Widget>[
+                    // SizedBox(width: 20.0),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "RIG NAME",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: SizeConfig.safeBlockHorizontal * 40),
+                    Container(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        "DATE AND TIME",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.fromLTRB(15.0, 5.0, 0.0, 0.0),
+                      alignment: Alignment.topLeft,
+                      child: buildDropDownButton(),
+                      // TextField(
+                      //   controller: _rigNameController,
+                      //   decoration: InputDecoration(
+                      //     border: OutlineInputBorder(),
+                      //     // labelText: 'User Name',
+                      //     // hintText: 'Enter Your Name',
+                      //   ),
+                      // ),
+                      width: SizeConfig.safeBlockHorizontal * 40,
+                      height: SizeConfig.safeBlockVertical * 5,
+                    ),
+                    SizedBox(width: SizeConfig.safeBlockHorizontal * 5),
+                    //SizedBox( height:SizeConfig.safeBlockVertical * 5),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(15.0, 5.0, 0.0, 0.0),
+                      alignment: Alignment.topLeft,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.black54)),
+                      child: ElevatedButton(
+                          child: Text(
+                            _datetime == null
+                                ? "Pick Date and Time"
+                                // DateTime.now().toString().substring(0, 16)
+
+                                : _datetime.toString().substring(0, 10) +
+                                    " : " +
+                                    time.toString().substring(10, 15),
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            primary: Colors.transparent,
+                          ),
+                          onPressed: () {
+                            showDatePicker(
+                              context: context,
+                              initialDate: _datetime == null
+                                  ? DateTime.now()
+                                  : _datetime,
+                              firstDate: DateTime(2001),
+                              lastDate: DateTime(2222),
+                            ).then((date) {
+                              setState(() {
+                                _datetime = date;
+                                _pickTime(time);
+                              });
+                            });
+                          }),
+
+                      //  TextField(
+                      //   decoration: InputDecoration(
+                      //     border: OutlineInputBorder(),
+                      //     // labelText: 'User Name',
+                      //     // hintText: 'Enter Your Name',
+                      //   ),
+                      // ),
+
+                      width: SizeConfig.safeBlockHorizontal * 40,
+                      height: SizeConfig.safeBlockVertical * 5,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 0.0),
+                      alignment: Alignment.topLeft,
+                      child: TextField(
+                        controller: _descriptionController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)),
+                          labelText: "Description Field",
+                          // hintText: 'Enter Your Name',
+                        ),
+                      ),
+                      height: SizeConfig.safeBlockVertical * 10,
+                      width: SizeConfig.safeBlockHorizontal * 90,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
+                      // alignment: Alignment.topLeft,
+                      child: RaisedButton(
+                        onPressed: () {},
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(80.0)),
+                        padding: EdgeInsets.all(0.0),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30.0),
+                              border: Border.all(
+                                color: Colors.blue,
+                              )),
+                          child: Container(
+                            constraints: BoxConstraints(
+                                maxWidth: 200.0, minHeight: 40.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              "View Rig Alert List",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black54),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: SizeConfig.safeBlockHorizontal * 5),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
+                      // alignment: Alignment.topLeft,
+                      child: RaisedButton(
+                        onPressed: () {
+                          if (rigValue == null ||
+                              _descriptionController.text == "") {
+                            Toast.show("Enter all Details", context,
+                                duration: Toast.LENGTH_SHORT,
+                                gravity: Toast.BOTTOM,
+                                textColor: Color(0xff49A5FF),
+                                backgroundColor: Colors.white);
+                          } else if (_datetime == null) {
+                            Toast.show("Pick date and Time", context,
+                                duration: Toast.LENGTH_SHORT,
+                                gravity: Toast.BOTTOM,
+                                textColor: Color(0xff49A5FF),
+                                backgroundColor: Colors.white);
+                          } else {
+                            upAlert(
+                                widget.userId,
+                                rigValue.toString(),
+                                _descriptionController.text,
+                                _datetime.toString().substring(0, 10),
+                                time.toString().substring(10, 15));
+                            _rigNameController.text = "";
+                            _descriptionController.text = "";
+                          }
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(80.0)),
+                        padding: EdgeInsets.all(0.0),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Color(0xFF4fc4f2), Colors.blue],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
+                              borderRadius: BorderRadius.circular(30.0)),
+                          child: Container(
+                            constraints: BoxConstraints(
+                                maxWidth: 100.0, minHeight: 40.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Send ",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 // Container(
-                //   margin: EdgeInsets.all(5.0),
-                //   decoration: BoxDecoration(
-                //     color: Colors.white,
-                //     borderRadius: BorderRadius.circular(10.0),
+                //   alignment: Alignment.topLeft,
+                //   margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
+                //   child: Text(
+                //     "ALERTED RIG LIST",
+                //     style: TextStyle(
+                //       color: Colors.black,
+                //       fontWeight: FontWeight.bold,
+                //       fontSize: 15.0,
+                //     ),
                 //   ),
-                //   child: Column(
-                //     children: <Widget>[
-                //       Container(
-                //         alignment: Alignment.topLeft,
-                //         margin: EdgeInsets.fromLTRB(1.0, 10.0, 0.0, 5.0),
-                //         child: Text(
-                //           "COUNT DOWN TIME",
-                //           style: TextStyle(
-                //             color: Colors.black54,
-                //             fontSize: 13.0,
-                //             fontWeight: FontWeight.bold,
+                // ),
+                // Container(
+                //   width: MediaQuery.of(context).size.width,
+                //   alignment: Alignment.topLeft,
+                //   margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                //   child: Tables2(),
+                // ),
+                // Container(
+                //   alignment: Alignment.bottomCenter,
+                //   margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
+                //   // alignment: Alignment.topLeft,
+                //   child: RaisedButton(
+                //     onPressed: () {},
+                //     shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(80.0)),
+                //     padding: EdgeInsets.all(0.0),
+                //     child: Ink(
+                //       decoration: BoxDecoration(
+                //           gradient: LinearGradient(
+                //             colors: [Color(0xFF4fc4f2), Colors.blue],
+                //             begin: Alignment.centerLeft,
+                //             end: Alignment.centerRight,
                 //           ),
+                //           borderRadius: BorderRadius.circular(30.0)),
+                //       child: Container(
+                //         constraints: BoxConstraints(maxWidth: 100.0, minHeight: 40.0),
+                //         alignment: Alignment.center,
+                //         child: Text(
+                //           "Alert",
+                //           textAlign: TextAlign.center,
+                //           style: TextStyle(color: Colors.white),
                 //         ),
                 //       ),
-                //       Row(
-                //         children: <Widget>[
-                //           Container(
-                //             width: 35,
-                //             height: 35,
-                //             alignment: Alignment.topLeft,
-                //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
-                //             //padding: EdgeInsets.all(5),
-
-                //             child: Text(''),
-                //             decoration: BoxDecoration(
-                //                 borderRadius: BorderRadius.circular(5.0),
-                //                 color: Colors.white,
-                //                 border: Border.all(
-                //                   color: Colors.black54,
-                //                   width: 1,
-                //                 )),
-                //           ),
-                //           SizedBox(width: 10.0),
-                //           Container(
-                //             width: 35,
-                //             height: 35,
-                //             alignment: Alignment.topLeft,
-                //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
-                //             //padding: EdgeInsets.all(5),
-
-                //             child: Text(''),
-                //             decoration: BoxDecoration(
-                //                 borderRadius: BorderRadius.circular(5.0),
-                //                 color: Colors.white,
-                //                 border: Border.all(
-                //                   color: Colors.black54,
-                //                   width: 1,
-                //                 )),
-                //           ),
-                //           SizedBox(width: 10.0),
-                //           Container(
-                //             width: 35,
-                //             height: 35,
-                //             alignment: Alignment.topLeft,
-                //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
-                //             //padding: EdgeInsets.all(5),
-
-                //             child: Text(''),
-                //             decoration: BoxDecoration(
-                //                 borderRadius: BorderRadius.circular(5.0),
-                //                 color: Colors.white,
-                //                 border: Border.all(
-                //                   color: Colors.black54,
-                //                   width: 1,
-                //                 )),
-                //           ),
-                //           SizedBox(width: 10.0),
-                //         ],
-                //       ),
-                //       Container(
-                //         margin: EdgeInsets.fromLTRB(0.0, 0.1, 0.0, 0.0),
-                //         alignment: Alignment.topLeft,
-                //         child: Text(
-                //           "HOURS      MINUTES      SECONDS",
-                //           style: TextStyle(
-                //             color: Colors.black,
-                //             fontSize: 10.0,
-                //             //fontWeight: FontWeight.bold,
-                //           ),
-                //         ),
-                //       ),
-                //     ],
+                //     ),
                 //   ),
                 // ),
               ],
             ),
-          ),
-          Row(
-            children: <Widget>[
-              // SizedBox(width: 20.0),
-              Container(
-                margin: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "RIG NAME",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12.0,
-                  ),
-                ),
-              ),
-              SizedBox(width: SizeConfig.safeBlockHorizontal * 40),
-              Container(
-                alignment: Alignment.topRight,
-                child: Text(
-                  "DATE AND TIME",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12.0,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.fromLTRB(15.0, 5.0, 0.0, 0.0),
-                alignment: Alignment.topLeft,
-                child: TextField(
-                  controller: _rigNameController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    // labelText: 'User Name',
-                    // hintText: 'Enter Your Name',
-                  ),
-                ),
-                width: SizeConfig.safeBlockHorizontal * 40,
-                height: SizeConfig.safeBlockVertical * 5,
-              ),
-              SizedBox(width: SizeConfig.safeBlockHorizontal * 5),
-              //SizedBox( height:SizeConfig.safeBlockVertical * 5),
-              Container(
-                margin: EdgeInsets.fromLTRB(15.0, 5.0, 0.0, 0.0),
-                alignment: Alignment.topLeft,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.black54)),
-                child: ElevatedButton(
-                    child: Text(
-                      _datetime == null
-                          ? "Pick Date and Time"
-                          // DateTime.now().toString().substring(0, 16)
-
-                          : _datetime.toString().substring(0, 10) +
-                              " : " +
-                              time.toString().substring(10, 15),
-                      style: TextStyle(color: Colors.black54),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      primary: Colors.transparent,
-                    ),
-                    onPressed: () {
-                      showDatePicker(
-                        context: context,
-                        initialDate:
-                            _datetime == null ? DateTime.now() : _datetime,
-                        firstDate: DateTime(2001),
-                        lastDate: DateTime(2222),
-                      ).then((date) {
-                        setState(() {
-                          _datetime = date;
-                          _pickTime(time);
-                        });
-                      });
-                    }),
-
-                //  TextField(
-                //   decoration: InputDecoration(
-                //     border: OutlineInputBorder(),
-                //     // labelText: 'User Name',
-                //     // hintText: 'Enter Your Name',
-                //   ),
-                // ),
-
-                width: SizeConfig.safeBlockHorizontal * 40,
-                height: SizeConfig.safeBlockVertical * 5,
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 0.0),
-                alignment: Alignment.topLeft,
-                child: TextField(
-                  controller: _descriptionController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)),
-                    labelText: "Description Field",
-                    // hintText: 'Enter Your Name',
-                  ),
-                ),
-                height: SizeConfig.safeBlockVertical * 10,
-                width: SizeConfig.safeBlockHorizontal * 90,
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
-                // alignment: Alignment.topLeft,
-                child: RaisedButton(
-                  onPressed: () {},
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80.0)),
-                  padding: EdgeInsets.all(0.0),
-                  child: Ink(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30.0),
-                        border: Border.all(
-                          color: Colors.blue,
-                        )),
-                    child: Container(
-                      constraints:
-                          BoxConstraints(maxWidth: 200.0, minHeight: 40.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "View Rig Alert List",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black54),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(width: SizeConfig.safeBlockHorizontal * 5),
-              Container(
-                margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
-                // alignment: Alignment.topLeft,
-                child: RaisedButton(
-                  onPressed: () {
-                    if (_rigNameController.text == "" ||
-                        _descriptionController.text == "") {
-                      Toast.show("Enter all Details", context,
-                          duration: Toast.LENGTH_SHORT,
-                          gravity: Toast.BOTTOM,
-                          textColor: Color(0xff49A5FF),
-                          backgroundColor: Colors.white);
-                    } else if (_datetime == null) {
-                      Toast.show("Pick date and Time", context,
-                          duration: Toast.LENGTH_SHORT,
-                          gravity: Toast.BOTTOM,
-                          textColor: Color(0xff49A5FF),
-                          backgroundColor: Colors.white);
-                    } else {
-                      upAlert(
-                          widget.userId,
-                          _rigNameController.text,
-                          _descriptionController.text,
-                          _datetime.toString().substring(0, 10),
-                          time.toString().substring(10, 15));
-                      _rigNameController.text = "";
-                      _descriptionController.text = "";
-                    }
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80.0)),
-                  padding: EdgeInsets.all(0.0),
-                  child: Ink(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Color(0xFF4fc4f2), Colors.blue],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                        ),
-                        borderRadius: BorderRadius.circular(30.0)),
-                    child: Container(
-                      constraints:
-                          BoxConstraints(maxWidth: 100.0, minHeight: 40.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Send ",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          // Container(
-          //   alignment: Alignment.topLeft,
-          //   margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
-          //   child: Text(
-          //     "ALERTED RIG LIST",
-          //     style: TextStyle(
-          //       color: Colors.black,
-          //       fontWeight: FontWeight.bold,
-          //       fontSize: 15.0,
-          //     ),
-          //   ),
-          // ),
-          // Container(
-          //   width: MediaQuery.of(context).size.width,
-          //   alignment: Alignment.topLeft,
-          //   margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-          //   child: Tables2(),
-          // ),
-          // Container(
-          //   alignment: Alignment.bottomCenter,
-          //   margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
-          //   // alignment: Alignment.topLeft,
-          //   child: RaisedButton(
-          //     onPressed: () {},
-          //     shape: RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.circular(80.0)),
-          //     padding: EdgeInsets.all(0.0),
-          //     child: Ink(
-          //       decoration: BoxDecoration(
-          //           gradient: LinearGradient(
-          //             colors: [Color(0xFF4fc4f2), Colors.blue],
-          //             begin: Alignment.centerLeft,
-          //             end: Alignment.centerRight,
-          //           ),
-          //           borderRadius: BorderRadius.circular(30.0)),
-          //       child: Container(
-          //         constraints: BoxConstraints(maxWidth: 100.0, minHeight: 40.0),
-          //         alignment: Alignment.center,
-          //         child: Text(
-          //           "Alert",
-          //           textAlign: TextAlign.center,
-          //           style: TextStyle(color: Colors.white),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-        ],
-      ),
     );
   }
 }

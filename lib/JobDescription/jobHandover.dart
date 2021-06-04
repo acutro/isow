@@ -123,6 +123,7 @@ class _JobdescriptionState extends State<JobHandover> {
         },
         iconEnabledColor: Colors.white,
         value: roleValue,
+        dropdownColor: Color(0xff49A5FF),
         isExpanded: true,
         underline: Container(
           height: 0,
@@ -145,7 +146,7 @@ class _JobdescriptionState extends State<JobHandover> {
               padding: EdgeInsets.only(left: 12),
               child: Text(
                 answer["userRoles"],
-                style: TextStyle(color: Colors.black38, fontSize: 14),
+                style: TextStyle(color: Colors.white, fontSize: 14),
               ),
             ),
           );
@@ -183,6 +184,7 @@ class _JobdescriptionState extends State<JobHandover> {
               },
               iconEnabledColor: Colors.white,
               value: userValue,
+              dropdownColor: Color(0xff49A5FF),
               isExpanded: true,
               underline: Container(
                 height: 0,
@@ -205,7 +207,7 @@ class _JobdescriptionState extends State<JobHandover> {
                     padding: EdgeInsets.only(left: 12),
                     child: Text(
                       answer["name"],
-                      style: TextStyle(color: Colors.black38, fontSize: 14),
+                      style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                   ),
                 );

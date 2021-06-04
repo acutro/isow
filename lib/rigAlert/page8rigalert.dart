@@ -96,8 +96,15 @@ class _RigAlert2State extends State<RigAlert2> {
         ),
         actions: [
           Icon(Icons.headset_mic),
+          SizedBox(
+            width: 10,
+          ),
+
           Icon(Icons.logout),
-          Icon(Icons.more_vert),
+          // Icon(Icons.more_vert),
+          SizedBox(
+            width: 10,
+          )
         ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -107,21 +114,21 @@ class _RigAlert2State extends State<RigAlert2> {
                   colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 65.0),
-        child: FloatingActionButton(
-          backgroundColor: const Color(0xfffcfafa),
-          foregroundColor: Colors.black54,
-          mini: true,
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Rigalert()),
-            );
-          },
-          child: Icon(Icons.add),
-        ),
-      ),
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(bottom: 65.0),
+      //   child: FloatingActionButton(
+      //     backgroundColor: const Color(0xfffcfafa),
+      //     foregroundColor: Colors.black54,
+      //     mini: true,
+      //     onPressed: () {
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (context) => Rigalert()),
+      //       );
+      //     },
+      //     child: Icon(Icons.add),
+      //   ),
+      // ),
       body: ListView(
         children: <Widget>[
           Container(
@@ -145,96 +152,96 @@ class _RigAlert2State extends State<RigAlert2> {
                   ),
                 ),
                 SizedBox(width: SizeConfig.safeBlockHorizontal * 10),
-                Container(
-                  margin: EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment.topLeft,
-                        margin: EdgeInsets.fromLTRB(1.0, 10.0, 0.0, 5.0),
-                        child: Text(
-                          "COUNT DOWN TIME",
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            width: 35,
-                            height: 35,
-                            alignment: Alignment.topLeft,
-                            margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
-                            //padding: EdgeInsets.all(5),
+                // Container(
+                //   margin: EdgeInsets.all(5.0),
+                //   decoration: BoxDecoration(
+                //     color: Colors.white,
+                //     borderRadius: BorderRadius.circular(10.0),
+                //   ),
+                //   child: Column(
+                //     children: <Widget>[
+                //       Container(
+                //         alignment: Alignment.topLeft,
+                //         margin: EdgeInsets.fromLTRB(1.0, 10.0, 0.0, 5.0),
+                //         child: Text(
+                //           "COUNT DOWN TIME",
+                //           style: TextStyle(
+                //             color: Colors.black54,
+                //             fontSize: 13.0,
+                //             fontWeight: FontWeight.bold,
+                //           ),
+                //         ),
+                //       ),
+                //       Row(
+                //         children: <Widget>[
+                //           Container(
+                //             width: 35,
+                //             height: 35,
+                //             alignment: Alignment.topLeft,
+                //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
+                //             //padding: EdgeInsets.all(5),
 
-                            child: Text(''),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.white,
-                                border: Border.all(
-                                  color: Colors.black54,
-                                  width: 1,
-                                )),
-                          ),
-                          SizedBox(width: 10.0),
-                          Container(
-                            width: 35,
-                            height: 35,
-                            alignment: Alignment.topLeft,
-                            margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
-                            //padding: EdgeInsets.all(5),
+                //             child: Text(''),
+                //             decoration: BoxDecoration(
+                //                 borderRadius: BorderRadius.circular(5.0),
+                //                 color: Colors.white,
+                //                 border: Border.all(
+                //                   color: Colors.black54,
+                //                   width: 1,
+                //                 )),
+                //           ),
+                //           SizedBox(width: 10.0),
+                //           Container(
+                //             width: 35,
+                //             height: 35,
+                //             alignment: Alignment.topLeft,
+                //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
+                //             //padding: EdgeInsets.all(5),
 
-                            child: Text(''),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.white,
-                                border: Border.all(
-                                  color: Colors.black54,
-                                  width: 1,
-                                )),
-                          ),
-                          SizedBox(width: 10.0),
-                          Container(
-                            width: 35,
-                            height: 35,
-                            alignment: Alignment.topLeft,
-                            margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
-                            //padding: EdgeInsets.all(5),
+                //             child: Text(''),
+                //             decoration: BoxDecoration(
+                //                 borderRadius: BorderRadius.circular(5.0),
+                //                 color: Colors.white,
+                //                 border: Border.all(
+                //                   color: Colors.black54,
+                //                   width: 1,
+                //                 )),
+                //           ),
+                //           SizedBox(width: 10.0),
+                //           Container(
+                //             width: 35,
+                //             height: 35,
+                //             alignment: Alignment.topLeft,
+                //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
+                //             //padding: EdgeInsets.all(5),
 
-                            child: Text(''),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                                color: Colors.white,
-                                border: Border.all(
-                                  color: Colors.black54,
-                                  width: 1,
-                                )),
-                          ),
-                          SizedBox(width: 10.0),
-                        ],
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0.0, 0.1, 0.0, 0.0),
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "HOURS      MINUTES      SECONDS",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 10.0,
-                            //fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                //             child: Text(''),
+                //             decoration: BoxDecoration(
+                //                 borderRadius: BorderRadius.circular(5.0),
+                //                 color: Colors.white,
+                //                 border: Border.all(
+                //                   color: Colors.black54,
+                //                   width: 1,
+                //                 )),
+                //           ),
+                //           SizedBox(width: 10.0),
+                //         ],
+                //       ),
+                //       Container(
+                //         margin: EdgeInsets.fromLTRB(0.0, 0.1, 0.0, 0.0),
+                //         alignment: Alignment.topLeft,
+                //         child: Text(
+                //           "HOURS      MINUTES      SECONDS",
+                //           style: TextStyle(
+                //             color: Colors.black,
+                //             fontSize: 10.0,
+                //             //fontWeight: FontWeight.bold,
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -439,53 +446,53 @@ class _RigAlert2State extends State<RigAlert2> {
               ),
             ],
           ),
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
-            child: Text(
-              "ALERTED RIG LIST",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 15.0,
-              ),
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-            child: Tables2(),
-          ),
-          Container(
-            alignment: Alignment.bottomCenter,
-            margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
-            // alignment: Alignment.topLeft,
-            child: RaisedButton(
-              onPressed: () {},
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(80.0)),
-              padding: EdgeInsets.all(0.0),
-              child: Ink(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF4fc4f2), Colors.blue],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                    borderRadius: BorderRadius.circular(30.0)),
-                child: Container(
-                  constraints: BoxConstraints(maxWidth: 100.0, minHeight: 40.0),
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Alert",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Container(
+          //   alignment: Alignment.topLeft,
+          //   margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
+          //   child: Text(
+          //     "ALERTED RIG LIST",
+          //     style: TextStyle(
+          //       color: Colors.black,
+          //       fontWeight: FontWeight.bold,
+          //       fontSize: 15.0,
+          //     ),
+          //   ),
+          // ),
+          // Container(
+          //   width: MediaQuery.of(context).size.width,
+          //   alignment: Alignment.topLeft,
+          //   margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+          //   child: Tables2(),
+          // ),
+          // Container(
+          //   alignment: Alignment.bottomCenter,
+          //   margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
+          //   // alignment: Alignment.topLeft,
+          //   child: RaisedButton(
+          //     onPressed: () {},
+          //     shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(80.0)),
+          //     padding: EdgeInsets.all(0.0),
+          //     child: Ink(
+          //       decoration: BoxDecoration(
+          //           gradient: LinearGradient(
+          //             colors: [Color(0xFF4fc4f2), Colors.blue],
+          //             begin: Alignment.centerLeft,
+          //             end: Alignment.centerRight,
+          //           ),
+          //           borderRadius: BorderRadius.circular(30.0)),
+          //       child: Container(
+          //         constraints: BoxConstraints(maxWidth: 100.0, minHeight: 40.0),
+          //         alignment: Alignment.center,
+          //         child: Text(
+          //           "Alert",
+          //           textAlign: TextAlign.center,
+          //           style: TextStyle(color: Colors.white),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

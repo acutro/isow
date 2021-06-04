@@ -79,21 +79,17 @@ class _MyApp extends State<Contact> {
           actions: [
             Icon(
               Icons.headset_mic,
-              color: Colors.white38,
+              color: Colors.white,
             ),
             SizedBox(
-              width: 5,
+              width: 10,
             ),
             Icon(
               Icons.logout,
-              color: Colors.white38,
+              color: Colors.white,
             ),
             SizedBox(
-              width: 5,
-            ),
-            Icon(
-              Icons.menu,
-              color: Colors.white38,
+              width: 10,
             ),
           ],
         ),

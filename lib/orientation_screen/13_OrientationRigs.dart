@@ -48,8 +48,13 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
         ),
         actions: [
           Icon(Icons.headset_mic),
+          SizedBox(
+            width: 10,
+          ),
           Icon(Icons.logout),
-          Icon(Icons.more_vert),
+          SizedBox(
+            width: 10,
+          )
         ],
         flexibleSpace: Container(
           decoration: BoxDecoration(

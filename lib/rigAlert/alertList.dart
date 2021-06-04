@@ -1,3 +1,6 @@
+import 'package:flutter_countdown_timer/countdown.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -5,6 +8,7 @@ import 'dart:convert';
 import 'page8rigalert.dart';
 import 'package:toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 
 class RecivedAlert extends StatefulWidget {
   @override
@@ -12,6 +16,8 @@ class RecivedAlert extends StatefulWidget {
 }
 
 class _RecivedWarningState extends State<RecivedAlert> {
+  CountdownTimerController controller;
+  int endTime = DateTime.now().millisecondsSinceEpoch + 100000000 * 30;
   String sid;
   bool error = true;
   Future getValidation() async {
@@ -65,6 +71,17 @@ class _RecivedWarningState extends State<RecivedAlert> {
     super.initState();
   }
 
+  void onEnd() {
+    print('onEnd');
+  }
+
+  int endT(DateTime due) {
+    int tm;
+    tm = DateTime.now().difference(due).inMicroseconds;
+    //tm = DateTime.now().millisecondsSinceEpoch + 100000000 * 4;
+    return tm;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,8 +93,13 @@ class _RecivedWarningState extends State<RecivedAlert> {
         ),
         actions: [
           Icon(Icons.headset_mic),
+          SizedBox(
+            width: 10,
+          ),
           Icon(Icons.logout),
-          Icon(Icons.more_vert),
+          SizedBox(
+            width: 10,
+          )
         ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -254,23 +276,39 @@ class _RecivedWarningState extends State<RecivedAlert> {
                                               children: [
                                                 Container(
                                                   margin: EdgeInsets.all(5.0),
-                                                  child: Text(
-                                                    listFacts[index]
-                                                        ["Alerted Rig List"],
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        height: 1.5),
+                                                  child: CountdownTimer(
+                                                    endTime:
+                                                        //  endT(index),
+                                                        endT(DateTime.parse(
+                                                            listFacts[index]
+                                                                ["Date"])),
+                                                    widgetBuilder: (_,
+                                                        CurrentRemainingTime
+                                                            time) {
+                                                      if (time == null) {
+                                                        return Text(
+                                                            'Game over');
+                                                      }
+                                                      return Text(
+                                                          'days: [ ${time.days} ], hours: [ ${time.hours} ], min: [ ${time.min} ], sec: [ ${time.sec} ]');
+                                                    },
                                                   ),
+                                                  //  Text(
+                                                  //   countTime,
+                                                  //   // listFacts[index]
+                                                  //   //     ["Alerted Rig List"],
+                                                  //   textAlign: TextAlign.center,
+                                                  //   style: TextStyle(
+                                                  //       fontSize: 14,
+                                                  //       fontWeight:
+                                                  //           FontWeight.bold,
+                                                  //       height: 1.5),
                                                 ),
                                                 Divider(),
                                                 Container(
                                                   margin: EdgeInsets.all(10.0),
                                                   child: Text(
                                                     '${listFacts[index]["Description"][0].toUpperCase()}${listFacts[index]["Description"].substring(1)}',
-                                                    // snapshot.data[index].content,
                                                     style: TextStyle(
                                                         fontSize: 13,
                                                         height: 1.5),

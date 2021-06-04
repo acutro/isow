@@ -7,6 +7,7 @@ import 'dart:convert';
 import '17_notepad.dart';
 import 'package:toast/toast.dart';
 import 'package:isow/Widgects/alertBox.dart';
+import 'notepadUpdate.dart';
 
 class NotepadList extends StatefulWidget {
   // final String email;
@@ -135,21 +136,17 @@ class _MyApp extends State<NotepadList> {
           actions: [
             Icon(
               Icons.headset_mic,
-              color: Colors.white38,
+              color: Colors.white,
             ),
             SizedBox(
-              width: 5,
+              width: 10,
             ),
             Icon(
               Icons.logout,
-              color: Colors.white38,
+              color: Colors.white,
             ),
             SizedBox(
-              width: 5,
-            ),
-            Icon(
-              Icons.menu,
-              color: Colors.white38,
+              width: 10,
             ),
           ],
         ),
@@ -177,7 +174,6 @@ class _MyApp extends State<NotepadList> {
                                   listFacts[index]["name"],
                                   listFacts[index]["date"],
                                   listFacts[index]["requirements"],
-                                  'https://googleflutter.com/sample_image.jpg',
                                   listFacts[index]["id"],
                                 );
                               },
@@ -225,48 +221,116 @@ class _MyApp extends State<NotepadList> {
                                               subtitle: Text(
                                                 listFacts[index]["date"],
                                               ),
-                                              trailing: InkWell(
-                                                  onTap: () {
-                                                    // BuildAlertDialogDelete();
+                                              trailing: Container(
+                                                width: 70,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    InkWell(
+                                                        onTap: () {
+                                                          // BuildAlertDialogDelete();
 
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (context) =>
-                                                          AlertDialog(
-                                                        backgroundColor:
-                                                            Colors.white,
-                                                        title: Text("Delete?"),
-                                                        content: Text(
-                                                            "Do you want to delete?"),
-                                                        actions: [
-                                                          FlatButton(
-                                                              onPressed: () {
-                                                                Navigator.pop(
-                                                                    context);
-                                                              },
-                                                              child:
-                                                                  Text("No")),
-                                                          FlatButton(
-                                                              onPressed: () {
-                                                                Navigator.pop(
-                                                                    context);
-                                                                deleteNotepad(
-                                                                    listFacts[
-                                                                            index]
-                                                                        ["id"],
-                                                                    sid);
-                                                                fetchData(sid);
-                                                              },
-                                                              child:
-                                                                  Text("Yes"))
-                                                        ],
-                                                      ),
-                                                    );
-                                                  },
-                                                  child: Icon(
-                                                    Icons.delete,
-                                                    color: Colors.red[400],
-                                                  )),
+                                                          showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (context) =>
+                                                                    AlertDialog(
+                                                              backgroundColor:
+                                                                  Colors.white,
+                                                              title: Text(
+                                                                  "Update ?"),
+                                                              content: Text(
+                                                                  "Do you want to Update ?"),
+                                                              actions: [
+                                                                FlatButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    child: Text(
+                                                                        "No")),
+                                                                FlatButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator
+                                                                          .pushReplacement(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                UpdateNotepad(
+                                                                                  id: listFacts[index]["id"],
+                                                                                  userId: listFacts[index]["userId"],
+                                                                                  name: listFacts[index]["name"],
+                                                                                  requirment: listFacts[index]["requirements"],
+                                                                                  date: listFacts[index]["date"],
+                                                                                )),
+                                                                      );
+                                                                    },
+                                                                    child: Text(
+                                                                        "Yes"))
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: Icon(
+                                                          Icons.create_rounded,
+                                                          color:
+                                                              Colors.green[400],
+                                                        )),
+                                                    InkWell(
+                                                        onTap: () {
+                                                          // BuildAlertDialogDelete();
+
+                                                          showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (context) =>
+                                                                    AlertDialog(
+                                                              backgroundColor:
+                                                                  Colors.white,
+                                                              title: Text(
+                                                                  "Delete?"),
+                                                              content: Text(
+                                                                  "Do you want to delete?"),
+                                                              actions: [
+                                                                FlatButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    child: Text(
+                                                                        "No")),
+                                                                FlatButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      deleteNotepad(
+                                                                          listFacts[index]
+                                                                              [
+                                                                              "id"],
+                                                                          sid);
+                                                                      fetchData(
+                                                                          sid);
+                                                                    },
+                                                                    child: Text(
+                                                                        "Yes"))
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: Icon(
+                                                          Icons.delete,
+                                                          color:
+                                                              Colors.red[400],
+                                                        )),
+                                                  ],
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -298,7 +362,7 @@ class _MyApp extends State<NotepadList> {
   }
 }
 
-showDialogFunc(context, title, date, requirment, path, id) {
+showDialogFunc(context, title, date, requirment, id) {
   Future deleteNotepad(
     String id,
   ) async {

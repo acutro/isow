@@ -17,10 +17,11 @@ class FeedbackCounter extends StatefulWidget {
 class _FeedbackCounterState extends State<FeedbackCounter> {
   Future upFeedback(
     String content,
+    String opinion,
   ) async {
     var data = {
       'content': content,
-      'opinion': 'mm',
+      'opinion': opinion,
       'userId': widget.userId,
     };
     http.Response response;
@@ -49,7 +50,7 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
   }
 
   TextEditingController _feedbackController = new TextEditingController();
-  // TextEditingController _opinionController = new TextEditingController();
+  TextEditingController _opinionController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,27 +90,41 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                         ),
                       ),
                     ),
-
-                    //  TextFormField(
-                    //   cursorColor: Theme.of(context).cursorColor,
-                    //   // initialValue: 'Opinion and Issue?',
-                    //   maxLength: 20,
-                    //   controller: _opinionController,
-                    //   decoration: InputDecoration(
-                    //     // icon: Icon(Icons.favorite),
-                    //     labelText: '''What's Empoloyers''',
-                    //     labelStyle: TextStyle(
-                    //       color: Color(0xFF6200EE),
-                    //     ),
-                    //     enabledBorder: UnderlineInputBorder(
-                    //       borderSide: BorderSide(color: Color(0xFF6200EE)),
-                    //     ),
-                    //   ),
-                    // ),
                   ),
                 ),
               ],
             ),
+            Container(
+              alignment: Alignment.center,
+
+              /// margin: EdgeInsets.all(20.0),
+              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 6.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              height: 45.0,
+              child: TextField(
+                controller: _opinionController,
+                style: TextStyle(color: Colors.black54),
+                decoration: new InputDecoration(
+                  hintText: 'Opinion',
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                ),
+              ),
+            ),
+
             Row(
               children: <Widget>[
                 Expanded(
@@ -202,17 +217,18 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                         ),
                       ),
                       onTap: () {
-                        if (_feedbackController.text == "") {
+                        if (_feedbackController.text == "" ||
+                            _opinionController.text == "") {
                           Toast.show("Please enter Feedback", context,
                               duration: Toast.LENGTH_SHORT,
                               gravity: Toast.BOTTOM,
                               textColor: Color(0xff49A5FF),
                               backgroundColor: Colors.white);
                         } else {
-                          upFeedback(
-                            _feedbackController.text,
-                          );
+                          upFeedback(_feedbackController.text,
+                              _opinionController.text);
                           _feedbackController.text = "";
+                          _opinionController.text = "";
                         }
                       },
                     ),

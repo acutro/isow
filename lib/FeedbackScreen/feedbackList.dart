@@ -89,21 +89,17 @@ class _MyApp extends State<FeedbackList> {
         actions: [
           Icon(
             Icons.headset_mic,
-            color: Colors.white38,
+            color: Colors.white,
           ),
           SizedBox(
-            width: 5,
+            width: 10,
           ),
           Icon(
             Icons.logout,
-            color: Colors.white38,
+            color: Colors.white,
           ),
           SizedBox(
-            width: 5,
-          ),
-          Icon(
-            Icons.menu,
-            color: Colors.white38,
+            width: 10,
           ),
         ],
       ),
@@ -128,6 +124,7 @@ class _MyApp extends State<FeedbackList> {
                             onTap: () {
                               showDialogFunc(
                                 context,
+                                listFacts[index]["opinion"],
                                 listFacts[index]["created_at"],
                                 listFacts[index]["content"],
                               );
@@ -163,7 +160,7 @@ class _MyApp extends State<FeedbackList> {
                                               ),
                                             ),
                                             title: Text(
-                                              "Feedback",
+                                              listFacts[index]["opinion"],
                                               // '${listFacts[index]["created_at"][0].toUpperCase()}${listFacts[index]["created_at"].substring(1)}',
                                               //  listFacts[index]["name"],
                                               style: TextStyle(
@@ -215,7 +212,7 @@ class _MyApp extends State<FeedbackList> {
   }
 }
 
-showDialogFunc(context, date, description) {
+showDialogFunc(context, opinion, date, description) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -262,7 +259,7 @@ showDialogFunc(context, date, description) {
                                 ),
                               ),
                               title: Text(
-                                'Feedback',
+                                opinion,
                                 // title,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, height: 1.5),

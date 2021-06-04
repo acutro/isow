@@ -216,7 +216,7 @@ class HomeScreenState extends State<HomeScreen> {
         actions: [
           Icon(Icons.headset_mic),
           SizedBox(
-            width: 5,
+            width: 10,
           ),
           GestureDetector(
               onTap: () {
@@ -226,12 +226,9 @@ class HomeScreenState extends State<HomeScreen> {
               },
               child: Icon(Icons.logout)),
           SizedBox(
-            width: 5,
+            width: 10,
           ),
-          Icon(Icons.more_vert),
-          SizedBox(
-            width: 5,
-          ),
+          // Icon(Icons.more_vert),
         ],
       ),
       body: SingleChildScrollView(
@@ -304,7 +301,20 @@ class HomeScreenState extends State<HomeScreen> {
                         width: 75,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          // shape: BoxShape.rectangle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 3.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
+
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                           gradient: LinearGradient(
                             colors: [Color(0xFF4fc4f2), Colors.blue],
                             begin: Alignment.centerLeft,
@@ -337,7 +347,18 @@ class HomeScreenState extends State<HomeScreen> {
                         width: 75,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 3.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                           gradient: LinearGradient(
                             colors: [Color(0xFF4fc4f2), Colors.blue],
                             begin: Alignment.centerLeft,
@@ -369,7 +390,18 @@ class HomeScreenState extends State<HomeScreen> {
                         width: 75,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 3.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                           gradient: LinearGradient(
                             colors: [Color(0xFF4fc4f2), Colors.blue],
                             begin: Alignment.centerLeft,
@@ -401,7 +433,18 @@ class HomeScreenState extends State<HomeScreen> {
                         width: 75,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 3.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
                           gradient: LinearGradient(
                             colors: [Color(0xFF4fc4f2), Colors.blue],
                             begin: Alignment.centerLeft,
@@ -433,7 +476,18 @@ class HomeScreenState extends State<HomeScreen> {
                         width: 75,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 3.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
                           gradient: LinearGradient(
                             colors: [Color(0xFF4fc4f2), Colors.blue],
                             begin: Alignment.centerLeft,
@@ -465,7 +519,18 @@ class HomeScreenState extends State<HomeScreen> {
                         width: 75,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 3.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
                           gradient: LinearGradient(
                             colors: [Color(0xFF4fc4f2), Colors.blue],
                             begin: Alignment.centerLeft,
@@ -497,7 +562,18 @@ class HomeScreenState extends State<HomeScreen> {
                         width: 75,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 3.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
                           gradient: LinearGradient(
                             colors: [Color(0xFF4fc4f2), Colors.blue],
                             begin: Alignment.centerLeft,
@@ -529,7 +605,18 @@ class HomeScreenState extends State<HomeScreen> {
                         width: 75,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 3.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
                           gradient: LinearGradient(
                             colors: [Color(0xFF4fc4f2), Colors.blue],
                             begin: Alignment.centerLeft,
@@ -562,7 +649,18 @@ class HomeScreenState extends State<HomeScreen> {
                         width: 75,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 3.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
                           gradient: LinearGradient(
                             colors: [Color(0xFF4fc4f2), Colors.blue],
                             begin: Alignment.centerLeft,
@@ -595,7 +693,18 @@ class HomeScreenState extends State<HomeScreen> {
                         width: 75,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 3.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
                           gradient: LinearGradient(
                             colors: [Color(0xFF4fc4f2), Colors.blue],
                             begin: Alignment.centerLeft,
@@ -627,7 +736,18 @@ class HomeScreenState extends State<HomeScreen> {
                         width: 75,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 3.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
                           gradient: LinearGradient(
                             colors: [Color(0xFF4fc4f2), Colors.blue],
                             begin: Alignment.centerLeft,
@@ -660,7 +780,18 @@ class HomeScreenState extends State<HomeScreen> {
                         width: 75,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 3.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
                           gradient: LinearGradient(
                             colors: [Color(0xFF4fc4f2), Colors.blue],
                             begin: Alignment.centerLeft,

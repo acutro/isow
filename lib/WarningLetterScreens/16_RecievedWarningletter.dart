@@ -1,18 +1,37 @@
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '15_issuewarning.dart';
 
 class RecivedWarning extends StatefulWidget {
+  final String userid;
+  final String posid;
+
+  RecivedWarning({Key key, @required this.userid, this.posid})
+      : super(key: key);
   @override
   _RecivedWarningState createState() => _RecivedWarningState();
 }
 
 class _RecivedWarningState extends State<RecivedWarning> {
-  Future<List<Warning>> _getEmployee() async {
+  String sid;
+  bool error = true;
+  Future getValidation() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String id = sharedPreferences.getString('position');
+    setState(() {
+      sid = id;
+
+      error = false;
+    });
+  }
+
+  Future<List<Warning>> _getEmployee(String uid) async {
     var data = {
-      'userId': '13',
+      'userId': uid,
     };
     http.Response response;
     response = await http.post(
@@ -37,9 +56,9 @@ class _RecivedWarningState extends State<RecivedWarning> {
     return employees;
   }
 
-  Future<Null> refreshList() async {
+  Future<Null> refreshList(String uid) async {
     await Future.delayed(Duration(seconds: 2));
-    _getEmployee();
+    _getEmployee(uid);
   }
 
   @override
@@ -70,12 +89,14 @@ class _RecivedWarningState extends State<RecivedWarning> {
         ),
       ),
       body: RefreshIndicator(
-        onRefresh: refreshList,
+        onRefresh: () {
+          refreshList(widget.userid);
+        },
         child: Container(
           margin: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 5.0),
           height: double.infinity,
           child: FutureBuilder(
-              future: _getEmployee(),
+              future: _getEmployee(widget.userid),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.data == null) {
                   return Container(
@@ -283,19 +304,21 @@ class _RecivedWarningState extends State<RecivedWarning> {
               }),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Warningletter()),
-          );
-        },
-        icon: Icon(
-          Icons.add,
-          size: 30,
-        ),
-        label: Text("ADD"),
-      ),
+      floatingActionButton: widget.posid == '4'
+          ? FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Warningletter()),
+                );
+              },
+              icon: Icon(
+                Icons.add,
+                size: 30,
+              ),
+              label: Text("ADD"),
+            )
+          : null,
     );
   }
 }

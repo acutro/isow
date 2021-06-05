@@ -12,13 +12,16 @@ class FeedbackList extends StatefulWidget {
 
 class _MyApp extends State<FeedbackList> {
   String sid;
+
   bool error = true;
   Future getValidation() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     String id = sharedPreferences.getString('userId');
+
     setState(() {
       sid = id;
+
       fetchIssued(id);
       error = false;
     });
@@ -127,6 +130,7 @@ class _MyApp extends State<FeedbackList> {
                                 listFacts[index]["opinion"],
                                 listFacts[index]["created_at"],
                                 listFacts[index]["content"],
+                                listFacts[index]["replied_message"],
                               );
                             },
                             child: Card(
@@ -212,7 +216,7 @@ class _MyApp extends State<FeedbackList> {
   }
 }
 
-showDialogFunc(context, opinion, date, description) {
+showDialogFunc(context, opinion, date, description, replay) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -235,7 +239,7 @@ showDialogFunc(context, opinion, date, description) {
                 ),
               ],
             ),
-            height: 400,
+            height: 500,
             width: 350,
             child: Column(
               children: [
@@ -289,10 +293,8 @@ showDialogFunc(context, opinion, date, description) {
                 ),
                 Divider(),
                 new Expanded(
-                  flex: 1,
-                  child: new SingleChildScrollView(
-                    //  padding: EdgeInsets.all(8),
-                    scrollDirection: Axis.vertical, //.horizontal
+                  flex: 4,
+                  child: SingleChildScrollView(
                     child: new Text(
                         '${description[0].toUpperCase()}${description.substring(1)}',
                         // requirment,
@@ -303,6 +305,41 @@ showDialogFunc(context, opinion, date, description) {
                         )),
                   ),
                 ),
+                replay != ""
+                    ? Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.black38),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        alignment: Alignment.centerLeft,
+                        height: 100,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Replay:",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
+                            ),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Expanded(
+                              child: Text(
+                                replay,
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.black54),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Container(),
                 new Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

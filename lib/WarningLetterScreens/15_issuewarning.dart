@@ -98,12 +98,7 @@ class _WarningletterState extends State<Warningletter> {
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
           backgroundColor: Colors.white);
-      Timer(
-          Duration(seconds: 2),
-          () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RecivedWarning()),
-              ));
+      Timer(Duration(seconds: 2), () => Navigator.pop(context));
     } else {
       Toast.show("Failed", context,
           duration: Toast.LENGTH_SHORT,

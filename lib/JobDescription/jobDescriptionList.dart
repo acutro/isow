@@ -16,12 +16,15 @@ class JobDescriptionList extends StatefulWidget {
 
 class _MyApp extends State<JobDescriptionList> {
   String sid;
+  String posid;
   bool error = true;
   Future getValidation() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     String id = sharedPreferences.getString('userId');
+    String pos = sharedPreferences.getString('position');
     setState(() {
+      posid = pos;
       sid = id;
 
       error = false;
@@ -372,20 +375,24 @@ class _MyApp extends State<JobDescriptionList> {
                       ),
               ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Jobdescription(userId: sid)),
-          );
-        },
-        icon: Icon(
-          Icons.add,
-          size: 30,
-        ),
-        label: Text("Issue"),
-      ),
+      floatingActionButton: jobError == true || mapResponse == null
+          ? Center()
+          : posid == '4'
+              ? FloatingActionButton.extended(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Jobdescription(userId: sid)),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.add,
+                    size: 30,
+                  ),
+                  label: Text("Issue"),
+                )
+              : null,
     );
   }
 }

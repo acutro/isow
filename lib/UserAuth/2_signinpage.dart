@@ -18,6 +18,7 @@ class SigninScreenState extends State<SigninScreen> {
   List listResponse;
   Map mapResponse;
   String userId;
+  String pos;
   List<dynamic> listFacts;
   Future getLogin(String uname, String pass) async {
     var data = {'email': uname, 'password': pass};
@@ -29,10 +30,11 @@ class SigninScreenState extends State<SigninScreen> {
       setState(() {
         mapResponse = jsonDecode(response.body);
         userId = mapResponse['data']['userId'];
+        pos = mapResponse['data']['positionid'];
         //   listFacts = mapResponse['data'];
         print(userId);
         error = false;
-        sharedSet(userId);
+        sharedSet(userId, pos);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -54,10 +56,11 @@ class SigninScreenState extends State<SigninScreen> {
     }
   }
 
-  sharedSet(String idd) async {
+  sharedSet(String idd, String pos) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     sharedPreferences.setString('userId', idd);
+    sharedPreferences.setString('position', pos);
   }
 
   final _formKey = GlobalKey<FormState>();

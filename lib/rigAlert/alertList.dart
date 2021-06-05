@@ -19,13 +19,16 @@ class _RecivedWarningState extends State<RecivedAlert> {
   CountdownTimerController controller;
   int endTime = DateTime.now().millisecondsSinceEpoch + 100000000 * 30;
   String sid;
+  String posid;
   bool error = true;
   Future getValidation() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     String id = sharedPreferences.getString('userId');
+    String pos = sharedPreferences.getString('position');
     setState(() {
       sid = id;
+      posid = pos;
 
       error = false;
     });
@@ -149,7 +152,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
                         child: CircularProgressIndicator(),
                       )
                     : listFacts.length == 0
-                        ? Center(child: Text("No Rig alerts found"))
+                        ? Center(child: Text("No Rig Alerts found"))
                         : ListView.builder(
                             itemCount: listFacts.length,
                             itemBuilder: (BuildContext context, int index) {
@@ -348,22 +351,26 @@ class _RecivedWarningState extends State<RecivedAlert> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => RigAlert2(
-                      userId: sid,
-                    )),
-          );
-        },
-        icon: Icon(
-          Icons.add,
-          size: 30,
-        ),
-        label: Text("ADD"),
-      ),
+      floatingActionButton: jobError == true || mapResponse == null
+          ? Center()
+          : posid == '4'
+              ? FloatingActionButton.extended(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RigAlert2(
+                                userId: sid,
+                              )),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.add,
+                    size: 30,
+                  ),
+                  label: Text("ADD"),
+                )
+              : null,
     );
   }
 }

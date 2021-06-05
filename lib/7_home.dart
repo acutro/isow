@@ -32,13 +32,16 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   String sid;
+  String posiid;
   bool error = true;
   Future getValidation() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     String id = sharedPreferences.getString('userId');
+    String pos = sharedPreferences.getString('position');
     setState(() {
       sid = id;
+      posiid = pos;
       note = fetchNote(id);
       error = false;
     });
@@ -465,9 +468,13 @@ class HomeScreenState extends State<HomeScreen> {
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RecivedWarning()),
-                    );
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RecivedWarning(
+                            userid: sid,
+                            posid: posiid,
+                          ),
+                        ));
                   },
                   child: Column(
                     children: [

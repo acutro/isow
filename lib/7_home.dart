@@ -236,59 +236,68 @@ class HomeScreenState extends State<HomeScreen> {
       ),
       body: SingleChildScrollView(
         child: Container(
+          alignment: Alignment.center,
           child: Column(children: <Widget>[
             Column(
               children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignupScreen()),
-                    );
-                  },
-                  child: Card(
-                    margin: const EdgeInsets.all(0.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(200),
-                        bottomLeft: Radius.circular(200),
-                        topRight: Radius.circular(0),
-                      ),
-                    ),
-                    color: Color(0xFF4fc4f2),
-                    child: new Container(
-                      height: 40.0,
-                      child: new Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Create New Employee Account',
-                                  style: TextStyle(
-                                      // fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 12.0),
-                                ),
-                              ],
-                            )
-                          ],
+                posiid == '4'
+                    ? GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignupScreen()),
+                          );
+                        },
+                        child: Card(
+                          margin: const EdgeInsets.all(0.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(200),
+                              bottomLeft: Radius.circular(200),
+                              topRight: Radius.circular(0),
+                            ),
+                          ),
+                          color: Color(0xFF4fc4f2),
+                          child: new Container(
+                            height: 40.0,
+                            child: new Container(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        'Create New Employee Account',
+                                        style: TextStyle(
+                                            // fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 12.0),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
+                      )
+                    : SizedBox(
+                        height: 1,
                       ),
-                    ),
-                  ),
-                ),
               ],
             ),
+
             SizedBox(height: 30),
 
             Wrap(
               alignment: WrapAlignment.center,
               spacing: 30.0,
-              runSpacing: 15.0,
+              runSpacing: 35.0,
               children: [
                 GestureDetector(
                   onTap: () {
@@ -300,8 +309,8 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 75,
-                        width: 75,
+                        height: 65,
+                        width: 65,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           // shape: BoxShape.rectangle,
@@ -326,12 +335,15 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         child: FaIcon(
                           FontAwesomeIcons.broadcastTower,
-                          size: 45,
+                          size: 40,
                           color: Colors.white,
                         ),
                         margin: EdgeInsets.all(10),
                       ),
-                      Text("Rig Alert")
+                      Text(
+                        "Rig Alert",
+                        style: TextStyle(fontSize: 12),
+                      )
                     ],
                   ),
                 ),
@@ -346,8 +358,8 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 75,
-                        width: 75,
+                        height: 65,
+                        width: 65,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -370,12 +382,15 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         child: FaIcon(
                           FontAwesomeIcons.compass,
-                          size: 50,
+                          size: 35,
                           color: Colors.white,
                         ),
                         margin: EdgeInsets.all(10),
                       ),
-                      Text("Orientation")
+                      Text(
+                        "Orientation",
+                        style: TextStyle(fontSize: 12),
+                      )
                     ],
                   ),
                 ),
@@ -389,8 +404,8 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 75,
-                        width: 75,
+                        height: 65,
+                        width: 65,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -413,12 +428,15 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         child: FaIcon(
                           FontAwesomeIcons.users,
-                          size: 50,
+                          size: 40,
                           color: Colors.white,
                         ),
                         margin: EdgeInsets.all(10),
                       ),
-                      Text("Contacts")
+                      Text(
+                        "Contacts",
+                        style: TextStyle(fontSize: 12),
+                      )
                     ],
                   ),
                 ),
@@ -432,8 +450,8 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 75,
-                        width: 75,
+                        height: 65,
+                        width: 65,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -456,12 +474,15 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         child: FaIcon(
                           FontAwesomeIcons.comments,
-                          size: 50,
+                          size: 40,
                           color: Colors.white,
                         ),
                         margin: EdgeInsets.all(10),
                       ),
-                      Text("Feed Back")
+                      Text(
+                        "Feed Back",
+                        style: TextStyle(fontSize: 12),
+                      )
                     ],
                   ),
                 ),
@@ -479,8 +500,8 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 75,
-                        width: 75,
+                        height: 65,
+                        width: 65,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -503,12 +524,15 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         child: FaIcon(
                           FontAwesomeIcons.envelopeOpenText,
-                          size: 50,
+                          size: 40,
                           color: Colors.white,
                         ),
                         margin: EdgeInsets.all(10),
                       ),
-                      Text("Warning Letter")
+                      Text(
+                        "Warning Letter",
+                        style: TextStyle(fontSize: 12),
+                      )
                     ],
                   ),
                 ),
@@ -522,8 +546,8 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 75,
-                        width: 75,
+                        height: 65,
+                        width: 65,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -546,12 +570,15 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         child: FaIcon(
                           FontAwesomeIcons.clipboardList,
-                          size: 50,
+                          size: 40,
                           color: Colors.white,
                         ),
                         margin: EdgeInsets.all(10),
                       ),
-                      Text("Notepad")
+                      Text(
+                        "Notepad",
+                        style: TextStyle(fontSize: 12),
+                      )
                     ],
                   ),
                 ),
@@ -565,8 +592,8 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 75,
-                        width: 75,
+                        height: 65,
+                        width: 65,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -589,12 +616,15 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         child: FaIcon(
                           FontAwesomeIcons.ambulance,
-                          size: 45,
+                          size: 35,
                           color: Colors.white,
                         ),
                         margin: EdgeInsets.all(10),
                       ),
-                      Text("Emergency")
+                      Text(
+                        "Emergency",
+                        style: TextStyle(fontSize: 12),
+                      )
                     ],
                   ),
                 ),
@@ -608,8 +638,8 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 75,
-                        width: 75,
+                        height: 65,
+                        width: 65,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -632,12 +662,15 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         child: FaIcon(
                           FontAwesomeIcons.personBooth,
-                          size: 45,
+                          size: 35,
                           color: Colors.white,
                         ),
                         margin: EdgeInsets.all(10),
                       ),
-                      Text("Services")
+                      Text(
+                        "Services",
+                        style: TextStyle(fontSize: 12),
+                      )
                     ],
                   ),
                 ),
@@ -652,8 +685,8 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 75,
-                        width: 75,
+                        height: 65,
+                        width: 65,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -676,12 +709,15 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         child: FaIcon(
                           FontAwesomeIcons.copy,
-                          size: 50,
+                          size: 40,
                           color: Colors.white,
                         ),
                         margin: EdgeInsets.all(10),
                       ),
-                      Text("Job Description")
+                      Text(
+                        "Job Description",
+                        style: TextStyle(fontSize: 12),
+                      )
                     ],
                   ),
                 ),
@@ -696,8 +732,8 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 75,
-                        width: 75,
+                        height: 65,
+                        width: 65,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -720,12 +756,15 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         child: FaIcon(
                           FontAwesomeIcons.tags,
-                          size: 45,
+                          size: 35,
                           color: Colors.white,
                         ),
                         margin: EdgeInsets.all(10),
                       ),
-                      Text("Offers")
+                      Text(
+                        "Offers",
+                        style: TextStyle(fontSize: 12),
+                      )
                     ],
                   ),
                 ),
@@ -739,8 +778,8 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 75,
-                        width: 75,
+                        height: 65,
+                        width: 65,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -763,12 +802,15 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         child: FaIcon(
                           FontAwesomeIcons.fileAlt,
-                          size: 50,
+                          size: 40,
                           color: Colors.white,
                         ),
                         margin: EdgeInsets.all(10),
                       ),
-                      Text("News")
+                      Text(
+                        "News",
+                        style: TextStyle(fontSize: 12),
+                      )
                     ],
                   ),
                 ),
@@ -783,8 +825,8 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 75,
-                        width: 75,
+                        height: 65,
+                        width: 65,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -807,12 +849,15 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         child: FaIcon(
                           FontAwesomeIcons.sun,
-                          size: 50,
+                          size: 40,
                           color: Colors.white,
                         ),
                         margin: EdgeInsets.all(10),
                       ),
-                      Text("Weather")
+                      Text(
+                        "Weather",
+                        style: TextStyle(fontSize: 12),
+                      )
                     ],
                   ),
                 ),

@@ -369,6 +369,28 @@ class _NewsState extends State<News> {
                       ),
                     ],
                   ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    alignment: Alignment.centerRight,
+                    child: RaisedButton(
+                      color: Color(0xFF4fc4f2),
+                      textColor: Colors.white,
+                      child: Text('More Activities..'),
+                      onPressed: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ActivityListing()),
+                        ),
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

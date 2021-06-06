@@ -177,13 +177,16 @@ class _EmergencyState extends State<Emergency> {
                     ),
                     Row(
                       children: <Widget>[
-                        Expanded(
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Container(
                           child: Stack(
                             children: <Widget>[
                               Container(
                                 alignment: Alignment.bottomCenter,
-                                margin:
-                                    EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
+                                // margin:
+                                //     EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
                                 height: 130.0,
                                 width: 90.0,
                                 child: Container(
@@ -211,8 +214,8 @@ class _EmergencyState extends State<Emergency> {
                                     bottomRight: Radius.circular(10.0),
                                   ),
                                 ),
-                                margin:
-                                    EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
+                                // margin:
+                                //     EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
                                 height: 110.0,
                                 width: 90.0,
                                 child: Center(
@@ -224,8 +227,8 @@ class _EmergencyState extends State<Emergency> {
                                 ),
                               ),
                               Container(
-                                margin:
-                                    EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
+                                // margin:
+                                //     EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
                                 height: 105.0,
                                 width: 90.0,
                                 alignment: Alignment.bottomCenter,
@@ -237,13 +240,13 @@ class _EmergencyState extends State<Emergency> {
                             ],
                           ),
                         ),
-                        Expanded(
+                        Container(
                           child: Stack(
                             children: <Widget>[
                               Container(
                                 alignment: Alignment.bottomCenter,
                                 margin:
-                                    EdgeInsets.fromLTRB(40.0, 0.0, 10.0, 0.0),
+                                    EdgeInsets.fromLTRB(30.0, 0.0, 10.0, 0.0),
                                 height: 130.0,
                                 width: 90.0,
                                 child: Container(
@@ -272,7 +275,7 @@ class _EmergencyState extends State<Emergency> {
                                   ),
                                 ),
                                 margin:
-                                    EdgeInsets.fromLTRB(40.0, 0.0, 10.0, 0.0),
+                                    EdgeInsets.fromLTRB(30.0, 0.0, 10.0, 0.0),
                                 height: 110.0,
                                 width: 90.0,
                                 child: Center(
@@ -285,7 +288,7 @@ class _EmergencyState extends State<Emergency> {
                               ),
                               Container(
                                 margin:
-                                    EdgeInsets.fromLTRB(40.0, 0.0, 10.0, 0.0),
+                                    EdgeInsets.fromLTRB(20.0, 0.0, 10.0, 0.0),
                                 height: 105.0,
                                 width: 100.0,
                                 alignment: Alignment.bottomCenter,
@@ -297,13 +300,13 @@ class _EmergencyState extends State<Emergency> {
                             ],
                           ),
                         ),
-                        Expanded(
+                        Container(
                           child: Stack(
                             children: <Widget>[
                               Container(
                                 alignment: Alignment.bottomCenter,
                                 margin:
-                                    EdgeInsets.fromLTRB(40.0, 0.0, 0.0, 0.0),
+                                    EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
                                 height: 130.0,
                                 width: 90.0,
                                 child: Container(
@@ -332,7 +335,7 @@ class _EmergencyState extends State<Emergency> {
                                   ),
                                 ),
                                 margin:
-                                    EdgeInsets.fromLTRB(40.0, 0.0, 0.0, 0.0),
+                                    EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
                                 height: 110.0,
                                 width: 90.0,
                                 child: Center(
@@ -345,7 +348,7 @@ class _EmergencyState extends State<Emergency> {
                               ),
                               Container(
                                 margin:
-                                    EdgeInsets.fromLTRB(40.0, 0.0, 20.0, 0.0),
+                                    EdgeInsets.fromLTRB(15.0, 0.0, 20.0, 0.0),
                                 height: 105.0,
                                 width: 100.0,
                                 alignment: Alignment.bottomCenter,

@@ -9,6 +9,7 @@ import 'page8rigalert.dart';
 import 'package:toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:intl/intl.dart';
 
 class RecivedAlert extends StatefulWidget {
   @override
@@ -77,6 +78,9 @@ class _RecivedWarningState extends State<RecivedAlert> {
   void onEnd() {
     print('onEnd');
   }
+
+  String formatDate(DateTime date) =>
+      new DateFormat("dd-MM-yyyy.hh:mm a").format(date);
 
   int endT(DateTime due) {
     int tm;
@@ -163,8 +167,9 @@ class _RecivedWarningState extends State<RecivedAlert> {
                                     listFacts[index]["Name"],
                                     listFacts[index]["Position"],
                                     listFacts[index]["Date"],
+                                    listFacts[index]["Created_Date"],
                                     listFacts[index]["Description"],
-                                    listFacts[index]["Alerted Rig List"],
+                                    listFacts[index]["rigName"] ?? "",
                                   );
                                 },
                                 child: Container(
@@ -258,7 +263,8 @@ class _RecivedWarningState extends State<RecivedAlert> {
                                               //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
                                               child: Center(
                                                 child: Text(
-                                                  listFacts[index]["Date"]
+                                                  listFacts[index]
+                                                          ["Created_Date"]
                                                       .substring(0, 10),
                                                   style: TextStyle(
                                                       fontSize: 16.0,
@@ -277,6 +283,34 @@ class _RecivedWarningState extends State<RecivedAlert> {
                                             child: Column(
                                               children: [
                                                 Container(
+                                                  padding: EdgeInsets.all(10),
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    'Rig Name: ${listFacts[index]["rigName"][0].toUpperCase()}${listFacts[index]["rigName"].substring(1)}\nExpired on: ' +
+                                                        formatDate(
+                                                          DateTime.parse(
+                                                              listFacts[index]
+                                                                  ["Date"]),
+                                                        ),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black54,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  height: 100,
+                                                  margin: EdgeInsets.all(10.0),
+                                                  child: Text(
+                                                    '${listFacts[index]["Description"][0].toUpperCase()}${listFacts[index]["Description"].substring(1)}',
+                                                    style: TextStyle(
+                                                        fontSize: 13,
+                                                        height: 1.5),
+                                                  ),
+                                                ),
+                                                Container(
                                                   margin: EdgeInsets.all(5.0),
                                                   child: CountdownTimer(
                                                     endTime:
@@ -291,16 +325,22 @@ class _RecivedWarningState extends State<RecivedAlert> {
                                                         return Text(
                                                           'Rig Alert Expired',
                                                           style: TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.black45,
+                                                          ),
                                                         );
                                                       }
                                                       return Text(
-                                                        'DD: ${time.days} HH: ${time.hours} MM: ${time.min} SS: ${time.sec} ',
+                                                        time.days == null
+                                                            ? 'Count Down:  ${time.hours ?? 00}:${time.min ?? 00}:${time.sec}'
+                                                            : 'Count Down:  ${time.hours + (time.days * 24)}:${time.min}:${time.sec}',
                                                         style: TextStyle(
-                                                            fontSize: 16,
+                                                            color:
+                                                                Colors.black45,
+                                                            fontSize: 14,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .bold),
@@ -317,16 +357,6 @@ class _RecivedWarningState extends State<RecivedAlert> {
                                                   //       fontWeight:
                                                   //           FontWeight.bold,
                                                   //       height: 1.5),
-                                                ),
-                                                Divider(),
-                                                Container(
-                                                  margin: EdgeInsets.all(10.0),
-                                                  child: Text(
-                                                    '${listFacts[index]["Description"][0].toUpperCase()}${listFacts[index]["Description"].substring(1)}',
-                                                    style: TextStyle(
-                                                        fontSize: 13,
-                                                        height: 1.5),
-                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -375,12 +405,15 @@ class _RecivedWarningState extends State<RecivedAlert> {
   }
 }
 
-showDialogFunc(context, person, position, date, content, issue) {
+showDialogFunc(context, person, position, date, creteDate, content, rigName) {
   int endT(DateTime due) {
     int tm;
     tm = due.millisecondsSinceEpoch;
     return tm;
   }
+
+  String formatDate(DateTime date) =>
+      new DateFormat("dd-MM-yyyy.hh:mm a").format(date);
 
   return showDialog(
     context: context,
@@ -426,45 +459,34 @@ showDialogFunc(context, person, position, date, content, issue) {
                             ),
                           ),
                           title: Text(
-                            '${person[0].toUpperCase()}${person.substring(1)}',
+                            '${rigName[0].toUpperCase()}${rigName.substring(1)}',
                             // title,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, height: 1.5),
                           ),
                           subtitle: Text(
-                            '${issue[0].toUpperCase()}${issue.substring(1)}',
+                            '${person[0].toUpperCase()}${person.substring(1)}\n${position[0].toUpperCase()}${position.substring(1)} ',
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style:
                                 TextStyle(fontSize: 12, color: Colors.black45),
                           ),
                           trailing: Text(
-                            date,
+                            creteDate,
                             style:
                                 TextStyle(fontSize: 12, color: Colors.black45),
                           ),
                         ),
-                        CountdownTimer(
-                          endTime: endT(
-                            DateTime.parse(date),
-                          ),
-                          //  endT(index),
-
-                          widgetBuilder: (_, CurrentRemainingTime time) {
-                            if (time == null) {
-                              return Text(
-                                'Rig Alert Expired',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              );
-                            }
-                            return Text(
-                              'DD: ${time.days} HH: ${time.hours} MM: ${time.min} SS: ${time.sec} ',
+                        Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              '            Expired on: ' +
+                                  formatDate(DateTime.parse(date)),
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            );
-                          },
-                        ),
+                                  fontSize: 12,
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold),
+                            )),
                       ],
                     ),
                   ),
@@ -478,14 +500,49 @@ showDialogFunc(context, person, position, date, content, issue) {
                   child: new SingleChildScrollView(
                     //  padding: EdgeInsets.all(8),
                     scrollDirection: Axis.vertical, //.horizontal
-                    child: new Text(
-                        '${content[0].toUpperCase()}${content.substring(1)}',
-                        // requirment,
-                        style: TextStyle(
-                          height: 1.5,
-                          color: Colors.black,
-                          fontSize: 14,
-                        )),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          height: 280,
+                          child: new Text(
+                              '${content[0].toUpperCase()}${content.substring(1)}',
+                              // requirment,
+                              style: TextStyle(
+                                height: 1.5,
+                                color: Colors.black,
+                                fontSize: 14,
+                              )),
+                        ),
+                        CountdownTimer(
+                          endTime: endT(
+                            DateTime.parse(date),
+                          ),
+                          //  endT(index),
+
+                          widgetBuilder: (_, CurrentRemainingTime time) {
+                            if (time == null) {
+                              return Text(
+                                'Rig Alert Expired',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black45),
+                              );
+                            }
+                            return Text(
+                              time.days == null
+                                  ? 'Count Down:  ${time.hours ?? 00}:${time.min ?? 00}:${time.sec}'
+                                  : 'Count Down:  ${time.hours + (time.days * 24)}:${time.min}:${time.sec}',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black45),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 new Row(

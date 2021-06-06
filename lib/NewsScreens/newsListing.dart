@@ -16,6 +16,18 @@ class NewsListing extends StatefulWidget {
 }
 
 class _MyApp extends State<NewsListing> {
+  getpath(String path) {
+    var pathf;
+    if (path == "") {
+      pathf = 'https://picsum.photos/250?image=9';
+
+      return pathf;
+    } else {
+      pathf = 'http://isow.acutrotech.com/assets/images/news/' + path;
+      return pathf;
+    }
+  }
+
   Future<Null> refreshList() async {
     await Future.delayed(Duration(seconds: 2));
   }
@@ -112,12 +124,13 @@ class _MyApp extends State<NewsListing> {
                                         ListTile(
                                           leading: CircleAvatar(
                                             backgroundColor: Color(0xFF4fc4f2),
-                                            child: Text(
-                                              'N',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                  fontSize: 20),
+                                            child: ClipOval(
+                                              child: Image.network(
+                                                  getpath(widget.newsList[index]
+                                                      ["image_url"]),
+                                                  width: 80,
+                                                  height: 80,
+                                                  fit: BoxFit.fill),
                                             ),
                                           ),
                                           title: Text(

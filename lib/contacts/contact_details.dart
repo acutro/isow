@@ -83,10 +83,10 @@ class _ContactDetail extends State<ContactDetail> {
             ListTile(
               subtitle: Text(
                 widget.id,
-                style: TextStyle(color: Colors.black, fontSize: 14),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
               title: Text(
-                "Registration ID",
+                "User ID",
                 style: TextStyle(color: Colors.black54, fontSize: 14),
               ),
               trailing: Container(
@@ -98,7 +98,7 @@ class _ContactDetail extends State<ContactDetail> {
             ListTile(
               subtitle: Text(
                 widget.mob,
-                style: TextStyle(color: Colors.black, fontSize: 18),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
               title: Text(
                 "Mobile",
@@ -119,7 +119,7 @@ class _ContactDetail extends State<ContactDetail> {
             ListTile(
               subtitle: Text(
                 widget.email,
-                style: TextStyle(color: Colors.black, fontSize: 18),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
               title: Text(
                 "Email",
@@ -133,8 +133,8 @@ class _ContactDetail extends State<ContactDetail> {
             Divider(),
             ListTile(
               subtitle: Text(
-                widget.work,
-                style: TextStyle(color: Colors.black, fontSize: 18),
+                '${widget.work[0].toUpperCase()}${widget.work.substring(1)}',
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
               title: Text(
                 "Position",

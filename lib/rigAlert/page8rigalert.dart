@@ -31,7 +31,7 @@ class _RigAlert2State extends State<RigAlert2> {
     String updatte = date + " " + timmme;
     var data = {
       'created_by': userIdd,
-      'rigName': rigName,
+      'rigId': rigName,
       'description': desc,
       'date': updatte,
     };
@@ -112,7 +112,7 @@ class _RigAlert2State extends State<RigAlert2> {
         hint: Padding(
           padding: const EdgeInsets.only(left: 12),
           child: Text(
-            "Position",
+            "Rig Name",
             style: TextStyle(
               fontSize: 14,
               color: Colors.black54,

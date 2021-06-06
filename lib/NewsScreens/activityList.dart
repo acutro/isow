@@ -31,6 +31,18 @@ class _MyApp extends State<ActivityListing> {
     fetchData();
   }
 
+  getpath(String path) {
+    var pathf;
+    if (path == "") {
+      pathf = 'https://picsum.photos/250?image=9';
+
+      return pathf;
+    } else {
+      pathf = 'http://isow.acutrotech.com/assets/images/activities/' + path;
+      return pathf;
+    }
+  }
+
   @override
   void initState() {
     fetchData();
@@ -127,12 +139,13 @@ class _MyApp extends State<ActivityListing> {
                                         ListTile(
                                           leading: CircleAvatar(
                                             backgroundColor: Color(0xFF4fc4f2),
-                                            child: Text(
-                                              'N',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                  fontSize: 20),
+                                            child: ClipOval(
+                                              child: Image.network(
+                                                  getpath(listFacts[index]
+                                                      ["image_url"]),
+                                                  width: 80,
+                                                  height: 80,
+                                                  fit: BoxFit.fill),
                                             ),
                                           ),
                                           title: Text(

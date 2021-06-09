@@ -359,6 +359,9 @@ class _MyApp extends State<JobHandoverList> {
                                 listFacts[index]["sender"],
                                 listFacts[index]["duration"],
                                 listFacts[index]["job_description"],
+                                listFacts[index]["handoverStatus"],
+                                listFacts[index]["reason"],
+                                listFacts[index]["issueDate"],
                               );
                             },
                             child: Card(
@@ -407,19 +410,43 @@ class _MyApp extends State<JobHandoverList> {
                                                   height: 1.3,
                                                   fontSize: 14),
                                             ),
-                                            subtitle: Text(
-                                              "Handovered by :  " +
-                                                  '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
-                                                  "\n" +
-                                                  "Duration             :   " +
-                                                  listFacts[index]["duration"] +
-                                                  " hr" +
-                                                  "\n" +
-                                                  "Handover Date:   " +
-                                                  listFacts[index]["issueDate"]
-                                                      .substring(0, 10),
-                                              style: TextStyle(fontSize: 11),
-                                            ),
+                                            subtitle: listFacts[index]
+                                                        ["handoverStatus"] ==
+                                                    '2'
+                                                ? Text(
+                                                    "Handovered by :  " +
+                                                        '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
+                                                        "\n" +
+                                                        "Duration             :   " +
+                                                        listFacts[index]
+                                                            ["duration"] +
+                                                        " hr" +
+                                                        "\n" +
+                                                        "Handover Date:   " +
+                                                        listFacts[index]
+                                                                ["issueDate"]
+                                                            .substring(0, 10) +
+                                                        "\nReason: "
+                                                            '${listFacts[index]["reason"][0].toUpperCase()}${listFacts[index]["reason"].substring(1)}',
+                                                    style:
+                                                        TextStyle(fontSize: 11),
+                                                  )
+                                                : Text(
+                                                    "Handovered by :  " +
+                                                        '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
+                                                        "\n" +
+                                                        "Duration             :   " +
+                                                        listFacts[index]
+                                                            ["duration"] +
+                                                        " hr" +
+                                                        "\n" +
+                                                        "Handover Date:   " +
+                                                        listFacts[index]
+                                                                ["issueDate"]
+                                                            .substring(0, 10),
+                                                    style:
+                                                        TextStyle(fontSize: 11),
+                                                  ),
                                             trailing: listFacts[index]
                                                         ["handoverStatus"] ==
                                                     '0'
@@ -446,7 +473,41 @@ class _MyApp extends State<JobHandoverList> {
   }
 }
 
-showDialogFunc(context, id, by, to, byName, duration, description) {
+showDialogFunc(
+    context, id, by, to, byName, duration, description, hid, reason, date) {
+  Widget status(String id) {
+    if (id == '0')
+      return Text.rich(TextSpan(
+          text: 'Status: ',
+          style: TextStyle(fontSize: 12, color: Colors.black45),
+          children: <InlineSpan>[
+            TextSpan(
+              text: 'Waiting',
+              style: TextStyle(fontSize: 12, color: Colors.blue),
+            )
+          ]));
+    else if (id == '1')
+      return Text.rich(TextSpan(
+          text: 'Status: ',
+          style: TextStyle(fontSize: 12, color: Colors.black45),
+          children: <InlineSpan>[
+            TextSpan(
+              text: 'Accepted',
+              style: TextStyle(fontSize: 12, color: Colors.green),
+            )
+          ]));
+    else
+      return Text.rich(TextSpan(
+          text: 'Status: ',
+          style: TextStyle(fontSize: 12, color: Colors.black45),
+          children: <InlineSpan>[
+            TextSpan(
+              text: 'Rejected',
+              style: TextStyle(fontSize: 12, color: Colors.red),
+            )
+          ]));
+  }
+
   return showDialog(
     context: context,
     builder: (context) {
@@ -499,10 +560,36 @@ showDialogFunc(context, id, by, to, byName, duration, description) {
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, height: 1.5),
                               ),
-                              subtitle: Text(
-                                "Duration   :   " + duration + " hr",
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.black45),
+                              subtitle: Container(
+                                alignment: Alignment.centerLeft,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Duration   :   " + duration + " hr",
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.black45),
+                                    ),
+                                    Text(
+                                      "Handover Date   :   " +
+                                          date.substring(0, 10),
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.black45),
+                                    ),
+                                    status(hid),
+                                    hid == '2'
+                                        ? Text(
+                                            "Reason   :   " + reason,
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black45),
+                                          )
+                                        : SizedBox(
+                                            height: 1,
+                                          ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],

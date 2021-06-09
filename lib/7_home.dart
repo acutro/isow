@@ -17,15 +17,9 @@ import 'FeedbackScreen/feedbackList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'rigAlert/alertList.dart';
-//  Icon(
-//                   FontAwesomeIcons.envelope,
-//                   color: odWhite,
-//                 ),
+import 'Faq/faqMainScreen.dart';
 
 class HomeScreen extends StatefulWidget {
-  // final String userId;
-
-  // HomeScreen({Key key, @required this.userId}) : super(key: key);
   @override
   HomeScreenState createState() => HomeScreenState();
 }
@@ -159,6 +153,34 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         title: Text(
                           'Settings',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        contentPadding:
+                            EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
+                        leading: MaterialButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FaqScreen()),
+                            );
+                          },
+                          color: Colors.white,
+                          textColor: Color(0xFF4fc4f2),
+                          child: Icon(
+                            Icons.question_answer,
+                            size: 25,
+                          ),
+                          padding: EdgeInsets.all(16),
+                          shape: CircleBorder(),
+                        ),
+                        title: Text(
+                          'Faq',
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.white,

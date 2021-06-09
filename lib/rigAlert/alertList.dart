@@ -146,34 +146,6 @@ class _RecivedWarningState extends State<RecivedAlert> {
                     ),
                   ),
                 ),
-                // child: Row(
-                //   children: <Widget>[
-                //     Container(
-                //       //  margin: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
-                //       child: Icon(
-                //         Icons.sticky_note_2,
-                //         size: 70.0,
-                //         color: Color(0xff4fc4f2),
-                //       ),
-                //     ),
-                //     Expanded(
-                //       child: Container(
-                //         margin: EdgeInsets.fromLTRB(0.0, 40.0, 10.0, 0.0),
-                //         child: Center(
-                //             child: Text.rich(
-                //           TextSpan(
-                //             children: [
-                //               TextSpan(
-                //                   text: 'Recieved  ',
-                //                   style: TextStyle(fontSize: 26)),
-                //               TextSpan(text: 'Rig Alerts'),
-                //             ],
-                //           ),
-                //         )),
-                //       ),
-                //     ),
-                //   ],
-                // ),
               ),
               Container(
                 alignment: Alignment.center,

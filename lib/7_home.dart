@@ -9,7 +9,7 @@ import 'notepadScreen/notepadListScreen.dart';
 import '19_services.dart';
 import 'OffersScreens/25_offers.dart';
 import 'JobHandOverScreen/jobHandoverList.dart';
-import '6_editprofile.dart';
+import 'Profile/6_editprofile.dart';
 import 'contacts/contact.dart';
 import 'UserAuth/4_signup.dart';
 import 'JobDescription/JobDescriptionTab.dart';

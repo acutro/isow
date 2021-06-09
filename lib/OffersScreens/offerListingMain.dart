@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
@@ -65,7 +66,10 @@ class _MyApp extends State<NewsListingMain> {
         onRefresh: refreshList,
         child: widget.offerList == null
             ? Center(
-                child: CircularProgressIndicator(),
+                child: SpinKitChasingDots(
+                  color: Colors.blue,
+                  size: 120,
+                ),
               )
             : Container(
                 height: MediaQuery.of(context).size.height,

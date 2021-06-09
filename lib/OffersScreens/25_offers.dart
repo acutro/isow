@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
@@ -51,7 +52,10 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
       ),
       body: mapResponse == null
           ? Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitChasingDots(
+                color: Colors.blue,
+                size: 120,
+              ),
             )
           : Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:http/http.dart' as http;
 import 'package:toast/toast.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class WeatherreportScreen extends StatefulWidget {
   @override
@@ -91,7 +92,10 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
       ),
       body: mapResponse == null
           ? Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitChasingDots(
+                color: Colors.blue,
+                size: 120,
+              ),
             )
           : SingleChildScrollView(
               physics: NeverScrollableScrollPhysics(),

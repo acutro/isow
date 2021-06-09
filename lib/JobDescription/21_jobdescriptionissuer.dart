@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '22_jobdescription.dart';
 import 'JobDescriptionTab.dart';
 import 'package:http/http.dart' as http;
@@ -237,7 +238,10 @@ class _JobdescriptionState extends State<Jobdescription> {
       ),
       body: mapResponse == null
           ? Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitChasingDots(
+                color: Colors.blue,
+                size: 120,
+              ),
             )
           : SingleChildScrollView(
               child: Column(

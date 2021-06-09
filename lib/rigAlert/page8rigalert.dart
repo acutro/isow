@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 import 'alertList.dart';
 import 'package:flutter/material.dart';
 import 'sizeadjust.dart';
@@ -207,7 +209,10 @@ class _RigAlert2State extends State<RigAlert2> {
       // ),
       body: mapResponse == null
           ? Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitChasingDots(
+                color: Colors.blue,
+                size: 120,
+              ),
             )
           : ListView(
               children: <Widget>[

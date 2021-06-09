@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -17,15 +18,16 @@ class NotepadList extends StatefulWidget {
 }
 
 class _MyApp extends State<NotepadList> {
+  TextEditingController controller = new TextEditingController();
   String sid;
   bool error = true;
-  Future getValidation() async {
+  Future getValidation(String nam) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     String id = sharedPreferences.getString('userId');
     setState(() {
       sid = id;
-      fetchData(id);
+      fetchData(id, nam);
       error = false;
     });
   }
@@ -34,13 +36,14 @@ class _MyApp extends State<NotepadList> {
   Map mapResponse;
   bool jobError = false;
   List<dynamic> listFacts;
-  Future fetchData(String id) async {
+  Future fetchData(String id, String name) async {
     var data = {
       'userId': id,
+      'name': name,
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Notepad/singleList',
+        'http://isow.acutrotech.com/index.php/api/SearchList/searchNotepad',
         body: (data));
     if (response.statusCode == 200) {
       setState(() {
@@ -74,7 +77,7 @@ class _MyApp extends State<NotepadList> {
           backgroundColor: Colors.white);
       Timer(
         Duration(seconds: 1),
-        () => fetchData(ssid),
+        () => fetchData(ssid, ""),
       );
     } else {
       Toast.show("Something went wrong", context,
@@ -85,9 +88,9 @@ class _MyApp extends State<NotepadList> {
     }
   }
 
-  Future<Null> refreshList() async {
+  Future<Null> refreshList(String nam) async {
     await Future.delayed(Duration(seconds: 2));
-    getValidation();
+    getValidation(nam);
   }
 
   getpath(String path) {
@@ -105,7 +108,7 @@ class _MyApp extends State<NotepadList> {
   @override
   void initState() {
     super.initState();
-    getValidation();
+    getValidation("");
   }
 
   // This widget is the root of your application.
@@ -151,197 +154,255 @@ class _MyApp extends State<NotepadList> {
           ],
         ),
         body: RefreshIndicator(
-          onRefresh: refreshList,
-          child: jobError == true || mapResponse == null
+          onRefresh: () {
+            refreshList(controller.text);
+          },
+          child: mapResponse == null
               ? Center(
-                  child: CircularProgressIndicator(),
+                  child: SpinKitChasingDots(
+                    color: Colors.blue,
+                    size: 120,
+                  ),
                 )
               : Container(
-                  decoration:
-                      BoxDecoration(color: Color(0xFF4fc4f2).withOpacity(0.2)),
-                  height: MediaQuery.of(context).size.height,
-                  width: double.infinity,
-                  child: listFacts.length == 0
-                      ? Center(child: Text("No Notes found"))
-                      : ListView.builder(
-                          itemCount: listFacts.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            // final Message chat = chats[index];
-                            return GestureDetector(
-                              onTap: () {
-                                showDialogFunc(
-                                  context,
-                                  listFacts[index]["name"],
-                                  listFacts[index]["date"],
-                                  listFacts[index]["requirements"],
-                                  listFacts[index]["id"],
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        // padding: EdgeInsets.all(5),
+                        margin: EdgeInsets.symmetric(horizontal: 15),
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.black45),
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.white,
+                        ),
+
+                        // width: MediaQuery.of(context).size.width*40,
+                        child: ListTile(
+                          // leading: new Icon(Icons.search),
+                          title: TextFormField(
+                            controller: controller,
+                            decoration: new InputDecoration(
+                              hintText: 'Search',
+                              hintStyle: TextStyle(color: Colors.grey[600]),
+                              border: InputBorder.none,
+                              // fillColor: Colors.blue,
+                              // filled: true
+                            ),
+                            onChanged: (value) {
+                              fetchData(sid, controller.text);
+                            },
+                          ),
+                          trailing: controller.text.isNotEmpty
+                              ? new IconButton(
+                                  icon: new Icon(Icons.cancel),
+                                  onPressed: () {
+                                    controller.clear();
+                                    fetchData(sid, controller.text);
+                                    // providerData.getContacts();
+                                    // onSearchTextChanged('');
+                                  },
+                                )
+                              : Icon(Icons.search),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          child: SingleChildScrollView(
+                            child: ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: listFacts.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                // final Message chat = chats[index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    showDialogFunc(
+                                      context,
+                                      listFacts[index]["name"],
+                                      listFacts[index]["date"],
+                                      listFacts[index]["requirements"],
+                                      listFacts[index]["id"],
+                                    );
+                                  },
+                                  child: Card(
+                                    elevation: 3,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 15,
+                                        vertical: 8,
+                                      ),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.90,
+                                            padding: EdgeInsets.all(3),
+                                            child: Column(
+                                              children: <Widget>[
+                                                ListTile(
+                                                  leading: CircleAvatar(
+                                                    backgroundColor:
+                                                        Color(0xFF4fc4f2),
+                                                    child: Text(
+                                                      listFacts[index]["name"]
+                                                          .toUpperCase()
+                                                          .substring(0, 1),
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white,
+                                                          fontSize: 20),
+                                                    ),
+                                                  ),
+                                                  title: Text(
+                                                    '${listFacts[index]["name"][0].toUpperCase()}${listFacts[index]["name"].substring(1)}',
+                                                    //  listFacts[index]["name"],
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        height: 1.5),
+                                                  ),
+                                                  subtitle: Text(
+                                                    listFacts[index]["date"],
+                                                  ),
+                                                  trailing: Container(
+                                                    width: 70,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        InkWell(
+                                                            onTap: () {
+                                                              // BuildAlertDialogDelete();
+
+                                                              showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) =>
+                                                                        AlertDialog(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  title: Text(
+                                                                      "Update ?"),
+                                                                  content: Text(
+                                                                      "Do you want to Update ?"),
+                                                                  actions: [
+                                                                    FlatButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        },
+                                                                        child: Text(
+                                                                            "No")),
+                                                                    FlatButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator
+                                                                              .pushReplacement(
+                                                                            context,
+                                                                            MaterialPageRoute(
+                                                                                builder: (context) => UpdateNotepad(
+                                                                                      id: listFacts[index]["id"],
+                                                                                      userId: listFacts[index]["userId"],
+                                                                                      name: listFacts[index]["name"],
+                                                                                      requirment: listFacts[index]["requirements"],
+                                                                                      date: listFacts[index]["date"],
+                                                                                    )),
+                                                                          );
+                                                                        },
+                                                                        child: Text(
+                                                                            "Yes"))
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: Icon(
+                                                              Icons
+                                                                  .create_rounded,
+                                                              color: Colors
+                                                                  .green[400],
+                                                            )),
+                                                        InkWell(
+                                                            onTap: () {
+                                                              // BuildAlertDialogDelete();
+
+                                                              showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) =>
+                                                                        AlertDialog(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  title: Text(
+                                                                      "Delete?"),
+                                                                  content: Text(
+                                                                      "Do you want to delete?"),
+                                                                  actions: [
+                                                                    FlatButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        },
+                                                                        child: Text(
+                                                                            "No")),
+                                                                    FlatButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                          deleteNotepad(
+                                                                              listFacts[index]["id"],
+                                                                              sid);
+                                                                          fetchData(
+                                                                              sid,
+                                                                              "");
+                                                                        },
+                                                                        child: Text(
+                                                                            "Yes"))
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: Icon(
+                                                              Icons.delete,
+                                                              color: Colors
+                                                                  .red[400],
+                                                            )),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 );
                               },
-                              child: Card(
-                                elevation: 3,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 15,
-                                    vertical: 8,
-                                  ),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.90,
-                                        padding: EdgeInsets.all(3),
-                                        child: Column(
-                                          children: <Widget>[
-                                            ListTile(
-                                              leading: CircleAvatar(
-                                                backgroundColor:
-                                                    Color(0xFF4fc4f2),
-                                                child: Text(
-                                                  listFacts[index]["name"]
-                                                      .toUpperCase()
-                                                      .substring(0, 1),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white,
-                                                      fontSize: 20),
-                                                ),
-                                              ),
-                                              title: Text(
-                                                '${listFacts[index]["name"][0].toUpperCase()}${listFacts[index]["name"].substring(1)}',
-                                                //  listFacts[index]["name"],
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    height: 1.5),
-                                              ),
-                                              subtitle: Text(
-                                                listFacts[index]["date"],
-                                              ),
-                                              trailing: Container(
-                                                width: 70,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    InkWell(
-                                                        onTap: () {
-                                                          // BuildAlertDialogDelete();
-
-                                                          showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                (context) =>
-                                                                    AlertDialog(
-                                                              backgroundColor:
-                                                                  Colors.white,
-                                                              title: Text(
-                                                                  "Update ?"),
-                                                              content: Text(
-                                                                  "Do you want to Update ?"),
-                                                              actions: [
-                                                                FlatButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    },
-                                                                    child: Text(
-                                                                        "No")),
-                                                                FlatButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      Navigator
-                                                                          .pushReplacement(
-                                                                        context,
-                                                                        MaterialPageRoute(
-                                                                            builder: (context) =>
-                                                                                UpdateNotepad(
-                                                                                  id: listFacts[index]["id"],
-                                                                                  userId: listFacts[index]["userId"],
-                                                                                  name: listFacts[index]["name"],
-                                                                                  requirment: listFacts[index]["requirements"],
-                                                                                  date: listFacts[index]["date"],
-                                                                                )),
-                                                                      );
-                                                                    },
-                                                                    child: Text(
-                                                                        "Yes"))
-                                                              ],
-                                                            ),
-                                                          );
-                                                        },
-                                                        child: Icon(
-                                                          Icons.create_rounded,
-                                                          color:
-                                                              Colors.green[400],
-                                                        )),
-                                                    InkWell(
-                                                        onTap: () {
-                                                          // BuildAlertDialogDelete();
-
-                                                          showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                (context) =>
-                                                                    AlertDialog(
-                                                              backgroundColor:
-                                                                  Colors.white,
-                                                              title: Text(
-                                                                  "Delete?"),
-                                                              content: Text(
-                                                                  "Do you want to delete?"),
-                                                              actions: [
-                                                                FlatButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    },
-                                                                    child: Text(
-                                                                        "No")),
-                                                                FlatButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                      deleteNotepad(
-                                                                          listFacts[index]
-                                                                              [
-                                                                              "id"],
-                                                                          sid);
-                                                                      fetchData(
-                                                                          sid);
-                                                                    },
-                                                                    child: Text(
-                                                                        "Yes"))
-                                                              ],
-                                                            ),
-                                                          );
-                                                        },
-                                                        child: Icon(
-                                                          Icons.delete,
-                                                          color:
-                                                              Colors.red[400],
-                                                        )),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
+                            ),
+                          ),
                         ),
+                      ),
+                    ],
+                  ),
                 ),
         ),
         floatingActionButton: FloatingActionButton.extended(

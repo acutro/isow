@@ -1,7 +1,9 @@
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 import 'dart:convert';
 import '15_issuewarning.dart';
 
@@ -18,47 +20,58 @@ class RecivedWarning extends StatefulWidget {
 class _RecivedWarningState extends State<RecivedWarning> {
   String sid;
   bool error = true;
-  Future getValidation() async {
+  Future getValidation(String nam) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    String id = sharedPreferences.getString('position');
+    String id = sharedPreferences.getString('userId');
     setState(() {
       sid = id;
-
+      _getEmployee(id, nam);
       error = false;
     });
   }
 
-  Future<List<Warning>> _getEmployee(String uid) async {
+  TextEditingController controller = new TextEditingController();
+  List listResponse;
+  Map mapResponse;
+  List<dynamic> listFacts;
+  bool jobError = false;
+  Future _getEmployee(String id, String namee) async {
     var data = {
-      'userId': uid,
+      'toId': id,
+      'issue': namee,
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/WarningLetter/singleList',
+        'http://isow.acutrotech.com/index.php/api/SearchList/searchWarningLetter',
         body: (data));
+    if (response.statusCode == 200) {
+      setState(() {
+        mapResponse = jsonDecode(response.body);
+        listFacts = mapResponse['data'];
+        jobError = false;
+        print("{$listFacts}");
+      });
+    } else {
+      jobError = true;
 
-    // var empData = await http
-    //     .get("http://isow.acutrotech.com/index.php/api/WarningLetter/list");
-    Map jsonData = jsonDecode(response.body);
-
-    List<Warning> employees = [];
-    jsonData["data"].forEach((f) {
-      Warning employee = Warning(
-          id: f["id"] ?? "",
-          issue: f["issue"] ?? "",
-          position: f["position"] ?? "",
-          person: f["to"] ?? "",
-          content: f["content"] ?? "",
-          createdAt: f["created_at"] ?? "");
-      employees.add(employee);
-    });
-    return employees;
+      Toast.show("No Warning Letter Found", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
+    }
   }
 
-  Future<Null> refreshList(String uid) async {
+  Future<Null> refreshList(String nam) async {
     await Future.delayed(Duration(seconds: 2));
-    _getEmployee(uid);
+    getValidation(nam);
+  }
+
+  @override
+  void initState() {
+    getValidation("");
+    super.initState();
   }
 
   @override
@@ -90,218 +103,248 @@ class _RecivedWarningState extends State<RecivedWarning> {
       ),
       body: RefreshIndicator(
         onRefresh: () {
-          refreshList(widget.userid);
+          refreshList(controller.text);
         },
         child: Container(
           margin: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 5.0),
           height: double.infinity,
-          child: FutureBuilder(
-              future: _getEmployee(widget.userid),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.data == null) {
-                  return Container(
-                    child: Center(
-                      child: Text("Loading..."),
+          child: Column(
+            children: [
+              Container(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.sticky_note_2,
+                    size: 70.0,
+                    color: Color(0xff4fc4f2),
+                  ),
+                  subtitle: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                            text: 'Recieved  ', style: TextStyle(fontSize: 26)),
+                        TextSpan(text: 'Warning Letter'),
+                      ],
                     ),
-                  );
-                } else {
-                  print(snapshot.data.length);
-                  return Column(
-                    children: [
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
-                            child: Icon(
-                              Icons.sticky_note_2,
-                              size: 90.0,
-                              color: Color(0xff4fc4f2),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(0.0, 40.0, 10.0, 0.0),
-                              child: Center(
-                                  child: Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                        text: 'Recieved ',
-                                        style: TextStyle(fontSize: 24)),
-                                    TextSpan(text: 'Warning Letter'),
-                                  ],
-                                ),
-                              )),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                              onTap: () {
-                                showDialogFunc(
-                                  context,
-                                  snapshot.data[index].person,
-                                  snapshot.data[index].position,
-                                  snapshot.data[index].createdAt
-                                      .substring(0, 10),
-                                  snapshot.data[index].content,
-                                  snapshot.data[index].issue,
-                                );
-                              },
-                              child: Container(
-                                margin:
-                                    EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      blurRadius: 6.0,
-                                      offset: Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                height: 230.0,
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Container(
-                                            height: 40.0,
-                                            decoration: BoxDecoration(
-                                                color: Color(0xff4fc4f2),
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft:
-                                                      Radius.circular(10.0),
-                                                )),
-                                            alignment: Alignment.topLeft,
-                                            margin: EdgeInsets.fromLTRB(
-                                                0.0, 0.0, .0, 0.0),
-                                            child: Center(
-                                              child: Text(
-                                                snapshot.data[index].person,
-                                                style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 2.0,
-                                          height: 40.0,
-                                          color: Colors.black54,
-                                          //margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            height: 40.0,
-                                            color: Color(0xff4fc4f2),
-                                            alignment: Alignment.topLeft,
-                                            margin: EdgeInsets.fromLTRB(
-                                                0.0, 0.0, 0.0, 0.0),
-                                            child: Center(
-                                              child: Text(
-                                                snapshot.data[index].position,
-                                                style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 2.0,
-                                          height: 40.0,
-                                          color: Colors.black54,
-                                          // margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            height: 40.0,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xff4fc4f2),
-                                              borderRadius: BorderRadius.only(
-                                                topRight: Radius.circular(10.0),
-                                              ),
-                                            ),
-                                            alignment: Alignment.topLeft,
-                                            //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
-                                            child: Center(
-                                              child: Text(
-                                                snapshot.data[index].createdAt
-                                                    .substring(0, 10),
-                                                style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                      child: Expanded(
-                                        child: SingleChildScrollView(
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.all(5.0),
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                // padding: EdgeInsets.all(5),
+                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.black45),
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: Colors.white,
+                ),
+
+                // width: MediaQuery.of(context).size.width*40,
+                child: ListTile(
+                  // leading: new Icon(Icons.search),
+                  title: TextFormField(
+                    controller: controller,
+                    decoration: new InputDecoration(
+                      hintText: 'Search',
+                      hintStyle: TextStyle(color: Colors.grey[600]),
+                      border: InputBorder.none,
+                      // fillColor: Colors.blue,
+                      // filled: true
+                    ),
+                    onChanged: (value) {
+                      _getEmployee(sid, controller.text);
+                    },
+                  ),
+                  trailing: controller.text.isNotEmpty
+                      ? new IconButton(
+                          icon: new Icon(Icons.cancel),
+                          onPressed: () {
+                            controller.clear();
+                            _getEmployee(sid, controller.text);
+                            // providerData.getContacts();
+                            // onSearchTextChanged('');
+                          },
+                        )
+                      : Icon(Icons.search),
+                ),
+              ),
+              Expanded(
+                child: jobError == true || mapResponse == null
+                    ? Center(
+                        child: SpinKitChasingDots(
+                          color: Colors.blue,
+                          size: 120,
+                        ),
+                      )
+                    : listFacts.length == 0
+                        ? Center(child: Text("No Rig Alerts found"))
+                        : ListView.builder(
+                            itemCount: listFacts.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  showDialogFunc(
+                                    context,
+                                    listFacts[index]['to'],
+                                    listFacts[index]['position'],
+                                    listFacts[index]['created_at']
+                                        .substring(0, 10),
+                                    listFacts[index]['content'],
+                                    listFacts[index]['issue'],
+                                  );
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.fromLTRB(
+                                      20.0, 0.0, 20.0, 20.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        blurRadius: 6.0,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  height: 230.0,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Container(
+                                              height: 40.0,
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xff4fc4f2),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(10.0),
+                                                  )),
+                                              alignment: Alignment.topLeft,
+                                              margin: EdgeInsets.fromLTRB(
+                                                  0.0, 0.0, .0, 0.0),
+                                              child: Center(
                                                 child: Text(
-                                                  snapshot.data[index].issue,
-                                                  textAlign: TextAlign.center,
+                                                  listFacts[index]['to'],
                                                   style: TextStyle(
-                                                      fontSize: 14,
+                                                      fontSize: 16.0,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      height: 1.5),
+                                                      color: Colors.white),
                                                 ),
                                               ),
-                                              Divider(),
-                                              Container(
-                                                margin: EdgeInsets.all(10.0),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 2.0,
+                                            height: 40.0,
+                                            color: Colors.black54,
+                                            //margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              height: 40.0,
+                                              color: Color(0xff4fc4f2),
+                                              alignment: Alignment.topLeft,
+                                              margin: EdgeInsets.fromLTRB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                              child: Center(
                                                 child: Text(
-                                                  '${snapshot.data[index].content[0].toUpperCase()}${snapshot.data[index].content.substring(1)}',
-                                                  // snapshot.data[index].content,
+                                                  listFacts[index]['position'],
                                                   style: TextStyle(
-                                                      fontSize: 13,
-                                                      height: 1.5),
+                                                      fontSize: 16.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white),
                                                 ),
                                               ),
-                                            ],
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 2.0,
+                                            height: 40.0,
+                                            color: Colors.black54,
+                                            // margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              height: 40.0,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff4fc4f2),
+                                                borderRadius: BorderRadius.only(
+                                                  topRight:
+                                                      Radius.circular(10.0),
+                                                ),
+                                              ),
+                                              alignment: Alignment.topLeft,
+                                              //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
+                                              child: Center(
+                                                child: Text(
+                                                  listFacts[index]['created_at']
+                                                      .substring(0, 10),
+                                                  style: TextStyle(
+                                                      fontSize: 16.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        child: Expanded(
+                                          child: SingleChildScrollView(
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.all(5.0),
+                                                  child: Text(
+                                                    listFacts[index]['issue'],
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        height: 1.5),
+                                                  ),
+                                                ),
+                                                Divider(),
+                                                Container(
+                                                  margin: EdgeInsets.all(10.0),
+                                                  child: Text(
+                                                    '${listFacts[index]['content'].toUpperCase()}${listFacts[index]['content'].substring(1)}',
+                                                    // snapshot.data[index].content,
+                                                    style: TextStyle(
+                                                        fontSize: 13,
+                                                        height: 1.5),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    // Container(
-                                    //   margin:
-                                    //       EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 0.0),
-                                    //   alignment: Alignment.centerLeft,
-                                    //   height: 20.0,
-                                    //   child: Text(snapshot.data[index].createdAt),
-                                    // ),
-                                  ],
+                                      // Container(
+                                      //   margin:
+                                      //       EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 0.0),
+                                      //   alignment: Alignment.centerLeft,
+                                      //   height: 20.0,
+                                      //   child: Text(snapshot.data[index].createdAt),
+                                      // ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  );
-                }
-              }),
+                              );
+                            },
+                          ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: widget.posid == '4'
@@ -321,23 +364,6 @@ class _RecivedWarningState extends State<RecivedWarning> {
           : null,
     );
   }
-}
-
-class Warning {
-  final String id;
-  final String position;
-  final String issue;
-  final String person;
-  final String content;
-  final String createdAt;
-
-  Warning(
-      {this.id,
-      this.position,
-      this.issue,
-      this.person,
-      this.content,
-      this.createdAt});
 }
 
 showDialogFunc(context, person, position, date, content, issue) {

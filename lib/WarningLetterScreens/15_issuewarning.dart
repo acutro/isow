@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '16_RecievedWarningletter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -15,7 +16,7 @@ class Warningletter extends StatefulWidget {
 class _WarningletterState extends State<Warningletter> {
   TextEditingController _reasonController = new TextEditingController();
 
-  // TextEditingController issueController = new TextEditingController();
+  TextEditingController issueController = new TextEditingController();
 
   String sid;
   bool error = true;
@@ -81,12 +82,13 @@ class _WarningletterState extends State<Warningletter> {
     String content,
     String toid,
     String userId,
+    String issue,
   ) async {
     var data = {
       'content': content,
       'fromId': userId,
       'toId': toid,
-      'issue': 'issue',
+      'issue': issue,
     };
     http.Response response;
     response = await http.post(
@@ -241,7 +243,10 @@ class _WarningletterState extends State<Warningletter> {
       ),
       body: mapResponse == null
           ? Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitChasingDots(
+                color: Colors.blue,
+                size: 120,
+              ),
             )
           : SingleChildScrollView(
               child: Column(
@@ -301,7 +306,7 @@ class _WarningletterState extends State<Warningletter> {
                     children: <Widget>[
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.fromLTRB(20.0, 20.0, 5.0, 20.0),
+                          margin: EdgeInsets.fromLTRB(20.0, 20.0, 5.0, 0.0),
                           //width: 200.0,
                           height: 40.0,
                           decoration: BoxDecoration(
@@ -320,7 +325,7 @@ class _WarningletterState extends State<Warningletter> {
                       ),
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.fromLTRB(5.0, 20.0, 5.0, 20.0),
+                          margin: EdgeInsets.fromLTRB(5.0, 20.0, 5.0, 0.0),
                           //width: 200.0,
                           height: 40.0,
                           decoration: BoxDecoration(
@@ -338,6 +343,40 @@ class _WarningletterState extends State<Warningletter> {
                         ),
                       ),
                     ],
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.all(20),
+                    padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                    //width: 200.0,
+                    height: 45.0,
+
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Color(0xff4fc4f2), width: 1),
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 6.0,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: TextField(
+                      decoration: new InputDecoration(
+                        hintText: 'Reason',
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                      ),
+                      autofocus: false,
+                      maxLines: null,
+                      controller: issueController,
+                      keyboardType: TextInputType.text,
+                    ),
                   ),
                   Row(
                     children: <Widget>[
@@ -366,7 +405,7 @@ class _WarningletterState extends State<Warningletter> {
                                 margin:
                                     EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 0.0),
                                 child: Text(
-                                  'Reason',
+                                  'Issue',
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold),
@@ -438,11 +477,15 @@ class _WarningletterState extends State<Warningletter> {
                                     textColor: Color(0xff49A5FF),
                                     backgroundColor: Colors.white);
                               } else {
-                                postWarning(_reasonController.text,
-                                    userValue.toString(), sid);
+                                postWarning(
+                                    _reasonController.text,
+                                    userValue.toString(),
+                                    sid,
+                                    issueController.text);
 
                                 setState(() {
                                   _reasonController.text = "";
+                                  issueController.text = "";
                                 });
                               }
                             },

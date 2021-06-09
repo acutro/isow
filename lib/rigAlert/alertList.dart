@@ -1,6 +1,7 @@
 import 'package:flutter_countdown_timer/countdown.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ class RecivedAlert extends StatefulWidget {
 }
 
 class _RecivedWarningState extends State<RecivedAlert> {
-  CountdownTimerController controller;
+  CountdownTimerController controllerCount;
+  TextEditingController controller = new TextEditingController();
   int endTime = DateTime.now().millisecondsSinceEpoch + 100000000 * 30;
   String sid;
   String posid;
@@ -39,11 +41,14 @@ class _RecivedWarningState extends State<RecivedAlert> {
   Map mapResponse;
   List<dynamic> listFacts;
   bool jobError = false;
-  Future _rigList() async {
+  Future _rigList(String namee) async {
+    var data = {
+      'rigName': namee,
+    };
     http.Response response;
-    response = await http.get(
-      'http://isow.acutrotech.com/index.php/api/Rigalert/list',
-    );
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/SearchList/searchRigalert',
+        body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
@@ -62,15 +67,15 @@ class _RecivedWarningState extends State<RecivedAlert> {
     }
   }
 
-  Future<Null> refreshList() async {
+  Future<Null> refreshList(String nam) async {
     await Future.delayed(Duration(seconds: 2));
     // getValidation();
-    _rigList();
+    _rigList(nam);
   }
 
   @override
   void initState() {
-    _rigList();
+    _rigList("");
     getValidation();
     super.initState();
   }
@@ -116,44 +121,106 @@ class _RecivedWarningState extends State<RecivedAlert> {
         ),
       ),
       body: RefreshIndicator(
-        onRefresh: refreshList,
+        onRefresh: () {
+          refreshList(controller.text);
+        },
         child: Container(
           margin: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 5.0),
           height: double.infinity,
           child: Column(
             children: [
-              Row(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
-                    child: Icon(
-                      Icons.sticky_note_2,
-                      size: 90.0,
-                      color: Color(0xff4fc4f2),
-                    ),
+              Container(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.sticky_note_2,
+                    size: 70.0,
+                    color: Color(0xff4fc4f2),
                   ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(0.0, 40.0, 10.0, 0.0),
-                      child: Center(
-                          child: Text.rich(
+                  subtitle: Text.rich(
+                    TextSpan(
+                      children: [
                         TextSpan(
-                          children: [
-                            TextSpan(
-                                text: 'Recieved  ',
-                                style: TextStyle(fontSize: 26)),
-                            TextSpan(text: 'Rig Alerts'),
-                          ],
-                        ),
-                      )),
+                            text: 'Recieved  ', style: TextStyle(fontSize: 26)),
+                        TextSpan(text: 'Rig Alerts'),
+                      ],
                     ),
                   ),
-                ],
+                ),
+                // child: Row(
+                //   children: <Widget>[
+                //     Container(
+                //       //  margin: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
+                //       child: Icon(
+                //         Icons.sticky_note_2,
+                //         size: 70.0,
+                //         color: Color(0xff4fc4f2),
+                //       ),
+                //     ),
+                //     Expanded(
+                //       child: Container(
+                //         margin: EdgeInsets.fromLTRB(0.0, 40.0, 10.0, 0.0),
+                //         child: Center(
+                //             child: Text.rich(
+                //           TextSpan(
+                //             children: [
+                //               TextSpan(
+                //                   text: 'Recieved  ',
+                //                   style: TextStyle(fontSize: 26)),
+                //               TextSpan(text: 'Rig Alerts'),
+                //             ],
+                //           ),
+                //         )),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                // padding: EdgeInsets.all(5),
+                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.black45),
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: Colors.white,
+                ),
+
+                // width: MediaQuery.of(context).size.width*40,
+                child: ListTile(
+                  // leading: new Icon(Icons.search),
+                  title: TextFormField(
+                    controller: controller,
+                    decoration: new InputDecoration(
+                      hintText: 'Search',
+                      hintStyle: TextStyle(color: Colors.grey[600]),
+                      border: InputBorder.none,
+                      // fillColor: Colors.blue,
+                      // filled: true
+                    ),
+                    onChanged: (value) {
+                      _rigList(controller.text);
+                    },
+                  ),
+                  trailing: controller.text.isNotEmpty
+                      ? new IconButton(
+                          icon: new Icon(Icons.cancel),
+                          onPressed: () {
+                            controller.clear();
+                            _rigList(controller.text);
+                            // providerData.getContacts();
+                            // onSearchTextChanged('');
+                          },
+                        )
+                      : Icon(Icons.search),
+                ),
               ),
               Expanded(
                 child: jobError == true || mapResponse == null
                     ? Center(
-                        child: CircularProgressIndicator(),
+                        child: SpinKitChasingDots(
+                          color: Colors.blue,
+                          size: 120,
+                        ),
                       )
                     : listFacts.length == 0
                         ? Center(child: Text("No Rig Alerts found"))

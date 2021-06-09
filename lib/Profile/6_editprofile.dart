@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'editProfile.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final String userId;
@@ -64,6 +66,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
               var aemail = snapshot.data.email;
               var awork = snapshot.data.work;
               var amob_num = snapshot.data.mob_num;
+              var aroleid = snapshot.data.roleId;
 
               return Container(
                 child: Column(children: <Widget>[
@@ -238,7 +241,20 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       Container(
                         height: 50.0,
                         child: RaisedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditProfile(
+                                        name: aname,
+                                        empid: auserId,
+                                        email: aemail,
+                                        work: awork,
+                                        mob: amob_num,
+                                        roleid: aroleid,
+                                      )),
+                            );
+                          },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(80.0)),
                           padding: EdgeInsets.all(0.0),
@@ -263,6 +279,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 30,
+                      )
                     ],
                   ),
                 ]),
@@ -272,7 +291,12 @@ class EditProfileScreenState extends State<EditProfileScreen> {
             }
 
             // By default, show a loading spinner.
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: SpinKitChasingDots(
+                color: Colors.blue,
+                size: 120,
+              ),
+            );
           },
         ),
       ),
@@ -302,8 +326,9 @@ Future<Note> fetchNote(String sidd) async {
         name: details['name'] as String,
         userId: details['empId'] as String,
         email: details['email'] as String,
-        work: details['work'] as String,
+        work: details['roleName'] as String,
         mob_num: details['mob_num'] as String,
+        roleId: details['roleId'] as String,
       );
     } else {
       throw Exception("Error");
@@ -319,16 +344,24 @@ class Note {
   final String email;
   final String work;
   final String mob_num;
+  final String roleId;
 
-  Note({this.name, this.userId, this.email, this.work, this.mob_num});
+  Note(
+      {this.name,
+      this.userId,
+      this.email,
+      this.work,
+      this.mob_num,
+      this.roleId});
 
   factory Note.fromJson(Map<String, String> json) {
     return Note(
       name: json['name'],
       userId: json['empId'],
       email: json['email'],
-      work: json['work'],
+      work: json['roleName'],
       mob_num: json['mob_num'],
+      roleId: json['roleId'],
     );
   }
 }

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
@@ -12,6 +15,7 @@ class JobHandoverList extends StatefulWidget {
 }
 
 class _MyApp extends State<JobHandoverList> {
+  TextEditingController resonController = new TextEditingController();
   String sid;
   bool error = true;
   Future getValidation() async {
@@ -61,8 +65,14 @@ class _MyApp extends State<JobHandoverList> {
     getValidation();
   }
 
-  Future handoverStatus(String jobid, String userid, String hstatus) async {
-    var data = {'jobId': jobid, 'userId': userid, 'handoverStatus': hstatus};
+  Future handoverStatus(
+      String jobid, String userid, String hstatus, String reson) async {
+    var data = {
+      'jobId': jobid,
+      'userId': userid,
+      'handoverStatus': hstatus,
+      'reason': reson
+    };
     http.Response response;
     response = await http.post(
         'http://isow.acutrotech.com/index.php/api/JobHandover/handoverstatus',
@@ -118,8 +128,121 @@ class _MyApp extends State<JobHandoverList> {
         children: [
           GestureDetector(
             onTap: () {
-              handoverStatus(jobid, sid, '2');
-              fetchIssued(sid);
+              return showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Center(
+                      child: Material(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0)),
+                        elevation: 5.0,
+                        type: MaterialType.card,
+                        child: Container(
+                          padding: EdgeInsets.all(25),
+                          height: 280,
+                          width: 320,
+                          child: Column(
+                            children: [
+                              Container(
+                                child: Text(
+                                  "Enter Reason",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                alignment: Alignment.topLeft,
+
+                                /// margin: EdgeInsets.all(20.0),
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 20),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 6.0,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                height: 100.0,
+                                child: TextField(
+                                  textAlign: TextAlign.start,
+                                  maxLines: null,
+                                  controller: resonController,
+                                  style: TextStyle(
+                                      color: Colors.black54, fontSize: 12),
+                                  decoration: new InputDecoration(
+                                    hintText: 'Reason',
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Center(
+                                child: Container(
+                                  width: 120.0,
+                                  height: 45.0,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 6.0,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: InkWell(
+                                    child: Center(
+                                      child: Text(
+                                        'Reject',
+                                        style: TextStyle(
+                                            color:
+                                                Colors.white.withOpacity(1.0)),
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      if (resonController.text == "") {
+                                        Toast.show("Enter Reason", context,
+                                            duration: Toast.LENGTH_SHORT,
+                                            gravity: Toast.BOTTOM,
+                                            textColor: Colors.blue[600],
+                                            backgroundColor: Colors.white);
+                                      } else {
+                                        handoverStatus(jobid, sid, '2',
+                                            resonController.text);
+                                        fetchIssued(sid);
+                                        Timer(
+                                          Duration(seconds: 1),
+                                          () => Navigator.pop(context),
+                                        );
+                                        fetchIssued(sid);
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  });
             },
             child: Column(
               children: [
@@ -140,7 +263,7 @@ class _MyApp extends State<JobHandoverList> {
           ),
           GestureDetector(
             onTap: () {
-              handoverStatus(jobid, sid, '1');
+              handoverStatus(jobid, sid, '1', "");
               fetchIssued(sid);
             },
             child: Column(
@@ -210,7 +333,10 @@ class _MyApp extends State<JobHandoverList> {
         onRefresh: refreshList,
         child: jobError == true || mapResponse == null
             ? Center(
-                child: CircularProgressIndicator(),
+                child: SpinKitChasingDots(
+                  color: Colors.blue,
+                  size: 120,
+                ),
               )
             : Container(
                 decoration:

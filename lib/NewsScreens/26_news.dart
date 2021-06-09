@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'newsListing.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -45,7 +46,10 @@ class _NewsState extends State<News> {
       ),
       body: mapResponse == null
           ? Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitChasingDots(
+                color: Colors.blue,
+                size: 120,
+              ),
             )
           : SingleChildScrollView(
               child: Column(

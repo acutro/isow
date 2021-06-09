@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:toast/toast.dart';
 import '14_feedback.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class FeedbackList extends StatefulWidget {
   @override
@@ -110,7 +111,10 @@ class _MyApp extends State<FeedbackList> {
         onRefresh: refreshList,
         child: jobError == true || mapResponse == null
             ? Center(
-                child: CircularProgressIndicator(),
+                child: SpinKitChasingDots(
+                  color: Colors.blue,
+                  size: 120,
+                ),
               )
             : Container(
                 decoration:

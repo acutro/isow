@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:toast/toast.dart';
 import 'contact_details.dart';
 import 'dart:convert';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Contact extends StatefulWidget {
   // final String email;
@@ -141,7 +142,10 @@ class _MyApp extends State<Contact> {
           },
           child: mapResponse == null
               ? Center(
-                  child: CircularProgressIndicator(),
+                  child: SpinKitChasingDots(
+                    color: Colors.blue,
+                    size: 120,
+                  ),
                 )
               : Container(
                   child: Column(

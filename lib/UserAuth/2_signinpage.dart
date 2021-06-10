@@ -46,7 +46,7 @@ class SigninScreenState extends State<SigninScreen> {
       });
 
       Toast.show(
-        "Enter valid credentials",
+        "Login failed ! invalid email id or password",
         context,
         duration: Toast.LENGTH_SHORT,
         gravity: Toast.BOTTOM,
@@ -63,6 +63,29 @@ class SigninScreenState extends State<SigninScreen> {
     sharedPreferences.setString('position', pos);
   }
 
+  Future<bool> _onBackPressed() {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text(
+                "Are you sure you want to exit from i.SOW ?",
+                style: TextStyle(fontSize: 14),
+              ),
+              actions: [
+                FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context, false);
+                    },
+                    child: Text("No")),
+                FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context, true);
+                    },
+                    child: Text("Yes")),
+              ],
+            ));
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _emailController = new TextEditingController();
@@ -77,10 +100,13 @@ class SigninScreenState extends State<SigninScreen> {
 //var finalname=EditProfileScreenState.name;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // drawer: AppDrawer(),
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        backgroundColor: Colors.blueAccent,
+        // drawer: AppDrawer(),
 
-      appBar: AppBar(
+        // appBar: AppBar(
         // leading: new IconButton(
         //   icon: new Icon(
         //     Icons.menu,
@@ -88,87 +114,115 @@ class SigninScreenState extends State<SigninScreen> {
         //   ),
         //   onPressed: () {},
         // ),
-        title: Center(
-          child: Text(
-            'Sign In',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-            ),
-          ),
-        ),
+        // title: Text(
+        //   'Sign In',
+        //   style: TextStyle(
+        //     fontSize: 16,
+        //     color: Colors.white,
+        //   ),
+        // ),
         // actions: [
         //   Padding(
         //     padding: EdgeInsets.symmetric(horizontal: 16),
         //     child: Icon(Icons.more_vert),
         //   ),
         // ],
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: Text(
-                '\n'
-                'Welcome\n',
-                style: TextStyle(fontSize: 25, color: Color(0xFF4fc4f2)),
+        // flexibleSpace: Container(
+        //   decoration: BoxDecoration(
+        //       gradient: LinearGradient(
+        //           begin: Alignment.topLeft,
+        //           end: Alignment.bottomRight,
+        //           colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
+        // ),
+        // ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 120,
               ),
-            ),
-            Container(
-              child: Text(
-                'I.SOW\n',
-                style: TextStyle(
-                    fontSize: 28,
-                    color: Color(0xFF4fc4f2),
-                    fontWeight: FontWeight.bold),
+              Container(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Icon(Icons.shopping_bag, size: 90, color: Colors.white),
+                      Text(
+                        'Apps Login',
+                        style: TextStyle(
+                            fontSize: 26,
+                            color: Colors.white,
+                            fontFamily: "WorkSansLight"),
+                      ),
+                    ],
+                  )),
+              SizedBox(
+                height: 80,
               ),
-            ),
-            Container(
-              child: Text(
-                'Sign In\n',
-                style: TextStyle(
-                    fontSize: 23,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+              Form(
+                key: _formKey,
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: Colors.transparent,
+                      border: Border.all(width: 1, color: Colors.white60)),
+                  margin: new EdgeInsets.symmetric(horizontal: 20.0),
+
+                  /// padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 19.0),
+                  child: TextFormField(
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                    controller: _emailController,
+                    decoration: new InputDecoration(
+                      suffixIcon: Icon(
+                        Icons.person,
+                        color: Colors.white,
+                      ),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      contentPadding: EdgeInsets.only(
+                          left: 15, bottom: 11, top: 11, right: 15),
+                      hintText: 'Email-ID',
+                      filled: true,
+                      // fillColor: Colors.white24,
+                      hintStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontFamily: "WorkSansLight"),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 19.0),
-              child: Text(
-                'Please enter Email ID and Password',
-                style: TextStyle(fontSize: 12, color: Colors.black),
+              SizedBox(
+                height: 20,
               ),
-            ),
-            Form(
-              key: _formKey,
-              child: Container(
+              Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.0),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0.0, 1.0), //(x,y)
-                      blurRadius: 6.0,
-                    ),
-                  ],
+                  color: Colors.transparent,
+                  border: Border.all(width: 1, color: Colors.white60),
                 ),
                 margin: new EdgeInsets.symmetric(horizontal: 20.0),
-
-                /// padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 19.0),
                 child: TextFormField(
-                  controller: _emailController,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  controller: _passwordController,
+                  obscureText: _obscureText,
                   decoration: new InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.person,
-                      color: Color(0xFF4fc4f2),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        _viewPass();
+                      },
+                      child: Icon(
+                        _obscureText
+                            ? Icons.lock_sharp
+                            : Icons.lock_open_outlined,
+                        color: Colors.white,
+                      ),
                     ),
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
@@ -177,179 +231,123 @@ class SigninScreenState extends State<SigninScreen> {
                     disabledBorder: InputBorder.none,
                     contentPadding: EdgeInsets.only(
                         left: 15, bottom: 11, top: 11, right: 15),
-                    hintText: 'Email-ID',
+                    hintText: 'Password',
                     filled: true,
-                    fillColor: Colors.white24,
+                    // fillColor: Colors.white24,
                     hintStyle: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 12,
                         fontFamily: "WorkSansLight"),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(0.0, 1.0), //(x,y)
-                    blurRadius: 6.0,
-                  ),
-                ],
+              SizedBox(
+                height: 20,
               ),
-              margin: new EdgeInsets.symmetric(horizontal: 20.0),
-              child: TextFormField(
-                style: TextStyle(
-                  color: Colors.black54,
-                ),
-                controller: _passwordController,
-                obscureText: _obscureText,
-                decoration: new InputDecoration(
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      _viewPass();
-                    },
-                    child: Icon(
-                      _obscureText ? Icons.visibility : Icons.visibility_off,
-                      color: Color(0xFF4fc4f2),
-                    ),
-                  ),
-                  prefixIcon: Icon(
-                    Icons.lock_open_outlined,
-                    color: Color(0xFF4fc4f2),
-                  ),
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                  hintText: 'Password',
-                  filled: true,
-                  fillColor: Colors.white24,
-                  hintStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                      fontFamily: "WorkSansLight"),
-                ),
-              ),
-            ),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    'Remember me',
-                    textAlign: TextAlign.left,
-                  ),
-                  FlatButton(
-                    textColor: Color(0xFF4fc4f2),
-                    child: Text(
-                      'Forgot password?',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ForgotpswdScreen()),
-                      );
-
-                      //signup screen
-                    },
-                  )
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-              ),
-            ),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    'New one ?',
-                    textAlign: TextAlign.left,
-                  ),
-                  FlatButton(
-                    textColor: Color(0xFF4fc4f2),
-                    child: Text(
-                      'Signup',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    onPressed: () {
-                      if (error == true) {
-                        Toast.show(
-                          "Enter valid credentials",
-                          context,
+              Container(
+                height: 50.0,
+                child: RaisedButton(
+                  onPressed: () async {
+                    if (_emailController.text == "" ||
+                        _passwordController.text == "") {
+                      Toast.show("Please Enter Email and Password", context,
                           duration: Toast.LENGTH_SHORT,
                           gravity: Toast.BOTTOM,
-                          backgroundColor: Colors.white,
-                          textColor: Colors.red[400],
-                        );
-                      } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignupScreen()),
-                        );
-                      }
+                          textColor: Colors.red,
+                          backgroundColor: Colors.white);
+                    } else {
+                      getLogin(_emailController.text, _passwordController.text);
+                    }
 
-                      //signup screen
-                    },
-                  )
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
+                    //signup screen
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(80.0)),
+                  padding: EdgeInsets.all(0.0),
+                  child: Ink(
+                    decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        // gradient: LinearGradient(
+                        //   colors: [Color(0xFF4fc4f2), Colors.blue],
+                        //   begin: Alignment.centerLeft,
+                        //   end: Alignment.centerRight,
+                        // ),
+                        borderRadius: BorderRadius.circular(30.0)),
+                    child: Container(
+                      constraints:
+                          BoxConstraints(maxWidth: 170.0, minHeight: 50.0),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Sign In",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            Container(
-              height: 50.0,
-              child: RaisedButton(
-                onPressed: () async {
-                  if (_emailController.text == "" ||
-                      _passwordController.text == "") {
-                    Toast.show("Please Enter Email and Password", context,
-                        duration: Toast.LENGTH_SHORT,
-                        gravity: Toast.BOTTOM,
-                        textColor: Color(0xff49A5FF),
-                        backgroundColor: Colors.white);
-                  } else {
-                    getLogin(_emailController.text, _passwordController.text);
-                  }
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                child: FlatButton(
+                  textColor: Colors.white,
+                  child: Text(
+                    'Forget password?',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: "WorkSansLight",
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ForgotpswdScreen()),
+                    );
+
+                    //signup screen
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 120,
+              ),
+              Container(
+                  child: FlatButton(
+                textColor: Colors.white,
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Don\'t have an account? ',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: "WorkSansLight",
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'create new.',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: "WorkSansLight",
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignupScreen()));
 
                   //signup screen
                 },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0)),
-                padding: EdgeInsets.all(0.0),
-                child: Ink(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFF4fc4f2), Colors.blue],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                      borderRadius: BorderRadius.circular(30.0)),
-                  child: Container(
-                    constraints:
-                        BoxConstraints(maxWidth: 170.0, minHeight: 50.0),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Sign In",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+              )),
+            ],
+          ),
         ),
       ),
     );

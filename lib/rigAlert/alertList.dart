@@ -37,6 +37,18 @@ class _RecivedWarningState extends State<RecivedAlert> {
     });
   }
 
+  getpath(String path) {
+    var pathf;
+    if (path == "") {
+      pathf = 'https://picsum.photos/250?image=9';
+
+      return pathf;
+    } else {
+      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
+      return pathf;
+    }
+  }
+
   List listResponse;
   Map mapResponse;
   List<dynamic> listFacts;
@@ -59,7 +71,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
     } else {
       jobError = true;
 
-      Toast.show("Something went Wrong", context,
+      Toast.show("No Rig Alerts found", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.red,
@@ -112,13 +124,13 @@ class _RecivedWarningState extends State<RecivedAlert> {
             width: 10,
           )
         ],
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
-        ),
+        // flexibleSpace: Container(
+        //   decoration: BoxDecoration(
+        //       gradient: LinearGradient(
+        //           begin: Alignment.topLeft,
+        //           end: Alignment.bottomRight,
+        //           colors: Colors.blue),
+        // ),
       ),
       body: RefreshIndicator(
         onRefresh: () {
@@ -130,61 +142,65 @@ class _RecivedWarningState extends State<RecivedAlert> {
           child: Column(
             children: [
               Container(
+                alignment: Alignment.center,
                 child: ListTile(
-                  leading: Icon(
-                    Icons.sticky_note_2,
-                    size: 70.0,
-                    color: Color(0xff4fc4f2),
-                  ),
+                  leading:
+                      Icon(Icons.sticky_note_2, size: 50.0, color: Colors.blue),
                   subtitle: Text.rich(
                     TextSpan(
                       children: [
                         TextSpan(
-                            text: 'Recieved  ', style: TextStyle(fontSize: 26)),
-                        TextSpan(text: 'Rig Alerts'),
+                            text: 'Recieved  ', style: TextStyle(fontSize: 22)),
+                        TextSpan(
+                            text: 'Rig Alerts', style: TextStyle(fontSize: 14)),
                       ],
                     ),
                   ),
                 ),
               ),
               Container(
-                alignment: Alignment.center,
-                // padding: EdgeInsets.all(5),
-                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                height: 45,
                 decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.black45),
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: Colors.white,
-                ),
-
-                // width: MediaQuery.of(context).size.width*40,
-                child: ListTile(
-                  // leading: new Icon(Icons.search),
-                  title: TextFormField(
-                    controller: controller,
-                    decoration: new InputDecoration(
-                      hintText: 'Search',
-                      hintStyle: TextStyle(color: Colors.grey[600]),
-                      border: InputBorder.none,
-                      // fillColor: Colors.blue,
-                      // filled: true
-                    ),
-                    onChanged: (value) {
-                      _rigList(controller.text);
-                    },
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(width: 1, color: Colors.blue)),
+                margin: new EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextFormField(
+                  onChanged: (value) {
+                    _rigList(controller.text);
+                  },
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
-                  trailing: controller.text.isNotEmpty
-                      ? new IconButton(
-                          icon: new Icon(Icons.cancel),
-                          onPressed: () {
-                            controller.clear();
-                            _rigList(controller.text);
-                            // providerData.getContacts();
-                            // onSearchTextChanged('');
-                          },
-                        )
-                      : Icon(Icons.search),
+                  controller: controller,
+                  decoration: new InputDecoration(
+                    suffixIcon: controller.text.isNotEmpty
+                        ? new IconButton(
+                            icon: new Icon(Icons.cancel),
+                            onPressed: () {
+                              controller.clear();
+                              _rigList(controller.text);
+                              // providerData.getContacts();
+                              // onSearchTextChanged('');
+                            },
+                          )
+                        : Icon(Icons.search),
+
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.only(
+                        left: 15, bottom: 11, top: 11, right: 15),
+                    hintText: 'Search',
+                    filled: true,
+                    // fillColor: Colors.white24,
+                    hintStyle: TextStyle(color: Colors.grey[600]),
+                  ),
                 ),
+              ),
+              SizedBox(
+                height: 10,
               ),
               Expanded(
                 child: jobError == true || mapResponse == null
@@ -209,207 +225,82 @@ class _RecivedWarningState extends State<RecivedAlert> {
                                     listFacts[index]["Created_Date"],
                                     listFacts[index]["Description"],
                                     listFacts[index]["rigName"] ?? "",
+                                    listFacts[index]["profile_pic"] ?? "",
                                   );
                                 },
-                                child: Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      20.0, 0.0, 20.0, 20.0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black26,
-                                        blurRadius: 6.0,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
+                                child: Card(
+                                  elevation: 3,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  height: 230.0,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: Container(
-                                              height: 40.0,
-                                              decoration: BoxDecoration(
-                                                  color: Color(0xff4fc4f2),
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(10.0),
-                                                  )),
-                                              alignment: Alignment.topLeft,
-                                              margin: EdgeInsets.fromLTRB(
-                                                  0.0, 0.0, .0, 0.0),
-                                              child: Center(
-                                                child: Text(
-                                                  listFacts[index]["Name"],
-                                                  style: TextStyle(
-                                                      fontSize: 16.0,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white),
-                                                ),
-                                              ),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.90,
+                                    padding: EdgeInsets.all(10),
+                                    child: Column(
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: CircleAvatar(
+                                            child: ClipOval(
+                                                child: Image.network(
+                                                    getpath(listFacts[index]
+                                                        ["profile_pic"]),
+                                                    width: 80,
+                                                    height: 80,
+                                                    fit: BoxFit.fill)),
+                                          ),
+                                          title: Text(
+                                            listFacts[index]["Name"],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                height: 1.8,
+                                                fontSize: 16),
+                                          ),
+                                          subtitle: Text(
+                                            '(${listFacts[index]["Position"]})' +
+                                                '\nRig name: ${listFacts[index]["rigName"]}',
+                                            style: TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 14,
                                             ),
                                           ),
-                                          Container(
-                                            width: 2.0,
-                                            height: 40.0,
-                                            color: Colors.black54,
-                                            //margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              height: 40.0,
-                                              color: Color(0xff4fc4f2),
-                                              alignment: Alignment.topLeft,
-                                              margin: EdgeInsets.fromLTRB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                              child: Center(
-                                                child: Text(
-                                                  listFacts[index]["Position"],
-                                                  style: TextStyle(
-                                                      fontSize: 16.0,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 2.0,
-                                            height: 40.0,
-                                            color: Colors.black54,
-                                            // margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              height: 40.0,
-                                              decoration: BoxDecoration(
-                                                color: Color(0xff4fc4f2),
-                                                borderRadius: BorderRadius.only(
-                                                  topRight:
-                                                      Radius.circular(10.0),
-                                                ),
-                                              ),
-                                              alignment: Alignment.topLeft,
-                                              //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
-                                              child: Center(
-                                                child: Text(
-                                                  listFacts[index]
-                                                          ["Created_Date"]
-                                                      .substring(0, 10),
-                                                  style: TextStyle(
-                                                      fontSize: 16.0,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        child: Expanded(
-                                          child: SingleChildScrollView(
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  padding: EdgeInsets.all(10),
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Text(
-                                                    'Rig Name: ${listFacts[index]["rigName"][0].toUpperCase()}${listFacts[index]["rigName"].substring(1)}\nExpired on: ' +
-                                                        formatDate(
-                                                          DateTime.parse(
-                                                              listFacts[index]
-                                                                  ["Date"]),
-                                                        ),
+                                          trailing: Container(
+                                            margin: EdgeInsets.all(5.0),
+                                            child: CountdownTimer(
+                                              endTime:
+                                                  //  endT(index),
+                                                  endT(DateTime.parse(
+                                                      listFacts[index]
+                                                          ["Date"])),
+                                              widgetBuilder: (_,
+                                                  CurrentRemainingTime time) {
+                                                if (time == null) {
+                                                  return Text(
+                                                    'Rig Alert Expired',
                                                     style: TextStyle(
-                                                        fontSize: 12,
-                                                        color: Colors.black54,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  height: 100,
-                                                  margin: EdgeInsets.all(10.0),
-                                                  child: Text(
-                                                    '${listFacts[index]["Description"][0].toUpperCase()}${listFacts[index]["Description"].substring(1)}',
-                                                    style: TextStyle(
-                                                        fontSize: 13,
-                                                        height: 1.5),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  margin: EdgeInsets.all(5.0),
-                                                  child: CountdownTimer(
-                                                    endTime:
-                                                        //  endT(index),
-                                                        endT(DateTime.parse(
-                                                            listFacts[index]
-                                                                ["Date"])),
-                                                    widgetBuilder: (_,
-                                                        CurrentRemainingTime
-                                                            time) {
-                                                      if (time == null) {
-                                                        return Text(
-                                                          'Rig Alert Expired',
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color:
-                                                                Colors.black45,
-                                                          ),
-                                                        );
-                                                      }
-                                                      return Text(
-                                                        time.days == null
-                                                            ? 'Count Down:  ${time.hours ?? 00}:${time.min ?? 00}:${time.sec}'
-                                                            : 'Count Down:  ${time.hours + (time.days * 24)}:${time.min}:${time.sec}',
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.black45,
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      );
-                                                    },
-                                                  ),
-                                                  //  Text(
-                                                  //   countTime,
-                                                  //   // listFacts[index]
-                                                  //   //     ["Alerted Rig List"],
-                                                  //   textAlign: TextAlign.center,
-                                                  //   style: TextStyle(
-                                                  //       fontSize: 14,
-                                                  //       fontWeight:
-                                                  //           FontWeight.bold,
-                                                  //       height: 1.5),
-                                                ),
-                                              ],
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black54,
+                                                    ),
+                                                  );
+                                                }
+                                                return Text(
+                                                  time.days == null
+                                                      ? '${time.hours ?? 00}:${time.min ?? 00}:${time.sec}'
+                                                      : '${time.hours + (time.days * 24)}:${time.min}:${time.sec}',
+                                                  style: TextStyle(
+                                                      color: Colors.black54,
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                );
+                                              },
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      // Container(
-                                      //   margin:
-                                      //       EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 0.0),
-                                      //   alignment: Alignment.centerLeft,
-                                      //   height: 20.0,
-                                      //   child: Text(snapshot.data[index].createdAt),
-                                      // ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );
@@ -444,11 +335,26 @@ class _RecivedWarningState extends State<RecivedAlert> {
   }
 }
 
-showDialogFunc(context, person, position, date, creteDate, content, rigName) {
+showDialogFunc(
+    context, person, position, date, creteDate, content, rigName, path) {
   int endT(DateTime due) {
     int tm;
     tm = due.millisecondsSinceEpoch;
     return tm;
+  }
+
+  bool st = true;
+
+  getpath(String path) {
+    var pathf;
+    if (path == "") {
+      pathf = 'https://picsum.photos/250?image=9';
+
+      return pathf;
+    } else {
+      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
+      return pathf;
+    }
   }
 
   String formatDate(DateTime date) =>
@@ -480,56 +386,134 @@ showDialogFunc(context, person, position, date, creteDate, content, rigName) {
             height: 500,
             child: Column(
               children: [
-                Container(
-                  child: Container(
-                    width: 300,
-                    padding: EdgeInsets.all(3),
-                    child: Column(
-                      children: <Widget>[
-                        ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: Color(0xFF4fc4f2),
-                            child: Text(
-                              person.substring(0, 1),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 20),
-                            ),
-                          ),
-                          title: Text(
-                            '${rigName[0].toUpperCase()}${rigName.substring(1)}',
-                            // title,
+                ListTile(
+                  leading: CircleAvatar(
+                    child: ClipOval(
+                        child: Image.network(getpath(path),
+                            width: 80, height: 80, fit: BoxFit.fill)),
+                  ),
+                  title: Text(
+                    person,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, height: 1.8, fontSize: 16),
+                  ),
+                  subtitle: Text(
+                    '($position)',
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 14,
+                    ),
+                  ),
+                  trailing: Container(
+                    child: CountdownTimer(
+                      endTime:
+                          //  endT(index),
+                          endT(DateTime.parse(
+                        date,
+                      )),
+                      widgetBuilder: (_, CurrentRemainingTime time) {
+                        if (time == null) {
+                          return Text(
+                            'Rig Alert Expired',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, height: 1.5),
-                          ),
-                          subtitle: Text(
-                            '${person[0].toUpperCase()}${person.substring(1)}\n${position[0].toUpperCase()}${position.substring(1)} ',
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            style:
-                                TextStyle(fontSize: 12, color: Colors.black45),
-                          ),
-                          trailing: Text(
-                            creteDate,
-                            style:
-                                TextStyle(fontSize: 12, color: Colors.black45),
-                          ),
-                        ),
-                        Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              '            Expired on: ' +
-                                  formatDate(DateTime.parse(date)),
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                      ],
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54,
+                            ),
+                          );
+                        }
+                        return Text(
+                          time.days == null
+                              ? '${time.hours ?? 00}:${time.min ?? 00}:${time.sec}'
+                              : '${time.hours + (time.days * 24)}:${time.min}:${time.sec}',
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        );
+                      },
                     ),
                   ),
                 ),
+                Container(
+                    padding: EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Rig Name        :  ',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
+                              ),
+                            ),
+                            Text(
+                              rigName,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Created Date  :  ',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
+                              ),
+                            ),
+                            Text(
+                              creteDate,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            CountdownTimer(
+                              endTime:
+                                  //  endT(index),
+                                  endT(DateTime.parse(
+                                date,
+                              )),
+                              widgetBuilder: (_, CurrentRemainingTime time) {
+                                if (time == null) {
+                                  return Text(
+                                    'Expired on      :  ',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black54,
+                                    ),
+                                  );
+                                }
+                                return Text(
+                                  'Expire on         :  ',
+                                  style: TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                );
+                              },
+                            ),
+                            Text(
+                              formatDate(DateTime.parse(date)),
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )),
                 SizedBox(
                   height: 5,
                 ),
@@ -553,33 +537,6 @@ showDialogFunc(context, person, position, date, creteDate, content, rigName) {
                                 fontSize: 14,
                               )),
                         ),
-                        CountdownTimer(
-                          endTime: endT(
-                            DateTime.parse(date),
-                          ),
-                          //  endT(index),
-
-                          widgetBuilder: (_, CurrentRemainingTime time) {
-                            if (time == null) {
-                              return Text(
-                                'Rig Alert Expired',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black45),
-                              );
-                            }
-                            return Text(
-                              time.days == null
-                                  ? 'Count Down:  ${time.hours ?? 00}:${time.min ?? 00}:${time.sec}'
-                                  : 'Count Down:  ${time.hours + (time.days * 24)}:${time.min}:${time.sec}',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black45),
-                            );
-                          },
-                        ),
                       ],
                     ),
                   ),
@@ -596,13 +553,16 @@ showDialogFunc(context, person, position, date, creteDate, content, rigName) {
                       width: 130.0,
                       height: 45.0,
                       child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(80.0)),
+                        color: Colors.blue,
                         onPressed: () {
                           Navigator.pop(context);
                         },
                         height: 30,
                         child: Text(
                           ' OK ',
-                          style: TextStyle(),
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),

@@ -166,12 +166,6 @@ class _RigAlert2State extends State<RigAlert2> {
             style: TextStyle(fontSize: 15),
           ),
         ),
-        leading: new Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: new Material(
-            shape: new CircleBorder(),
-          ),
-        ),
         actions: [
           Icon(Icons.headset_mic),
           SizedBox(

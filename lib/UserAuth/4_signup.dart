@@ -16,83 +16,98 @@ class SignupScreenState extends State<SignupScreen> {
   TextEditingController _useridController = new TextEditingController();
   TextEditingController _cpasswordController = new TextEditingController();
 
+  void _viewPass() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  void _viewPass2() {
+    setState(() {
+      _obscureText1 = !_obscureText1;
+    });
+  }
+
+  bool _obscureText = true;
+  bool _obscureText1 = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueAccent,
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Sign up',
-          ),
+        title: Text(
+          'Sign up',
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Icon(Icons.more_vert),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: EdgeInsets.symmetric(horizontal: 16),
+        //     child: Icon(Icons.more_vert),
+        //   ),
+        // ],
         flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
+          decoration: BoxDecoration(color: Colors.blueAccent
+              // gradient: LinearGradient(
+              //     begin: Alignment.topLeft,
+              //     end: Alignment.bottomRight,
+              //     colors: <Color>[Color(0xFF4fc4f2), Colors.blue]),
+              ),
         ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 01.0),
-              child: Text(
-                '\n'
-                '\n'
-                'Create New\n',
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
+            SizedBox(
+              height: 40,
             ),
             Container(
-              child: Text(
-                'Employee Account\n',
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 19.0),
-              child: Text(
-                'Please enter Employee Details and Password',
-                style: TextStyle(fontSize: 10, color: Colors.black),
-              ),
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Icon(Icons.shopping_bag, size: 90, color: Colors.white),
+                    Text(
+                      'Apps Login',
+                      style: TextStyle(
+                          fontSize: 26,
+                          color: Colors.white,
+                          fontFamily: "WorkSansLight"),
+                    ),
+                  ],
+                )),
+            SizedBox(
+              height: 80,
             ),
             Form(
               key: _formKey,
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 45),
-                child: Column(
-                  children: <Widget>[
-                    TextFormField(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.transparent,
+                        border: Border.all(width: 1, color: Colors.white60)),
+                    margin: new EdgeInsets.symmetric(horizontal: 20.0),
+                    child: TextFormField(
                       style: TextStyle(
-                        color: Colors.black54,
+                        color: Colors.white,
                       ),
                       controller: _nameController,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.person_pin_sharp,
-                          color: Color(0xFF4fc4f2),
+                        suffixIcon: Icon(
+                          Icons.person,
+                          color: Colors.white,
                         ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                          Radius.circular((90.0)),
-                        )),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 11, top: 11, right: 15),
                         hintText: "Name",
-                        hintStyle:
-                            TextStyle(color: Colors.black54, fontSize: 15),
+                        hintStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontFamily: "WorkSansLight"),
                       ),
                       validator: (String value) {
                         if (value.isEmpty) {
@@ -102,26 +117,38 @@ class SignupScreenState extends State<SignupScreen> {
                       },
                       onSaved: (String name) {},
                     ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    TextFormField(
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.transparent,
+                        border: Border.all(width: 1, color: Colors.white60)),
+                    margin: new EdgeInsets.symmetric(horizontal: 20.0),
+                    child: TextFormField(
                       style: TextStyle(
-                        color: Colors.black54,
+                        color: Colors.white,
                       ),
                       controller: _useridController,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.person_pin_sharp,
-                          color: Color(0xFF4fc4f2),
+                        suffixIcon: Icon(
+                          Icons.perm_identity_sharp,
+                          color: Colors.white,
                         ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                          Radius.circular((90.0)),
-                        )),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 11, top: 11, right: 15),
                         hintText: "Employee Id",
-                        hintStyle:
-                            TextStyle(color: Colors.black54, fontSize: 15),
+                        hintStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontFamily: "WorkSansLight"),
                       ),
                       validator: (String value) {
                         if (value.isEmpty) {
@@ -134,26 +161,38 @@ class SignupScreenState extends State<SignupScreen> {
                       },
                       onSaved: (String userid) {},
                     ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    TextFormField(
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.transparent,
+                        border: Border.all(width: 1, color: Colors.white60)),
+                    margin: new EdgeInsets.symmetric(horizontal: 20.0),
+                    child: TextFormField(
                       style: TextStyle(
-                        color: Colors.black54,
+                        color: Colors.white,
                       ),
                       controller: _emailController,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(
+                        suffixIcon: Icon(
                           Icons.email,
-                          color: Color(0xFF4fc4f2),
+                          color: Colors.white,
                         ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                          Radius.circular((90.0)),
-                        )),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 11, top: 11, right: 15),
                         hintText: "Email",
-                        hintStyle:
-                            TextStyle(color: Colors.black54, fontSize: 15),
+                        hintStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontFamily: "WorkSansLight"),
                       ),
                       validator: (String value) {
                         if (value.isEmpty) {
@@ -167,27 +206,46 @@ class SignupScreenState extends State<SignupScreen> {
                       },
                       onSaved: (String email) {},
                     ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    TextFormField(
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.transparent,
+                        border: Border.all(width: 1, color: Colors.white60)),
+                    margin: new EdgeInsets.symmetric(horizontal: 20.0),
+                    child: TextFormField(
                       style: TextStyle(
-                        color: Colors.black54,
+                        color: Colors.white,
                       ),
                       controller: _passwordController,
-                      obscureText: true,
+                      obscureText: _obscureText,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.lock_open_outlined,
-                          color: Color(0xFF4fc4f2),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            _viewPass();
+                          },
+                          child: Icon(
+                            _obscureText
+                                ? Icons.lock_sharp
+                                : Icons.lock_open_outlined,
+                            color: Colors.white,
+                          ),
                         ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                          Radius.circular((90.0)),
-                        )),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 11, top: 11, right: 15),
                         hintText: "Password",
-                        hintStyle:
-                            TextStyle(color: Colors.black54, fontSize: 15),
+                        hintStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontFamily: "WorkSansLight"),
                       ),
                       validator: (String value) {
                         if (value.isEmpty) {
@@ -196,27 +254,46 @@ class SignupScreenState extends State<SignupScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    TextFormField(
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.transparent,
+                        border: Border.all(width: 1, color: Colors.white60)),
+                    margin: new EdgeInsets.symmetric(horizontal: 20.0),
+                    child: TextFormField(
                       style: TextStyle(
-                        color: Colors.black54,
+                        color: Colors.white,
                       ),
                       controller: _cpasswordController,
-                      obscureText: true,
+                      obscureText: _obscureText1,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.lock_open_outlined,
-                          color: Color(0xFF4fc4f2),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            _viewPass2();
+                          },
+                          child: Icon(
+                            _obscureText1
+                                ? Icons.lock_sharp
+                                : Icons.lock_open_outlined,
+                            color: Colors.white,
+                          ),
                         ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                          Radius.circular((90.0)),
-                        )),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 11, top: 11, right: 15),
                         hintText: "Confirm Password",
-                        hintStyle:
-                            TextStyle(color: Colors.black54, fontSize: 15),
+                        hintStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontFamily: "WorkSansLight"),
                       ),
                       validator: (String value) {
                         if (value.isEmpty) {
@@ -229,11 +306,11 @@ class SignupScreenState extends State<SignupScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                ],
               ),
             ),
             Container(
@@ -258,11 +335,12 @@ class SignupScreenState extends State<SignupScreen> {
                 padding: EdgeInsets.all(0.0),
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFF4fc4f2), Colors.blue],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
+                      color: Colors.blueAccent,
+                      // gradient: LinearGradient(
+                      //   colors: [Color(0xFF4fc4f2), Colors.blue],
+                      //   begin: Alignment.centerLeft,
+                      //   end: Alignment.centerRight,
+                      // ),
                       borderRadius: BorderRadius.circular(30.0)),
                   child: Container(
                     constraints:

@@ -1,12 +1,16 @@
 import 'dart:async';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
+import 'dart:io' as file;
 import '6_editprofile.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
+import 'package:async/async.dart';
+
+import 'package:image_picker/image_picker.dart';
+import 'package:http_parser/http_parser.dart';
 
 class EditProfile extends StatefulWidget {
   final String name;
@@ -34,6 +38,63 @@ class EditProfileState extends State<EditProfile> {
   TextEditingController _empController = new TextEditingController();
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _mobController = new TextEditingController();
+  file.File newImage;
+  String path;
+  String name;
+
+  Future openGallery(String id) async {
+    var image = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 40);
+    // var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null)
+      setState(() {
+        newImage = image;
+        name = image.path.split('/').last;
+        path = image.path;
+        profileUpdate(id, newImage);
+      });
+  }
+
+  Future openCamera(String id) async {
+    var image = await ImagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 10);
+    // var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null)
+      setState(() {
+        newImage = image;
+        name = image.path.split('/').last;
+        path = image.path;
+        profileUpdate(id, newImage);
+      });
+  }
+
+  Future<void> profileUpdate(
+    String id,
+    file.File images,
+  ) async {
+    var uri = Uri.parse(
+        "http://isow.acutrotech.com/index.php/api/PropicUpload/update");
+    print("image upload URL - $uri");
+// create multipart request
+    var request = new http.MultipartRequest("POST", uri);
+
+    String fileName = images.path.split("/").last;
+    var stream = new http.ByteStream(DelegatingStream.typed(images.openRead()));
+    var length = await images.length();
+    request.files.add(new http.MultipartFile('image_url', stream, length,
+        filename: fileName));
+    request.fields['id'] = id;
+    var response = await request.send();
+    print("end ");
+    print("${response.statusCode} status code of service request");
+    if (response.statusCode == 200) {
+      Toast.show("Updated Successfully", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.green[600],
+          backgroundColor: Colors.white);
+    }
+  }
 
   Future updateProfile(
     String userIdd,
@@ -252,12 +313,56 @@ class EditProfileState extends State<EditProfile> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 Center(
-                                  child: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        'https://pixel.nymag.com/imgs/daily/vulture/2017/06/14/14-tom-cruise.w700.h700.jpg'),
-                                    radius: 39.0,
-                                    child: Icon(Icons.camera_alt,
-                                        size: 30.0, color: Colors.white),
+                                  child: GestureDetector(
+                                    child: CircleAvatar(
+                                      backgroundImage: newImage == null
+                                          ? NetworkImage(
+                                              'https://pixel.nymag.com/imgs/daily/vulture/2017/06/14/14-tom-cruise.w700.h700.jpg')
+                                          : FileImage(
+                                              newImage,
+                                            ),
+                                      radius: 39.0,
+                                      child: Icon(Icons.camera_alt,
+                                          size: 30.0, color: Colors.white),
+                                    ),
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              content: Positioned(
+                                                bottom: 10,
+                                                child: Container(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          openGallery(sid);
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child:
+                                                            Icon(Icons.image),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          openCamera(sid);
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child:
+                                                            Icon(Icons.camera),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                    },
                                   ),
                                 ),
                                 Column(

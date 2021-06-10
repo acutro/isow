@@ -41,8 +41,9 @@ dependencies:
   font_awesome_flutter: ^9.0.0
   intl: ^0.17.0
   flutter_spinkit: ^5.0.0
-  dependencies:
   flutter_countdown_timer: ^4.1.0
+  http_parser: 
+  image_picker: any 
 
 dev_dependencies:
   flutter_test:

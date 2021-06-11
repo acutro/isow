@@ -161,13 +161,13 @@ class _EmergencyState extends State<Emergency> {
                           margin: EdgeInsets.only(top: 30.0),
                           //margin: EdgeInsets.fromLTRB(50.0, 100.0, 50.0, 10.0),
                           child: Image.asset('assets/images/signal.jpg'),
-                          height: 100.0,
+                          height: 80.0,
                           color: Colors.blueGrey,
                         ),
                         Expanded(
                           child: Container(
-                            margin: EdgeInsets.only(top: 30.0),
-                            height: 100.0,
+                            margin: EdgeInsets.only(top: 20.0),
+                            height: 80.0,
                           ),
                         ),
                       ],
@@ -176,7 +176,7 @@ class _EmergencyState extends State<Emergency> {
                       height: 40.0,
                       child: Text(
                         'Emergency',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
                     Row(
@@ -184,195 +184,216 @@ class _EmergencyState extends State<Emergency> {
                         SizedBox(
                           width: 30,
                         ),
-                        Container(
-                          child: Stack(
-                            children: <Widget>[
-                              Container(
-                                alignment: Alignment.bottomCenter,
-                                // margin:
-                                //     EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
-                                height: 130.0,
-                                width: 90.0,
-                                child: Container(
-                                  height: 20.0,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6.0),
-                                      border: Border.all(
-                                          color: Color(0xff49A5FF),
-                                          width: 2.0)),
-                                  child: Text(
-                                    "       911       ",
-                                    style: TextStyle(
-                                      color: Color(0xff49A5FF),
+                        GestureDetector(
+                          onTap: () {
+                            launch("tel:" + '911');
+                          },
+                          child: Container(
+                            child: Stack(
+                              children: <Widget>[
+                                Container(
+                                  alignment: Alignment.bottomCenter,
+                                  // margin:
+                                  //     EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
+                                  height: 110.0,
+                                  width: 80.0,
+                                  child: Container(
+                                    height: 20.0,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(6.0),
+                                        border: Border.all(
+                                            color: Color(0xff49A5FF),
+                                            width: 2.0)),
+                                    child: Text(
+                                      "       911       ",
+                                      style: TextStyle(
+                                        color: Color(0xff49A5FF),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xff49A5FF),
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(50.0),
-                                    topLeft: Radius.circular(50.0),
-                                    bottomLeft: Radius.circular(10.0),
-                                    bottomRight: Radius.circular(10.0),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff49A5FF),
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(50.0),
+                                      topLeft: Radius.circular(50.0),
+                                      bottomLeft: Radius.circular(10.0),
+                                      bottomRight: Radius.circular(10.0),
+                                    ),
+                                  ),
+                                  // margin:
+                                  //     EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
+                                  height: 90.0,
+                                  width: 80.0,
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.local_police,
+                                      size: 50.0,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                                // margin:
-                                //     EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
-                                height: 110.0,
-                                width: 90.0,
-                                child: Center(
-                                  child: Icon(
-                                    Icons.local_police,
-                                    size: 60.0,
-                                    color: Colors.white,
+                                Container(
+                                  // margin:
+                                  //     EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
+                                  height: 90.0,
+                                  width: 83.0,
+                                  alignment: Alignment.bottomCenter,
+                                  child: Text(
+                                    'Police',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                // margin:
-                                //     EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
-                                height: 105.0,
-                                width: 90.0,
-                                alignment: Alignment.bottomCenter,
-                                child: Text(
-                                  'Police',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                        Container(
-                          child: Stack(
-                            children: <Widget>[
-                              Container(
-                                alignment: Alignment.bottomCenter,
-                                margin:
-                                    EdgeInsets.fromLTRB(30.0, 0.0, 10.0, 0.0),
-                                height: 130.0,
-                                width: 90.0,
-                                child: Container(
-                                  height: 20.0,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6.0),
-                                      border: Border.all(
-                                          color: Color(0xff49A5FF),
-                                          width: 2.0)),
-                                  child: Text(
-                                    "       111       ",
-                                    style: TextStyle(
-                                      color: Color(0xff49A5FF),
+                        GestureDetector(
+                          onTap: () {
+                            launch("tel:" + '111');
+                          },
+                          child: Container(
+                            child: Stack(
+                              children: <Widget>[
+                                Container(
+                                  alignment: Alignment.bottomCenter,
+                                  margin:
+                                      EdgeInsets.fromLTRB(40.0, 0.0, 10.0, 0.0),
+                                  height: 110.0,
+                                  width: 80.0,
+                                  child: Container(
+                                    height: 20.0,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(6.0),
+                                        border: Border.all(
+                                            color: Color(0xff49A5FF),
+                                            width: 2.0)),
+                                    child: Text(
+                                      "       111       ",
+                                      style: TextStyle(
+                                        color: Color(0xff49A5FF),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xff49A5FF),
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(50.0),
-                                    topLeft: Radius.circular(50.0),
-                                    bottomLeft: Radius.circular(10.0),
-                                    bottomRight: Radius.circular(10.0),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff49A5FF),
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(50.0),
+                                      topLeft: Radius.circular(50.0),
+                                      bottomLeft: Radius.circular(10.0),
+                                      bottomRight: Radius.circular(10.0),
+                                    ),
+                                  ),
+                                  margin:
+                                      EdgeInsets.fromLTRB(40.0, 0.0, 10.0, 0.0),
+                                  height: 90.0,
+                                  width: 80.0,
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.local_hospital,
+                                      size: 50.0,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                                margin:
-                                    EdgeInsets.fromLTRB(30.0, 0.0, 10.0, 0.0),
-                                height: 110.0,
-                                width: 90.0,
-                                child: Center(
-                                  child: Icon(
-                                    Icons.local_hospital,
-                                    size: 80.0,
-                                    color: Colors.white,
+                                Container(
+                                  margin:
+                                      EdgeInsets.fromLTRB(38.0, 0.0, 10.0, 0.0),
+                                  height: 90.0,
+                                  width: 85.0,
+                                  alignment: Alignment.bottomCenter,
+                                  child: Text(
+                                    'Hospital',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                margin:
-                                    EdgeInsets.fromLTRB(20.0, 0.0, 10.0, 0.0),
-                                height: 105.0,
-                                width: 100.0,
-                                alignment: Alignment.bottomCenter,
-                                child: Text(
-                                  'Hospital',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                        Container(
-                          child: Stack(
-                            children: <Widget>[
-                              Container(
-                                alignment: Alignment.bottomCenter,
-                                margin:
-                                    EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
-                                height: 130.0,
-                                width: 90.0,
-                                child: Container(
-                                  height: 20.0,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6.0),
-                                      border: Border.all(
-                                          color: Color(0xff49A5FF),
-                                          width: 2.0)),
-                                  child: Text(
-                                    "       237       ",
-                                    style: TextStyle(
-                                      color: Color(0xff49A5FF),
+                        GestureDetector(
+                          onTap: () {
+                            launch("tel:" + '237');
+                          },
+                          child: Container(
+                            child: Stack(
+                              children: <Widget>[
+                                Container(
+                                  alignment: Alignment.bottomCenter,
+                                  margin:
+                                      EdgeInsets.fromLTRB(30.0, 0.0, 0.0, 0.0),
+                                  height: 110.0,
+                                  width: 80.0,
+                                  child: Container(
+                                    height: 20.0,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(6.0),
+                                        border: Border.all(
+                                            color: Color(0xff49A5FF),
+                                            width: 2.0)),
+                                    child: Text(
+                                      "       237       ",
+                                      style: TextStyle(
+                                        color: Color(0xff49A5FF),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xff49A5FF),
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(50.0),
-                                    topLeft: Radius.circular(50.0),
-                                    bottomLeft: Radius.circular(10.0),
-                                    bottomRight: Radius.circular(10.0),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff49A5FF),
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(50.0),
+                                      topLeft: Radius.circular(50.0),
+                                      bottomLeft: Radius.circular(10.0),
+                                      bottomRight: Radius.circular(10.0),
+                                    ),
+                                  ),
+                                  margin:
+                                      EdgeInsets.fromLTRB(30.0, 0.0, 0.0, 0.0),
+                                  height: 90.0,
+                                  width: 80.0,
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.local_fire_department,
+                                      size: 50.0,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                                margin:
-                                    EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
-                                height: 110.0,
-                                width: 90.0,
-                                child: Center(
-                                  child: Icon(
-                                    Icons.local_fire_department,
-                                    size: 80.0,
-                                    color: Colors.white,
+                                Container(
+                                  margin:
+                                      EdgeInsets.fromLTRB(27.0, 0.0, 20.0, 0.0),
+                                  height: 90.0,
+                                  width: 85.0,
+                                  alignment: Alignment.bottomCenter,
+                                  child: Text(
+                                    'Fire',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                margin:
-                                    EdgeInsets.fromLTRB(15.0, 0.0, 20.0, 0.0),
-                                height: 105.0,
-                                width: 100.0,
-                                alignment: Alignment.bottomCenter,
-                                child: Text(
-                                  'Fire',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Row(
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
+                          margin: EdgeInsets.fromLTRB(25.0, 30.0, 0.0, 0.0),
                           child: Icon(
                             Icons.person,
-                            size: 70.0,
+                            size: 50.0,
                             color: Color(0xff49A5FF),
                           ),
                         ),
@@ -398,7 +419,7 @@ class _EmergencyState extends State<Emergency> {
                                 child: Text(
                                   'SOS Contacts',
                                   style: TextStyle(
-                                      fontSize: 25.0, color: Colors.black54),
+                                      fontSize: 20.0, color: Colors.black54),
                                 ),
                               ),
 
@@ -441,8 +462,7 @@ class _EmergencyState extends State<Emergency> {
                                             children: <Widget>[
                                               ListTile(
                                                 leading: CircleAvatar(
-                                                  backgroundColor:
-                                                      Color(0xFF4fc4f2),
+                                                  backgroundColor: Colors.blue,
                                                   child: Text(
                                                     listFacts[index]["name"]
                                                         .toUpperCase()
@@ -686,7 +706,8 @@ class _EmergencyState extends State<Emergency> {
                                                 'Add SOS',
                                                 style: TextStyle(
                                                     color: Colors.white
-                                                        .withOpacity(1.0)),
+                                                        .withOpacity(1.0),
+                                                    fontSize: 16),
                                               ),
                                             ),
                                             onTap: () {

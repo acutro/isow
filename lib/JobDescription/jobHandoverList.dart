@@ -339,8 +339,6 @@ class _MyApp extends State<JobHandoverList> {
                 ),
               )
             : Container(
-                decoration:
-                    BoxDecoration(color: Color(0xFF4fc4f2).withOpacity(0.2)),
                 height: MediaQuery.of(context).size.height,
                 width: double.infinity,
                 child: listFacts.length == 0
@@ -629,13 +627,16 @@ showDialogFunc(
                       width: 130.0,
                       height: 45.0,
                       child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(80.0)),
+                        color: Colors.blue,
                         onPressed: () {
                           Navigator.pop(context);
                         },
                         height: 30,
                         child: Text(
                           ' OK ',
-                          style: TextStyle(),
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),

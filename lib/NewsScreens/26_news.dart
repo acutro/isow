@@ -57,11 +57,10 @@ class _NewsState extends State<News> {
                   Row(
                     children: <Widget>[
                       Container(
-                        height: 100.0,
-                        margin: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
+                        margin: EdgeInsets.fromLTRB(25.0, 30.0, 10.0, 10.0),
                         child: Icon(
                           Icons.new_releases_sharp,
-                          size: 90.0,
+                          size: 50.0,
                           color: Color(0xff49A5FF),
                         ),
                       ),
@@ -91,7 +90,7 @@ class _NewsState extends State<News> {
                                       child: Text(
                                         'Company',
                                         style: TextStyle(
-                                            fontSize: 25.0,
+                                            fontSize: 22.0,
                                             color: Colors.black54),
                                       ),
                                     ),
@@ -117,6 +116,9 @@ class _NewsState extends State<News> {
                         ),
                       ),
                     ],
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -202,7 +204,7 @@ class _NewsState extends State<News> {
                     padding: EdgeInsets.all(10),
                     alignment: Alignment.centerRight,
                     child: RaisedButton(
-                      color: Color(0xFF4fc4f2),
+                      color: Color(0xff49A5FF),
                       textColor: Colors.white,
                       child: Text('More News..'),
                       onPressed: () => {
@@ -225,10 +227,10 @@ class _NewsState extends State<News> {
                   Row(
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
+                        margin: EdgeInsets.fromLTRB(25.0, 30.0, 10.0, 10.0),
                         child: Icon(
                           Icons.lock_clock,
-                          size: 90.0,
+                          size: 55.0,
                           color: Color(0xff49A5FF),
                         ),
                       ),
@@ -254,7 +256,7 @@ class _NewsState extends State<News> {
                               child: Text(
                                 'Activities',
                                 style: TextStyle(
-                                    fontSize: 25.0, color: Colors.black54),
+                                    fontSize: 22.0, color: Colors.black54),
                               ),
                             ),
 
@@ -377,7 +379,7 @@ class _NewsState extends State<News> {
                     padding: EdgeInsets.all(10),
                     alignment: Alignment.centerRight,
                     child: RaisedButton(
-                      color: Color(0xFF4fc4f2),
+                      color: Color(0xff49A5FF),
                       textColor: Colors.white,
                       child: Text('More Activities..'),
                       onPressed: () => {

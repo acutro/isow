@@ -173,7 +173,25 @@ class _JobdescriptionState extends State<Jobdescription> {
 
       // color: Color.fromRGBO(221, 193, 135, 0.08),
       child: userResponse == null
-          ? Text("")
+          ? GestureDetector(
+              onTap: () {
+                Toast.show("Select Position", context,
+                    duration: Toast.LENGTH_SHORT,
+                    gravity: Toast.BOTTOM,
+                    textColor: Colors.red,
+                    backgroundColor: Colors.white);
+              },
+              child: Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                child: Text(
+                  "Choose Position",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+              ))
           : DropdownButton(
               onTap: () {
                 FocusScope.of(context).requestFocus(new FocusNode());
@@ -275,13 +293,6 @@ class _JobdescriptionState extends State<Jobdescription> {
                               color: Colors.white,
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(right: 30.0),
-                            height: 100.0,
-                            width: 90.0,
-                            alignment: Alignment.bottomCenter,
-                            child: Text('Issue a Job'),
-                          ),
                         ],
                       ),
                       // Stack(
@@ -335,7 +346,7 @@ class _JobdescriptionState extends State<Jobdescription> {
                     children: <Widget>[
                       Expanded(
                         child: Container(
-                          height: 285.0,
+                          height: 360.0,
                           margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                           decoration: BoxDecoration(
                             color: Color(0xff49A5FF),
@@ -399,58 +410,50 @@ class _JobdescriptionState extends State<Jobdescription> {
                                   ),
                                 ],
                               ),
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.fromLTRB(
-                                          10.0, 10.0, 10.0, 0.0),
-                                      height: 45.0,
-                                      child: TextField(
-                                        controller: _descriptionController,
-                                        style: TextStyle(color: Colors.white),
-                                        decoration: InputDecoration(
-                                          hintText: 'Job Description',
-                                          hintStyle:
-                                              TextStyle(color: Colors.white),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10.0)),
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
-                                          ),
-                                        ),
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.fromLTRB(
+                                      10.0, 10.0, 10.0, 0.0),
+                                  height: 45.0,
+                                  child: TextField(
+                                    controller: _descriptionController,
+                                    style: TextStyle(color: Colors.white),
+                                    maxLines: 8,
+                                    decoration: InputDecoration(
+                                      hintText: 'Job Description',
+                                      hintStyle: TextStyle(color: Colors.white),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide:
+                                            BorderSide(color: Colors.white),
                                       ),
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.fromLTRB(
-                                          10.0, 10.0, 10.0, 0.0),
-                                      height: 45.0,
-                                      child: TextField(
-                                        controller: _durationController,
-                                        keyboardType: TextInputType.number,
-                                        style: TextStyle(color: Colors.white),
-                                        decoration: InputDecoration(
-                                          hintText: 'Duration in Hour',
-                                          hintStyle:
-                                              TextStyle(color: Colors.white),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10.0)),
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
-                                          ),
-                                        ),
-                                      ),
+                              Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                                height: 45.0,
+                                child: TextField(
+                                  controller: _durationController,
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(color: Colors.white),
+                                  decoration: InputDecoration(
+                                    hintText: 'Duration in Hour',
+                                    hintStyle: TextStyle(color: Colors.white),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
                                     ),
                                   ),
-                                ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
                               ),
                             ],
                           ),

@@ -157,7 +157,7 @@ class _MyApp extends State<NotepadList> {
           onRefresh: () {
             refreshList(controller.text);
           },
-          child: mapResponse == null
+          child: jobError == true || mapResponse == null
               ? Center(
                   child: SpinKitChasingDots(
                     color: Colors.blue,
@@ -171,233 +171,233 @@ class _MyApp extends State<NotepadList> {
                         height: 10,
                       ),
                       Container(
-                        alignment: Alignment.center,
-                        // padding: EdgeInsets.all(5),
-                        margin: EdgeInsets.symmetric(horizontal: 15),
+                        height: 45,
                         decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.black45),
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.white,
-                        ),
-
-                        // width: MediaQuery.of(context).size.width*40,
-                        child: ListTile(
-                          // leading: new Icon(Icons.search),
-                          title: TextFormField(
-                            controller: controller,
-                            decoration: new InputDecoration(
-                              hintText: 'Search',
-                              hintStyle: TextStyle(color: Colors.grey[600]),
-                              border: InputBorder.none,
-                              // fillColor: Colors.blue,
-                              // filled: true
-                            ),
-                            onChanged: (value) {
-                              fetchData(sid, controller.text);
-                            },
+                            borderRadius: BorderRadius.circular(20.0),
+                            border:
+                                Border.all(width: 1, color: Colors.grey[600])),
+                        margin: new EdgeInsets.symmetric(horizontal: 20.0),
+                        child: TextFormField(
+                          onChanged: (value) {
+                            fetchData(sid, controller.text);
+                          },
+                          style: TextStyle(
+                            color: Colors.grey[600],
                           ),
-                          trailing: controller.text.isNotEmpty
-                              ? new IconButton(
-                                  icon: new Icon(Icons.cancel),
-                                  onPressed: () {
-                                    controller.clear();
-                                    fetchData(sid, controller.text);
-                                    // providerData.getContacts();
-                                    // onSearchTextChanged('');
-                                  },
-                                )
-                              : Icon(Icons.search),
+                          controller: controller,
+                          decoration: new InputDecoration(
+                            suffixIcon: controller.text.isNotEmpty
+                                ? new IconButton(
+                                    icon: new Icon(Icons.cancel),
+                                    onPressed: () {
+                                      controller.clear();
+                                      fetchData(sid, controller.text);
+                                      // providerData.getContacts();
+                                      // onSearchTextChanged('');
+                                    },
+                                  )
+                                : Icon(Icons.search),
+
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.only(
+                                left: 15, bottom: 11, top: 11, right: 15),
+                            hintText: 'Search',
+
+                            // fillColor: Colors.white24,
+                            hintStyle: TextStyle(color: Colors.grey[600]),
+                          ),
                         ),
                       ),
                       Expanded(
                         child: Container(
                           child: SingleChildScrollView(
-                            child: ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: listFacts.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                // final Message chat = chats[index];
-                                return GestureDetector(
-                                  onTap: () {
-                                    showDialogFunc(
-                                      context,
-                                      listFacts[index]["name"],
-                                      listFacts[index]["date"],
-                                      listFacts[index]["requirements"],
-                                      listFacts[index]["id"],
-                                    );
-                                  },
-                                  child: Card(
-                                    elevation: 3,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 15,
-                                        vertical: 8,
-                                      ),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.90,
-                                            padding: EdgeInsets.all(3),
-                                            child: Column(
+                            child: listFacts == null
+                                ? Center(
+                                    heightFactor: 10,
+                                    child: Text("No Notepad found"))
+                                : ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: listFacts.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      // final Message chat = chats[index];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          showDialogFunc(
+                                            context,
+                                            listFacts[index]["name"],
+                                            listFacts[index]["date"],
+                                            listFacts[index]["requirements"],
+                                            listFacts[index]["id"],
+                                          );
+                                        },
+                                        child: Card(
+                                          elevation: 3,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 15,
+                                              vertical: 8,
+                                            ),
+                                            child: Row(
                                               children: <Widget>[
-                                                ListTile(
-                                                  leading: CircleAvatar(
-                                                    backgroundColor:
-                                                        Color(0xFF4fc4f2),
-                                                    child: Text(
-                                                      listFacts[index]["name"]
-                                                          .toUpperCase()
-                                                          .substring(0, 1),
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.white,
-                                                          fontSize: 20),
-                                                    ),
-                                                  ),
-                                                  title: Text(
-                                                    '${listFacts[index]["name"][0].toUpperCase()}${listFacts[index]["name"].substring(1)}',
-                                                    //  listFacts[index]["name"],
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        height: 1.5),
-                                                  ),
-                                                  subtitle: Text(
-                                                    listFacts[index]["date"],
-                                                  ),
-                                                  trailing: Container(
-                                                    width: 70,
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        InkWell(
-                                                            onTap: () {
-                                                              // BuildAlertDialogDelete();
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.90,
+                                                  padding: EdgeInsets.all(3),
+                                                  child: Column(
+                                                    children: <Widget>[
+                                                      ListTile(
+                                                        leading: CircleAvatar(
+                                                          backgroundColor:
+                                                              Colors.blue,
+                                                          child: Text(
+                                                            listFacts[index]
+                                                                    ["name"]
+                                                                .toUpperCase()
+                                                                .substring(
+                                                                    0, 1),
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 20),
+                                                          ),
+                                                        ),
+                                                        title: Text(
+                                                          '${listFacts[index]["name"][0].toUpperCase()}${listFacts[index]["name"].substring(1)}',
+                                                          //  listFacts[index]["name"],
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              height: 1.5),
+                                                        ),
+                                                        subtitle: Text(
+                                                          listFacts[index]
+                                                              ["date"],
+                                                        ),
+                                                        trailing: Container(
+                                                          width: 70,
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              InkWell(
+                                                                  onTap: () {
+                                                                    // BuildAlertDialogDelete();
 
-                                                              showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (context) =>
-                                                                        AlertDialog(
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  title: Text(
-                                                                      "Update ?"),
-                                                                  content: Text(
-                                                                      "Do you want to Update ?"),
-                                                                  actions: [
-                                                                    FlatButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                        },
-                                                                        child: Text(
-                                                                            "No")),
-                                                                    FlatButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator
-                                                                              .pushReplacement(
-                                                                            context,
-                                                                            MaterialPageRoute(
-                                                                                builder: (context) => UpdateNotepad(
-                                                                                      id: listFacts[index]["id"],
-                                                                                      userId: listFacts[index]["userId"],
-                                                                                      name: listFacts[index]["name"],
-                                                                                      requirment: listFacts[index]["requirements"],
-                                                                                      date: listFacts[index]["date"],
-                                                                                    )),
-                                                                          );
-                                                                        },
-                                                                        child: Text(
-                                                                            "Yes"))
-                                                                  ],
-                                                                ),
-                                                              );
-                                                            },
-                                                            child: Icon(
-                                                              Icons
-                                                                  .create_rounded,
-                                                              color: Colors
-                                                                  .green[400],
-                                                            )),
-                                                        InkWell(
-                                                            onTap: () {
-                                                              // BuildAlertDialogDelete();
+                                                                    showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (context) =>
+                                                                              AlertDialog(
+                                                                        backgroundColor:
+                                                                            Colors.white,
+                                                                        title: Text(
+                                                                            "Update ?"),
+                                                                        content:
+                                                                            Text("Do you want to Update ?"),
+                                                                        actions: [
+                                                                          FlatButton(
+                                                                              onPressed: () {
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              child: Text("No")),
+                                                                          FlatButton(
+                                                                              onPressed: () {
+                                                                                Navigator.pushReplacement(
+                                                                                  context,
+                                                                                  MaterialPageRoute(
+                                                                                      builder: (context) => UpdateNotepad(
+                                                                                            id: listFacts[index]["id"],
+                                                                                            userId: listFacts[index]["userId"],
+                                                                                            name: listFacts[index]["name"],
+                                                                                            requirment: listFacts[index]["requirements"],
+                                                                                            date: listFacts[index]["date"],
+                                                                                          )),
+                                                                                );
+                                                                              },
+                                                                              child: Text("Yes"))
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .create_rounded,
+                                                                    color: Colors
+                                                                            .green[
+                                                                        400],
+                                                                  )),
+                                                              InkWell(
+                                                                  onTap: () {
+                                                                    // BuildAlertDialogDelete();
 
-                                                              showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (context) =>
-                                                                        AlertDialog(
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  title: Text(
-                                                                      "Delete?"),
-                                                                  content: Text(
-                                                                      "Do you want to delete?"),
-                                                                  actions: [
-                                                                    FlatButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                        },
-                                                                        child: Text(
-                                                                            "No")),
-                                                                    FlatButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                          deleteNotepad(
-                                                                              listFacts[index]["id"],
-                                                                              sid);
-                                                                          fetchData(
-                                                                              sid,
-                                                                              "");
-                                                                        },
-                                                                        child: Text(
-                                                                            "Yes"))
-                                                                  ],
-                                                                ),
-                                                              );
-                                                            },
-                                                            child: Icon(
-                                                              Icons.delete,
-                                                              color: Colors
-                                                                  .red[400],
-                                                            )),
-                                                      ],
-                                                    ),
+                                                                    showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (context) =>
+                                                                              AlertDialog(
+                                                                        backgroundColor:
+                                                                            Colors.white,
+                                                                        title: Text(
+                                                                            "Delete?"),
+                                                                        content:
+                                                                            Text("Do you want to delete?"),
+                                                                        actions: [
+                                                                          FlatButton(
+                                                                              onPressed: () {
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              child: Text("No")),
+                                                                          FlatButton(
+                                                                              onPressed: () {
+                                                                                Navigator.pop(context);
+                                                                                deleteNotepad(listFacts[index]["id"], sid);
+                                                                                fetchData(sid, "");
+                                                                              },
+                                                                              child: Text("Yes"))
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .delete,
+                                                                    color: Colors
+                                                                            .red[
+                                                                        400],
+                                                                  )),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
                           ),
                         ),
                       ),
@@ -483,7 +483,7 @@ showDialogFunc(context, title, date, requirment, id) {
                           children: <Widget>[
                             ListTile(
                               leading: CircleAvatar(
-                                backgroundColor: Color(0xFF4fc4f2),
+                                backgroundColor: Colors.blue,
                                 child: Text(
                                   title.toUpperCase().substring(0, 1),
                                   style: TextStyle(
@@ -551,13 +551,16 @@ showDialogFunc(context, title, date, requirment, id) {
                       width: 130.0,
                       height: 45.0,
                       child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(80.0)),
+                        color: Colors.blue,
                         onPressed: () {
                           Navigator.pop(context);
                         },
                         height: 30,
                         child: Text(
                           ' OK ',
-                          style: TextStyle(),
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),

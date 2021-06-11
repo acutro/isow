@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'alertList.dart';
@@ -84,6 +85,7 @@ class _RigAlert2State extends State<RigAlert2> {
       setState(() {
         mapResponse = jsonDecode(response.body);
         rigList = mapResponse['data'];
+
         print("{$rigList}");
       });
     }
@@ -211,147 +213,148 @@ class _RigAlert2State extends State<RigAlert2> {
           : ListView(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                  margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   height: 100.0,
                   //width: double.infinity,
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        height: 110,
-                        // width: 110,
-                        margin: EdgeInsets.fromLTRB(10.0, 20.0, 5.0, 5.0),
-                        alignment: Alignment.topLeft,
-                        child: Image.asset(
-                          'assets/scn1.PNG',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      SizedBox(width: SizeConfig.safeBlockHorizontal * 10),
-                      // Container(
-                      //   margin: EdgeInsets.all(5.0),
-                      //   decoration: BoxDecoration(
-                      //     color: Colors.white,
-                      //     borderRadius: BorderRadius.circular(10.0),
-                      //   ),
-                      //   child: Column(
-                      //     children: <Widget>[
-                      //       Container(
-                      //         alignment: Alignment.topLeft,
-                      //         margin: EdgeInsets.fromLTRB(1.0, 10.0, 0.0, 5.0),
-                      //         child: Text(
-                      //           "COUNT DOWN TIME",
-                      //           style: TextStyle(
-                      //             color: Colors.black54,
-                      //             fontSize: 13.0,
-                      //             fontWeight: FontWeight.bold,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       Row(
-                      //         children: <Widget>[
-                      //           Container(
-                      //             width: 35,
-                      //             height: 35,
-                      //             alignment: Alignment.topLeft,
-                      //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
-                      //             //padding: EdgeInsets.all(5),
+                  child: ListTile(
+                    leading: Image.asset(
+                      'assets/scn1.PNG',
+                      fit: BoxFit.cover,
+                    ),
+                    subtitle: Text(
+                      "Rig Alert",
+                      style: TextStyle(fontSize: 24),
+                    ),
 
-                      //             child: Text(''),
-                      //             decoration: BoxDecoration(
-                      //                 borderRadius: BorderRadius.circular(5.0),
-                      //                 color: Colors.white,
-                      //                 border: Border.all(
-                      //                   color: Colors.black54,
-                      //                   width: 1,
-                      //                 )),
-                      //           ),
-                      //           SizedBox(width: 10.0),
-                      //           Container(
-                      //             width: 35,
-                      //             height: 35,
-                      //             alignment: Alignment.topLeft,
-                      //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
-                      //             //padding: EdgeInsets.all(5),
+                    //     SizedBox(width: SizeConfig.safeBlockHorizontal * 10),
+                    // Container(
+                    //   margin: EdgeInsets.all(5.0),
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.white,
+                    //     borderRadius: BorderRadius.circular(10.0),
+                    //   ),
+                    //   child: Column(
+                    //     children: <Widget>[
+                    //       Container(
+                    //         alignment: Alignment.topLeft,
+                    //         margin: EdgeInsets.fromLTRB(1.0, 10.0, 0.0, 5.0),
+                    //         child: Text(
+                    //           "COUNT DOWN TIME",
+                    //           style: TextStyle(
+                    //             color: Colors.black54,
+                    //             fontSize: 13.0,
+                    //             fontWeight: FontWeight.bold,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       Row(
+                    //         children: <Widget>[
+                    //           Container(
+                    //             width: 35,
+                    //             height: 35,
+                    //             alignment: Alignment.topLeft,
+                    //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
+                    //             //padding: EdgeInsets.all(5),
 
-                      //             child: Text(''),
-                      //             decoration: BoxDecoration(
-                      //                 borderRadius: BorderRadius.circular(5.0),
-                      //                 color: Colors.white,
-                      //                 border: Border.all(
-                      //                   color: Colors.black54,
-                      //                   width: 1,
-                      //                 )),
-                      //           ),
-                      //           SizedBox(width: 10.0),
-                      //           Container(
-                      //             width: 35,
-                      //             height: 35,
-                      //             alignment: Alignment.topLeft,
-                      //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
-                      //             //padding: EdgeInsets.all(5),
+                    //             child: Text(''),
+                    //             decoration: BoxDecoration(
+                    //                 borderRadius: BorderRadius.circular(5.0),
+                    //                 color: Colors.white,
+                    //                 border: Border.all(
+                    //                   color: Colors.black54,
+                    //                   width: 1,
+                    //                 )),
+                    //           ),
+                    //           SizedBox(width: 10.0),
+                    //           Container(
+                    //             width: 35,
+                    //             height: 35,
+                    //             alignment: Alignment.topLeft,
+                    //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
+                    //             //padding: EdgeInsets.all(5),
 
-                      //             child: Text(''),
-                      //             decoration: BoxDecoration(
-                      //                 borderRadius: BorderRadius.circular(5.0),
-                      //                 color: Colors.white,
-                      //                 border: Border.all(
-                      //                   color: Colors.black54,
-                      //                   width: 1,
-                      //                 )),
-                      //           ),
-                      //           SizedBox(width: 10.0),
-                      //         ],
-                      //       ),
-                      //       Container(
-                      //         margin: EdgeInsets.fromLTRB(0.0, 0.1, 0.0, 0.0),
-                      //         alignment: Alignment.topLeft,
-                      //         child: Text(
-                      //           "HOURS      MINUTES      SECONDS",
-                      //           style: TextStyle(
-                      //             color: Colors.black,
-                      //             fontSize: 10.0,
-                      //             //fontWeight: FontWeight.bold,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                    ],
+                    //             child: Text(''),
+                    //             decoration: BoxDecoration(
+                    //                 borderRadius: BorderRadius.circular(5.0),
+                    //                 color: Colors.white,
+                    //                 border: Border.all(
+                    //                   color: Colors.black54,
+                    //                   width: 1,
+                    //                 )),
+                    //           ),
+                    //           SizedBox(width: 10.0),
+                    //           Container(
+                    //             width: 35,
+                    //             height: 35,
+                    //             alignment: Alignment.topLeft,
+                    //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
+                    //             //padding: EdgeInsets.all(5),
+
+                    //             child: Text(''),
+                    //             decoration: BoxDecoration(
+                    //                 borderRadius: BorderRadius.circular(5.0),
+                    //                 color: Colors.white,
+                    //                 border: Border.all(
+                    //                   color: Colors.black54,
+                    //                   width: 1,
+                    //                 )),
+                    //           ),
+                    //           SizedBox(width: 10.0),
+                    //         ],
+                    //       ),
+                    //       Container(
+                    //         margin: EdgeInsets.fromLTRB(0.0, 0.1, 0.0, 0.0),
+                    //         alignment: Alignment.topLeft,
+                    //         child: Text(
+                    //           "HOURS      MINUTES      SECONDS",
+                    //           style: TextStyle(
+                    //             color: Colors.black,
+                    //             fontSize: 10.0,
+                    //             //fontWeight: FontWeight.bold,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    //  ],
                   ),
                 ),
-                Row(
-                  children: <Widget>[
-                    // SizedBox(width: 20.0),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "RIG NAME",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.0,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: SizeConfig.safeBlockHorizontal * 40),
-                    Container(
-                      alignment: Alignment.topRight,
-                      child: Text(
-                        "DATE AND TIME",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.0,
-                        ),
-                      ),
-                    ),
-                  ],
+                // Row(
+                //   children: <Widget>[
+                //     // SizedBox(width: 20.0),
+                //     Container(
+                //       margin: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                //       alignment: Alignment.topLeft,
+                //       child: Text(
+                //         "RIG NAME",
+                //         style: TextStyle(
+                //           color: Colors.black,
+                //           fontWeight: FontWeight.bold,
+                //           fontSize: 12.0,
+                //         ),
+                //       ),
+                //     ),
+                //     SizedBox(width: SizeConfig.safeBlockHorizontal * 40),
+                //     Container(
+                //       alignment: Alignment.topRight,
+                //       child: Text(
+                //         "DATE AND TIME",
+                //         style: TextStyle(
+                //           color: Colors.black,
+                //           fontWeight: FontWeight.bold,
+                //           fontSize: 12.0,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                SizedBox(
+                  height: 50,
                 ),
                 Row(
                   children: <Widget>[
@@ -380,7 +383,7 @@ class _RigAlert2State extends State<RigAlert2> {
                       child: ElevatedButton(
                           child: Text(
                             _datetime == null
-                                ? "Pick Date and Time"
+                                ? "Date and Time"
                                 // DateTime.now().toString().substring(0, 16)
 
                                 : _datetime.toString().substring(0, 10) +
@@ -407,19 +410,13 @@ class _RigAlert2State extends State<RigAlert2> {
                               });
                             });
                           }),
-
-                      //  TextField(
-                      //   decoration: InputDecoration(
-                      //     border: OutlineInputBorder(),
-                      //     // labelText: 'User Name',
-                      //     // hintText: 'Enter Your Name',
-                      //   ),
-                      // ),
-
                       width: SizeConfig.safeBlockHorizontal * 40,
                       height: SizeConfig.safeBlockVertical * 5,
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Row(
                   children: <Widget>[
@@ -427,51 +424,53 @@ class _RigAlert2State extends State<RigAlert2> {
                       margin: EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 0.0),
                       alignment: Alignment.topLeft,
                       child: TextField(
+                        maxLines: 10,
                         controller: _descriptionController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.black)),
-                          labelText: "Description Field",
+                          labelText: "Description",
                           // hintText: 'Enter Your Name',
                         ),
                       ),
-                      height: SizeConfig.safeBlockVertical * 10,
+                      height: SizeConfig.safeBlockVertical * 30,
                       width: SizeConfig.safeBlockHorizontal * 90,
                     ),
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
-                      // alignment: Alignment.topLeft,
-                      child: RaisedButton(
-                        onPressed: () {},
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(80.0)),
-                        padding: EdgeInsets.all(0.0),
-                        child: Ink(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(30.0),
-                              border: Border.all(
-                                color: Colors.blue,
-                              )),
-                          child: Container(
-                            constraints: BoxConstraints(
-                                maxWidth: 200.0, minHeight: 40.0),
-                            alignment: Alignment.center,
-                            child: Text(
-                              "View Rig Alert List",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.black54),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: SizeConfig.safeBlockHorizontal * 5),
+                    // Container(
+                    //   margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
+                    //   // alignment: Alignment.topLeft,
+                    //   child: RaisedButton(
+                    //     onPressed: () {},
+                    //     shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(80.0)),
+                    //     padding: EdgeInsets.all(0.0),
+                    //     child: Ink(
+                    //       decoration: BoxDecoration(
+                    //           color: Colors.white,
+                    //           borderRadius: BorderRadius.circular(30.0),
+                    //           border: Border.all(
+                    //             color: Colors.blue,
+                    //           )),
+                    //       child: Container(
+                    //         constraints: BoxConstraints(
+                    //             maxWidth: 200.0, minHeight: 40.0),
+                    //         alignment: Alignment.center,
+                    //         child: Text(
+                    //           "View Rig Alert List",
+                    //           textAlign: TextAlign.center,
+                    //           style: TextStyle(color: Colors.black54),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(width: SizeConfig.safeBlockHorizontal * 5),
                     Container(
                       margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
                       // alignment: Alignment.topLeft,
@@ -527,53 +526,6 @@ class _RigAlert2State extends State<RigAlert2> {
                     ),
                   ],
                 ),
-                // Container(
-                //   alignment: Alignment.topLeft,
-                //   margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
-                //   child: Text(
-                //     "ALERTED RIG LIST",
-                //     style: TextStyle(
-                //       color: Colors.black,
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: 15.0,
-                //     ),
-                //   ),
-                // ),
-                // Container(
-                //   width: MediaQuery.of(context).size.width,
-                //   alignment: Alignment.topLeft,
-                //   margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                //   child: Tables2(),
-                // ),
-                // Container(
-                //   alignment: Alignment.bottomCenter,
-                //   margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
-                //   // alignment: Alignment.topLeft,
-                //   child: RaisedButton(
-                //     onPressed: () {},
-                //     shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(80.0)),
-                //     padding: EdgeInsets.all(0.0),
-                //     child: Ink(
-                //       decoration: BoxDecoration(
-                //           gradient: LinearGradient(
-                //             colors: [Color(0xFF4fc4f2), Colors.blue],
-                //             begin: Alignment.centerLeft,
-                //             end: Alignment.centerRight,
-                //           ),
-                //           borderRadius: BorderRadius.circular(30.0)),
-                //       child: Container(
-                //         constraints: BoxConstraints(maxWidth: 100.0, minHeight: 40.0),
-                //         alignment: Alignment.center,
-                //         child: Text(
-                //           "Alert",
-                //           textAlign: TextAlign.center,
-                //           style: TextStyle(color: Colors.white),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
     );

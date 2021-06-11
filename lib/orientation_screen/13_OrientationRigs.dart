@@ -77,7 +77,7 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            'Orientation Rigs',
+            'Rigs Details',
           ),
         ),
         actions: [
@@ -114,8 +114,8 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
                     BoxDecoration(color: Color(0xFF4fc4f2).withOpacity(0.2)),
                 height: MediaQuery.of(context).size.height,
                 width: double.infinity,
-                child: listFacts.length == 0
-                    ? Center(child: Text("No Rigs found"))
+                child: listFacts == null
+                    ? Center(child: Text("No Rig details found"))
                     : Container(
                         child: Column(
                           children: [
@@ -123,44 +123,45 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
                               height: 10,
                             ),
                             Container(
-                              alignment: Alignment.center,
-                              // padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.symmetric(horizontal: 15),
+                              height: 45,
                               decoration: BoxDecoration(
-                                border:
-                                    Border.all(width: 1, color: Colors.black45),
-                                borderRadius: BorderRadius.circular(20.0),
-                                color: Colors.white,
-                              ),
-
-                              // width: MediaQuery.of(context).size.width*40,
-                              child: ListTile(
-                                // leading: new Icon(Icons.search),
-                                title: TextFormField(
-                                  controller: controller,
-                                  decoration: new InputDecoration(
-                                    hintText: 'Search',
-                                    hintStyle:
-                                        TextStyle(color: Colors.grey[600]),
-                                    border: InputBorder.none,
-                                    // fillColor: Colors.blue,
-                                    // filled: true
-                                  ),
-                                  onChanged: (value) {
-                                    fetchData(controller.text);
-                                  },
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      width: 1, color: Colors.grey[600])),
+                              margin:
+                                  new EdgeInsets.symmetric(horizontal: 20.0),
+                              child: TextFormField(
+                                onChanged: (value) {
+                                  fetchData(controller.text);
+                                },
+                                style: TextStyle(
+                                  color: Colors.grey[600],
                                 ),
-                                trailing: controller.text.isNotEmpty
-                                    ? new IconButton(
-                                        icon: new Icon(Icons.cancel),
-                                        onPressed: () {
-                                          controller.clear();
-                                          fetchData(controller.text);
-                                          // providerData.getContacts();
-                                          // onSearchTextChanged('');
-                                        },
-                                      )
-                                    : Icon(Icons.search),
+                                controller: controller,
+                                decoration: new InputDecoration(
+                                  suffixIcon: controller.text.isNotEmpty
+                                      ? new IconButton(
+                                          icon: new Icon(Icons.cancel),
+                                          onPressed: () {
+                                            controller.clear();
+                                            fetchData(controller.text);
+                                            // providerData.getContacts();
+                                            // onSearchTextChanged('');
+                                          },
+                                        )
+                                      : Icon(Icons.search),
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                  contentPadding: EdgeInsets.only(
+                                      left: 15, bottom: 11, top: 11, right: 15),
+                                  hintText: 'Search',
+                                  fillColor: Colors.white,
+                                  hintStyle: TextStyle(color: Colors.grey[600]),
+                                ),
                               ),
                             ),
                             Expanded(

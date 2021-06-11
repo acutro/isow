@@ -178,7 +178,25 @@ class _JobdescriptionState extends State<JobHandover> {
 
       // color: Color.fromRGBO(221, 193, 135, 0.08),
       child: userResponse == null
-          ? Text("")
+          ? GestureDetector(
+              onTap: () {
+                Toast.show("Select Position", context,
+                    duration: Toast.LENGTH_SHORT,
+                    gravity: Toast.BOTTOM,
+                    textColor: Colors.red,
+                    backgroundColor: Colors.white);
+              },
+              child: Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                child: Text(
+                  "Choose Position",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+              ))
           : DropdownButton(
               onTap: () {
                 FocusScope.of(context).requestFocus(new FocusNode());

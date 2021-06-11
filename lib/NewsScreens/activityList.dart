@@ -153,7 +153,7 @@ class _MyApp extends State<ActivityListing> {
                                             ),
                                           ),
                                           title: Text(
-                                            listFacts[index]["title"],
+                                            listFacts[index]["category"],
                                             // '${listFacts[index]["created_at"][0].toUpperCase()}${listFacts[index]["created_at"].substring(1)}',
                                             //  listFacts[index]["name"],
                                             style: TextStyle(

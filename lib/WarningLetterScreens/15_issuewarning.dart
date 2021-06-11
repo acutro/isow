@@ -116,7 +116,7 @@ class _WarningletterState extends State<Warningletter> {
       height: 58,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: Color(0xff4fc4f2), width: 1),
+        border: Border.all(color: Colors.blue, width: 1),
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
 
@@ -125,7 +125,7 @@ class _WarningletterState extends State<Warningletter> {
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        iconEnabledColor: Colors.black54,
+        iconEnabledColor: Colors.black87,
         value: roleValue,
         isExpanded: true,
         underline: Container(
@@ -138,7 +138,7 @@ class _WarningletterState extends State<Warningletter> {
             "Position",
             style: TextStyle(
               fontSize: 14,
-              color: Colors.black54,
+              color: Colors.black87,
             ),
           ),
         ),
@@ -149,7 +149,7 @@ class _WarningletterState extends State<Warningletter> {
               padding: EdgeInsets.only(left: 12),
               child: Text(
                 answer["userRoles"],
-                style: TextStyle(color: Colors.black54, fontSize: 14),
+                style: TextStyle(color: Colors.black87, fontSize: 14),
               ),
             ),
           );
@@ -171,20 +171,35 @@ class _WarningletterState extends State<Warningletter> {
     return Container(
       alignment: Alignment.center,
       height: 58,
+
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: Color(0xff4fc4f2), width: 1),
+        border: Border.all(color: Colors.blue, width: 1),
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
 
       // color: Color.fromRGBO(221, 193, 135, 0.08),
       child: userResponse == null
-          ? Text("")
+          ? GestureDetector(
+              onTap: () {
+                Toast.show("Select Position", context,
+                    duration: Toast.LENGTH_SHORT,
+                    gravity: Toast.BOTTOM,
+                    textColor: Colors.red,
+                    backgroundColor: Colors.white);
+              },
+              child: Text(
+                "Choose Position",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                ),
+              ))
           : DropdownButton(
               onTap: () {
                 FocusScope.of(context).requestFocus(new FocusNode());
               },
-              iconEnabledColor: Colors.black54,
+              iconEnabledColor: Colors.black87,
               value: userValue,
               isExpanded: true,
               underline: Container(
@@ -208,7 +223,7 @@ class _WarningletterState extends State<Warningletter> {
                     padding: EdgeInsets.only(left: 12),
                     child: Text(
                       answer["name"],
-                      style: TextStyle(color: Colors.black54, fontSize: 14),
+                      style: TextStyle(color: Colors.black87, fontSize: 14),
                     ),
                   ),
                 );
@@ -237,9 +252,15 @@ class _WarningletterState extends State<Warningletter> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xff4fc4f2),
         title: Text('Warning Letter'),
         centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
+        ),
       ),
       body: mapResponse == null
           ? Center(
@@ -251,55 +272,30 @@ class _WarningletterState extends State<Warningletter> {
           : SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment.centerRight,
-                        margin: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
-                        child: Icon(
-                          Icons.list_alt_sharp,
-                          size: 90.0,
-                          color: Color(0xff4fc4f2),
-                        ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.list_alt_sharp,
+                        size: 70.0,
+                        color: Colors.blue,
                       ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0.0, 40.0, 10.0, 0.0),
-                        child: Center(
-                          child: Text.rich(
+                      subtitle: Text.rich(
+                        TextSpan(
+                          children: [
                             TextSpan(
-                              children: [
-                                TextSpan(
-                                    text: 'Issue ',
-                                    style: TextStyle(fontSize: 30)),
-                                TextSpan(
-                                  text: 'Warning Letter',
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          //  TextFormField(
-                          //   cursorColor: Theme.of(context).cursorColor,
-                          //   //initialValue: 'Opinion and Issue?',
-                          //   maxLength: 20,
-                          //   controller: issueController,
-                          //   decoration: InputDecoration(
-                          //     // icon: Icon(Icons.favorite),
-                          //     labelText: 'Issue',
-                          //     labelStyle: TextStyle(
-                          //       fontWeight: FontWeight.bold,
-                          //       color: Color(0xff4fc4f2),
-                          //     ),
-                          //     enabledBorder: UnderlineInputBorder(
-                          //       borderSide:
-                          //           BorderSide(color: Color(0xff4fc4f2)),
-                          //     ),
-                          //   ),
-                          // ),
+                                text: 'Issue  ',
+                                style: TextStyle(fontSize: 26)),
+                            TextSpan(text: 'Warning Letter'),
+                          ],
                         ),
                       ),
-                    ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 60,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -325,7 +321,7 @@ class _WarningletterState extends State<Warningletter> {
                       ),
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.fromLTRB(5.0, 20.0, 5.0, 0.0),
+                          margin: EdgeInsets.fromLTRB(5.0, 20.0, 15.0, 0.0),
                           //width: 200.0,
                           height: 40.0,
                           decoration: BoxDecoration(
@@ -353,7 +349,7 @@ class _WarningletterState extends State<Warningletter> {
 
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      border: Border.all(color: Color(0xff4fc4f2), width: 1),
+                      border: Border.all(color: Colors.blue, width: 1),
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                       boxShadow: [
                         BoxShadow(
@@ -378,65 +374,107 @@ class _WarningletterState extends State<Warningletter> {
                       keyboardType: TextInputType.text,
                     ),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.all(20.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 6.0,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          height: 230.0,
-                          //width: 300.0,
-                          //color: Colors.redAccent,
-                          // child: Container(
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                alignment: Alignment.topLeft,
-                                margin:
-                                    EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 0.0),
-                                child: Text(
-                                  'Issue',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  child: Container(
-                                    margin: EdgeInsets.all(10.0),
-                                    child: new TextField(
-                                      decoration: new InputDecoration(
-                                        border: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        errorBorder: InputBorder.none,
-                                        disabledBorder: InputBorder.none,
-                                      ),
-                                      autofocus: false,
-                                      maxLines: null,
-                                      controller: _reasonController,
-                                      keyboardType: TextInputType.text,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+
+                  Container(
+                    margin: EdgeInsets.all(10.0),
+                    height: 230.0,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          alignment: Alignment.topLeft,
+                          margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
+                          child: Text(
+                            'Issue',
+                            style: TextStyle(
+                                fontSize: 16.0, fontWeight: FontWeight.bold),
                           ),
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                border: Border.all(color: Colors.blue)),
+                            margin: EdgeInsets.all(10.0),
+                            child: new TextField(
+                              style: TextStyle(color: Colors.black87),
+                              decoration: new InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                contentPadding: EdgeInsets.all(10.0),
+                              ),
+                              autofocus: false,
+                              maxLines: 8,
+                              controller: _reasonController,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
+
+                  // Row(
+                  //   children: <Widget>[
+                  //     Expanded(
+                  //       child: Container(
+                  //         margin: EdgeInsets.all(20.0),
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.white,
+                  //           borderRadius: BorderRadius.circular(10.0),
+                  //           boxShadow: [
+                  //             BoxShadow(
+                  //               color: Colors.black26,
+                  //               blurRadius: 6.0,
+                  //               offset: Offset(0, 2),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //         height: 230.0,
+                  //         //width: 300.0,
+                  //         //color: Colors.redAccent,
+                  //         // child: Container(
+                  //         child: Column(
+                  //           children: <Widget>[
+                  //             Container(
+                  //               alignment: Alignment.topLeft,
+                  //               margin:
+                  //                   EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 0.0),
+                  //               child: Text(
+                  //                 'Issue',
+                  //                 style: TextStyle(
+                  //                     fontSize: 16.0,
+                  //                     fontWeight: FontWeight.bold),
+                  //               ),
+                  //             ),
+                  //             Expanded(
+                  //               child: SingleChildScrollView(
+                  //                 child: Container(
+                  //                   margin: EdgeInsets.all(10.0),
+                  //                   child: new TextField(
+                  //                     decoration: new InputDecoration(
+                  //                       border: InputBorder.none,
+                  //                       focusedBorder: InputBorder.none,
+                  //                       enabledBorder: InputBorder.none,
+                  //                       errorBorder: InputBorder.none,
+                  //                       disabledBorder: InputBorder.none,
+                  //                     ),
+                  //                     autofocus: false,
+                  //                     maxLines: null,
+                  //                     controller: _reasonController,
+                  //                     keyboardType: TextInputType.text,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -445,7 +483,7 @@ class _WarningletterState extends State<Warningletter> {
                           width: 200.0,
                           height: 40.0,
                           decoration: BoxDecoration(
-                            color: Color(0xff4fc4f2),
+                            color: Colors.blue,
                             borderRadius: BorderRadius.circular(50.0),
                             boxShadow: [
                               BoxShadow(

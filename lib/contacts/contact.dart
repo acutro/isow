@@ -101,6 +101,7 @@ class _MyApp extends State<Contact> {
       title: 'Contacts',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(centerTitle: true),
       ),
       home: Scaffold(
         appBar: AppBar(

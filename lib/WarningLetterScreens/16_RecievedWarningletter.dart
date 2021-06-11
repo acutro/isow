@@ -106,7 +106,7 @@ class _RecivedWarningState extends State<RecivedWarning> {
           refreshList(controller.text);
         },
         child: Container(
-          margin: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 5.0),
+          margin: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 5.0),
           height: double.infinity,
           child: Column(
             children: [
@@ -115,7 +115,7 @@ class _RecivedWarningState extends State<RecivedWarning> {
                   leading: Icon(
                     Icons.sticky_note_2,
                     size: 70.0,
-                    color: Color(0xff4fc4f2),
+                    color: Colors.blue,
                   ),
                   subtitle: Text.rich(
                     TextSpan(
@@ -129,42 +129,45 @@ class _RecivedWarningState extends State<RecivedWarning> {
                 ),
               ),
               Container(
-                alignment: Alignment.center,
-                // padding: EdgeInsets.all(5),
-                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                height: 45,
                 decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.black45),
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: Colors.white,
-                ),
-
-                // width: MediaQuery.of(context).size.width*40,
-                child: ListTile(
-                  // leading: new Icon(Icons.search),
-                  title: TextFormField(
-                    controller: controller,
-                    decoration: new InputDecoration(
-                      hintText: 'Search',
-                      hintStyle: TextStyle(color: Colors.grey[600]),
-                      border: InputBorder.none,
-                      // fillColor: Colors.blue,
-                      // filled: true
-                    ),
-                    onChanged: (value) {
-                      _getEmployee(sid, controller.text);
-                    },
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(width: 1, color: Colors.grey[600])),
+                margin:
+                    new EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                child: TextFormField(
+                  onChanged: (value) {
+                    _getEmployee(sid, controller.text);
+                  },
+                  style: TextStyle(
+                    color: Colors.grey[600],
                   ),
-                  trailing: controller.text.isNotEmpty
-                      ? new IconButton(
-                          icon: new Icon(Icons.cancel),
-                          onPressed: () {
-                            controller.clear();
-                            _getEmployee(sid, controller.text);
-                            // providerData.getContacts();
-                            // onSearchTextChanged('');
-                          },
-                        )
-                      : Icon(Icons.search),
+                  controller: controller,
+                  decoration: new InputDecoration(
+                    suffixIcon: controller.text.isNotEmpty
+                        ? new IconButton(
+                            icon: new Icon(Icons.cancel),
+                            onPressed: () {
+                              controller.clear();
+                              _getEmployee(sid, controller.text);
+                              // providerData.getContacts();
+                              // onSearchTextChanged('');
+                            },
+                          )
+                        : Icon(Icons.search),
+
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.only(
+                        left: 15, bottom: 11, top: 11, right: 15),
+                    hintText: 'Search',
+                    // filled: true,
+                    // fillColor: Colors.white24,
+                    hintStyle: TextStyle(color: Colors.grey[600]),
+                  ),
                 ),
               ),
               Expanded(
@@ -175,8 +178,10 @@ class _RecivedWarningState extends State<RecivedWarning> {
                           size: 120,
                         ),
                       )
-                    : listFacts.length == 0
-                        ? Center(child: Text("No Rig Alerts found"))
+                    : listFacts == null
+                        ? Center(
+                            heightFactor: 10,
+                            child: Text("No Warning Letter found"))
                         : ListView.builder(
                             itemCount: listFacts.length,
                             itemBuilder: (BuildContext context, int index) {
@@ -217,7 +222,8 @@ class _RecivedWarningState extends State<RecivedWarning> {
                                             child: Container(
                                               height: 40.0,
                                               decoration: BoxDecoration(
-                                                  color: Color(0xff4fc4f2),
+                                                  color: Colors.blue,
+                                                  //color: Color(0xff4fc4f2),
                                                   borderRadius:
                                                       BorderRadius.only(
                                                     topLeft:
@@ -247,7 +253,7 @@ class _RecivedWarningState extends State<RecivedWarning> {
                                           Expanded(
                                             child: Container(
                                               height: 40.0,
-                                              color: Color(0xff4fc4f2),
+                                              color: Colors.blue,
                                               alignment: Alignment.topLeft,
                                               margin: EdgeInsets.fromLTRB(
                                                   0.0, 0.0, 0.0, 0.0),
@@ -273,7 +279,7 @@ class _RecivedWarningState extends State<RecivedWarning> {
                                             child: Container(
                                               height: 40.0,
                                               decoration: BoxDecoration(
-                                                color: Color(0xff4fc4f2),
+                                                color: Colors.blue,
                                                 borderRadius: BorderRadius.only(
                                                   topRight:
                                                       Radius.circular(10.0),
@@ -403,7 +409,7 @@ showDialogFunc(context, person, position, date, content, issue) {
                           children: <Widget>[
                             ListTile(
                               leading: CircleAvatar(
-                                backgroundColor: Color(0xFF4fc4f2),
+                                backgroundColor: Colors.blue,
                                 child: Text(
                                   person.substring(0, 1),
                                   style: TextStyle(
@@ -468,13 +474,16 @@ showDialogFunc(context, person, position, date, content, issue) {
                       width: 130.0,
                       height: 45.0,
                       child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(80.0)),
+                        color: Colors.blue,
                         onPressed: () {
                           Navigator.pop(context);
                         },
                         height: 30,
                         child: Text(
                           ' OK ',
-                          style: TextStyle(),
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),

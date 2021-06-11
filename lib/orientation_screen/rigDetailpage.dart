@@ -43,10 +43,17 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            widget.flag == 0 ? 'Orientation Rigs' : 'Orientation Materials',
+            widget.flag == 0 ? 'Rigs details' : 'Material details',
             style: TextStyle(
               color: Colors.white,
             ),
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
           ),
           leading: GestureDetector(
             onTap: () {

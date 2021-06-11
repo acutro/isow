@@ -88,14 +88,23 @@ class _RigDetailScreenState extends State<NewsScreen> {
             },
             itemCount: widget.rigList.length,
             itemBuilder: (BuildContext context, int index) {
-              return NewsDetailsView(
-                index,
-                widget.list,
-                widget.rigList[index]["title"],
-                widget.rigList[index]["description"],
-                widget.rigList[index]["image_url"],
-                widget.rigList[index]["created_date"],
-              );
+              return widget.list == 2
+                  ? NewsDetailsView(
+                      index,
+                      widget.list,
+                      widget.rigList[index]["title"],
+                      widget.rigList[index]["description"],
+                      widget.rigList[index]["image_url"],
+                      widget.rigList[index]["created_date"],
+                    )
+                  : NewsDetailsView(
+                      index,
+                      widget.list,
+                      widget.rigList[index]["category"],
+                      widget.rigList[index]["description"],
+                      widget.rigList[index]["image_url"],
+                      widget.rigList[index]["created_date"],
+                    );
             },
           ),
         ]));

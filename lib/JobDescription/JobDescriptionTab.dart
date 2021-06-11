@@ -17,10 +17,12 @@ class _JobDescriptionTabState extends State<JobDescriptionTab> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            "Job Description",
-            style: TextStyle(
-              color: Colors.white,
+          title: Center(
+            child: Text(
+              "Job Description",
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
           ),
           leading: GestureDetector(

@@ -199,7 +199,7 @@ class _NotepadState extends State<UpdateNotepad> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10))),
                                       margin: EdgeInsets.fromLTRB(
-                                          10.0, 5.0, 5.0, 0.0),
+                                          10.0, 10.0, 5.0, 0.0),
                                       height: 40.0,
                                       child: ElevatedButton(
                                           child: Text(
@@ -232,96 +232,80 @@ class _NotepadState extends State<UpdateNotepad> {
                                 ),
                                 Expanded(
                                   child: Container(
+                                    padding: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                        color: Color(0xff49A5FF),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        border:
+                                            Border.all(color: Colors.white)),
+                                    alignment: Alignment.center,
                                     margin: EdgeInsets.fromLTRB(
-                                        10.0, 5.0, 5.0, 0.0),
+                                        10.0, 10.0, 10.0, 0.0),
                                     height: 40.0,
                                     child: TextField(
                                       controller: _nameController,
                                       style: TextStyle(color: Colors.white),
                                       decoration: InputDecoration(
-                                        hintText: 'Name',
+                                        hintText: 'Title',
                                         hintStyle:
                                             TextStyle(color: Colors.white),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          borderSide:
-                                              BorderSide(color: Colors.white),
-                                        ),
+                                        border: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        disabledBorder: InputBorder.none,
+                                        contentPadding: EdgeInsets.all(10.0),
                                       ),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Container(
-                                    margin: EdgeInsets.all(10.0),
-                                    decoration: BoxDecoration(
-                                        color: Color(0xff49A5FF),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        border: Border.all(color: Colors.white)
-                                        // boxShadow: [
-                                        //   BoxShadow(
-                                        //     color: Colors.black26,
-                                        //     blurRadius: 6.0,
-                                        //     offset: Offset(0, 2),
-                                        //   ),
-                                        // ],
-                                        ),
-                                    height: 230.0,
-                                    //width: 300.0,
-                                    //color: Colors.redAccent,
-                                    // child: Container(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Container(
-                                          alignment: Alignment.topLeft,
-                                          margin: EdgeInsets.fromLTRB(
-                                              10.0, 10.0, 0.0, 0.0),
-                                          child: Text(
-                                            'Requirments',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: SingleChildScrollView(
-                                            child: Container(
-                                              margin: EdgeInsets.all(10.0),
-                                              child: new TextField(
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                                decoration: new InputDecoration(
-                                                  border: InputBorder.none,
-                                                  focusedBorder:
-                                                      InputBorder.none,
-                                                  enabledBorder:
-                                                      InputBorder.none,
-                                                  errorBorder: InputBorder.none,
-                                                  disabledBorder:
-                                                      InputBorder.none,
-                                                ),
-                                                autofocus: false,
-                                                maxLines: null,
-                                                controller:
-                                                    _requirmentController,
-                                                keyboardType:
-                                                    TextInputType.text,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                            Container(
+                              margin: EdgeInsets.all(10.0),
+                              height: 230.0,
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    alignment: Alignment.topLeft,
+                                    margin: EdgeInsets.fromLTRB(
+                                        11.0, 10.0, 0.0, 0.0),
+                                    child: Text(
+                                      'Requirments',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Color(0xff49A5FF),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          border:
+                                              Border.all(color: Colors.white)),
+                                      margin: EdgeInsets.all(10.0),
+                                      child: new TextField(
+                                        style: TextStyle(color: Colors.white),
+                                        decoration: new InputDecoration(
+                                          border: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          enabledBorder: InputBorder.none,
+                                          errorBorder: InputBorder.none,
+                                          disabledBorder: InputBorder.none,
+                                          contentPadding: EdgeInsets.all(10.0),
+                                        ),
+                                        autofocus: false,
+                                        maxLines: 8,
+                                        controller: _requirmentController,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

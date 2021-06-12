@@ -195,8 +195,7 @@ class _MyApp extends State<JobDescriptionList> {
                                         children: <Widget>[
                                           ListTile(
                                             leading: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xFF4fc4f2),
+                                              backgroundColor: Colors.blue,
                                               child: Text(
                                                 listFacts[index]["id"],
                                                 style: TextStyle(

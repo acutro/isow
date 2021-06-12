@@ -110,8 +110,6 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
                 ),
               )
             : Container(
-                decoration:
-                    BoxDecoration(color: Color(0xFF4fc4f2).withOpacity(0.2)),
                 height: MediaQuery.of(context).size.height,
                 width: double.infinity,
                 child: listFacts == null
@@ -210,7 +208,7 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
                                               ],
                                             ),
                                             subtitle: RaisedButton(
-                                              color: Color(0xFF4fc4f2),
+                                              color: Colors.blue,
                                               textColor: Colors.white,
                                               child: Text('More Details'),
                                               onPressed: () => {

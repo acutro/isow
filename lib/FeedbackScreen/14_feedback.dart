@@ -56,9 +56,15 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xff49A5FF),
-        title: Text('Feedback Counter'),
+        title: Text('Feedback'),
         centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -66,28 +72,26 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
             Row(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 10.0),
+                  margin: EdgeInsets.fromLTRB(50.0, 30.0, 10.0, 10.0),
                   child: Icon(
                     Icons.message,
-                    size: 90.0,
+                    size: 50.0,
                     color: Color(0xff49A5FF),
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(0.0, 40.0, 10.0, 0.0),
-                    child: Center(
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Whats Employers\n',
-                            ),
-                            TextSpan(
-                                text: 'Opinion and Issues?',
-                                style: TextStyle(fontSize: 24)),
-                          ],
-                        ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(20.0, 40.0, 10.0, 10.0),
+                  child: Center(
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Whats Employers\n',
+                          ),
+                          TextSpan(
+                              text: 'Opinion and Issues?',
+                              style: TextStyle(fontSize: 20)),
+                        ],
                       ),
                     ),
                   ),

@@ -9,8 +9,12 @@ class ForgotpswdScreen extends StatefulWidget {
 class ForgotpswdScreenState extends State<ForgotpswdScreen> {
   @override
   Widget build(BuildContext context) {
+    TextEditingController _emailController = new TextEditingController();
     return Scaffold(
+      backgroundColor: Colors.blueAccent,
       appBar: AppBar(
+        backgroundColor: Colors.blueAccent,
+        centerTitle: true,
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);
@@ -20,10 +24,8 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
             color: Colors.white,
           ),
         ),
-        title: Center(
-          child: Text(
-            'Forgot Password',
-          ),
+        title: Text(
+          'Forget password',
         ),
         // actions: [
         //   Padding(
@@ -31,58 +33,69 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
         //     child: Icon(Icons.more_vert),
         //   ),
         // ],
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
-        ),
+        // flexibleSpace: Container(
+        //   decoration: BoxDecoration(
+        //       gradient: LinearGradient(
+        //           begin: Alignment.topLeft,
+        //           end: Alignment.bottomRight,
+        //           colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
+        // ),
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 5.0),
-              child: Text(
-                '\n'
-                '\n'
-                '\n'
-                '\n'
-                '\n'
-                '\n'
-                'Forgot Password ?\n',
-                style: TextStyle(
-                    fontSize: 23,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
+            SizedBox(
+              height: 80,
             ),
             Container(
-              padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 19.0),
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 110.0,
+                      width: 110.0,
+                      child: Image.asset('assets/images/logo.png'),
+                    ),
+                    Text(
+                      'Forget Password?',
+                      style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.white,
+                          fontFamily: "WorkSansLight"),
+                    ),
+                  ],
+                )),
+            SizedBox(
+              height: 80,
+            ),
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 30.0),
               child: Text(
-                'Please enter your E-mail ID',
-                style: TextStyle(fontSize: 10, color: Colors.black),
+                " Don't worry! Just fill in your email and we'll send you a link to reset password",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontFamily: "WorkSansLight"),
               ),
             ),
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(0.0, 1.0), //(x,y)
-                    blurRadius: 6.0,
-                  ),
-                ],
-              ),
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: Colors.transparent,
+                  border: Border.all(width: 1, color: Colors.white60)),
               margin: new EdgeInsets.symmetric(horizontal: 20.0),
               child: TextFormField(
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+                controller: _emailController,
                 decoration: new InputDecoration(
-                  prefixIcon: Icon(
+                  suffixIcon: Icon(
                     Icons.email_outlined,
-                    color: Color(0xFF4fc4f2),
+                    color: Colors.white,
                   ),
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,
@@ -91,11 +104,11 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                   disabledBorder: InputBorder.none,
                   contentPadding:
                       EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                  hintText: 'Email-ID',
+                  hintText: 'Email Address',
                   filled: true,
-                  fillColor: Colors.white24,
+                  // fillColor: Colors.white24,
                   hintStyle: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 12,
                       fontFamily: "WorkSansLight"),
                 ),
@@ -113,18 +126,19 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                 padding: EdgeInsets.all(0.0),
                 child: Ink(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFF4fc4f2), Colors.blue],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
+                      color: Colors.blueAccent,
+                      // gradient: LinearGradient(
+                      //   colors: [Color(0xFF4fc4f2), Colors.blue],
+                      //   begin: Alignment.centerLeft,
+                      //   end: Alignment.centerRight,
+                      // ),
                       borderRadius: BorderRadius.circular(30.0)),
                   child: Container(
                     constraints:
                         BoxConstraints(maxWidth: 170.0, minHeight: 50.0),
                     alignment: Alignment.center,
                     child: Text(
-                      "Send Reset Link",
+                      "Send reset link",
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white),
                     ),
@@ -132,33 +146,40 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                 ),
               ),
             ),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Back to',
-                    textAlign: TextAlign.left,
-                  ),
-                  FlatButton(
-                    textColor: Color(0xFF4fc4f2),
-                    child: Text(
-                      'Sign In',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SigninScreen()),
-                      );
-
-                      //signup screen
-                    },
-                  )
-                ],
-              ),
+            SizedBox(
+              height: 30,
             ),
+            Container(
+                child: FlatButton(
+              textColor: Colors.white,
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Back to ',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: "WorkSansLight",
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'sign in.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: "WorkSansLight",
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SigninScreen()));
+
+                //signup screen
+              },
+            )),
           ],
         ),
       ),

@@ -145,11 +145,16 @@ class SigninScreenState extends State<SigninScreen> {
                   padding: EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      Icon(Icons.shopping_bag, size: 90, color: Colors.white),
+                      Container(
+                        height: 110.0,
+                        width: 110.0,
+                        child: Image.asset('assets/images/logo.png'),
+                      ),
+                      // Icon(Icons.shopping_bag, size: 90, color: Colors.white),
                       Text(
                         'Apps Login',
                         style: TextStyle(
-                            fontSize: 26,
+                            fontSize: 22,
                             color: Colors.white,
                             fontFamily: "WorkSansLight"),
                       ),

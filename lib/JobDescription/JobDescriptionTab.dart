@@ -37,14 +37,14 @@ class _JobDescriptionTabState extends State<JobDescriptionTab> {
           actions: [
             Icon(
               Icons.headset_mic,
-              color: Colors.white38,
+              color: Colors.white,
             ),
             SizedBox(
               width: 10,
             ),
             Icon(
               Icons.logout,
-              color: Colors.white38,
+              color: Colors.white,
             ),
             SizedBox(
               width: 10,
@@ -64,6 +64,13 @@ class _JobDescriptionTabState extends State<JobDescriptionTab> {
                   icon: Icon(Icons.transfer_within_a_station, size: 30)),
               // Tab(icon: Icon(Icons.directions_car)),
             ],
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
           ),
         ),
         body: TabBarView(

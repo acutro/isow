@@ -255,9 +255,15 @@ class _JobdescriptionState extends State<JobHandover> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xff49A5FF),
         title: Text(' Job Handover'),
         centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
+        ),
       ),
       body: mapResponse == null
           ? Center(
@@ -278,7 +284,7 @@ class _JobdescriptionState extends State<JobHandover> {
                       Stack(
                         children: <Widget>[
                           Container(
-                            margin: EdgeInsets.only(left: 30.0),
+                            margin: EdgeInsets.all(20.0),
                             decoration: BoxDecoration(
                               color: Color(0xff49A5FF),
                               borderRadius: BorderRadius.circular(100.0),
@@ -308,13 +314,6 @@ class _JobdescriptionState extends State<JobHandover> {
                               },
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(left: 30.0),
-                            height: 100.0,
-                            width: 90.0,
-                            alignment: Alignment.bottomCenter,
-                            child: Text('Handover'),
-                          ),
                         ],
                       ),
                     ],
@@ -322,123 +321,95 @@ class _JobdescriptionState extends State<JobHandover> {
                   SizedBox(
                     height: 40.0,
                   ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
+                  Container(
+                    height: 350,
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                    decoration: BoxDecoration(
+                      color: Color(0xff49A5FF),
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 6.0,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                                height: 45.0,
+                                child: buildDropDownButton(),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                                height: 45.0,
+                                child: personDropDownButton(),
+                                //  TextField(
+                                //   decoration: InputDecoration(
+                                //     hintText: 'Name',
+                                //     hintStyle: TextStyle(color: Colors.white),
+                                //     enabledBorder: OutlineInputBorder(
+                                //       borderRadius: BorderRadius.all(
+                                //           Radius.circular(10.0)),
+                                //       borderSide:
+                                //           BorderSide(color: Colors.white),
+                                //     ),
+                                //   ),
+                                // ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          height: 150,
                           padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                          alignment: Alignment.topLeft,
                           decoration: BoxDecoration(
-                            color: Color(0xff49A5FF),
-                            borderRadius: BorderRadius.circular(10.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 6.0,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.fromLTRB(
-                                          10.0, 10.0, 10.0, 0.0),
-                                      height: 45.0,
-                                      child: buildDropDownButton(),
-                                      // TextField(
-                                      //   decoration: InputDecoration(
-                                      //     hintText: 'Position',
-                                      //     hintStyle: TextStyle(color: Colors.white),
-                                      //     enabledBorder: OutlineInputBorder(
-                                      //       borderRadius: BorderRadius.all(
-                                      //           Radius.circular(10.0)),
-                                      //       borderSide:
-                                      //           BorderSide(color: Colors.white),
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.fromLTRB(
-                                          10.0, 10.0, 10.0, 0.0),
-                                      height: 45.0,
-                                      child: personDropDownButton(),
-                                      //  TextField(
-                                      //   decoration: InputDecoration(
-                                      //     hintText: 'Name',
-                                      //     hintStyle: TextStyle(color: Colors.white),
-                                      //     enabledBorder: OutlineInputBorder(
-                                      //       borderRadius: BorderRadius.all(
-                                      //           Radius.circular(10.0)),
-                                      //       borderSide:
-                                      //           BorderSide(color: Colors.white),
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      alignment: Alignment.centerLeft,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.white),
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      margin: EdgeInsets.fromLTRB(
-                                          10.0, 10.0, 10.0, 0.0),
-                                      child: Text(
-                                        widget.dec,
-                                        maxLines: null,
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      alignment: Alignment.centerLeft,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.white),
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      margin: EdgeInsets.fromLTRB(
-                                          10.0, 10.0, 10.0, 0.0),
-                                      child: Text(
-                                        widget.dur,
-                                        maxLines: null,
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(10)),
+                          margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                          child: Text(
+                            widget.dec,
+                            maxLines: 10,
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
-                      ),
-                    ],
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                alignment: Alignment.centerLeft,
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.white),
+                                    borderRadius: BorderRadius.circular(10)),
+                                margin:
+                                    EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                                child: Text(
+                                  widget.dur,
+                                  maxLines: null,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 20.0,
@@ -454,7 +425,7 @@ class _JobdescriptionState extends State<JobHandover> {
                               height: 40.0,
                               width: 200.0,
                               decoration: BoxDecoration(
-                                color: Color(0xff4fc4f2),
+                                color: Colors.blue,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(30.0),
                                 ),

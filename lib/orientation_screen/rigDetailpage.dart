@@ -42,6 +42,7 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             widget.flag == 0 ? 'Rigs details' : 'Material details',
             style: TextStyle(

@@ -253,6 +253,13 @@ class _JobdescriptionState extends State<Jobdescription> {
         backgroundColor: Color(0xff49A5FF),
         title: Text(' Issue a Job'),
         centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
+        ),
       ),
       body: mapResponse == null
           ? Center(
@@ -475,7 +482,7 @@ class _JobdescriptionState extends State<Jobdescription> {
                               height: 40.0,
                               width: 200.0,
                               decoration: BoxDecoration(
-                                color: Color(0xff4fc4f2),
+                                color: Colors.blue,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(30.0),
                                 ),

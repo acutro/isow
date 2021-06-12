@@ -35,6 +35,8 @@ class SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
         title: Text(
           'Sign up',
         ),
@@ -63,18 +65,22 @@ class SignupScreenState extends State<SignupScreen> {
                 padding: EdgeInsets.all(20),
                 child: Column(
                   children: [
-                    Icon(Icons.shopping_bag, size: 90, color: Colors.white),
+                    Container(
+                      height: 110.0,
+                      width: 110.0,
+                      child: Image.asset('assets/images/logo.png'),
+                    ),
                     Text(
-                      'Apps Login',
+                      'Apps Signup',
                       style: TextStyle(
-                          fontSize: 26,
+                          fontSize: 22,
                           color: Colors.white,
                           fontFamily: "WorkSansLight"),
                     ),
                   ],
                 )),
             SizedBox(
-              height: 80,
+              height: 60,
             ),
             Form(
               key: _formKey,

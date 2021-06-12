@@ -106,6 +106,13 @@ class _MyApp extends State<FeedbackList> {
             width: 10,
           ),
         ],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: refreshList,
@@ -157,8 +164,7 @@ class _MyApp extends State<FeedbackList> {
                                         children: <Widget>[
                                           ListTile(
                                             leading: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xFF4fc4f2),
+                                              backgroundColor: Colors.blue,
                                               child: Text(
                                                 'F',
                                                 style: TextStyle(

@@ -124,13 +124,13 @@ class _RecivedWarningState extends State<RecivedAlert> {
             width: 10,
           )
         ],
-        // flexibleSpace: Container(
-        //   decoration: BoxDecoration(
-        //       gradient: LinearGradient(
-        //           begin: Alignment.topLeft,
-        //           end: Alignment.bottomRight,
-        //           colors: Colors.blue),
-        // ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () {
@@ -210,7 +210,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
                           size: 120,
                         ),
                       )
-                    : listFacts.length == 0
+                    : listFacts == null
                         ? Center(child: Text("No Rig Alerts found"))
                         : ListView.builder(
                             itemCount: listFacts.length,

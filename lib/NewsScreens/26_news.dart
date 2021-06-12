@@ -280,7 +280,7 @@ class _NewsState extends State<News> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ActivityListing()));
+                                            ActivityListing(cat: '1')));
                               },
                               child: Stack(
                                 children: <Widget>[
@@ -313,8 +313,9 @@ class _NewsState extends State<News> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            ActivityListing()));
+                                        builder: (context) => ActivityListing(
+                                              cat: '2',
+                                            )));
                               },
                               child: Stack(
                                 children: <Widget>[
@@ -347,8 +348,9 @@ class _NewsState extends State<News> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            ActivityListing()));
+                                        builder: (context) => ActivityListing(
+                                              cat: '3',
+                                            )));
                               },
                               child: Stack(
                                 children: <Widget>[
@@ -386,7 +388,9 @@ class _NewsState extends State<News> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ActivityListing()),
+                              builder: (context) => ActivityListing(
+                                    cat: '0',
+                                  )),
                         ),
                       },
                       shape: RoundedRectangleBorder(

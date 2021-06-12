@@ -6,6 +6,12 @@ import 'package:toast/toast.dart';
 import 'newsListingMain.dart';
 
 class ActivityListing extends StatefulWidget {
+  final String cat;
+
+  ActivityListing({
+    Key key,
+    @required this.cat,
+  }) : super(key: key);
   @override
   _MyApp createState() => _MyApp();
 }
@@ -25,6 +31,11 @@ class _MyApp extends State<ActivityListing> {
         print("{$listFacts}");
       });
     }
+  }
+
+  List<dynamic> chooseCtogory(List<dynamic> listt, String id) {
+    List lis = listt.where((o) => o['category_id'] == id).toList();
+    return lis;
   }
 
   Future<Null> refreshList() async {
@@ -106,7 +117,9 @@ class _MyApp extends State<ActivityListing> {
                 child: listFacts.length == 0
                     ? Center(child: Text("No Activities Available"))
                     : ListView.builder(
-                        itemCount: listFacts.length,
+                        itemCount: widget.cat == '0'
+                            ? listFacts.length
+                            : chooseCtogory(listFacts, widget.cat).length,
                         itemBuilder: (BuildContext context, int index) {
                           // final Message chat = chats[index];
                           return GestureDetector(
@@ -116,7 +129,10 @@ class _MyApp extends State<ActivityListing> {
                                 MaterialPageRoute(
                                     builder: (context) => NewsScreen(
                                           title: "Activities",
-                                          rigList: listFacts,
+                                          rigList: widget.cat == '0'
+                                              ? listFacts
+                                              : chooseCtogory(
+                                                  listFacts, widget.cat),
                                           list: 1,
                                           id: index,
                                         )),
@@ -124,10 +140,15 @@ class _MyApp extends State<ActivityListing> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                  color:
-                                      int.parse(listFacts[index]["id"]) % 2 == 0
-                                          ? Color(0xFF4fc4f2).withOpacity(0.2)
-                                          : Colors.white),
+                                  color: int.parse(widget.cat == '0'
+                                                  ? listFacts[index]["id"]
+                                                  : chooseCtogory(listFacts,
+                                                          widget.cat)[index]
+                                                      ["id"]) %
+                                              2 ==
+                                          0
+                                      ? Color(0xFF4fc4f2).withOpacity(0.2)
+                                      : Colors.white),
                               padding: EdgeInsets.symmetric(
                                 horizontal: 15,
                                 vertical: 8,
@@ -141,40 +162,52 @@ class _MyApp extends State<ActivityListing> {
                                     child: Column(
                                       children: <Widget>[
                                         ListTile(
-                                          leading: CircleAvatar(
-                                            backgroundColor: Color(0xFF4fc4f2),
-                                            child: ClipOval(
-                                              child: Image.network(
-                                                  getpath(listFacts[index]
-                                                      ["image_url"]),
-                                                  width: 80,
-                                                  height: 80,
-                                                  fit: BoxFit.fill),
+                                            leading: CircleAvatar(
+                                              backgroundColor:
+                                                  Color(0xFF4fc4f2),
+                                              child: ClipOval(
+                                                child: Image.network(
+                                                    widget.cat == '0'
+                                                        ? getpath(
+                                                            listFacts[index]
+                                                                ["image_url"])
+                                                        : getpath(chooseCtogory(
+                                                                listFacts,
+                                                                widget
+                                                                    .cat)[index]
+                                                            ["image_url"]),
+                                                    width: 80,
+                                                    height: 80,
+                                                    fit: BoxFit.fill),
+                                              ),
                                             ),
-                                          ),
-                                          title: Text(
-                                            listFacts[index]["category"],
-                                            // '${listFacts[index]["created_at"][0].toUpperCase()}${listFacts[index]["created_at"].substring(1)}',
-                                            //  listFacts[index]["name"],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                height: 1.5),
-                                          ),
-                                          subtitle: Text(
-                                            listFacts[index]["description"]
-                                                        .length >
-                                                    40
-                                                ? listFacts[index]
-                                                        ["description"]
-                                                    .substring(0, 40)
-                                                : listFacts[index]
-                                                    ["description"],
-                                          ),
-                                          // trailing: Text(
-                                          //   listFacts[index]["description"]
-                                          //       .substring(0, 10),
-                                          // ),
-                                        ),
+                                            title: Text(
+                                              widget.cat == '0'
+                                                  ? listFacts[index]["category"]
+                                                  : chooseCtogory(listFacts,
+                                                          widget.cat)[index]
+                                                      ["category"],
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  height: 1.5),
+                                            ),
+                                            subtitle: widget.cat == '0'
+                                                ? Text(listFacts[index]["description"].length > 40
+                                                    ? listFacts[index]
+                                                            ["description"]
+                                                        .substring(0, 40)
+                                                    : listFacts[index]
+                                                        ["description"])
+                                                : Text(chooseCtogory(listFacts, widget.cat)[index]
+                                                                ["description"]
+                                                            .length >
+                                                        40
+                                                    ? chooseCtogory(listFacts, widget.cat)[index]
+                                                            ["description"]
+                                                        .substring(0, 40)
+                                                    : chooseCtogory(
+                                                            listFacts, widget.cat)[index]
+                                                        ["description"])),
                                       ],
                                     ),
                                   ),
@@ -189,131 +222,3 @@ class _MyApp extends State<ActivityListing> {
     );
   }
 }
-
-// showDialogFunc(context, title, description, date) {
-//   return showDialog(
-//     context: context,
-//     builder: (context) {
-//       return Center(
-//         child: Material(
-//           shape:
-//               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-//           elevation: 5.0,
-//           type: MaterialType.card,
-//           child: Container(
-//             padding: EdgeInsets.all(15),
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(10.0),
-//               color: Colors.white,
-//               boxShadow: [
-//                 BoxShadow(
-//                   color: Colors.grey,
-//                   offset: Offset(0.0, 1.0), //(x,y)
-//                   blurRadius: 6.0,
-//                 ),
-//               ],
-//             ),
-//             height: 400,
-//             width: 350,
-//             child: Column(
-//               children: [
-//                 Container(
-//                   child: Row(
-//                     children: <Widget>[
-//                       Container(
-//                         width: 300,
-//                         padding: EdgeInsets.all(3),
-//                         child: Column(
-//                           children: <Widget>[
-//                             ListTile(
-//                               leading: CircleAvatar(
-//                                 backgroundColor: Color(0xFF4fc4f2),
-//                                 child: Text(
-//                                   'A',
-//                                   style: TextStyle(
-//                                       fontWeight: FontWeight.bold,
-//                                       color: Colors.white,
-//                                       fontSize: 20),
-//                                 ),
-//                               ),
-//                               title: Text(
-//                                 title,
-//                                 // title,
-//                                 style: TextStyle(
-//                                   fontWeight: FontWeight.bold,
-//                                 ),
-//                               ),
-//                               subtitle: Text(
-//                                 date,
-//                                 style: TextStyle(
-//                                     fontSize: 12, color: Colors.black45),
-//                               ),
-//                               // trailing: InkWell(
-//                               //     onTap: () {
-//                               //       Navigator.pop(context);
-//                               //     },
-//                               //     child: Icon(
-//                               //       Icons.delete,
-//                               //       color: Colors.red[400],
-//                               //     )),
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   height: 5,
-//                 ),
-//                 Divider(),
-//                 new Expanded(
-//                   flex: 1,
-//                   child: new SingleChildScrollView(
-//                     //  padding: EdgeInsets.all(8),
-//                     scrollDirection: Axis.vertical, //.horizontal
-//                     child: new Text(
-//                         '${description[0].toUpperCase()}${description.substring(1)}',
-//                         // requirment,
-//                         style: TextStyle(
-//                           height: 1.5,
-//                           color: Colors.black,
-//                           fontSize: 14,
-//                         )),
-//                   ),
-//                 ),
-//                 new Row(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   crossAxisAlignment: CrossAxisAlignment.center,
-//                   children: <Widget>[
-//                     new SizedBox(
-//                       width: 10.0,
-//                       height: 10.0,
-//                     ),
-//                     new SizedBox(
-//                       width: 130.0,
-//                       height: 45.0,
-//                       child: FlatButton(
-//                         onPressed: () {
-//                           Navigator.pop(context);
-//                         },
-//                         height: 30,
-//                         child: Text(
-//                           ' OK ',
-//                           style: TextStyle(),
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//                 SizedBox(
-//                   height: 10,
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       );
-//     },
-//   );
-// }

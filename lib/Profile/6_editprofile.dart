@@ -36,6 +36,18 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     });
   }
 
+  getpath(String path) {
+    var pathf;
+    if (path == "") {
+      pathf = 'https://picsum.photos/250?image=9';
+
+      return pathf;
+    } else {
+      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
+      return pathf;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +79,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
               var awork = snapshot.data.work;
               var amob_num = snapshot.data.mob_num;
               var aroleid = snapshot.data.roleId;
+              var propic = snapshot.data.propic;
 
               return Container(
                 child: Column(children: <Widget>[
@@ -88,12 +101,15 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 Center(
-                                  child: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        'https://pixel.nymag.com/imgs/daily/vulture/2017/06/14/14-tom-cruise.w700.h700.jpg'),
-                                    radius: 39.0,
-                                    child: Icon(Icons.camera_alt,
-                                        size: 30.0, color: Colors.white),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100000),
+                                    child: CircleAvatar(
+                                      radius: 45,
+                                      child: Image.network(getpath(propic),
+                                          height: 100,
+                                          width: 100,
+                                          fit: BoxFit.cover),
+                                    ),
                                   ),
                                 ),
                                 Column(
@@ -252,6 +268,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                         work: awork,
                                         mob: amob_num,
                                         roleid: aroleid,
+                                        propic: propic,
                                       )),
                             );
                           },
@@ -292,6 +309,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
 
             // By default, show a loading spinner.
             return Center(
+              heightFactor: 5,
               child: SpinKitChasingDots(
                 color: Colors.blue,
                 size: 120,
@@ -329,6 +347,7 @@ Future<Note> fetchNote(String sidd) async {
         work: details['roleName'] as String,
         mob_num: details['mob_num'] as String,
         roleId: details['roleId'] as String,
+        propic: details['profile_pic'] as String,
       );
     } else {
       throw Exception("Error");
@@ -345,6 +364,7 @@ class Note {
   final String work;
   final String mob_num;
   final String roleId;
+  final String propic;
 
   Note(
       {this.name,
@@ -352,7 +372,8 @@ class Note {
       this.email,
       this.work,
       this.mob_num,
-      this.roleId});
+      this.roleId,
+      this.propic});
 
   factory Note.fromJson(Map<String, String> json) {
     return Note(
@@ -362,6 +383,7 @@ class Note {
       work: json['roleName'],
       mob_num: json['mob_num'],
       roleId: json['roleId'],
+      propic: json['profile_pic'],
     );
   }
 }

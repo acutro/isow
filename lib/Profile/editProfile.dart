@@ -19,7 +19,7 @@ class EditProfile extends StatefulWidget {
   final String work;
   final String mob;
   final String roleid;
-
+  final String propic;
   EditProfile(
       {Key key,
       @required this.name,
@@ -27,7 +27,8 @@ class EditProfile extends StatefulWidget {
       this.email,
       this.work,
       this.mob,
-      this.roleid})
+      this.roleid,
+      this.propic})
       : super(key: key);
   @override
   EditProfileState createState() => EditProfileState();
@@ -57,7 +58,10 @@ class EditProfileState extends State<EditProfile> {
 
   Future openCamera(String id) async {
     var image = await ImagePicker.pickImage(
-        source: ImageSource.camera, imageQuality: 10);
+        maxHeight: 640,
+        maxWidth: 480,
+        source: ImageSource.camera,
+        imageQuality: 10);
     // var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     if (image != null)
       setState(() {
@@ -66,6 +70,18 @@ class EditProfileState extends State<EditProfile> {
         path = image.path;
         profileUpdate(id, newImage);
       });
+  }
+
+  getpath(String path) {
+    var pathf;
+    if (path == "") {
+      pathf = 'https://picsum.photos/250?image=9';
+
+      return pathf;
+    } else {
+      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
+      return pathf;
+    }
   }
 
   Future<void> profileUpdate(
@@ -81,17 +97,33 @@ class EditProfileState extends State<EditProfile> {
     String fileName = images.path.split("/").last;
     var stream = new http.ByteStream(DelegatingStream.typed(images.openRead()));
     var length = await images.length();
-    request.files.add(new http.MultipartFile('image_url', stream, length,
+    request.files.add(new http.MultipartFile('profile_pic', stream, length,
         filename: fileName));
     request.fields['id'] = id;
     var response = await request.send();
     print("end ");
     print("${response.statusCode} status code of service request");
+
     if (response.statusCode == 200) {
-      Toast.show("Updated Successfully", context,
+      Toast.show("Profile Picture Updated", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
+          backgroundColor: Colors.white);
+      Timer(
+          Duration(seconds: 1),
+          () => Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => EditProfileScreen(
+                          userId: sid,
+                        )),
+              ));
+    } else {
+      Toast.show("Something went wrong try again", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
           backgroundColor: Colors.white);
     }
   }
@@ -308,86 +340,149 @@ class EditProfileState extends State<EditProfile> {
                         color: Color(0xFF4fc4f2),
                         child: new Container(
                           height: 250.0,
-                          child: new Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Center(
-                                  child: GestureDetector(
-                                    child: CircleAvatar(
-                                      backgroundImage: newImage == null
-                                          ? NetworkImage(
-                                              'https://pixel.nymag.com/imgs/daily/vulture/2017/06/14/14-tom-cruise.w700.h700.jpg')
-                                          : FileImage(
-                                              newImage,
-                                            ),
-                                      radius: 39.0,
-                                      child: Icon(Icons.camera_alt,
-                                          size: 30.0, color: Colors.white),
-                                    ),
-                                    onTap: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              content: Positioned(
-                                                bottom: 10,
-                                                child: Container(
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          openGallery(sid);
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        child:
-                                                            Icon(Icons.image),
-                                                      ),
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          openCamera(sid);
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        child:
-                                                            Icon(Icons.camera),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          });
-                                    },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Center(
+                                child: GestureDetector(
+                                  child: CircleAvatar(
+                                    backgroundImage: newImage == null
+                                        ? NetworkImage(getpath(widget.propic))
+                                        : FileImage(
+                                            newImage,
+                                          ),
+                                    radius: 45.0,
+                                    child: Icon(Icons.camera_alt,
+                                        size: 30.0, color: Colors.white),
                                   ),
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                          backgroundColor: Colors.white,
+                                          title: Text("Upload image"),
+                                          content: Container(
+                                            height: 100,
+                                            width: 250,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        openGallery(sid);
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child: Icon(
+                                                        Icons.image,
+                                                        size: 40,
+                                                      ),
+                                                    ),
+                                                    Text("Gallery"),
+                                                  ],
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        openCamera(sid);
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child: Icon(
+                                                        Icons.camera,
+                                                        size: 40,
+                                                      ),
+                                                    ),
+                                                    Text("Camera"),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          )),
+                                    );
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (context) {
+                                    //       return AlertDialog(
+                                    //         content: Positioned(
+                                    //           bottom: 10,
+                                    //           child: Container(
+                                    //             height: 100,
+                                    //             width: 250,
+                                    //             child: Row(
+                                    //               mainAxisAlignment:
+                                    //                   MainAxisAlignment
+                                    //                       .spaceBetween,
+                                    //               children: [
+                                    //                 Column(
+                                    //                   children: [
+                                    //                     TextButton(
+                                    //                       onPressed: () {
+                                    //                         openGallery(sid);
+                                    //                         Navigator.of(
+                                    //                                 context)
+                                    //                             .pop();
+                                    //                       },
+                                    //                       child: Icon(
+                                    //                         Icons.image,
+                                    //                         size: 40,
+                                    //                       ),
+                                    //                     ),
+                                    //                     Text("Gallery"),
+                                    //                   ],
+                                    //                 ),
+                                    //                 Column(
+                                    //                   children: [
+                                    //                     TextButton(
+                                    //                       onPressed: () {
+                                    //                         openCamera(sid);
+                                    //                         Navigator.of(
+                                    //                                 context)
+                                    //                             .pop();
+                                    //                       },
+                                    //                       child: Icon(
+                                    //                         Icons.camera,
+                                    //                         size: 40,
+                                    //                       ),
+                                    //                     ),
+                                    //                     Text("Camera"),
+                                    //                   ],
+                                    //                 ),
+                                    //               ],
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       );
+                                    //     },);
+                                  },
                                 ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Name : ' + widget.name,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 15.0),
-                                    ),
-                                    SizedBox(height: 5.0),
-                                    // Text(
-                                    //   'New york',
-                                    //   style: TextStyle(
-                                    //       fontWeight: FontWeight.bold,
-                                    //       color: Colors.white,
-                                    //       fontSize: 14.0),
-                                    // ),
-                                  ],
-                                )
-                              ],
-                            ),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    'Name : ' + widget.name,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 15.0),
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  // Text(
+                                  //   'New york',
+                                  //   style: TextStyle(
+                                  //       fontWeight: FontWeight.bold,
+                                  //       color: Colors.white,
+                                  //       fontSize: 14.0),
+                                  // ),
+                                ],
+                              )
+                            ],
                           ),
                         ),
                       ),
@@ -503,7 +598,7 @@ class EditProfileState extends State<EditProfile> {
                           height: 10,
                         ),
                         Container(
-                          // padding: EdgeInsets.fromLTRB(40.0, 0.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(30.0, 0.0, 0.0, 0.0),
                           height: 50.0,
                           child: RaisedButton(
                             onPressed: () {

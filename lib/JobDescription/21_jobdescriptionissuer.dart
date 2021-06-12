@@ -302,48 +302,6 @@ class _JobdescriptionState extends State<Jobdescription> {
                           ),
                         ],
                       ),
-                      // Stack(
-                      //   children: <Widget>[
-                      //     Container(
-                      //       margin: EdgeInsets.only(left: 30.0),
-                      //       decoration: BoxDecoration(
-                      //         color: Color(0xff49A5FF),
-                      //         borderRadius: BorderRadius.circular(100.0),
-                      //         boxShadow: [
-                      //           BoxShadow(
-                      //             color: Colors.black38,
-                      //             blurRadius: 10.0,
-                      //             offset: Offset(0, 2),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //       height: 80.0,
-                      //       width: 80.0,
-                      //       child: InkWell(
-                      //         child: Icon(
-                      //           Icons.settings,
-                      //           size: 40.0,
-                      //           color: Colors.white,
-                      //         ),
-                      //         onTap: () {
-                      //           Navigator.push(
-                      //             context,
-                      //             // MaterialPageRoute(builder: (context) => Warningletter()),
-                      //             MaterialPageRoute(
-                      //                 builder: (context) => Jobexecute()),
-                      //           );
-                      //         },
-                      //       ),
-                      //     ),
-                      //     Container(
-                      //       margin: EdgeInsets.only(left: 30.0),
-                      //       height: 100.0,
-                      //       width: 90.0,
-                      //       alignment: Alignment.bottomCenter,
-                      //       child: Text('Execute'),
-                      //     ),
-                      //   ],
-                      // ),
                     ],
                   ),
                   SizedBox(
@@ -377,18 +335,6 @@ class _JobdescriptionState extends State<Jobdescription> {
                                           10.0, 10.0, 10.0, 0.0),
                                       height: 45.0,
                                       child: buildDropDownButton(),
-                                      // TextField(
-                                      //   decoration: InputDecoration(
-                                      //     hintText: 'Position',
-                                      //     hintStyle: TextStyle(color: Colors.white),
-                                      //     enabledBorder: OutlineInputBorder(
-                                      //       borderRadius: BorderRadius.all(
-                                      //           Radius.circular(10.0)),
-                                      //       borderSide:
-                                      //           BorderSide(color: Colors.white),
-                                      //     ),
-                                      //   ),
-                                      // ),
                                     ),
                                   ),
                                 ],
@@ -401,18 +347,6 @@ class _JobdescriptionState extends State<Jobdescription> {
                                           10.0, 10.0, 10.0, 0.0),
                                       height: 45.0,
                                       child: personDropDownButton(),
-                                      //  TextField(
-                                      //   decoration: InputDecoration(
-                                      //     hintText: 'Name',
-                                      //     hintStyle: TextStyle(color: Colors.white),
-                                      //     enabledBorder: OutlineInputBorder(
-                                      //       borderRadius: BorderRadius.all(
-                                      //           Radius.circular(10.0)),
-                                      //       borderSide:
-                                      //           BorderSide(color: Colors.white),
-                                      //     ),
-                                      //   ),
-                                      // ),
                                     ),
                                   ),
                                 ],

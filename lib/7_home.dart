@@ -101,6 +101,18 @@ class HomeScreenState extends State<HomeScreen> {
             ));
   }
 
+  getpath(String path) {
+    var pathf;
+    if (path == "") {
+      pathf = 'https://picsum.photos/250?image=9';
+
+      return pathf;
+    } else {
+      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
+      return pathf;
+    }
+  }
+
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _onBackPressed,
@@ -111,6 +123,7 @@ class HomeScreenState extends State<HomeScreen> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   var item = snapshot.data.name;
+                  var propic = snapshot.data.propic;
                   return Theme(
                     data: Theme.of(context).copyWith(
                       canvasColor: Color(0xFF4fc4f2),
@@ -129,10 +142,15 @@ class HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 Center(
-                                  child: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        'https://pixel.nymag.com/imgs/daily/vulture/2017/06/14/14-tom-cruise.w700.h700.jpg'),
-                                    radius: 35.0,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100000),
+                                    child: CircleAvatar(
+                                      radius: 35,
+                                      child: Image.network(getpath(propic),
+                                          height: 100,
+                                          width: 100,
+                                          fit: BoxFit.cover),
+                                    ),
                                   ),
                                 ),
                                 Column(
@@ -147,13 +165,13 @@ class HomeScreenState extends State<HomeScreen> {
                                           fontSize: 20.0),
                                     ),
                                     SizedBox(height: 5.0),
-                                    Text(
-                                      'New york',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 14.0),
-                                    ),
+                                    // Text(
+                                    //   'New york',
+                                    //   style: TextStyle(
+                                    //       fontWeight: FontWeight.bold,
+                                    //       color: Colors.white,
+                                    //       fontSize: 14.0),
+                                    // ),
                                   ],
                                 )
                               ],

@@ -2,35 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'contact_details.dart';
+import 'chatScreenMain.dart';
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../ChatScreens/chatScreenMain.dart';
 
-class Contact extends StatefulWidget {
-  // final String email;
-  // Contact({Key key, @required this.email}) : super(key: key);
+class ChatListScreen extends StatefulWidget {
   @override
   _MyApp createState() => _MyApp();
 }
 
-class _MyApp extends State<Contact> {
+class _MyApp extends State<ChatListScreen> {
   TextEditingController controller = new TextEditingController();
   List listResponse;
   Map mapResponse;
   List<dynamic> listFacts;
-  // Future fetchData() async {
-  //   http.Response response;
-  //   response =
-  //       await http.get('http://isow.acutrotech.com/index.php/api/Users/list');
-  //   if (response.statusCode == 200) {
-  //     setState(() {
-  //       mapResponse = jsonDecode(response.body);
-  //       listFacts = mapResponse['data'];
-  //       print("{$listFacts}");
-  //     });
-  //   }
-  // }
 
   bool jobError = false;
   Future fetchData(String namee) async {
@@ -202,25 +188,17 @@ class _MyApp extends State<Contact> {
                                       return GestureDetector(
                                         onTap: () {
                                           Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
+                                              context,
+                                              MaterialPageRoute(
                                                 builder: (context) =>
-                                                    ContactDetail(
-                                                      email: listFacts[index]
-                                                          ["email"],
-                                                      mob: listFacts[index]
-                                                          ["mob_num"],
-                                                      name: listFacts[index]
-                                                          ["name"],
-                                                      id: listFacts[index]
-                                                              ["userId"]
-                                                          .toString(),
-                                                      work: listFacts[index]
-                                                          ["work"],
-                                                      ppath: listFacts[index]
-                                                          ["profile_pic"],
-                                                    )),
-                                          );
+                                                    ChatDetailScreen(
+                                                        name: listFacts[index]
+                                                            ["name"],
+                                                        path: getpath(
+                                                          listFacts[index]
+                                                              ["profile_pic"],
+                                                        )),
+                                              ));
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
@@ -255,51 +233,23 @@ class _MyApp extends State<Contact> {
                                                       subtitle: Text(
                                                         '${listFacts[index]["work"][0].toUpperCase()}${listFacts[index]["work"].substring(1)}',
                                                       ),
-                                                      trailing: Container(
-                                                        width: 75,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                ChatDetailScreen()));
-                                                              },
-                                                              child: Icon(
-                                                                Icons
-                                                                    .chat_sharp,
-                                                                size: 25,
-                                                                color: Colors
-                                                                    .blue[400],
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                launch(
-                                                                  "tel:" +
-                                                                      listFacts[
-                                                                              index]
-                                                                          [
-                                                                          "mob_num"],
-                                                                );
-                                                              },
-                                                              child: Icon(
-                                                                Icons.call,
-                                                                size: 25,
-                                                                color: Colors
-                                                                    .green[400],
-                                                              ),
-                                                            ),
-                                                          ],
+                                                      trailing: GestureDetector(
+                                                        onTap: () {
+                                                          launch(
+                                                            "tel:" +
+                                                                listFacts[index]
+                                                                    ["mob_num"],
+                                                          );
+                                                        },
+                                                        child: Icon(
+                                                          Icons.call,
+                                                          size: 25,
+                                                          color:
+                                                              Colors.green[400],
                                                         ),
                                                       ),
                                                     ),
+                                                    Divider(),
                                                   ],
                                                 ),
                                               ),

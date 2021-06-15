@@ -9,16 +9,12 @@ import 'package:intl/intl.dart';
 
 //import 'package:flutter_downloader/flutter_downloader.dart';
 
-class ChatDetailScreen extends StatefulWidget {
-  // final dynamic usename, isonline, senderId;
-  // ChatDetailScreen({Key key, this.usename, this.isonline, this.senderId})
-  //     : super(key: key);
-
+class ChatDetailScree extends StatefulWidget {
   @override
   _ChatDetailScreenState createState() => _ChatDetailScreenState();
 }
 
-class _ChatDetailScreenState extends State<ChatDetailScreen> {
+class _ChatDetailScreenState extends State<ChatDetailScree> {
   String formatDate(DateTime date) => new DateFormat(" hh:mm a").format(date);
   var currentdate = DateTime.now();
   TextEditingController sendDateController = new TextEditingController();
@@ -332,31 +328,15 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               child: ListView.builder(
                 reverse: false,
                 padding: EdgeInsets.all(20),
-                //itemCount: count,
                 itemCount: 10,
-
-                //itemCount: messages.length,
                 itemBuilder: (BuildContext context, int index) {
-                  // final Message message = messages[index];
-
-                  //final ChatModel message = data[index];
-                  final String msg = "hihji";
+                  final String msg = "ggg";
                   final String senddate = "767687688";
                   final String pathfile = "";
-                  // final bool isFile = message.isfile;
+
                   final bool isSameUser = false;
-                  //final String pathfile = message.filepath;
-                  //final bool isMe =true;
 
                   final bool isMe = ismee(int.parse("1"));
-                  //   final bool isSameUser =isSame(message.messageto);
-
-                  // final bool isMe = message.messagefrom == currentUser.id;
-                  // final bool isSameUser = prevUserId == message.sender.id;
-                  // prevUserId = message.sender.id;
-
-                  // return funtest(imageURI, message, isMe,
-                  //     isSameUser, isFile, pathfile);
 
                   return _chatBubble(
                       msg, senddate, isMe, isSameUser, pathfile, imageURI);

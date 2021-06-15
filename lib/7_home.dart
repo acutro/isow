@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:isow/NewsScreens/26_news.dart';
+import 'ChatScreens/chatListScreen.dart';
 import 'whetherScreens/27_weatherreport.dart';
 import 'orientation_screen/12_Orientation.dart';
 import 'WarningLetterScreens/16_RecievedWarningletter.dart';
@@ -893,6 +894,54 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             "Weather",
+                            style: TextStyle(fontSize: 12),
+                          )
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChatListScreen()),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 65,
+                            width: 65,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black54,
+                                  blurRadius: 3.0,
+                                  spreadRadius: 1.0,
+                                  offset: Offset(
+                                    0.0,
+                                    2.0,
+                                  ),
+                                )
+                              ],
+                              gradient: LinearGradient(
+                                colors: [Color(0xFF4fc4f2), Colors.blue],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
+                            ),
+                            child: FaIcon(
+                              FontAwesomeIcons.facebookMessenger,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                            margin: EdgeInsets.all(10),
+                          ),
+                          Text(
+                            "Chat",
                             style: TextStyle(fontSize: 12),
                           )
                         ],

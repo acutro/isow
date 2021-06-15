@@ -116,13 +116,6 @@ class _MyApp extends State<NewsListingMain> {
                                           leading: CircleAvatar(
                                             backgroundColor: Color(0xFF4fc4f2),
                                             child: Image.asset(widget.path),
-                                            //  Text(
-                                            //   'N',
-                                            //   style: TextStyle(
-                                            //       fontWeight: FontWeight.bold,
-                                            //       color: Colors.white,
-                                            //       fontSize: 20),
-                                            // ),
                                           ),
                                           title: Text(
                                             widget.offerList[index]["title"],

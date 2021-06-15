@@ -174,7 +174,12 @@ class _MyApp extends State<FeedbackList> {
                                               ),
                                             ),
                                             title: Text(
-                                              listFacts[index]["opinion"],
+                                              listFacts[index]["opinion"]
+                                                          .length >
+                                                      21
+                                                  ? listFacts[index]["opinion"]
+                                                      .substring(0, 21)
+                                                  : listFacts[index]["opinion"],
                                               // '${listFacts[index]["created_at"][0].toUpperCase()}${listFacts[index]["created_at"].substring(1)}',
                                               //  listFacts[index]["name"],
                                               style: TextStyle(
@@ -273,8 +278,9 @@ showDialogFunc(context, opinion, date, description, replay) {
                                 ),
                               ),
                               title: Text(
-                                opinion,
-                                // title,
+                                opinion.length > 60
+                                    ? opinion.substring(0, 60)
+                                    : opinion,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, height: 1.5),
                               ),

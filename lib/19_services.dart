@@ -7,7 +7,7 @@ class Services extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color(0xff49A5FF),
-        title: Text(' offer'),
+        title: Text(' Services'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(

@@ -5,11 +5,33 @@ import 'UserAuth/2_signinpage.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '7_home.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-void main() {
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'id', 'test', 'test description',
+    importance: Importance.high, playSound: true);
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+Future<void> _firebaseMessagingBckgroundHndler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print(message.messageId);
+}
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBckgroundHndler);
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true, badge: true, sound: true);
+
   runApp(MyApp());
 }
 

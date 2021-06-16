@@ -264,12 +264,12 @@ class _MyApp extends State<Contact> {
                                                           children: [
                                                             GestureDetector(
                                                               onTap: () {
-                                                                Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                ChatDetailScreen()));
+                                                                // Navigator.push(
+                                                                //     context,
+                                                                //     MaterialPageRoute(
+                                                                //         builder:
+                                                                //             (context) =>
+                                                                //                 ChatDetailScreen()));
                                                               },
                                                               child: Icon(
                                                                 Icons

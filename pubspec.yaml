@@ -44,6 +44,9 @@ dependencies:
   flutter_countdown_timer: ^4.1.0
   http_parser: 
   image_picker: any 
+  flutter_local_notifications: any
+  firebase_core: any
+  firebase_messaging: any
 
 dev_dependencies:
   flutter_test:

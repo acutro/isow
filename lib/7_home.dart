@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:isow/NewsScreens/26_news.dart';
+import 'package:isow/main.dart';
 import 'ChatScreens/chatListScreen.dart';
 import 'whetherScreens/27_weatherreport.dart';
 import 'orientation_screen/12_Orientation.dart';
@@ -19,6 +20,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'rigAlert/alertList.dart';
 import 'Faq/faqMainScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -47,6 +51,48 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                channel.description,
+                color: Colors.blue,
+                playSound: true,
+                icon: '@mipmap/ic_laucher',
+              ),
+            ));
+      }
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ChatListScreen()),
+        );
+        // showDialog(
+        //     context: context,
+        //     builder: (_) {
+        //       return AlertDialog(
+        //         title: Text(notification.title),
+        //         content: SingleChildScrollView(
+        //           child: Column(
+        //             children: [Text(notification.body)],
+        //           ),
+        //         ),
+        //       );
+        //     });
+      }
+    });
     getValidation();
   }
 
@@ -947,6 +993,60 @@ class HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     flutterLocalNotificationsPlugin.show(
+                    //         0,
+                    //         'test',
+                    //         'android notification',
+                    //         NotificationDetails(
+                    //             android: AndroidNotificationDetails(channel.id,
+                    //                 channel.name, channel.description,
+                    //                 importance: Importance.high,
+                    //                 color: Colors.blue,
+                    //                 playSound: true,
+                    //                 icon: '@mipmap/ic_launcher')));
+                    //   },
+                    //   child: Column(
+                    //     children: [
+                    //       Container(
+                    //         height: 65,
+                    //         width: 65,
+                    //         alignment: Alignment.center,
+                    //         decoration: BoxDecoration(
+                    //           borderRadius:
+                    //               BorderRadius.all(Radius.circular(20)),
+                    //           boxShadow: [
+                    //             BoxShadow(
+                    //               color: Colors.black54,
+                    //               blurRadius: 3.0,
+                    //               spreadRadius: 1.0,
+                    //               offset: Offset(
+                    //                 0.0,
+                    //                 2.0,
+                    //               ),
+                    //             )
+                    //           ],
+                    //           gradient: LinearGradient(
+                    //             colors: [Color(0xFF4fc4f2), Colors.blue],
+                    //             begin: Alignment.centerLeft,
+                    //             end: Alignment.centerRight,
+                    //           ),
+                    //         ),
+                    //         child: FaIcon(
+                    //           FontAwesomeIcons.sun,
+                    //           size: 40,
+                    //           color: Colors.white,
+                    //         ),
+                    //         margin: EdgeInsets.all(10),
+                    //       ),
+                    //       Text(
+                    //         "Nitification",
+                    //         style: TextStyle(fontSize: 12),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
 

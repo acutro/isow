@@ -136,52 +136,106 @@ class SigninScreenState extends State<SigninScreen> {
         // ),
         // ),
         body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 120,
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/bg1.jpg"),
+                fit: BoxFit.fitHeight,
               ),
-              Container(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 110.0,
-                        width: 110.0,
-                        child: Image.asset('assets/images/logo.png'),
+            ),
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 120,
+                ),
+                Container(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 110.0,
+                          width: 110.0,
+                          child: Image.asset('assets/images/logo.png'),
+                        ),
+                        // Icon(Icons.shopping_bag, size: 90, color: Colors.white),
+                        Text(
+                          'Apps Login',
+                          style: TextStyle(
+                              fontSize: 22,
+                              color: Colors.white,
+                              fontFamily: "WorkSansLight"),
+                        ),
+                      ],
+                    )),
+                SizedBox(
+                  height: 80,
+                ),
+                Form(
+                  key: _formKey,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.transparent,
+                        border: Border.all(width: 1, color: Colors.white60)),
+                    margin: new EdgeInsets.symmetric(horizontal: 20.0),
+
+                    /// padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 19.0),
+                    child: TextFormField(
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
-                      // Icon(Icons.shopping_bag, size: 90, color: Colors.white),
-                      Text(
-                        'Apps Login',
-                        style: TextStyle(
-                            fontSize: 22,
+                      controller: _emailController,
+                      decoration: new InputDecoration(
+                        suffixIcon: Icon(
+                          Icons.person,
+                          color: Colors.white,
+                        ),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 11, top: 11, right: 15),
+                        hintText: 'Email-ID',
+                        filled: true,
+                        // fillColor: Colors.white24,
+                        hintStyle: TextStyle(
                             color: Colors.white,
+                            fontSize: 12,
                             fontFamily: "WorkSansLight"),
                       ),
-                    ],
-                  )),
-              SizedBox(
-                height: 80,
-              ),
-              Form(
-                key: _formKey,
-                child: Container(
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0),
-                      color: Colors.transparent,
-                      border: Border.all(width: 1, color: Colors.white60)),
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: Colors.transparent,
+                    border: Border.all(width: 1, color: Colors.white60),
+                  ),
                   margin: new EdgeInsets.symmetric(horizontal: 20.0),
-
-                  /// padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 19.0),
                   child: TextFormField(
                     style: TextStyle(
                       color: Colors.white,
                     ),
-                    controller: _emailController,
+                    controller: _passwordController,
+                    obscureText: _obscureText,
                     decoration: new InputDecoration(
-                      suffixIcon: Icon(
-                        Icons.person,
-                        color: Colors.white,
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          _viewPass();
+                        },
+                        child: Icon(
+                          _obscureText
+                              ? Icons.lock_sharp
+                              : Icons.lock_open_outlined,
+                          color: Colors.white,
+                        ),
                       ),
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
@@ -190,7 +244,7 @@ class SigninScreenState extends State<SigninScreen> {
                       disabledBorder: InputBorder.none,
                       contentPadding: EdgeInsets.only(
                           left: 15, bottom: 11, top: 11, right: 15),
-                      hintText: 'Email-ID',
+                      hintText: 'Password',
                       filled: true,
                       // fillColor: Colors.white24,
                       hintStyle: TextStyle(
@@ -200,158 +254,116 @@ class SigninScreenState extends State<SigninScreen> {
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: Colors.transparent,
-                  border: Border.all(width: 1, color: Colors.white60),
+                SizedBox(
+                  height: 40,
                 ),
-                margin: new EdgeInsets.symmetric(horizontal: 20.0),
-                child: TextFormField(
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                  controller: _passwordController,
-                  obscureText: _obscureText,
-                  decoration: new InputDecoration(
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        _viewPass();
-                      },
-                      child: Icon(
-                        _obscureText
-                            ? Icons.lock_sharp
-                            : Icons.lock_open_outlined,
-                        color: Colors.white,
-                      ),
-                    ),
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                    contentPadding: EdgeInsets.only(
-                        left: 15, bottom: 11, top: 11, right: 15),
-                    hintText: 'Password',
-                    filled: true,
-                    // fillColor: Colors.white24,
-                    hintStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontFamily: "WorkSansLight"),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 50.0,
-                child: RaisedButton(
-                  onPressed: () async {
-                    if (_emailController.text == "" ||
-                        _passwordController.text == "") {
-                      Toast.show("Please Enter Email and Password", context,
-                          duration: Toast.LENGTH_SHORT,
-                          gravity: Toast.BOTTOM,
-                          textColor: Colors.red,
-                          backgroundColor: Colors.white);
-                    } else {
-                      getLogin(_emailController.text, _passwordController.text);
-                    }
+                Container(
+                  height: 50.0,
+                  child: RaisedButton(
+                    onPressed: () async {
+                      if (_emailController.text == "" ||
+                          _passwordController.text == "") {
+                        Toast.show("Please Enter Email and Password", context,
+                            duration: Toast.LENGTH_SHORT,
+                            gravity: Toast.BOTTOM,
+                            textColor: Colors.red,
+                            backgroundColor: Colors.white);
+                      } else {
+                        getLogin(
+                            _emailController.text, _passwordController.text);
+                      }
 
-                    //signup screen
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80.0)),
-                  padding: EdgeInsets.all(0.0),
-                  child: Ink(
-                    decoration: BoxDecoration(
-                        color: Colors.blueAccent,
-                        // gradient: LinearGradient(
-                        //   colors: [Color(0xFF4fc4f2), Colors.blue],
-                        //   begin: Alignment.centerLeft,
-                        //   end: Alignment.centerRight,
-                        // ),
-                        borderRadius: BorderRadius.circular(30.0)),
-                    child: Container(
-                      constraints:
-                          BoxConstraints(maxWidth: 170.0, minHeight: 50.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Sign In",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
+                      //signup screen
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80.0)),
+                    padding: EdgeInsets.all(0.0),
+                    child: Ink(
+                      decoration: BoxDecoration(
+                          color: Colors.blue[600],
+                          // gradient: LinearGradient(
+                          //   colors: [Color(0xFF4fc4f2), Colors.blue],
+                          //   begin: Alignment.centerLeft,
+                          //   end: Alignment.centerRight,
+                          // ),
+                          borderRadius: BorderRadius.circular(30.0)),
+                      child: Container(
+                        constraints:
+                            BoxConstraints(maxWidth: 170.0, minHeight: 50.0),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Sign In",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                child: FlatButton(
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  child: FlatButton(
+                    textColor: Colors.white,
+                    child: Text(
+                      'Forget password?',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: "WorkSansLight",
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ForgotpswdScreen()),
+                      );
+
+                      //signup screen
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 100,
+                ),
+                Container(
+                    child: FlatButton(
                   textColor: Colors.white,
-                  child: Text(
-                    'Forget password?',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: "WorkSansLight",
-                      decoration: TextDecoration.underline,
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Don\'t have an account? ',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: "WorkSansLight",
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'create new.',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: "WorkSansLight",
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   onPressed: () {
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ForgotpswdScreen()),
-                    );
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignupScreen()));
 
                     //signup screen
                   },
-                ),
-              ),
-              SizedBox(
-                height: 120,
-              ),
-              Container(
-                  child: FlatButton(
-                textColor: Colors.white,
-                child: Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Don\'t have an account? ',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: "WorkSansLight",
-                        ),
-                      ),
-                      TextSpan(
-                        text: 'create new.',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: "WorkSansLight",
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignupScreen()));
-
-                  //signup screen
-                },
-              )),
-            ],
+                )),
+              ],
+            ),
           ),
         ),
       ),

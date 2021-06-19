@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'chatScreenMain.dart';
@@ -14,6 +15,21 @@ class ChatListScreen extends StatefulWidget {
 
 class _MyApp extends State<ChatListScreen> {
   TextEditingController controller = new TextEditingController();
+  String sid;
+
+  bool error = true;
+  Future getValidation() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String id = sharedPreferences.getString('userId');
+
+    setState(() {
+      sid = id;
+
+      error = false;
+    });
+  }
+
   List listResponse;
   Map mapResponse;
   List<dynamic> listFacts;
@@ -67,6 +83,7 @@ class _MyApp extends State<ChatListScreen> {
     fetchData("");
 
     super.initState();
+    getValidation();
   }
 
   // This widget is the root of your application.
@@ -197,7 +214,10 @@ class _MyApp extends State<ChatListScreen> {
                                                         path: getpath(
                                                           listFacts[index]
                                                               ["profile_pic"],
-                                                        )),
+                                                        ),
+                                                        id: listFacts[index]
+                                                            ['id'],
+                                                        toid: sid),
                                               ));
                                         },
                                         child: Container(

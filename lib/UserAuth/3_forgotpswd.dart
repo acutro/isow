@@ -11,7 +11,6 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
   Widget build(BuildContext context) {
     TextEditingController _emailController = new TextEditingController();
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
       // appBar: AppBar(
       //   backgroundColor: Colors.blueAccent,
       //   centerTitle: true,

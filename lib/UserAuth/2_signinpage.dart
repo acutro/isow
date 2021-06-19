@@ -103,7 +103,7 @@ class SigninScreenState extends State<SigninScreen> {
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.transparent,
         // drawer: AppDrawer(),
 
         // appBar: AppBar(

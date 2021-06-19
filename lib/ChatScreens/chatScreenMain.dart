@@ -1,16 +1,106 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:isow/contacts/contact.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
+import 'package:http/http.dart' as http;
 
 class ChatDetailScreen extends StatefulWidget {
   final String name;
   final String path;
+  final String id;
+  final String toid;
 
-  ChatDetailScreen({Key key, @required this.name, this.path}) : super(key: key);
+  ChatDetailScreen(
+      {Key key, @required this.name, this.path, this.id, this.toid})
+      : super(key: key);
   @override
   _ChatDetailScreenState createState() => _ChatDetailScreenState();
 }
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
+  TextEditingController messageController = new TextEditingController();
+
+  List listResponse;
+  Map mapResponse;
+  List<dynamic> listFacts;
+  bool jobError = false;
+  Future chatUp(
+    String fromid,
+    String toid,
+    String message,
+  ) async {
+    var data = {
+      'fromId': fromid,
+      'toId': toid,
+      'message': message,
+      'send_by': fromid
+    };
+    http.Response response;
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/Chat/create',
+        body: (data));
+    if (response.statusCode == 200) {
+      // Toast.show("Executed Successfully", context,
+      //     duration: Toast.LENGTH_SHORT,
+      //     gravity: Toast.BOTTOM,
+      //     textColor: Colors.green[600],
+      //     backgroundColor: Colors.white);
+      Timer(
+        Duration(milliseconds: 10),
+        () => fetchChat(widget.toid, widget.id),
+      );
+    } else {
+      Toast.show("Something went Wrong", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
+    }
+  }
+
+  Future fetchChat(String fromid, String toid) async {
+    var data = {'fromId': fromid, 'toId': toid};
+    http.Response response;
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/Chat/singleList',
+        body: (data));
+    if (response.statusCode == 200) {
+      setState(() {
+        mapResponse = jsonDecode(response.body);
+        listFacts = mapResponse['data'];
+        jobError = false;
+        print("{$listFacts}");
+      });
+    } else {
+      jobError = true;
+
+      Toast.show("Something went Wrong", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
+    }
+  }
+
+  Timer _clockTimer;
+  @override
+  void initState() {
+    super.initState();
+    fetchChat(widget.toid, widget.id);
+    _clockTimer = Timer.periodic(
+        Duration(seconds: 15), (Timer t) => fetchChat(widget.toid, widget.id));
+  }
+
+  @override
+  void dispose() {
+    _clockTimer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,55 +150,83 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           ),
         ],
       ),
-      body: SafeArea(
-          child: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: 20,
-              padding: EdgeInsets.all(20),
-              itemBuilder: (BuildContext context, int index) {
-                final String msg = "hijhfdbhfbhgfjfhkjfhfkjhkjhgdfkjhhji";
-                final String senddate = "767687688";
-                final String pathfile = "";
+      body: jobError == true || mapResponse == null
+          ? Center(
+              child: SpinKitChasingDots(
+                color: Colors.blue,
+                size: 120,
+              ),
+            )
+          : SafeArea(
+              child: Column(
+              children: [
+                Expanded(
+                  child: listFacts.length == 0
+                      ? Center(child: Text("No Messages found"))
+                      : ListView.builder(
+                          itemCount: listFacts.length,
+                          padding: EdgeInsets.all(20),
+                          itemBuilder: (BuildContext context, int index) {
+                            final String msg = listFacts[index]['message'];
+                            final String senddate = listFacts[index]['date'];
+                            final String pathfile = "";
 
-                final bool isMe = index % 2 == 0;
+                            final bool isMe =
+                                listFacts[index]['send_by'] == widget.toid;
 
-                return _chatBubble(msg, senddate, isMe, pathfile);
-              },
-            ),
-          ),
-          _sendMessageArea(),
-        ],
-      )),
+                            return _chatBubble(
+                                msg, senddate, isMe, pathfile, senddate);
+                          },
+                        ),
+                ),
+                _sendMessageArea(),
+              ],
+            )),
     );
   }
 
-  _chatBubble(String msg, String senddate, bool isMe, String pathfile) {
+  _chatBubble(
+      String msg, String senddate, bool isMe, String pathfile, String date) {
     return Container(
       padding: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
       child: Align(
-        alignment: (isMe == true ? Alignment.topLeft : Alignment.topRight),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10.0),
-                bottomLeft:
-                    isMe == true ? Radius.circular(0.0) : Radius.circular(10.0),
-                topRight: Radius.circular(10.0),
-                bottomRight: isMe == true
-                    ? Radius.circular(10.0)
-                    : Radius.circular(0.0)),
-            color: (isMe == true ? Colors.grey.shade200 : Colors.blue[600]),
-          ),
-          padding: EdgeInsets.all(16),
-          child: Text(
-            msg,
-            style: TextStyle(
-              fontSize: 15,
-              color: (isMe == true ? Colors.black87 : Colors.white),
+        alignment: (isMe == true ? Alignment.topRight : Alignment.topLeft),
+        child: Column(
+          crossAxisAlignment: (isMe == true
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start),
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10.0),
+                    bottomLeft: isMe == true
+                        ? Radius.circular(10.0)
+                        : Radius.circular(0.0),
+                    topRight: Radius.circular(10.0),
+                    bottomRight: isMe == true
+                        ? Radius.circular(0.0)
+                        : Radius.circular(10.0)),
+                color: (isMe == true ? Colors.blue[600] : Colors.grey.shade200),
+              ),
+              padding: EdgeInsets.all(16),
+              child: Text(
+                msg,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: (isMe == true ? Colors.white : Colors.black87),
+                ),
+              ),
             ),
-          ),
+            Text(
+              date.substring(10),
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 10,
+                color: (Colors.black45),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -130,6 +248,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
         ));
   }
 
+  final FocusScopeNode _node = FocusScopeNode();
   _sendMessageArea() {
     return Container(
       //  padding: EdgeInsets.symmetric(horizontal: 8),
@@ -157,9 +276,16 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                         ),
                         width: 260,
                         child: TextFormField(
+                          focusNode: _node,
+                          controller: messageController,
                           decoration: new InputDecoration(
                             suffixIcon: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                chatUp(widget.toid, widget.id,
+                                    messageController.text);
+                                messageController.clear();
+                                _node.unfocus();
+                              },
                               child: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(30),

@@ -25,7 +25,7 @@ class _MyApp extends State<ChatListScreen> {
 
     setState(() {
       sid = id;
-
+      fetchData(id);
       error = false;
     });
   }
@@ -35,13 +35,13 @@ class _MyApp extends State<ChatListScreen> {
   List<dynamic> listFacts;
 
   bool jobError = false;
-  Future fetchData(String namee) async {
+  Future fetchData(String fromid) async {
     var data = {
-      'name': namee,
+      'fromId': fromid,
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/SearchList/searchUsers',
+        'http://isow.acutrotech.com/index.php/api/Chat/chatList',
         body: (data));
     if (response.statusCode == 200) {
       setState(() {
@@ -80,7 +80,7 @@ class _MyApp extends State<ChatListScreen> {
 
   @override
   void initState() {
-    fetchData("");
+    // fetchData("");
 
     super.initState();
     getValidation();
@@ -131,7 +131,7 @@ class _MyApp extends State<ChatListScreen> {
         ),
         body: RefreshIndicator(
           onRefresh: () {
-            refreshList(controller.text);
+            refreshList(sid);
           },
           child: jobError == true || mapResponse == null
               ? Center(
@@ -155,7 +155,7 @@ class _MyApp extends State<ChatListScreen> {
                         margin: new EdgeInsets.symmetric(horizontal: 20.0),
                         child: TextFormField(
                           onChanged: (value) {
-                            fetchData(controller.text);
+                            fetchData(sid);
                           },
                           style: TextStyle(
                             color: Colors.grey[600],
@@ -167,7 +167,7 @@ class _MyApp extends State<ChatListScreen> {
                                     icon: new Icon(Icons.cancel),
                                     onPressed: () {
                                       controller.clear();
-                                      fetchData(controller.text);
+                                      fetchData(sid);
                                       // providerData.getContacts();
                                       // onSearchTextChanged('');
                                     },

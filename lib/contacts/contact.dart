@@ -8,8 +8,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../ChatScreens/chatScreenMain.dart';
 
 class Contact extends StatefulWidget {
-  // final String email;
-  // Contact({Key key, @required this.email}) : super(key: key);
+  final String sid;
+  Contact({Key key, @required this.sid}) : super(key: key);
   @override
   _MyApp createState() => _MyApp();
 }
@@ -264,12 +264,17 @@ class _MyApp extends State<Contact> {
                                                           children: [
                                                             GestureDetector(
                                                               onTap: () {
-                                                                // Navigator.push(
-                                                                //     context,
-                                                                //     MaterialPageRoute(
-                                                                //         builder:
-                                                                //             (context) =>
-                                                                //                 ChatDetailScreen()));
+                                                                Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                      builder: (context) => ChatDetailScreen(
+                                                                          name: listFacts[index]["name"],
+                                                                          path: getpath(
+                                                                            listFacts[index]["profile_pic"],
+                                                                          ),
+                                                                          id: listFacts[index]['id'],
+                                                                          toid: widget.sid),
+                                                                    ));
                                                               },
                                                               child: Icon(
                                                                 Icons

@@ -37,7 +37,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
       'fromId': fromid,
       'toId': toid,
       'message': message,
-      'send_by': fromid
     };
     http.Response response;
     response = await http.post(
@@ -92,7 +91,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
     super.initState();
     fetchChat(widget.toid, widget.id);
     _clockTimer = Timer.periodic(
-        Duration(seconds: 15), (Timer t) => fetchChat(widget.toid, widget.id));
+        Duration(seconds: 10), (Timer t) => fetchChat(widget.toid, widget.id));
   }
 
   @override

@@ -1,15 +1,13 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
-import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-// import 'package:sms/sms.dart';
+
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 
 class Emergency extends StatefulWidget {
   @override
@@ -17,8 +15,6 @@ class Emergency extends StatefulWidget {
 }
 
 class _EmergencyState extends State<Emergency> {
-  // SmsSender sender = new SmsSender();
-  TextEditingController _requirmentController = new TextEditingController();
   String sid;
   bool error = true;
   Future getValidation() async {
@@ -113,7 +109,6 @@ class _EmergencyState extends State<Emergency> {
       setState(() {
         mapResponse = jsonDecode(response.body);
         listFacts = mapResponse['data'];
-
         jobError = false;
         print("{$listFacts}");
       });
@@ -128,129 +123,11 @@ class _EmergencyState extends State<Emergency> {
     }
   }
 
-  _textMe(List contactList, String txt) async {
-    for (int i = 0; i < contactList.length; i++) {
-      // if (txt == "") {
-      //   await sender.sendSms(
-      //       new SmsMessage(contactList[i]['sos_content'], 'SOS Alert'));
-      // } else {
-      //   await sender
-      //       .sendSms(new SmsMessage(contactList[i]['sos_content'], txt));
-      // }
-
-      // new SmsMessage(contactList[i]['sos_content'], 'Hello flutter!'));
-    }
-    _requirmentController.clear();
-  }
-
   @override
   void initState() {
     getValidation();
 
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  void onEnd(String txt) {
-    _textMe(listFacts, txt);
-    Navigator.pop(context);
-  }
-
-  CountdownTimerController controller;
-  //DateTime.now().millisecondsSinceEpoch + 1000 * 10;
-
-  showDialo(String txt) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Center(
-            child: Material(
-              color: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0)),
-              elevation: 5.0,
-              // type: MaterialType.card,
-              child: new Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        height: 200,
-                      ),
-                      Stack(
-                        alignment: Alignment.center,
-                        overflow: Overflow.clip,
-                        children: [
-                          Container(
-                              height: 160,
-                              width: 160,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 20,
-                                backgroundColor: Colors.white,
-                              )),
-                          Container(
-                            alignment: Alignment.center,
-                            height: 160,
-                            width: 160,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.blue,
-                            ),
-                            child: CountdownTimer(
-                              widgetBuilder: (_, CurrentRemainingTime time) {
-                                if (time == null) {
-                                  return Text('');
-                                }
-                                return Text(
-                                  ' ${time.sec}',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 50,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                );
-                              },
-                              controller: controller,
-                              onEnd: () {
-                                onEnd(txt);
-                              },
-                              endTime: DateTime.now().millisecondsSinceEpoch +
-                                  1000 * 10,
-                            ),
-
-                            // Text(
-                            //   "10",
-                            //   style:
-                            //       TextStyle(fontSize: 40, color: Colors.white),
-                            // ),
-                          ),
-                        ],
-                      ),
-                      Expanded(child: SizedBox()),
-                      IconButton(
-                          icon: Icon(
-                            Icons.close,
-                            size: 40,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            controller.disposeTimer();
-                            Navigator.pop(context);
-                          }),
-                      SizedBox(
-                        height: 50,
-                      )
-                    ],
-                  )),
-            ),
-          );
-        });
   }
 
   @override
@@ -508,103 +385,7 @@ class _EmergencyState extends State<Emergency> {
                       ],
                     ),
                     SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.0),
-                          border: Border.all(color: Colors.black38)),
-                      margin: EdgeInsets.all(10.0),
-                      child: new TextField(
-                        style: TextStyle(color: Colors.black87),
-                        decoration: new InputDecoration(
-                          hintText: 'Please add text here if you require it',
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.all(10.0),
-                        ),
-                        autofocus: false,
-                        maxLines: 5,
-                        controller: _requirmentController,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onDoubleTap: () {
-                            controller = CountdownTimerController(
-                                endTime: DateTime.now().millisecondsSinceEpoch +
-                                    1000 * 10,
-                                onEnd: () {
-                                  onEnd(_requirmentController.text);
-                                });
-                            showDialo(_requirmentController.text);
-                          },
-                          child: Container(
-                              alignment: Alignment.center,
-                              height: 140,
-                              width: 140,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.blue,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black26,
-                                    blurRadius: 4.0,
-                                    spreadRadius: 4.0,
-                                    offset: Offset(2.0,
-                                        2.0), // shadow direction: bottom right
-                                  )
-                                ],
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    'SOS',
-                                    style: TextStyle(
-                                        fontSize: 35,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    'Double tap',
-                                    style: TextStyle(
-                                      fontSize: 11,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    'here',
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              )
-
-                              //  Text(
-                              //   "SOS\nAlert",
-                              //   style: TextStyle(
-                              //       fontSize: 20,
-                              //       color: Colors.white,
-                              //       fontWeight: FontWeight.bold),
-                              //   textAlign: TextAlign.center,
-                              // ),
-                              ),
-                        ),
-                      ],
+                      height: 15,
                     ),
                     Row(
                       children: <Widget>[

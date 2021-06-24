@@ -14,6 +14,7 @@ import '19_services.dart';
 import 'OffersScreens/25_offers.dart';
 import 'Profile/6_editprofile.dart';
 import 'contacts/contact.dart';
+import 'SafteyRules/safteyRules.dart';
 import 'JobDescription/JobDescriptionTab.dart';
 import 'FeedbackScreen/feedbackList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -991,6 +992,53 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                           Text(
                             "Chat",
+                            style: TextStyle(fontSize: 12),
+                          )
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SafetyRule()),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 65,
+                            width: 65,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black54,
+                                  blurRadius: 3.0,
+                                  spreadRadius: 1.0,
+                                  offset: Offset(
+                                    0.0,
+                                    2.0,
+                                  ),
+                                )
+                              ],
+                              gradient: LinearGradient(
+                                colors: [Color(0xFF4fc4f2), Colors.blue],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
+                            ),
+                            child: FaIcon(
+                              FontAwesomeIcons.fire,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                            margin: EdgeInsets.all(10),
+                          ),
+                          Text(
+                            "Safety Rules",
                             style: TextStyle(fontSize: 12),
                           )
                         ],

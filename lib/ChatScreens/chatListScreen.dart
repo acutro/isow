@@ -36,9 +36,7 @@ class _MyApp extends State<ChatListScreen> {
 
   bool jobError = false;
   Future fetchData(String fromid) async {
-    var data = {
-      'fromId': fromid,
-    };
+    var data = {'fromId': fromid, 'toId': fromid};
     http.Response response;
     response = await http.post(
         'http://isow.acutrotech.com/index.php/api/Chat/chatList',
@@ -90,7 +88,7 @@ class _MyApp extends State<ChatListScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Contacts',
+      title: 'Chat list',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         appBarTheme: AppBarTheme(centerTitle: true),
@@ -98,7 +96,7 @@ class _MyApp extends State<ChatListScreen> {
       home: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Contacts",
+            "Chat list",
             style: TextStyle(
               color: Colors.white,
             ),
@@ -216,7 +214,7 @@ class _MyApp extends State<ChatListScreen> {
                                                               ["profile_pic"],
                                                         ),
                                                         id: listFacts[index]
-                                                            ['id'],
+                                                            ['toId'],
                                                         toid: sid),
                                               ));
                                         },

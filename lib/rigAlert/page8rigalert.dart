@@ -5,8 +5,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'alertList.dart';
 import 'package:flutter/material.dart';
 import 'sizeadjust.dart';
-import 'copy.dart';
-import '9_RigAlertsendmsg.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';

@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '17_notepad.dart';
 import 'package:toast/toast.dart';
-import 'package:isow/Widgects/alertBox.dart';
 import 'notepadUpdate.dart';
 
 class NotepadList extends StatefulWidget {

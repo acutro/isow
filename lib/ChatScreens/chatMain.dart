@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:toast/toast.dart';
-import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:ui';
 import 'package:intl/intl.dart';
-
-//import 'package:flutter_downloader/flutter_downloader.dart';
 
 class ChatDetailScree extends StatefulWidget {
   @override

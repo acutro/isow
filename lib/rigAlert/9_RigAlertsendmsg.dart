@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../table.dart';
-import 'page8rigalert.dart';
 
 class Rigalert extends StatelessWidget {
   @override

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:toast/toast.dart';
-import 'offerListing.dart';
 import 'offerListingMain.dart';
 
 class OfferMainScreen extends StatefulWidget {

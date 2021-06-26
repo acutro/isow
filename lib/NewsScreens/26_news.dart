@@ -3,7 +3,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'newsListing.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:toast/toast.dart';
 import 'activityList.dart';
 
 class News extends StatefulWidget {
@@ -13,7 +12,6 @@ class News extends StatefulWidget {
 
 class _NewsState extends State<News> {
   @override
-  List listResponse;
   Map mapResponse;
   List<dynamic> listFacts;
   Future fetchData() async {

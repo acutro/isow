@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '13_OrientationRigs.dart';
 import '14_orientaionmaterials.dart';
-import '../rigAlert/sizeadjust.dart';
 
 class OrientationScreen extends StatefulWidget {
   @override

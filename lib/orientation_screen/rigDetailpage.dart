@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:isow/orientation_screen/13_OrientationRigs.dart';
 import 'rigDetailScreen.dart';
 
 class RigDetailScreen extends StatefulWidget {

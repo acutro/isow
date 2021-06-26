@@ -1,4 +1,3 @@
-import 'package:flutter_countdown_timer/countdown.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

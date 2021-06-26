@@ -5,8 +5,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
-import '21_jobdescriptionissuer.dart';
-import 'package:isow/JobDescription/jobDescriptionList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class JobHandoverList extends StatefulWidget {

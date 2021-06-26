@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'sizeadjust.dart';
 
 class Tables2 extends StatefulWidget {
   @override

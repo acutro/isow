@@ -10,7 +10,6 @@ import 'package:toast/toast.dart';
 import 'package:async/async.dart';
 
 import 'package:image_picker/image_picker.dart';
-import 'package:http_parser/http_parser.dart';
 
 class EditProfile extends StatefulWidget {
   final String name;

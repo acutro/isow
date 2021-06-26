@@ -54,7 +54,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            'Edit Profile',
+            'Profile',
             style: TextStyle(
               fontSize: 18,
             ),
@@ -82,226 +82,301 @@ class EditProfileScreenState extends State<EditProfileScreen> {
               var propic = snapshot.data.propic;
 
               return Container(
-                child: Column(children: <Widget>[
-                  Column(
+                padding: EdgeInsets.all(15),
+                alignment: AlignmentDirectional.centerEnd,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Card(
-                        margin: const EdgeInsets.all(0.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(220),
-                            topRight: Radius.circular(0),
-                          ),
-                        ),
-                        color: Color(0xFF4fc4f2),
-                        child: new Container(
-                          height: 250.0,
-                          child: new Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Center(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100000),
-                                    child: CircleAvatar(
-                                      radius: 45,
-                                      child: Image.network(getpath(propic),
-                                          height: 100,
-                                          width: 100,
-                                          fit: BoxFit.cover),
-                                    ),
-                                  ),
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'Name : $aname',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 15.0),
-                                    ),
-                                    SizedBox(height: 5.0),
-                                    // Text(
-                                    //   'New york',
-                                    //   style: TextStyle(
-                                    //       fontWeight: FontWeight.bold,
-                                    //       color: Colors.white,
-                                    //       fontSize: 14.0),
-                                    // ),
-                                  ],
-                                )
-                              ],
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(5.0),
+                              child: Image.asset("assets/images/logo.png",
+                                  color: Colors.blue,
+                                  height: 130,
+                                  width: 130,
+                                  fit: BoxFit.fill),
                             ),
-                          ),
+                            Text(
+                              'I Sow',
+                              style: TextStyle(
+                                  color: Colors.blue[600],
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      SizedBox(height: 40),
-                      ListTile(
-                        contentPadding:
-                            EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
-                        leading: MaterialButton(
-                          onPressed: () {},
-                          color: Colors.white,
-                          textColor: Color(0xFF4fc4f2),
-                          child: Icon(
-                            Icons.perm_identity,
-                            size: 25,
-                          ),
-                          padding: EdgeInsets.all(16),
-                          shape: CircleBorder(),
-                        ),
-                        title: Text(
-                          'Name : $aname',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                          ),
-                        ),
+                      SizedBox(
+                        height: 20,
                       ),
-                      ListTile(
-                        contentPadding:
-                            EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
-                        leading: MaterialButton(
-                          onPressed: () {},
-                          color: Colors.white,
-                          textColor: Color(0xFF4fc4f2),
-                          child: Icon(
-                            Icons.person_pin_sharp,
-                            size: 25,
-                          ),
-                          padding: EdgeInsets.all(16),
-                          shape: CircleBorder(),
-                        ),
-                        title: Text(
-                          'Employee ID\n$auserId',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                          ),
-                        ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(5.0),
+                        child: Image.network(getpath(propic),
+                            height: 230, width: 190, fit: BoxFit.cover),
                       ),
-                      ListTile(
-                        contentPadding:
-                            EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
-                        leading: MaterialButton(
-                          onPressed: () {},
-                          color: Colors.white,
-                          textColor: Color(0xFF4fc4f2),
-                          child: Icon(
-                            Icons.mail_outline,
-                            size: 25,
-                          ),
-                          padding: EdgeInsets.all(16),
-                          shape: CircleBorder(),
-                        ),
-                        title: Text(
-                          'E-mail Address\n$aemail',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                          ),
-                        ),
+                      Text(
+                        aname,
+                        style: TextStyle(
+                            color: Colors.blue[900],
+                            fontSize: 24,
+                            height: 1.5,
+                            fontWeight: FontWeight.bold),
                       ),
-                      ListTile(
-                        contentPadding:
-                            EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
-                        leading: MaterialButton(
-                          onPressed: () {},
-                          color: Colors.white,
-                          textColor: Color(0xFF4fc4f2),
-                          child: Icon(
-                            Icons.work_outline_outlined,
-                            size: 25,
-                          ),
-                          padding: EdgeInsets.all(16),
-                          shape: CircleBorder(),
-                        ),
-                        title: Text(
-                          'Work\n' +
-                              '${awork[0].toUpperCase()}${awork.substring(1)}',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                          ),
-                        ),
+                      Text(
+                        awork,
+                        style: TextStyle(
+                            color: Colors.blue[900],
+                            fontSize: 20,
+                            height: 1.5,
+                            fontWeight: FontWeight.bold),
                       ),
-                      ListTile(
-                        contentPadding:
-                            EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
-                        leading: MaterialButton(
-                          onPressed: () {},
-                          color: Colors.white,
-                          textColor: Color(0xFF4fc4f2),
-                          child: Icon(
-                            Icons.phone_android_outlined,
-                            size: 25,
-                          ),
-                          padding: EdgeInsets.all(16),
-                          shape: CircleBorder(),
-                        ),
-                        title: Text(
-                          'Mobile Number\n$amob_num',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                          ),
-                        ),
+                      Text(
+                        'ID# $auserId',
+                        style: TextStyle(
+                            color: Colors.blue[900],
+                            fontSize: 20,
+                            height: 1.5,
+                            fontWeight: FontWeight.bold),
                       ),
-                      Container(
-                        height: 50.0,
-                        child: RaisedButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EditProfile(
-                                        name: aname,
-                                        empid: auserId,
-                                        email: aemail,
-                                        work: awork,
-                                        mob: amob_num,
-                                        roleid: aroleid,
-                                        propic: propic,
-                                      )),
-                            );
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(80.0)),
-                          padding: EdgeInsets.all(0.0),
-                          child: Ink(
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [Color(0xFF4fc4f2), Colors.blue],
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
+                      Text(
+                        amob_num,
+                        style: TextStyle(
+                            color: Colors.blue[900],
+                            fontSize: 20,
+                            height: 1.5,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        aemail,
+                        style: TextStyle(
+                            color: Colors.blue[900],
+                            fontSize: 20,
+                            height: 1.5,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+
+                      // Column(
+                      //   children: <Widget>[
+                      //     Card(
+                      //       margin: const EdgeInsets.all(0.0),
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.only(
+                      //           bottomRight: Radius.circular(220),
+                      //           topRight: Radius.circular(0),
+                      //         ),
+                      //       ),
+                      //       color: Color(0xFF4fc4f2),
+                      //       child: new Container(
+                      //         height: 250.0,
+                      //         child: new Container(
+                      //           child: Row(
+                      //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //             children: <Widget>[
+                      //               Center(
+                      //                 child: ClipRRect(
+                      //                   borderRadius: BorderRadius.circular(100000),
+                      //                   child: CircleAvatar(
+                      //                     radius: 45,
+                      //                     child: Image.network(getpath(propic),
+                      //                         height: 100,
+                      //                         width: 100,
+                      //                         fit: BoxFit.cover),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               Column(
+                      //                 mainAxisAlignment: MainAxisAlignment.center,
+                      //                 crossAxisAlignment: CrossAxisAlignment.start,
+                      //                 children: <Widget>[
+                      //                   Text(
+                      //                     'Name : $aname',
+                      //                     style: TextStyle(
+                      //                         fontWeight: FontWeight.bold,
+                      //                         color: Colors.white,
+                      //                         fontSize: 15.0),
+                      //                   ),
+                      //                   SizedBox(height: 5.0),
+                      //                 ],
+                      //               )
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // Column(
+                      //   children: <Widget>[
+                      //     SizedBox(height: 40),
+                      //     ListTile(
+                      //       contentPadding:
+                      //           EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
+                      //       leading: MaterialButton(
+                      //         onPressed: () {},
+                      //         color: Colors.white,
+                      //         textColor: Color(0xFF4fc4f2),
+                      //         child: Icon(
+                      //           Icons.perm_identity,
+                      //           size: 25,
+                      //         ),
+                      //         padding: EdgeInsets.all(16),
+                      //         shape: CircleBorder(),
+                      //       ),
+                      //       title: Text(
+                      //         'Name : $aname',
+                      //         style: TextStyle(
+                      //           fontSize: 15,
+                      //           color: Colors.black,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     ListTile(
+                      //       contentPadding:
+                      //           EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
+                      //       leading: MaterialButton(
+                      //         onPressed: () {},
+                      //         color: Colors.white,
+                      //         textColor: Color(0xFF4fc4f2),
+                      //         child: Icon(
+                      //           Icons.person_pin_sharp,
+                      //           size: 25,
+                      //         ),
+                      //         padding: EdgeInsets.all(16),
+                      //         shape: CircleBorder(),
+                      //       ),
+                      //       title: Text(
+                      //         'Employee ID\n$auserId',
+                      //         style: TextStyle(
+                      //           fontSize: 15,
+                      //           color: Colors.black,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     ListTile(
+                      //       contentPadding:
+                      //           EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
+                      //       leading: MaterialButton(
+                      //         onPressed: () {},
+                      //         color: Colors.white,
+                      //         textColor: Color(0xFF4fc4f2),
+                      //         child: Icon(
+                      //           Icons.mail_outline,
+                      //           size: 25,
+                      //         ),
+                      //         padding: EdgeInsets.all(16),
+                      //         shape: CircleBorder(),
+                      //       ),
+                      //       title: Text(
+                      //         'E-mail Address\n$aemail',
+                      //         style: TextStyle(
+                      //           fontSize: 15,
+                      //           color: Colors.black,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     ListTile(
+                      //       contentPadding:
+                      //           EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
+                      //       leading: MaterialButton(
+                      //         onPressed: () {},
+                      //         color: Colors.white,
+                      //         textColor: Color(0xFF4fc4f2),
+                      //         child: Icon(
+                      //           Icons.work_outline_outlined,
+                      //           size: 25,
+                      //         ),
+                      //         padding: EdgeInsets.all(16),
+                      //         shape: CircleBorder(),
+                      //       ),
+                      //       title: Text(
+                      //         'Work\n' +
+                      //             '${awork[0].toUpperCase()}${awork.substring(1)}',
+                      //         style: TextStyle(
+                      //           fontSize: 15,
+                      //           color: Colors.black,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     ListTile(
+                      //       contentPadding:
+                      //           EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
+                      //       leading: MaterialButton(
+                      //         onPressed: () {},
+                      //         color: Colors.white,
+                      //         textColor: Color(0xFF4fc4f2),
+                      //         child: Icon(
+                      //           Icons.phone_android_outlined,
+                      //           size: 25,
+                      //         ),
+                      //         padding: EdgeInsets.all(16),
+                      //         shape: CircleBorder(),
+                      //       ),
+                      //       title: Text(
+                      //         'Mobile Number\n$amob_num',
+                      //         style: TextStyle(
+                      //           fontSize: 15,
+                      //           color: Colors.black,
+                      //         ),
+                      //       ),
+                      //     ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          height: 50.0,
+                          child: RaisedButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditProfile(
+                                          name: aname,
+                                          empid: auserId,
+                                          email: aemail,
+                                          work: awork,
+                                          mob: amob_num,
+                                          roleid: aroleid,
+                                          propic: propic,
+                                        )),
+                              );
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(80.0)),
+                            padding: EdgeInsets.all(0.0),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [Color(0xFF4fc4f2), Colors.blue],
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: Container(
+                                constraints: BoxConstraints(
+                                    maxWidth: 170.0, minHeight: 50.0),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Edit Profile",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.white),
                                 ),
-                                borderRadius: BorderRadius.circular(30.0)),
-                            child: Container(
-                              constraints: BoxConstraints(
-                                  maxWidth: 170.0, minHeight: 50.0),
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Edit Profile",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white),
                               ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 30,
-                      )
-                    ],
-                  ),
-                ]),
+                      //     SizedBox(
+                      //       height: 30,
+                      //     )
+                      //   ],
+                      // ),
+                    ]),
               );
             } else if (snapshot.hasError) {
               return Text("${snapshot.error}");

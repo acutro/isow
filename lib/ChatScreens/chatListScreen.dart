@@ -234,39 +234,27 @@ class _MyApp extends State<ChatListScreen> {
                                                 child: Column(
                                                   children: <Widget>[
                                                     ListTile(
-                                                      leading: CircleAvatar(
-                                                        child: ClipOval(
-                                                            child: Image.network(
-                                                                getpath(listFacts[
-                                                                        index][
-                                                                    "profile_pic"]),
-                                                                width: 80,
-                                                                height: 80,
-                                                                fit: BoxFit
-                                                                    .fill)),
-                                                      ),
-                                                      title: Text(
-                                                          listFacts[index]
-                                                              ["name"]),
-                                                      subtitle: Text(
-                                                        '${listFacts[index]["work"][0].toUpperCase()}${listFacts[index]["work"].substring(1)}',
-                                                      ),
-                                                      trailing: GestureDetector(
-                                                        onTap: () {
-                                                          launch(
-                                                            "tel:" +
-                                                                listFacts[index]
-                                                                    ["mob_num"],
-                                                          );
-                                                        },
-                                                        child: Icon(
-                                                          Icons.call,
-                                                          size: 25,
-                                                          color:
-                                                              Colors.green[400],
+                                                        leading: CircleAvatar(
+                                                          child: ClipOval(
+                                                              child: Image.network(
+                                                                  getpath(listFacts[
+                                                                          index]
+                                                                      [
+                                                                      "profile_pic"]),
+                                                                  width: 80,
+                                                                  height: 80,
+                                                                  fit: BoxFit
+                                                                      .fill)),
                                                         ),
-                                                      ),
-                                                    ),
+                                                        title: Text(
+                                                            listFacts[index]
+                                                                ["name"]),
+                                                        subtitle: Text(
+                                                          '${listFacts[index]["work"][0].toUpperCase()}${listFacts[index]["work"].substring(1)}',
+                                                        ),
+                                                        trailing: Text(
+                                                            listFacts[index]
+                                                                ["empId"])),
                                                     Divider(),
                                                   ],
                                                 ),

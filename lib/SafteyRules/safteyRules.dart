@@ -11,14 +11,14 @@ class _MyApp extends State<SafetyRule> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Safety rules',
+      title: 'Safety Rules',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Safety rules",
+            "Safety Rules",
             style: TextStyle(
               color: Colors.white,
             ),
@@ -51,7 +51,7 @@ class _MyApp extends State<SafetyRule> {
         ),
         body: Container(
           height: double.infinity,
-          color: Colors.yellow[800],
+          color: Colors.white,
           padding: EdgeInsets.all(20),
           child: SingleChildScrollView(
               child: Column(

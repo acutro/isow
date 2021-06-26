@@ -6,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_sms/flutter_sms.dart';
 import 'dart:convert';
 // import 'package:sms/sms.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -128,20 +129,44 @@ class _EmergencyState extends State<Emergency> {
     }
   }
 
-  _textMe(List contactList, String txt) async {
-    for (int i = 0; i < contactList.length; i++) {
-      // if (txt == "") {
-      //   await sender.sendSms(
-      //       new SmsMessage(contactList[i]['sos_content'], 'SOS Alert'));
-      // } else {
-      //   await sender
-      //       .sendSms(new SmsMessage(contactList[i]['sos_content'], txt));
-      // }
-
-      // new SmsMessage(contactList[i]['sos_content'], 'Hello flutter!'));
+  _textMe(
+    List recipents,
+    String message,
+  ) async {
+    message == "" ? message = 'SOS Alert' : message = message;
+    List<String> l = [];
+    if (recipents == null) {
+      Toast.show("Add SOS Contacts", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
+    } else {
+      for (int i = 0; i < recipents.length; i++) {
+        l.add(recipents[i]['sos_content']);
+      }
+      String _result =
+          await sendSMS(message: message, recipients: l).catchError((onError) {
+        print(onError);
+      });
+      print(_result);
     }
-    _requirmentController.clear();
   }
+
+  // _textMe(List contactList, String txt) async {
+  //   for (int i = 0; i < contactList.length; i++) {
+  // if (txt == "") {
+  //   await sender.sendSms(
+  //       new SmsMessage(contactList[i]['sos_content'], 'SOS Alert'));
+  // } else {
+  //   await sender
+  //       .sendSms(new SmsMessage(contactList[i]['sos_content'], txt));
+  // }
+
+  // new SmsMessage(contactList[i]['sos_content'], 'Hello flutter!'));
+  //   }
+  //   _requirmentController.clear();
+  // }
 
   @override
   void initState() {

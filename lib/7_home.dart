@@ -10,7 +10,7 @@ import 'WarningLetterScreens/16_RecievedWarningletter.dart';
 import 'Emergency/18_emergency.dart';
 import 'UserAuth/2_signinpage.dart';
 import 'notepadScreen/notepadListScreen.dart';
-import '19_services.dart';
+import 'ServicesScreen/19_services.dart';
 import 'OffersScreens/25_offers.dart';
 import 'Profile/6_editprofile.dart';
 import 'contacts/contact.dart';
@@ -301,6 +301,34 @@ class HomeScreenState extends State<HomeScreen> {
                             ),
                             title: Text(
                               'Faq',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            contentPadding:
+                                EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
+                            leading: MaterialButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SafetyRule()),
+                                );
+                              },
+                              color: Colors.white,
+                              textColor: Color(0xFF4fc4f2),
+                              child: FaIcon(
+                                FontAwesomeIcons.fire,
+                                size: 25,
+                              ),
+                              padding: EdgeInsets.all(16),
+                              shape: CircleBorder(),
+                            ),
+                            title: Text(
+                              'Safety Rules',
                               style: TextStyle(
                                 fontSize: 15,
                                 color: Colors.white,
@@ -997,53 +1025,7 @@ class HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SafetyRule()),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 65,
-                            width: 65,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black54,
-                                  blurRadius: 3.0,
-                                  spreadRadius: 1.0,
-                                  offset: Offset(
-                                    0.0,
-                                    2.0,
-                                  ),
-                                )
-                              ],
-                              gradient: LinearGradient(
-                                colors: [Color(0xFF4fc4f2), Colors.blue],
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                              ),
-                            ),
-                            child: FaIcon(
-                              FontAwesomeIcons.fire,
-                              size: 40,
-                              color: Colors.white,
-                            ),
-                            margin: EdgeInsets.all(10),
-                          ),
-                          Text(
-                            "Safety Rules",
-                            style: TextStyle(fontSize: 12),
-                          )
-                        ],
-                      ),
-                    ),
+
                     // GestureDetector(
                     //   onTap: () {
                     //     flutterLocalNotificationsPlugin.show(

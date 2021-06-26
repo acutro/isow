@@ -6,9 +6,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_sms/flutter_sms.dart';
 import 'dart:convert';
-// import 'package:sms/sms.dart';
+import 'package:telephony/telephony.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 
@@ -18,7 +17,6 @@ class Emergency extends StatefulWidget {
 }
 
 class _EmergencyState extends State<Emergency> {
-  // SmsSender sender = new SmsSender();
   TextEditingController _requirmentController = new TextEditingController();
   String sid;
   bool error = true;
@@ -129,6 +127,7 @@ class _EmergencyState extends State<Emergency> {
     }
   }
 
+  final Telephony telephony = Telephony.instance;
   _textMe(
     List recipents,
     String message,
@@ -143,30 +142,12 @@ class _EmergencyState extends State<Emergency> {
           backgroundColor: Colors.white);
     } else {
       for (int i = 0; i < recipents.length; i++) {
-        l.add(recipents[i]['sos_content']);
+        await telephony.sendSms(
+            to: recipents[i]['sos_content'], message: message);
       }
-      String _result =
-          await sendSMS(message: message, recipients: l).catchError((onError) {
-        print(onError);
-      });
-      print(_result);
+      _requirmentController.clear();
     }
   }
-
-  // _textMe(List contactList, String txt) async {
-  //   for (int i = 0; i < contactList.length; i++) {
-  // if (txt == "") {
-  //   await sender.sendSms(
-  //       new SmsMessage(contactList[i]['sos_content'], 'SOS Alert'));
-  // } else {
-  //   await sender
-  //       .sendSms(new SmsMessage(contactList[i]['sos_content'], txt));
-  // }
-
-  // new SmsMessage(contactList[i]['sos_content'], 'Hello flutter!'));
-  //   }
-  //   _requirmentController.clear();
-  // }
 
   @override
   void initState() {
@@ -177,7 +158,6 @@ class _EmergencyState extends State<Emergency> {
 
   @override
   void dispose() {
-    controller.dispose();
     super.dispose();
   }
 
@@ -187,7 +167,6 @@ class _EmergencyState extends State<Emergency> {
   }
 
   CountdownTimerController controller;
-  //DateTime.now().millisecondsSinceEpoch + 1000 * 10;
 
   showDialo(String txt) {
     showDialog(

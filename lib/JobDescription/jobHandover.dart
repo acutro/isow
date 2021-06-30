@@ -111,8 +111,8 @@ class _JobdescriptionState extends State<JobHandover> {
       alignment: Alignment.center,
       height: 58,
       decoration: BoxDecoration(
-        color: Color(0xff49A5FF),
-        border: Border.all(color: Colors.white, width: 1),
+        color: Colors.white,
+        border: Border.all(color: Colors.black45, width: 1),
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
 
@@ -121,9 +121,9 @@ class _JobdescriptionState extends State<JobHandover> {
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        iconEnabledColor: Colors.white,
+        iconEnabledColor: Colors.black87,
         value: roleValue,
-        dropdownColor: Color(0xff49A5FF),
+        dropdownColor: Colors.white,
         isExpanded: true,
         underline: Container(
           height: 0,
@@ -135,7 +135,7 @@ class _JobdescriptionState extends State<JobHandover> {
             "To Position",
             style: TextStyle(
               fontSize: 14,
-              color: Colors.white,
+              color: Colors.black87,
             ),
           ),
         ),
@@ -146,7 +146,7 @@ class _JobdescriptionState extends State<JobHandover> {
               padding: EdgeInsets.only(left: 12),
               child: Text(
                 answer["userRoles"],
-                style: TextStyle(color: Colors.white, fontSize: 14),
+                style: TextStyle(color: Colors.black87, fontSize: 14),
               ),
             ),
           );
@@ -170,8 +170,8 @@ class _JobdescriptionState extends State<JobHandover> {
       alignment: Alignment.center,
       height: 58,
       decoration: BoxDecoration(
-        color: Color(0xff49A5FF),
-        border: Border.all(color: Colors.white, width: 1),
+        color: Colors.white,
+        border: Border.all(color: Colors.black45, width: 1),
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
 
@@ -192,7 +192,7 @@ class _JobdescriptionState extends State<JobHandover> {
                   "Choose Position",
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.white,
+                    color: Colors.black87,
                   ),
                 ),
               ))
@@ -200,9 +200,9 @@ class _JobdescriptionState extends State<JobHandover> {
               onTap: () {
                 FocusScope.of(context).requestFocus(new FocusNode());
               },
-              iconEnabledColor: Colors.white,
+              iconEnabledColor: Colors.black87,
               value: userValue,
-              dropdownColor: Color(0xff49A5FF),
+              dropdownColor: Colors.white,
               isExpanded: true,
               underline: Container(
                 height: 0,
@@ -214,7 +214,7 @@ class _JobdescriptionState extends State<JobHandover> {
                   "To Person",
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.white,
+                    color: Colors.black87,
                   ),
                 ),
               ),
@@ -225,7 +225,7 @@ class _JobdescriptionState extends State<JobHandover> {
                     padding: EdgeInsets.only(left: 12),
                     child: Text(
                       answer["name"],
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      style: TextStyle(color: Colors.black87, fontSize: 14),
                     ),
                   ),
                 );
@@ -321,11 +321,11 @@ class _JobdescriptionState extends State<JobHandover> {
                     height: 40.0,
                   ),
                   Container(
-                    height: 350,
+                    height: 470,
                     padding: EdgeInsets.all(10),
                     margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                     decoration: BoxDecoration(
-                      color: Color(0xff49A5FF),
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(10.0),
                       boxShadow: [
                         BoxShadow(
@@ -337,6 +337,9 @@ class _JobdescriptionState extends State<JobHandover> {
                     ),
                     child: Column(
                       children: <Widget>[
+                        SizedBox(
+                          height: 10,
+                        ),
                         Row(
                           children: <Widget>[
                             Expanded(
@@ -348,6 +351,9 @@ class _JobdescriptionState extends State<JobHandover> {
                               ),
                             ),
                           ],
+                        ),
+                        SizedBox(
+                          height: 10.0,
                         ),
                         Row(
                           children: <Widget>[
@@ -373,19 +379,25 @@ class _JobdescriptionState extends State<JobHandover> {
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         Container(
                           height: 150,
                           padding: EdgeInsets.all(10),
                           alignment: Alignment.topLeft,
                           decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white),
+                              border: Border.all(color: Colors.black45),
                               borderRadius: BorderRadius.circular(10)),
                           margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
                           child: Text(
                             widget.dec,
                             maxLines: 10,
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black87),
                           ),
+                        ),
+                        SizedBox(
+                          height: 10.0,
                         ),
                         Row(
                           children: <Widget>[
@@ -394,29 +406,23 @@ class _JobdescriptionState extends State<JobHandover> {
                                 padding: EdgeInsets.all(10),
                                 alignment: Alignment.centerLeft,
                                 decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.white),
+                                    border: Border.all(color: Colors.black45),
                                     borderRadius: BorderRadius.circular(10)),
                                 margin:
                                     EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
                                 child: Text(
                                   widget.dur,
                                   maxLines: null,
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Colors.black87),
                                 ),
                               ),
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: GestureDetector(
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        GestureDetector(
                           child: Container(
                             alignment: Alignment.bottomCenter,
                             child: Container(
@@ -452,19 +458,14 @@ class _JobdescriptionState extends State<JobHandover> {
                             } else {
                               handoverJob(widget.userId, userValue.toString(),
                                   widget.jid);
-                              //  Navigator.pop(context);
-                              // Navigator.push(
-                              //     context,
-                              //     // MaterialPageRoute(builder: (context) => Warningletter()),
-                              //     MaterialPageRoute(
-                              //         builder: (context) => JobDescriptionTab(
-                              //               userId: widget.userId,
-                              //             )));
                             }
                           },
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
                   ),
                 ],
               ),

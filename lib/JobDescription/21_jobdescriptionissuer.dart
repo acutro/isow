@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '22_jobdescription.dart';
 import 'JobDescriptionTab.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -107,8 +105,8 @@ class _JobdescriptionState extends State<Jobdescription> {
       alignment: Alignment.center,
       height: 58,
       decoration: BoxDecoration(
-        color: Color(0xff49A5FF),
-        border: Border.all(color: Colors.white, width: 1),
+        color: Colors.white,
+        border: Border.all(color: Colors.black45, width: 1),
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
 
@@ -117,13 +115,13 @@ class _JobdescriptionState extends State<Jobdescription> {
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        iconEnabledColor: Colors.white,
+        iconEnabledColor: Colors.black87,
         value: roleValue,
-        dropdownColor: Color(0xff49A5FF),
+        dropdownColor: Colors.white,
         isExpanded: true,
         underline: Container(
           height: 0,
-          color: roleError ? Colors.red : Colors.white,
+          color: roleError ? Colors.red : Colors.black87,
         ),
         hint: Padding(
           padding: const EdgeInsets.only(left: 12),
@@ -131,7 +129,7 @@ class _JobdescriptionState extends State<Jobdescription> {
             "Position",
             style: TextStyle(
               fontSize: 14,
-              color: Colors.white,
+              color: Colors.black87,
             ),
           ),
         ),
@@ -142,7 +140,7 @@ class _JobdescriptionState extends State<Jobdescription> {
               padding: EdgeInsets.only(left: 12),
               child: Text(
                 answer["userRoles"],
-                style: TextStyle(color: Colors.white, fontSize: 14),
+                style: TextStyle(color: Colors.black87, fontSize: 14),
               ),
             ),
           );
@@ -166,8 +164,8 @@ class _JobdescriptionState extends State<Jobdescription> {
       alignment: Alignment.center,
       height: 58,
       decoration: BoxDecoration(
-        color: Color(0xff49A5FF),
-        border: Border.all(color: Colors.white, width: 1),
+        color: Colors.white,
+        border: Border.all(color: Colors.black45, width: 1),
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
 
@@ -179,7 +177,7 @@ class _JobdescriptionState extends State<Jobdescription> {
                     duration: Toast.LENGTH_SHORT,
                     gravity: Toast.BOTTOM,
                     textColor: Colors.red,
-                    backgroundColor: Colors.white);
+                    backgroundColor: Colors.black87);
               },
               child: Container(
                 alignment: Alignment.centerLeft,
@@ -188,7 +186,7 @@ class _JobdescriptionState extends State<Jobdescription> {
                   "Choose Position",
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.white,
+                    color: Colors.black87,
                   ),
                 ),
               ))
@@ -196,13 +194,13 @@ class _JobdescriptionState extends State<Jobdescription> {
               onTap: () {
                 FocusScope.of(context).requestFocus(new FocusNode());
               },
-              iconEnabledColor: Colors.white,
+              iconEnabledColor: Colors.black87,
               value: userValue,
-              dropdownColor: Color(0xff49A5FF),
+              dropdownColor: Colors.white,
               isExpanded: true,
               underline: Container(
                 height: 0,
-                color: userError ? Colors.red : Colors.white,
+                color: userError ? Colors.red : Colors.black87,
               ),
               hint: Padding(
                 padding: const EdgeInsets.only(left: 12),
@@ -210,7 +208,7 @@ class _JobdescriptionState extends State<Jobdescription> {
                   "Person",
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.white,
+                    color: Colors.black87,
                   ),
                 ),
               ),
@@ -221,7 +219,7 @@ class _JobdescriptionState extends State<Jobdescription> {
                     padding: EdgeInsets.only(left: 12),
                     child: Text(
                       answer["name"],
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      style: TextStyle(color: Colors.black87, fontSize: 14),
                     ),
                   ),
                 );
@@ -272,7 +270,7 @@ class _JobdescriptionState extends State<Jobdescription> {
               child: Column(
                 children: <Widget>[
                   SizedBox(
-                    height: 40.0,
+                    height: 50.0,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -310,10 +308,10 @@ class _JobdescriptionState extends State<Jobdescription> {
                     children: <Widget>[
                       Expanded(
                         child: Container(
-                          height: 360.0,
+                          height: 470.0,
                           margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                           decoration: BoxDecoration(
-                            color: Color(0xff49A5FF),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(10.0),
                             boxShadow: [
                               BoxShadow(
@@ -326,6 +324,9 @@ class _JobdescriptionState extends State<Jobdescription> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
+                              SizedBox(
+                                height: 10,
+                              ),
                               Row(
                                 children: <Widget>[
                                   Expanded(
@@ -337,6 +338,9 @@ class _JobdescriptionState extends State<Jobdescription> {
                                     ),
                                   ),
                                 ],
+                              ),
+                              SizedBox(
+                                height: 10,
                               ),
                               Row(
                                 children: <Widget>[
@@ -350,44 +354,35 @@ class _JobdescriptionState extends State<Jobdescription> {
                                   ),
                                 ],
                               ),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Expanded(
                                 child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        color: Colors.black45, width: 1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
                                   margin: EdgeInsets.fromLTRB(
                                       10.0, 10.0, 10.0, 0.0),
                                   height: 45.0,
                                   child: TextField(
                                     controller: _descriptionController,
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(color: Colors.black87),
                                     maxLines: 8,
                                     decoration: InputDecoration(
                                       hintText: 'Job Description',
-                                      hintStyle: TextStyle(color: Colors.white),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0)),
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin:
-                                    EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                                height: 45.0,
-                                child: TextField(
-                                  controller: _durationController,
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(color: Colors.white),
-                                  decoration: InputDecoration(
-                                    hintText: 'Duration in Hour',
-                                    hintStyle: TextStyle(color: Colors.white),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
+                                      hintStyle:
+                                          TextStyle(color: Colors.black87),
+                                      border: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      errorBorder: InputBorder.none,
+                                      disabledBorder: InputBorder.none,
+                                      contentPadding: EdgeInsets.all(10.0),
                                     ),
                                   ),
                                 ),
@@ -395,74 +390,100 @@ class _JobdescriptionState extends State<Jobdescription> {
                               SizedBox(
                                 height: 10,
                               ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      color: Colors.black45, width: 1),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                ),
+                                margin:
+                                    EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                                height: 45.0,
+                                child: TextField(
+                                  controller: _durationController,
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(color: Colors.black87),
+                                  decoration: InputDecoration(
+                                    hintText: 'Duration in Hour',
+                                    hintStyle: TextStyle(color: Colors.black87),
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                    contentPadding: EdgeInsets.all(10.0),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              GestureDetector(
+                                child: Container(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    margin: EdgeInsets.fromLTRB(
+                                        20.0, 0.0, 20.0, 0.0),
+                                    height: 40.0,
+                                    width: 200.0,
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(30.0),
+                                      ),
+                                    ),
+
+                                    //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
+                                    child: Center(
+                                      child: Text(
+                                        'Submit',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {
+                                  if (userValue == null) {
+                                    Toast.show("Select from Dropdown", context,
+                                        duration: Toast.LENGTH_SHORT,
+                                        gravity: Toast.BOTTOM,
+                                        textColor: Color(0xff49A5FF),
+                                        backgroundColor: Colors.white);
+                                  } else if (_descriptionController.text ==
+                                          "" ||
+                                      _durationController.text == "") {
+                                    Toast.show("Enter Description and Duration",
+                                        context,
+                                        duration: Toast.LENGTH_SHORT,
+                                        gravity: Toast.BOTTOM,
+                                        textColor: Color(0xff49A5FF),
+                                        backgroundColor: Colors.white);
+                                  } else {
+                                    postJob(
+                                      userValue.toString(),
+                                      _descriptionController.text,
+                                      _durationController.text,
+                                    );
+
+                                    setState(() {
+                                      _descriptionController.text = "";
+                                      _durationController.text = "";
+                                    });
+                                    // Navigator.pop(context);
+
+                                  }
+                                },
+                              ),
+                              SizedBox(
+                                height: 30.0,
+                              ),
                             ],
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: GestureDetector(
-                          child: Container(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                              height: 40.0,
-                              width: 200.0,
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(30.0),
-                                ),
-                              ),
-
-                              //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
-                              child: Center(
-                                child: Text(
-                                  'Submit',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ),
-                          onTap: () {
-                            if (userValue == null) {
-                              Toast.show("Select from Dropdown", context,
-                                  duration: Toast.LENGTH_SHORT,
-                                  gravity: Toast.BOTTOM,
-                                  textColor: Color(0xff49A5FF),
-                                  backgroundColor: Colors.white);
-                            } else if (_descriptionController.text == "" ||
-                                _durationController.text == "") {
-                              Toast.show(
-                                  "Enter Description and Duration", context,
-                                  duration: Toast.LENGTH_SHORT,
-                                  gravity: Toast.BOTTOM,
-                                  textColor: Color(0xff49A5FF),
-                                  backgroundColor: Colors.white);
-                            } else {
-                              postJob(
-                                userValue.toString(),
-                                _descriptionController.text,
-                                _durationController.text,
-                              );
-
-                              setState(() {
-                                _descriptionController.text = "";
-                                _durationController.text = "";
-                              });
-                              // Navigator.pop(context);
-
-                            }
-                          },
                         ),
                       ),
                     ],

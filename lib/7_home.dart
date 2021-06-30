@@ -21,6 +21,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'rigAlert/alertList.dart';
 import 'Faq/faqMainScreen.dart';
+import 'package:http/http.dart' as http;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -43,6 +44,7 @@ class HomeScreenState extends State<HomeScreen> {
       sid = id;
       posiid = pos;
       note = fetchNote(id);
+      FirebaseMessaging.instance.getToken().then((value) => upToken(id, value));
       error = false;
     });
   }
@@ -94,7 +96,25 @@ class HomeScreenState extends State<HomeScreen> {
         //     });
       }
     });
+
     getValidation();
+  }
+
+  Future upToken(
+    String content,
+    String token,
+  ) async {
+    var data = {
+      'id': content,
+      'token': token,
+    };
+    http.Response response;
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/Token/update',
+        body: (data));
+    if (response.statusCode == 200) {
+      print('Success');
+    }
   }
 
   Future<bool> _onLogout() {
@@ -126,7 +146,7 @@ class HomeScreenState extends State<HomeScreen> {
             ));
   }
 
-  Future<bool> _onBackPressed() {
+  Future<bool> _onBackPressed() async {
     return showDialog(
         context: context,
         builder: (context) => AlertDialog(

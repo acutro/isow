@@ -168,7 +168,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
                     _rigList(controller.text);
                   },
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black87,
                   ),
                   controller: controller,
                   decoration: new InputDecoration(

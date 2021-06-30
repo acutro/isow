@@ -89,7 +89,7 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                             text: 'Whats Employers\n',
                           ),
                           TextSpan(
-                              text: 'Opinion and Issues?',
+                              text: 'Subject and Issues?',
                               style: TextStyle(fontSize: 20)),
                         ],
                       ),
@@ -120,7 +120,7 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                 controller: _opinionController,
                 style: TextStyle(color: Colors.black54),
                 decoration: new InputDecoration(
-                  hintText: 'Opinion',
+                  hintText: 'Subject',
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,

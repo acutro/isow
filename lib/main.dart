@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       color: Colors.white,
-      title: 'Flutter Login UI',
+      title: 'I.SOW',
       debugShowCheckedModeBanner: false,
       home: error == true
           ? Center(

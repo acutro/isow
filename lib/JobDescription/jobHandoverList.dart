@@ -76,11 +76,12 @@ class _MyApp extends State<JobHandoverList> {
         'http://isow.acutrotech.com/index.php/api/JobHandover/handoverstatus',
         body: (data));
     if (response.statusCode == 200) {
-      Toast.show("Status changed Successfully", context,
-          duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          textColor: Colors.green[600],
-          backgroundColor: Colors.white);
+      // Toast.show("Status changed Successfully", context,
+      //     duration: Toast.LENGTH_SHORT,
+      //     gravity: Toast.BOTTOM,
+      //     textColor: Colors.green[600],
+      //     backgroundColor: Colors.white);
+      Timer(Duration(seconds: 2), () => fetchIssued(sid));
     } else {
       Toast.show("Something went Wrong", context,
           duration: Toast.LENGTH_SHORT,

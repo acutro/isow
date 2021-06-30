@@ -106,7 +106,7 @@ class _RigAlert2State extends State<RigAlert2> {
         },
         iconEnabledColor: Colors.black54,
         value: rigValue,
-        isExpanded: true,
+        // isExpanded: true,
         underline: Container(
           height: 0,
           color: rigError ? Colors.red : Colors.white,

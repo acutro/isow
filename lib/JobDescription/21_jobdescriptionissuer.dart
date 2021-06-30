@@ -280,7 +280,6 @@ class _JobdescriptionState extends State<Jobdescription> {
                       Stack(
                         children: <Widget>[
                           Container(
-                            margin: EdgeInsets.only(right: 30.0),
                             decoration: BoxDecoration(
                               color: Color(0xff49A5FF),
                               borderRadius: BorderRadius.circular(50.0),

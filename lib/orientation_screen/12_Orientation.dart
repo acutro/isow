@@ -42,7 +42,7 @@ class OrientationScreenState extends State<OrientationScreen> {
             Container(
               padding: EdgeInsets.all(10),
               height: 300,
-              decoration: BoxDecoration(color: Colors.blue),
+              decoration: BoxDecoration(color: Colors.white),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -50,7 +50,7 @@ class OrientationScreenState extends State<OrientationScreen> {
                     'COMPANY',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Colors.blue,
                         fontSize: 20.0),
                   ),
                   SizedBox(height: 30),
@@ -59,10 +59,25 @@ class OrientationScreenState extends State<OrientationScreen> {
                       child: Text(
                         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut.",
                         style: TextStyle(
-                            color: Colors.white, fontSize: 12.0, height: 1.5),
+                            color: Colors.blue, fontSize: 12.0, height: 1.5),
                       ),
                     ),
                   ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: RaisedButton(
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      child: Text('Read more..'),
+                      onPressed: () => {},
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
 

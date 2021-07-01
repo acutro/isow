@@ -11,6 +11,7 @@ class UpdateNotepad extends StatefulWidget {
   final String name;
   final String requirment;
   final String date;
+  final String pr;
 
   UpdateNotepad(
       {Key key,
@@ -18,19 +19,22 @@ class UpdateNotepad extends StatefulWidget {
       this.userId,
       this.name,
       this.requirment,
-      this.date})
+      this.date,
+      this.pr})
       : super(key: key);
   @override
   _NotepadState createState() => _NotepadState();
 }
 
 class _NotepadState extends State<UpdateNotepad> {
+  int pr = 0;
   Future updateNotepad(
     String id,
     String userid,
     String name,
     String requirment,
     String date,
+    String pr,
   ) async {
     var data = {
       'id': id,
@@ -38,6 +42,7 @@ class _NotepadState extends State<UpdateNotepad> {
       'name': name,
       'requirements': requirment,
       'date': date,
+      'priorityColor': pr
     };
     http.Response response;
     response = await http.post(
@@ -96,6 +101,7 @@ class _NotepadState extends State<UpdateNotepad> {
   @override
   Widget build(BuildContext context) {
     date1 = widget.date;
+    // pr = int.parse(widget.pr);
     _nameController.text = widget.name;
     _requirmentController.text = widget.requirment;
     return Scaffold(
@@ -169,7 +175,6 @@ class _NotepadState extends State<UpdateNotepad> {
                 Container(
                   child: Expanded(
                     child: Container(
-                      height: 300.0,
                       margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 5.0),
                       decoration: BoxDecoration(
                         color: Color(0xff49A5FF),
@@ -185,6 +190,9 @@ class _NotepadState extends State<UpdateNotepad> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: <Widget>[
+                            SizedBox(
+                              height: 10,
+                            ),
                             Row(
                               children: <Widget>[
                                 Expanded(
@@ -261,8 +269,137 @@ class _NotepadState extends State<UpdateNotepad> {
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Container(
-                              margin: EdgeInsets.all(10.0),
+                              margin:
+                                  EdgeInsets.fromLTRB(10.0, 2.0, 10.0, 10.0),
+                              width: double.infinity,
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    alignment: Alignment.topLeft,
+                                    margin: EdgeInsets.fromLTRB(
+                                        10.0, 10.0, 0.0, 0.0),
+                                    child: Text(
+                                      'Priority',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: Wrap(
+                                      alignment: WrapAlignment.center,
+                                      spacing: 10.0,
+                                      runSpacing: 10.0,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              pr = 1;
+                                            });
+                                          },
+                                          child: Container(
+                                            height: pr == 1 ? 50 : 40,
+                                            width: pr == 1 ? 60 : 50,
+                                            decoration: BoxDecoration(
+                                                color: Colors.red,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(30)),
+                                                border: Border.all(
+                                                    width: 3,
+                                                    color: Colors.white54)),
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              pr = 2;
+                                            });
+                                          },
+                                          child: Container(
+                                            height: pr == 2 ? 50 : 40,
+                                            width: pr == 2 ? 60 : 50,
+                                            decoration: BoxDecoration(
+                                                color: Colors.orange,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(30)),
+                                                border: Border.all(
+                                                    width: 3,
+                                                    color: Colors.white54)),
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              pr = 3;
+                                            });
+                                          },
+                                          child: Container(
+                                            height: pr == 3 ? 50 : 40,
+                                            width: pr == 3 ? 60 : 50,
+                                            decoration: BoxDecoration(
+                                                color: Colors.yellow,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(30)),
+                                                border: Border.all(
+                                                    width: 3,
+                                                    color: Colors.white54)),
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              pr = 4;
+                                            });
+                                          },
+                                          child: Container(
+                                            height: pr == 4 ? 50 : 40,
+                                            width: pr == 4 ? 60 : 50,
+                                            decoration: BoxDecoration(
+                                                color: Colors.green,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(30)),
+                                                border: Border.all(
+                                                    width: 3,
+                                                    color: Colors.white54)),
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              pr = 5;
+                                            });
+                                          },
+                                          child: Container(
+                                            height: pr == 5 ? 50 : 40,
+                                            width: pr == 5 ? 60 : 50,
+                                            decoration: BoxDecoration(
+                                              color: Colors.blue,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(30)),
+                                              border: Border.all(
+                                                  width: 3,
+                                                  color: Colors.white54),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin:
+                                  EdgeInsets.fromLTRB(10.0, 2.0, 10.0, 10.0),
                               height: 230.0,
                               child: Column(
                                 children: <Widget>[
@@ -306,6 +443,9 @@ class _NotepadState extends State<UpdateNotepad> {
                                 ],
                               ),
                             ),
+                            SizedBox(
+                              height: 10,
+                            ),
                           ],
                         ),
                       ),
@@ -319,7 +459,13 @@ class _NotepadState extends State<UpdateNotepad> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      if (_datetime == null) {
+                      if (pr == 0) {
+                        Toast.show("Select Priority", context,
+                            duration: Toast.LENGTH_SHORT,
+                            gravity: Toast.BOTTOM,
+                            textColor: Colors.red,
+                            backgroundColor: Colors.white);
+                      } else if (_datetime == null) {
                         updateNotepad(
                             widget.id,
                             widget.userId,
@@ -328,14 +474,16 @@ class _NotepadState extends State<UpdateNotepad> {
                             widget.date.substring(6, 10) +
                                 widget.date.substring(2, 6) +
                                 widget.date.substring(0, 2) +
-                                " 00:00:00.000");
+                                " 00:00:00.000",
+                            pr.toString());
                       } else {
                         updateNotepad(
                             widget.id,
                             widget.userId,
                             _nameController.text,
                             _requirmentController.text,
-                            _datetime.toString());
+                            _datetime.toString(),
+                            pr.toString());
                       }
                     },
                     child: Container(

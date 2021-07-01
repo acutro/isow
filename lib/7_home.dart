@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:isow/NewsScreens/26_news.dart';
 import 'package:isow/main.dart';
 import 'ChatScreens/chatListScreen.dart';
+import 'UserAuth/4_signup.dart';
+import 'UserAuth/userReg.dart';
 import 'whetherScreens/27_weatherreport.dart';
 import 'orientation_screen/12_Orientation.dart';
 import 'WarningLetterScreens/16_RecievedWarningletter.dart';
@@ -1200,7 +1202,12 @@ class HomeScreenState extends State<HomeScreen> {
                         topLeft: Radius.circular(200),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegScreen()),
+                      );
+                    },
                     label: Text(
                       'Create New Employee Account',
                       style: TextStyle(

@@ -62,6 +62,20 @@ class _MyApp extends State<NotepadList> {
     }
   }
 
+  Color colorSelect(String sColor) {
+    if (sColor == '1') {
+      return Colors.red;
+    } else if (sColor == '2') {
+      return Colors.orange;
+    } else if (sColor == '3') {
+      return Colors.yellow;
+    } else if (sColor == '4') {
+      return Colors.green;
+    } else {
+      return Colors.blue;
+    }
+  }
+
   Future deleteNotepad(String id, String ssid) async {
     var data = {'id': id};
     http.Response response;
@@ -233,6 +247,8 @@ class _MyApp extends State<NotepadList> {
                                             listFacts[index]["date"],
                                             listFacts[index]["requirements"],
                                             listFacts[index]["id"],
+                                            colorSelect(listFacts[index]
+                                                ["priorityColor"]),
                                           );
                                         },
                                         child: Card(
@@ -258,8 +274,11 @@ class _MyApp extends State<NotepadList> {
                                                     children: <Widget>[
                                                       ListTile(
                                                         leading: CircleAvatar(
+                                                          radius: 30,
                                                           backgroundColor:
-                                                              Colors.blue,
+                                                              colorSelect(listFacts[
+                                                                      index][
+                                                                  "priorityColor"]),
                                                           child: Text(
                                                             listFacts[index]
                                                                     ["name"]
@@ -328,6 +347,7 @@ class _MyApp extends State<NotepadList> {
                                                                                             name: listFacts[index]["name"],
                                                                                             requirment: listFacts[index]["requirements"],
                                                                                             date: listFacts[index]["date"],
+                                                                                            pr: listFacts[index]["priorityColor"],
                                                                                           )),
                                                                                 );
                                                                               },
@@ -422,7 +442,7 @@ class _MyApp extends State<NotepadList> {
   }
 }
 
-showDialogFunc(context, title, date, requirment, id) {
+showDialogFunc(context, title, date, requirment, id, color) {
   Future deleteNotepad(
     String id,
   ) async {
@@ -482,7 +502,8 @@ showDialogFunc(context, title, date, requirment, id) {
                           children: <Widget>[
                             ListTile(
                               leading: CircleAvatar(
-                                backgroundColor: Colors.blue,
+                                radius: 30,
+                                backgroundColor: color,
                                 child: Text(
                                   title.toUpperCase().substring(0, 1),
                                   style: TextStyle(
@@ -502,16 +523,6 @@ showDialogFunc(context, title, date, requirment, id) {
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.black45),
                               ),
-                              // trailing: InkWell(
-                              //     onTap: () {
-                              //       deleteNotepad(id);
-
-                              //       Navigator.pop(context);
-                              //     },
-                              //     child: Icon(
-                              //       Icons.delete,
-                              //       color: Colors.red[400],
-                              //     )),
                             ),
                           ],
                         ),

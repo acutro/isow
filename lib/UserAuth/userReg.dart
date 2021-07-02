@@ -20,6 +20,7 @@ class SignupScreenState extends State<RegScreen> {
   bool rigError = false;
   Map roleResponse;
   Map rigResponse;
+  Map regResponse;
   List<dynamic> roleList;
   List<dynamic> rigList;
   Future fetchRig() async {
@@ -53,9 +54,8 @@ class SignupScreenState extends State<RegScreen> {
       onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
       },
-      iconEnabledColor: Colors.white,
+      iconEnabledColor: Colors.black45,
       value: rigValue,
-      dropdownColor: Colors.blueAccent,
       isExpanded: true,
       underline: Container(
         height: 0,
@@ -67,7 +67,7 @@ class SignupScreenState extends State<RegScreen> {
           "Select Rig",
           style: TextStyle(
             fontSize: 14,
-            color: Colors.white,
+            color: Colors.black45,
           ),
         ),
       ),
@@ -79,7 +79,7 @@ class SignupScreenState extends State<RegScreen> {
             child: Text(
               answer["rigName"],
               style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black87,
                   fontSize: 12,
                   fontFamily: "WorkSansLight"),
             ),
@@ -103,10 +103,9 @@ class SignupScreenState extends State<RegScreen> {
       onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
       },
-      iconEnabledColor: Colors.white,
+      iconEnabledColor: Colors.black45,
       value: roleValue,
-      style: TextStyle(color: Colors.white),
-      dropdownColor: Colors.blueAccent,
+      style: TextStyle(color: Colors.black87),
       isExpanded: true,
       underline: Container(
         height: 0,
@@ -117,7 +116,7 @@ class SignupScreenState extends State<RegScreen> {
         child: Text(
           "Select Role",
           style: TextStyle(
-              color: Colors.white, fontSize: 12, fontFamily: "WorkSansLight"),
+              color: Colors.black45, fontSize: 12, fontFamily: "WorkSansLight"),
         ),
       ),
       items: (roleList).map<DropdownMenuItem>((answer) {
@@ -127,7 +126,7 @@ class SignupScreenState extends State<RegScreen> {
             padding: EdgeInsets.only(left: 12),
             child: Text(
               answer["userRoles"],
-              style: TextStyle(color: Colors.white, fontSize: 14),
+              style: TextStyle(color: Colors.black87, fontSize: 14),
             ),
           ),
         );
@@ -175,7 +174,9 @@ class SignupScreenState extends State<RegScreen> {
           textColor: Colors.green[600],
           backgroundColor: Colors.white);
     } else {
-      Toast.show("Something went wrong", context,
+      regResponse = jsonDecode(response.body);
+      print(regResponse['message']);
+      Toast.show(regResponse['message'], context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.red,
@@ -216,28 +217,29 @@ class SignupScreenState extends State<RegScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   elevation: 0,
-      //   title: Text(
-      //     'Sign up',
-      //   ),
-      // actions: [
-      //   Padding(
-      //     padding: EdgeInsets.symmetric(horizontal: 16),
-      //     child: Icon(Icons.more_vert),
-      //   ),
-      // ],
-      // flexibleSpace: Container(
-      //   decoration: BoxDecoration(color: Colors.blueAccent
-      // gradient: LinearGradient(
-      //     begin: Alignment.topLeft,
-      //     end: Alignment.bottomRight,
-      //     colors: <Color>[Color(0xFF4fc4f2), Colors.blue]),
-      //         ),
-      //   ),
-      // ),
-      body: roleResponse == null
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        title: Text(
+          'Registration',
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Icon(Icons.more_vert),
+          ),
+        ],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            color: Colors.blueAccent,
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: <Color>[Color(0xFF4fc4f2), Colors.blue]),
+          ),
+        ),
+      ),
+      body: roleResponse == null || rigResponse == null
           ? Center(
               child: SpinKitChasingDots(
                 color: Colors.blue,
@@ -247,37 +249,34 @@ class SignupScreenState extends State<RegScreen> {
           : Container(
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/bg1.jpg"),
-                  fit: BoxFit.cover,
-                ),
+                color: Colors.white,
               ),
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: 60,
+                      height: 10,
                     ),
                     Container(
                         padding: EdgeInsets.all(20),
                         child: Column(
                           children: [
-                            Container(
-                              height: 110.0,
-                              width: 110.0,
-                              child: Image.asset('assets/images/logo.png'),
-                            ),
+                            // Container(
+                            //   height: 110.0,
+                            //   width: 110.0,
+                            //   child: Image.asset('assets/images/logo.png'),
+                            // ),
                             Text(
-                              'Apps Signup',
+                              'User Registration',
                               style: TextStyle(
                                   fontSize: 22,
-                                  color: Colors.white,
+                                  color: Colors.black87,
                                   fontFamily: "WorkSansLight"),
                             ),
                           ],
                         )),
                     SizedBox(
-                      height: 40,
+                      height: 10,
                     ),
                     Form(
                       key: _formKey,
@@ -288,17 +287,17 @@ class SignupScreenState extends State<RegScreen> {
                                 borderRadius: BorderRadius.circular(20.0),
                                 color: Colors.transparent,
                                 border: Border.all(
-                                    width: 1, color: Colors.white60)),
+                                    width: 1, color: Colors.black45)),
                             margin: new EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextFormField(
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black87,
                               ),
                               controller: _nameController,
                               decoration: InputDecoration(
                                 suffixIcon: Icon(
                                   Icons.person,
-                                  color: Colors.white,
+                                  color: Colors.black45,
                                 ),
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
@@ -309,7 +308,7 @@ class SignupScreenState extends State<RegScreen> {
                                     left: 15, bottom: 11, top: 11, right: 15),
                                 hintText: "Name",
                                 hintStyle: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black45,
                                     fontSize: 12,
                                     fontFamily: "WorkSansLight"),
                               ),
@@ -330,17 +329,17 @@ class SignupScreenState extends State<RegScreen> {
                                 borderRadius: BorderRadius.circular(20.0),
                                 color: Colors.transparent,
                                 border: Border.all(
-                                    width: 1, color: Colors.white60)),
+                                    width: 1, color: Colors.black45)),
                             margin: new EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextFormField(
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black87,
                               ),
                               controller: _useridController,
                               decoration: InputDecoration(
                                 suffixIcon: Icon(
                                   Icons.perm_identity_sharp,
-                                  color: Colors.white,
+                                  color: Colors.black45,
                                 ),
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
@@ -351,7 +350,7 @@ class SignupScreenState extends State<RegScreen> {
                                     left: 15, bottom: 11, top: 11, right: 15),
                                 hintText: "Employee Id",
                                 hintStyle: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black45,
                                     fontSize: 12,
                                     fontFamily: "WorkSansLight"),
                               ),
@@ -375,17 +374,17 @@ class SignupScreenState extends State<RegScreen> {
                                 borderRadius: BorderRadius.circular(20.0),
                                 color: Colors.transparent,
                                 border: Border.all(
-                                    width: 1, color: Colors.white60)),
+                                    width: 1, color: Colors.black45)),
                             margin: new EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextFormField(
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black87,
                               ),
                               controller: _emailController,
                               decoration: InputDecoration(
                                 suffixIcon: Icon(
                                   Icons.email,
-                                  color: Colors.white,
+                                  color: Colors.black45,
                                 ),
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
@@ -396,7 +395,7 @@ class SignupScreenState extends State<RegScreen> {
                                     left: 15, bottom: 11, top: 11, right: 15),
                                 hintText: "Email",
                                 hintStyle: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black45,
                                     fontSize: 12,
                                     fontFamily: "WorkSansLight"),
                               ),
@@ -422,17 +421,17 @@ class SignupScreenState extends State<RegScreen> {
                                 borderRadius: BorderRadius.circular(20.0),
                                 color: Colors.transparent,
                                 border: Border.all(
-                                    width: 1, color: Colors.white60)),
+                                    width: 1, color: Colors.black45)),
                             margin: new EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextFormField(
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black87,
                               ),
                               controller: _mobController,
                               decoration: InputDecoration(
                                 suffixIcon: Icon(
                                   Icons.mobile_friendly,
-                                  color: Colors.white,
+                                  color: Colors.black45,
                                 ),
                                 border: InputBorder.none,
                                 focusedBorder: InputBorder.none,
@@ -443,7 +442,7 @@ class SignupScreenState extends State<RegScreen> {
                                     left: 15, bottom: 11, top: 11, right: 15),
                                 hintText: "Mobile Number",
                                 hintStyle: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black45,
                                     fontSize: 12,
                                     fontFamily: "WorkSansLight"),
                               ),
@@ -451,7 +450,7 @@ class SignupScreenState extends State<RegScreen> {
                                 if (value.isEmpty) {
                                   return "Please enter Mobile Number";
                                 }
-                                if (value.length < 10) {
+                                if (value.length != 10) {
                                   return "Please enter valid Mobile Number";
                                 }
                                 return null;
@@ -467,7 +466,7 @@ class SignupScreenState extends State<RegScreen> {
                                   borderRadius: BorderRadius.circular(20.0),
                                   color: Colors.transparent,
                                   border: Border.all(
-                                      width: 1, color: Colors.white60)),
+                                      width: 1, color: Colors.black45)),
                               margin:
                                   new EdgeInsets.symmetric(horizontal: 20.0),
                               child: buildRoleDropDownButton()),
@@ -479,7 +478,7 @@ class SignupScreenState extends State<RegScreen> {
                                   borderRadius: BorderRadius.circular(20.0),
                                   color: Colors.transparent,
                                   border: Border.all(
-                                      width: 1, color: Colors.white60)),
+                                      width: 1, color: Colors.black45)),
                               margin:
                                   new EdgeInsets.symmetric(horizontal: 20.0),
                               child: buildRigDownButton()),
@@ -491,11 +490,11 @@ class SignupScreenState extends State<RegScreen> {
                                 borderRadius: BorderRadius.circular(20.0),
                                 color: Colors.transparent,
                                 border: Border.all(
-                                    width: 1, color: Colors.white60)),
+                                    width: 1, color: Colors.black45)),
                             margin: new EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextFormField(
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black87,
                               ),
                               controller: _passwordController,
                               obscureText: _obscureText,
@@ -508,7 +507,7 @@ class SignupScreenState extends State<RegScreen> {
                                     _obscureText
                                         ? Icons.lock_sharp
                                         : Icons.lock_open_outlined,
-                                    color: Colors.white,
+                                    color: Colors.black45,
                                   ),
                                 ),
                                 border: InputBorder.none,
@@ -520,7 +519,7 @@ class SignupScreenState extends State<RegScreen> {
                                     left: 15, bottom: 11, top: 11, right: 15),
                                 hintText: "Password",
                                 hintStyle: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black45,
                                     fontSize: 12,
                                     fontFamily: "WorkSansLight"),
                               ),
@@ -540,11 +539,11 @@ class SignupScreenState extends State<RegScreen> {
                                 borderRadius: BorderRadius.circular(20.0),
                                 color: Colors.transparent,
                                 border: Border.all(
-                                    width: 1, color: Colors.white60)),
+                                    width: 1, color: Colors.black45)),
                             margin: new EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextFormField(
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black87,
                               ),
                               controller: _cpasswordController,
                               obscureText: _obscureText1,
@@ -557,7 +556,7 @@ class SignupScreenState extends State<RegScreen> {
                                     _obscureText1
                                         ? Icons.lock_sharp
                                         : Icons.lock_open_outlined,
-                                    color: Colors.white,
+                                    color: Colors.black45,
                                   ),
                                 ),
                                 border: InputBorder.none,
@@ -569,7 +568,7 @@ class SignupScreenState extends State<RegScreen> {
                                     left: 15, bottom: 11, top: 11, right: 15),
                                 hintText: "Confirm Password",
                                 hintStyle: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black45,
                                     fontSize: 12,
                                     fontFamily: "WorkSansLight"),
                               ),
@@ -604,9 +603,7 @@ class SignupScreenState extends State<RegScreen> {
                                 _mobController.text,
                                 rigValue.toString(),
                                 roleValue.toString());
-                            AlertDialog(
-                              title: Text("Successful"),
-                            );
+
                             print("Successful");
                           } else {
                             AlertDialog(
@@ -641,41 +638,41 @@ class SignupScreenState extends State<RegScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 20,
                     ),
-                    Container(
-                        child: FlatButton(
-                      textColor: Colors.white,
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Back to ',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: "WorkSansLight",
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'sign in.',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: "WorkSansLight",
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SigninScreen()));
+                    // Container(
+                    //     child: FlatButton(
+                    //   textColor: Colors.white,
+                    //   child: Text.rich(
+                    //     TextSpan(
+                    //       children: [
+                    //         TextSpan(
+                    //           text: 'Back to ',
+                    //           style: TextStyle(
+                    //             fontSize: 14,
+                    //             fontFamily: "WorkSansLight",
+                    //           ),
+                    //         ),
+                    //         TextSpan(
+                    //           text: 'sign in.',
+                    //           style: TextStyle(
+                    //             fontSize: 14,
+                    //             fontFamily: "WorkSansLight",
+                    //             decoration: TextDecoration.underline,
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    //   onPressed: () {
+                    //     Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //             builder: (context) => SigninScreen()));
 
-                        //signup screen
-                      },
-                    )),
+                    //     //signup screen
+                    //   },
+                    // )),
                   ],
                 ),
               ),

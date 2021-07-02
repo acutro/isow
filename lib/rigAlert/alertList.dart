@@ -92,7 +92,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
     getValidation();
     super.initState();
     _clockTimer =
-        Timer.periodic(Duration(seconds: 10), (Timer t) => getValidation());
+        Timer.periodic(Duration(seconds: 8), (Timer t) => _rigList(""));
   }
 
   @override
@@ -227,15 +227,16 @@ class _RecivedWarningState extends State<RecivedAlert> {
                               return GestureDetector(
                                 onTap: () {
                                   showDialogFunc(
-                                    context,
-                                    listFacts[index]["Name"],
-                                    listFacts[index]["Position"],
-                                    listFacts[index]["Date"],
-                                    listFacts[index]["Created_Date"],
-                                    listFacts[index]["Description"],
-                                    listFacts[index]["rigName"] ?? "",
-                                    listFacts[index]["profile_pic"] ?? "",
-                                  );
+                                      context,
+                                      listFacts[index]["Name"],
+                                      listFacts[index]["Position"],
+                                      listFacts[index]["Date"],
+                                      listFacts[index]["Created_Date"],
+                                      listFacts[index]["Description"],
+                                      listFacts[index]["rigName"] ?? "",
+                                      listFacts[index]["profile_pic"] ?? "",
+                                      listFacts[index]["id"] ?? "",
+                                      posid);
                                 },
                                 child: Card(
                                   elevation: 3,
@@ -344,8 +345,8 @@ class _RecivedWarningState extends State<RecivedAlert> {
   }
 }
 
-showDialogFunc(
-    context, person, position, date, creteDate, content, rigName, path) {
+showDialogFunc(context, person, position, date, creteDate, content, rigName,
+    path, id, posid) {
   int endT(DateTime due) {
     int tm;
     tm = due.millisecondsSinceEpoch;
@@ -363,6 +364,31 @@ showDialogFunc(
     } else {
       pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
       return pathf;
+    }
+  }
+
+  Future stopStatus(String rigId, String date) async {
+    var data = {
+      'id': rigId,
+      'date': date,
+    };
+    http.Response response;
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/Rigalert/dateupdate',
+        body: (data));
+    if (response.statusCode == 200) {
+      // Toast.show("Status changed Successfully", context,
+      //     duration: Toast.LENGTH_SHORT,
+      //     gravity: Toast.BOTTOM,
+      //     textColor: Colors.green[600],
+      //     backgroundColor: Colors.white);
+
+    } else {
+      Toast.show("Something went Wrong", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
     }
   }
 
@@ -554,9 +580,35 @@ showDialogFunc(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    new SizedBox(
-                      width: 10.0,
-                      height: 10.0,
+                    posid == '4'
+                        ? new SizedBox(
+                            width: 130.0,
+                            height: 45.0,
+                            child: FlatButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(80.0)),
+                              color: Colors.red,
+                              onPressed: () {
+                                stopStatus(
+                                    id,
+                                    DateFormat('HH:mm:ss')
+                                        .format(DateTime.now())
+                                        .toString());
+                                Timer(Duration(seconds: 1),
+                                    () => Navigator.pop(context));
+                              },
+                              height: 30,
+                              child: Text(
+                                'STOP',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          )
+                        : SizedBox(
+                            width: 5,
+                          ),
+                    SizedBox(
+                      width: 5,
                     ),
                     new SizedBox(
                       width: 130.0,

@@ -62,6 +62,16 @@ class _MyApp extends State<NotepadList> {
     }
   }
 
+  String priofn(String pr) {
+    if (pr == '1') {
+      return 'Severe';
+    } else if (pr == '2') {
+      return 'Moderate';
+    } else {
+      return 'Important';
+    }
+  }
+
   Color colorSelect(String sColor) {
     if (sColor == '1') {
       return Colors.red;
@@ -304,8 +314,28 @@ class _MyApp extends State<NotepadList> {
                                                               height: 1.5),
                                                         ),
                                                         subtitle: Text(
-                                                          listFacts[index]
-                                                              ["date"],
+                                                          "Priority     :  " +
+                                                              priofn(listFacts[
+                                                                      index][
+                                                                  "priority"]) +
+                                                              "\nCatogory  :  " +
+                                                              listFacts[index][
+                                                                  "categoryName"] +
+                                                              // "Priority :  " +
+                                                              //     listFacts[index]
+                                                              //         ["priority"] +
+                                                              //     "\n" +
+                                                              //     "Catogory   :   " +
+                                                              //     listFacts[index][
+                                                              //         "categoryName"] +
+                                                              //     "\n" +
+                                                              "\nDate          :  " +
+                                                              listFacts[index]
+                                                                      ["date"]
+                                                                  .substring(
+                                                                      0, 10),
+                                                          style: TextStyle(
+                                                              fontSize: 11),
                                                         ),
                                                         trailing: Container(
                                                           width: 70,

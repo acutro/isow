@@ -56,6 +56,9 @@ class _JobdescriptionState extends State<Jobdescription> {
         print("{$userList}");
       });
     } else {
+      setState(() {
+        userList.clear();
+      });
       Toast.show("List is Empty", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
@@ -173,7 +176,7 @@ class _JobdescriptionState extends State<Jobdescription> {
       child: userResponse == null
           ? GestureDetector(
               onTap: () {
-                Toast.show("Select Position", context,
+                Toast.show("Select Person", context,
                     duration: Toast.LENGTH_SHORT,
                     gravity: Toast.BOTTOM,
                     textColor: Colors.red,
@@ -183,7 +186,7 @@ class _JobdescriptionState extends State<Jobdescription> {
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                 child: Text(
-                  "Choose Position",
+                  "Choose Person",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black87,

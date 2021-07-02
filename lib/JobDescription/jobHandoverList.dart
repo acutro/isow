@@ -137,8 +137,8 @@ class _MyApp extends State<JobHandoverList> {
                         elevation: 5.0,
                         type: MaterialType.card,
                         child: Container(
-                          padding: EdgeInsets.all(25),
-                          height: 280,
+                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          height: 250,
                           width: 320,
                           child: Column(
                             children: [

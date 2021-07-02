@@ -71,7 +71,7 @@ class HomeScreenState extends State<HomeScreen> {
                 channel.description,
                 color: Colors.blue,
                 playSound: true,
-                icon: '@mipmap/ic_laucher',
+                icon: '@mipmap/ic_launcher',
               ),
             ));
       }

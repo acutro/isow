@@ -213,7 +213,7 @@ class _MyApp extends State<FeedbackList> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => FeedbackCounter(

@@ -560,7 +560,7 @@ class HomeScreenState extends State<HomeScreen> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
+                                new MaterialPageRoute(
                                     builder: (context) => Contact(
                                           sid: sid,
                                         )),

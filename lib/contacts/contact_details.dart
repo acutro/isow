@@ -36,116 +36,119 @@ class _ContactDetail extends State<ContactDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.name),
-        actions: [],
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
+    return WillPopScope(
+      onWillPop: () => Future.value(true),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.name),
+          actions: [],
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
           ),
         ),
-      ),
-      body: Container(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 15,
-            ),
-            Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(100000),
-                child: CircleAvatar(
-                  radius: 80,
-                  child: Image.network(getpath(widget.ppath),
-                      height: 300, width: 300, fit: BoxFit.cover),
+        body: Container(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100000),
+                  child: CircleAvatar(
+                    radius: 80,
+                    child: Image.network(getpath(widget.ppath),
+                        height: 300, width: 300, fit: BoxFit.cover),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Text(
-                widget.name,
-                style: TextStyle(color: Colors.black, fontSize: 25),
+              SizedBox(
+                height: 30,
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Divider(),
-            ListTile(
-              subtitle: Text(
-                widget.id,
-                style: TextStyle(color: Colors.black, fontSize: 16),
+              Padding(
+                padding: EdgeInsets.only(left: 16),
+                child: Text(
+                  widget.name,
+                  style: TextStyle(color: Colors.black, fontSize: 25),
+                ),
               ),
-              title: Text(
-                "User ID",
-                style: TextStyle(color: Colors.black54, fontSize: 14),
+              SizedBox(
+                height: 10,
               ),
-              trailing: Container(
-                padding: EdgeInsets.all(18),
-                child: Icon(Icons.person),
-              ),
-            ),
-            Divider(),
-            ListTile(
-              subtitle: Text(
-                widget.mob,
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
-              title: Text(
-                "Mobile",
-                style: TextStyle(color: Colors.black54, fontSize: 14),
-              ),
-              trailing: InkWell(
-                borderRadius: BorderRadius.circular(30),
-                onTap: () {
-                  launch("tel:" + widget.mob);
-                },
-                child: Container(
+              Divider(),
+              ListTile(
+                subtitle: Text(
+                  widget.id,
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
+                title: Text(
+                  "User ID",
+                  style: TextStyle(color: Colors.black54, fontSize: 14),
+                ),
+                trailing: Container(
                   padding: EdgeInsets.all(18),
-                  child: Icon(Icons.call),
+                  child: Icon(Icons.person),
                 ),
               ),
-            ),
-            Divider(),
-            ListTile(
-              subtitle: Text(
-                widget.email,
-                style: TextStyle(color: Colors.black, fontSize: 16),
+              Divider(),
+              ListTile(
+                subtitle: Text(
+                  widget.mob,
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
+                title: Text(
+                  "Mobile",
+                  style: TextStyle(color: Colors.black54, fontSize: 14),
+                ),
+                trailing: InkWell(
+                  borderRadius: BorderRadius.circular(30),
+                  onTap: () {
+                    launch("tel:" + widget.mob);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(18),
+                    child: Icon(Icons.call),
+                  ),
+                ),
               ),
-              title: Text(
-                "Email",
-                style: TextStyle(color: Colors.black54, fontSize: 14),
+              Divider(),
+              ListTile(
+                subtitle: Text(
+                  widget.email,
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
+                title: Text(
+                  "Email",
+                  style: TextStyle(color: Colors.black54, fontSize: 14),
+                ),
+                trailing: Container(
+                  padding: EdgeInsets.all(18),
+                  child: Icon(Icons.email),
+                ),
               ),
-              trailing: Container(
-                padding: EdgeInsets.all(18),
-                child: Icon(Icons.email),
+              Divider(),
+              ListTile(
+                subtitle: Text(
+                  '${widget.work[0].toUpperCase()}${widget.work.substring(1)}',
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
+                title: Text(
+                  "Position",
+                  style: TextStyle(color: Colors.black54, fontSize: 14),
+                ),
+                trailing: Container(
+                  padding: EdgeInsets.all(18),
+                  child: Icon(Icons.work),
+                ),
               ),
-            ),
-            Divider(),
-            ListTile(
-              subtitle: Text(
-                '${widget.work[0].toUpperCase()}${widget.work.substring(1)}',
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
-              title: Text(
-                "Position",
-                style: TextStyle(color: Colors.black54, fontSize: 14),
-              ),
-              trailing: Container(
-                padding: EdgeInsets.all(18),
-                child: Icon(Icons.work),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

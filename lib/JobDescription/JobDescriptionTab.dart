@@ -19,7 +19,7 @@ class _JobDescriptionTabState extends State<JobDescriptionTab> {
         appBar: AppBar(
           title: Center(
             child: Text(
-              "Job Description",
+              "Work Management",
               style: TextStyle(
                 color: Colors.white,
               ),

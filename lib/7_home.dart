@@ -281,135 +281,168 @@ class HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           SizedBox(height: 25.0),
-                          ListTile(
-                            contentPadding:
-                                EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
-                            leading: MaterialButton(
-                              onPressed: () {
-                                Navigator.push(
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          EditProfileScreen(userId: sid)),
-                                );
+                                          EditProfileScreen(userId: sid)));
+                            },
+                            child: ListTile(
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
+                              leading: MaterialButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditProfileScreen(userId: sid)),
+                                  );
 
 //signup screen
-                              },
-                              color: Colors.white,
-                              textColor: Color(0xFF4fc4f2),
-                              child: Icon(
-                                Icons.perm_identity,
-                                size: 25,
-                              ),
-                              padding: EdgeInsets.all(16),
-                              shape: CircleBorder(),
-                            ),
-                            title: Text(
-                              'Profile',
-                              style: TextStyle(
-                                fontSize: 15,
+                                },
                                 color: Colors.white,
+                                textColor: Color(0xFF4fc4f2),
+                                child: Icon(
+                                  Icons.perm_identity,
+                                  size: 25,
+                                ),
+                                padding: EdgeInsets.all(16),
+                                shape: CircleBorder(),
+                              ),
+                              title: Text(
+                                'Profile',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
-                          ListTile(
-                            contentPadding:
-                                EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
-                            leading: MaterialButton(
-                              onPressed: () {},
-                              color: Colors.white,
-                              textColor: Color(0xFF4fc4f2),
-                              child: Icon(
-                                Icons.settings,
-                                size: 25,
-                              ),
-                              padding: EdgeInsets.all(16),
-                              shape: CircleBorder(),
-                            ),
-                            title: Text(
-                              'Settings',
-                              style: TextStyle(
-                                fontSize: 15,
+                          GestureDetector(
+                            onTap: () {},
+                            child: ListTile(
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
+                              leading: MaterialButton(
+                                onPressed: () {},
                                 color: Colors.white,
+                                textColor: Color(0xFF4fc4f2),
+                                child: Icon(
+                                  Icons.settings,
+                                  size: 25,
+                                ),
+                                padding: EdgeInsets.all(16),
+                                shape: CircleBorder(),
+                              ),
+                              title: Text(
+                                'Settings',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
-                          ListTile(
-                            contentPadding:
-                                EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
-                            leading: MaterialButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => FaqScreen()),
-                                );
-                              },
-                              color: Colors.white,
-                              textColor: Color(0xFF4fc4f2),
-                              child: Icon(
-                                Icons.question_answer,
-                                size: 25,
-                              ),
-                              padding: EdgeInsets.all(16),
-                              shape: CircleBorder(),
-                            ),
-                            title: Text(
-                              'Faq',
-                              style: TextStyle(
-                                fontSize: 15,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FaqScreen()),
+                              );
+                            },
+                            child: ListTile(
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
+                              leading: MaterialButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FaqScreen()),
+                                  );
+                                },
                                 color: Colors.white,
+                                textColor: Color(0xFF4fc4f2),
+                                child: Icon(
+                                  Icons.question_answer,
+                                  size: 25,
+                                ),
+                                padding: EdgeInsets.all(16),
+                                shape: CircleBorder(),
+                              ),
+                              title: Text(
+                                'Faq',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
-                          ListTile(
-                            contentPadding:
-                                EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
-                            leading: MaterialButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SafetyRule()),
-                                );
-                              },
-                              color: Colors.white,
-                              textColor: Color(0xFF4fc4f2),
-                              child: FaIcon(
-                                FontAwesomeIcons.fire,
-                                size: 25,
-                              ),
-                              padding: EdgeInsets.all(16),
-                              shape: CircleBorder(),
-                            ),
-                            title: Text(
-                              'Safety Rules',
-                              style: TextStyle(
-                                fontSize: 15,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SafetyRule()),
+                              );
+                            },
+                            child: ListTile(
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
+                              leading: MaterialButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SafetyRule()),
+                                  );
+                                },
                                 color: Colors.white,
+                                textColor: Color(0xFF4fc4f2),
+                                child: FaIcon(
+                                  FontAwesomeIcons.fire,
+                                  size: 25,
+                                ),
+                                padding: EdgeInsets.all(16),
+                                shape: CircleBorder(),
+                              ),
+                              title: Text(
+                                'Safety Rules',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                           SizedBox(height: 100),
-                          ListTile(
-                            contentPadding:
-                                EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
-                            leading: MaterialButton(
-                              onPressed: _onLogout,
-                              color: Colors.white,
-                              textColor: Color(0xFF4fc4f2),
-                              child: Icon(
-                                Icons.logout,
-                                size: 25,
-                              ),
-                              padding: EdgeInsets.all(16),
-                              shape: CircleBorder(),
-                            ),
-                            title: Text(
-                              'Logout',
-                              style: TextStyle(
-                                fontSize: 15,
+                          GestureDetector(
+                            onTap: _onLogout,
+                            child: ListTile(
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 25.0),
+                              leading: MaterialButton(
+                                onPressed: _onLogout,
                                 color: Colors.white,
+                                textColor: Color(0xFF4fc4f2),
+                                child: Icon(
+                                  Icons.logout,
+                                  size: 25,
+                                ),
+                                padding: EdgeInsets.all(16),
+                                shape: CircleBorder(),
+                              ),
+                              title: Text(
+                                'Logout',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
@@ -560,7 +593,7 @@ class HomeScreenState extends State<HomeScreen> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                new MaterialPageRoute(
+                                MaterialPageRoute(
                                     builder: (context) => Contact(
                                           sid: sid,
                                         )),
@@ -891,7 +924,7 @@ class HomeScreenState extends State<HomeScreen> {
                                   margin: EdgeInsets.all(10),
                                 ),
                                 Text(
-                                  "Job Description",
+                                  "Work Management",
                                   style: TextStyle(fontSize: 12),
                                 )
                               ],

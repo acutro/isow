@@ -1,43 +1,41 @@
 import 'dart:async';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:isow/UserAuth/passresetScreen.dart';
 import 'package:toast/toast.dart';
 import '2_signinpage.dart';
-import 'otpScreen.dart';
-import 'package:http/http.dart' as http;
 
-class ForgotpswdScreen extends StatefulWidget {
+class ForgotPassScreen extends StatefulWidget {
+  final String email;
+
+  ForgotPassScreen({Key key, @required this.email}) : super(key: key);
   @override
-  ForgotpswdScreenState createState() => ForgotpswdScreenState();
+  ForgotPassScreenState createState() => ForgotPassScreenState();
 }
 
-class ForgotpswdScreenState extends State<ForgotpswdScreen> {
-  TextEditingController _emailController = new TextEditingController();
-  Future otpSend(String email) async {
+class ForgotPassScreenState extends State<ForgotPassScreen> {
+  TextEditingController _cpasswordController = new TextEditingController();
+  TextEditingController _passwordController = new TextEditingController();
+  Future passwordReset(String email, String pass) async {
     var data = {
       'email': email,
+      'password': pass,
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/ResetPassword/ForgotPassword',
+        'http://isow.acutrotech.com/index.php/api/ResetPassword/resetpassword',
         body: (data));
     if (response.statusCode == 200) {
-      Toast.show("OTP Sent successfully", context,
+      Toast.show("Password Reseted successfully", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
           backgroundColor: Colors.white);
       Timer(
           Duration(seconds: 2),
-          () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => OtpScreen(
-                        email: email,
-                      ))));
+          () => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => SigninScreen())));
     } else {
-      Toast.show("Please Enter Valid or Registered E-Mail ID", context,
+      Toast.show("Something went wrong try again", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.red,
@@ -45,39 +43,23 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
     }
   }
 
+  void _viewPass() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  void _viewPass2() {
+    setState(() {
+      _obscureText1 = !_obscureText1;
+    });
+  }
+
+  bool _obscureText = true;
+  bool _obscureText1 = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.blueAccent,
-      //   centerTitle: true,
-      //   leading: GestureDetector(
-      //     onTap: () {
-      //       Navigator.pop(context);
-      //     },
-      //     child: Icon(
-      //       Icons.arrow_back_ios,
-      //       color: Colors.white,
-      //     ),
-      //   ),
-      //   title: Text(
-      //     'Forget password',
-      //   ),
-      // actions: [
-      //   Padding(
-      //     padding: EdgeInsets.symmetric(horizontal: 16),
-      //     child: Icon(Icons.more_vert),
-      //   ),
-      // ],
-      // flexibleSpace: Container(
-      //   decoration: BoxDecoration(
-      //       gradient: LinearGradient(
-      //           begin: Alignment.topLeft,
-      //           end: Alignment.bottomRight,
-      //           colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
-      // ),
-      //   elevation: 0,
-      // ),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -117,7 +99,7 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 30.0),
                 child: Text(
-                  " Don't worry! Just fill in your email and we'll send you a link to reset password",
+                  "Please enter new password",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
@@ -135,11 +117,19 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                   style: TextStyle(
                     color: Colors.white,
                   ),
-                  controller: _emailController,
-                  decoration: new InputDecoration(
-                    suffixIcon: Icon(
-                      Icons.email_outlined,
-                      color: Colors.white,
+                  controller: _passwordController,
+                  obscureText: _obscureText,
+                  decoration: InputDecoration(
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        _viewPass();
+                      },
+                      child: Icon(
+                        _obscureText
+                            ? Icons.lock_sharp
+                            : Icons.lock_open_outlined,
+                        color: Colors.white,
+                      ),
                     ),
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
@@ -148,9 +138,49 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                     disabledBorder: InputBorder.none,
                     contentPadding: EdgeInsets.only(
                         left: 15, bottom: 11, top: 11, right: 15),
-                    hintText: 'Email Address',
-                    filled: true,
-                    // fillColor: Colors.white24,
+                    hintText: "Password",
+                    hintStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontFamily: "WorkSansLight"),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: Colors.transparent,
+                    border: Border.all(width: 1, color: Colors.white60)),
+                margin: new EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextFormField(
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  controller: _cpasswordController,
+                  obscureText: _obscureText1,
+                  decoration: InputDecoration(
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        _viewPass2();
+                      },
+                      child: Icon(
+                        _obscureText1
+                            ? Icons.lock_sharp
+                            : Icons.lock_open_outlined,
+                        color: Colors.white,
+                      ),
+                    ),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.only(
+                        left: 15, bottom: 11, top: 11, right: 15),
+                    hintText: "Confirm Password",
                     hintStyle: TextStyle(
                         color: Colors.white,
                         fontSize: 12,
@@ -165,15 +195,29 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                 height: 50.0,
                 child: RaisedButton(
                   onPressed: () {
-                    if (_emailController.text == "") {
-                      Toast.show("Please enter E-mail", context,
+                    if (_passwordController.text == "" ||
+                        _cpasswordController.text == "") {
+                      Toast.show("Enter password and confirm password", context,
                           duration: Toast.LENGTH_SHORT,
                           gravity: Toast.BOTTOM,
                           textColor: Colors.red,
                           backgroundColor: Colors.white);
+                    } else if (_passwordController.text.length < 6) {
+                      Toast.show("Password must be 6 charecters", context,
+                          duration: Toast.LENGTH_SHORT,
+                          gravity: Toast.BOTTOM,
+                          textColor: Colors.red,
+                          backgroundColor: Colors.white);
+                    } else if (_passwordController.text ==
+                        _cpasswordController.text) {
+                      passwordReset(widget.email, _passwordController.text);
+                      _passwordController.clear();
                     } else {
-                      otpSend(_emailController.text);
-                      _emailController.clear();
+                      Toast.show("Password not match", context,
+                          duration: Toast.LENGTH_SHORT,
+                          gravity: Toast.BOTTOM,
+                          textColor: Colors.red,
+                          backgroundColor: Colors.white);
                     }
                   },
                   shape: RoundedRectangleBorder(
@@ -193,7 +237,7 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                           BoxConstraints(maxWidth: 170.0, minHeight: 50.0),
                       alignment: Alignment.center,
                       child: Text(
-                        "Send reset link",
+                        "Reset Password",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
@@ -229,6 +273,9 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                   ),
                 ),
                 onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SigninScreen()));
+
                   //signup screen
                 },
               )),

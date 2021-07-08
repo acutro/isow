@@ -4,26 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:isow/UserAuth/passresetScreen.dart';
 import 'package:toast/toast.dart';
 import '2_signinpage.dart';
-import 'otpScreen.dart';
 import 'package:http/http.dart' as http;
 
-class ForgotpswdScreen extends StatefulWidget {
+class OtpScreen extends StatefulWidget {
+  final String email;
+
+  OtpScreen({Key key, @required this.email}) : super(key: key);
   @override
-  ForgotpswdScreenState createState() => ForgotpswdScreenState();
+  OtpScreenState createState() => OtpScreenState();
 }
 
-class ForgotpswdScreenState extends State<ForgotpswdScreen> {
-  TextEditingController _emailController = new TextEditingController();
-  Future otpSend(String email) async {
+class OtpScreenState extends State<OtpScreen> {
+  TextEditingController _otpController = new TextEditingController();
+  Future otpVerify(String email, String otp) async {
     var data = {
+      'OTP': otp,
       'email': email,
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/ResetPassword/ForgotPassword',
+        'http://isow.acutrotech.com/index.php/api/ResetPassword/CheckverificationCode',
         body: (data));
     if (response.statusCode == 200) {
-      Toast.show("OTP Sent successfully", context,
+      Toast.show("OTP Verified successfully", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
@@ -33,11 +36,11 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
           () => Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => OtpScreen(
+                  builder: (context) => ForgotPassScreen(
                         email: email,
                       ))));
     } else {
-      Toast.show("Please Enter Valid or Registered E-Mail ID", context,
+      Toast.show("Invalid OTP", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.red,
@@ -117,7 +120,7 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                 alignment: Alignment.center,
                 padding: EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 30.0),
                 child: Text(
-                  " Don't worry! Just fill in your email and we'll send you a link to reset password",
+                  "Enter your Five digit OTP",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
@@ -135,12 +138,12 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                   style: TextStyle(
                     color: Colors.white,
                   ),
-                  controller: _emailController,
+                  controller: _otpController,
                   decoration: new InputDecoration(
-                    suffixIcon: Icon(
-                      Icons.email_outlined,
-                      color: Colors.white,
-                    ),
+                    // suffixIcon: Icon(
+                    //   Icons.email_outlined,
+                    //   color: Colors.white,
+                    // ),
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
@@ -148,7 +151,7 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                     disabledBorder: InputBorder.none,
                     contentPadding: EdgeInsets.only(
                         left: 15, bottom: 11, top: 11, right: 15),
-                    hintText: 'Email Address',
+                    hintText: 'OTP',
                     filled: true,
                     // fillColor: Colors.white24,
                     hintStyle: TextStyle(
@@ -165,15 +168,15 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                 height: 50.0,
                 child: RaisedButton(
                   onPressed: () {
-                    if (_emailController.text == "") {
-                      Toast.show("Please enter E-mail", context,
+                    if (_otpController.text.length != 5) {
+                      Toast.show("Please enter 5 digit OTP", context,
                           duration: Toast.LENGTH_SHORT,
                           gravity: Toast.BOTTOM,
                           textColor: Colors.red,
                           backgroundColor: Colors.white);
                     } else {
-                      otpSend(_emailController.text);
-                      _emailController.clear();
+                      otpVerify(widget.email, _otpController.text);
+                      _otpController.clear();
                     }
                   },
                   shape: RoundedRectangleBorder(
@@ -229,6 +232,9 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                   ),
                 ),
                 onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SigninScreen()));
+
                   //signup screen
                 },
               )),

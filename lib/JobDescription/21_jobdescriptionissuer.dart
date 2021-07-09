@@ -1,10 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:image_picker/image_picker.dart';
 import 'JobDescriptionTab.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async';
 import 'package:toast/toast.dart';
+import 'dart:io' as file;
+import 'package:async/async.dart';
+import 'package:file_picker/file_picker.dart';
 
 class Jobdescription extends StatefulWidget {
   final String userId;
@@ -67,21 +72,40 @@ class _JobdescriptionState extends State<Jobdescription> {
     }
   }
 
-  Future postJob(
+  Future<void> postJobissue(
     String id,
     String description,
     String duration,
+    file.File images,
   ) async {
-    var data = {
-      'assignedBy': widget.userId,
-      'assignedTo': id,
-      'job_description': description,
-      'duration': duration
-    };
-    http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobIssue/create',
-        body: (data));
+    var uri =
+        Uri.parse("http://isow.acutrotech.com/index.php/api/JobIssue/create");
+    print("image upload URL - $uri");
+// create multipart request
+    var request = new http.MultipartRequest("POST", uri);
+    if (images == null) {
+      request.fields['file_url'] = "";
+      request.fields['assignedBy'] = widget.userId;
+      request.fields['assignedTo'] = id;
+      request.fields['job_description'] = description;
+      request.fields['duration'] = duration;
+    } else {
+      String fileName = images.path.split("/").last;
+      var stream =
+          new http.ByteStream(DelegatingStream.typed(images.openRead()));
+      var length = await images.length();
+      request.files.add(new http.MultipartFile('file_url', stream, length,
+          filename: fileName));
+      request.fields['assignedBy'] = widget.userId;
+      request.fields['assignedTo'] = id;
+      request.fields['job_description'] = description;
+      request.fields['duration'] = duration;
+    }
+
+    var response = await request.send();
+    print("end ");
+    print("${response.statusCode} status code of service request");
+
     if (response.statusCode == 200) {
       Toast.show("Job added successfully", context,
           duration: Toast.LENGTH_SHORT,
@@ -95,13 +119,49 @@ class _JobdescriptionState extends State<Jobdescription> {
                 MaterialPageRoute(builder: (context) => JobDescriptionTab()),
               ));
     } else {
-      Toast.show("Failed", context,
+      Toast.show("Something went wrong try again", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.red,
           backgroundColor: Colors.white);
     }
   }
+
+  // Future postJob(
+  //   String id,
+  //   String description,
+  //   String duration,
+  // ) async {
+  //   var data = {
+  //     'assignedBy': widget.userId,
+  //     'assignedTo': id,
+  //     'job_description': description,
+  //     'duration': duration
+  //   };
+  //   http.Response response;
+  //   response = await http.post(
+  //       'http://isow.acutrotech.com/index.php/api/JobIssue/create',
+  //       body: (data));
+  //   if (response.statusCode == 200) {
+  //     Toast.show("Job added successfully", context,
+  //         duration: Toast.LENGTH_SHORT,
+  //         gravity: Toast.BOTTOM,
+  //         textColor: Colors.green[600],
+  //         backgroundColor: Colors.white);
+  //     Timer(
+  //         Duration(seconds: 1),
+  //         () => Navigator.pushReplacement(
+  //               context,
+  //               MaterialPageRoute(builder: (context) => JobDescriptionTab()),
+  //             ));
+  //   } else {
+  //     Toast.show("Failed", context,
+  //         duration: Toast.LENGTH_SHORT,
+  //         gravity: Toast.BOTTOM,
+  //         textColor: Colors.red,
+  //         backgroundColor: Colors.white);
+  //   }
+  // }
 
   Widget buildDropDownButton() {
     return Container(
@@ -242,9 +302,52 @@ class _JobdescriptionState extends State<Jobdescription> {
   @override
   void initState() {
     super.initState();
-
     fetchData();
   }
+
+  file.File fileup;
+  String path;
+  String name;
+  String _fileName;
+  String _path;
+  Map<String, String> _paths;
+  String _extension;
+  bool _loadingPath = false;
+  bool _multiPick = false;
+  bool _hasValidMime = false;
+  FileType _pickingType;
+  void openGallery() async {
+    _paths = null;
+    var selectfile = await FilePicker.getFile(type: FileType.any);
+
+    if (!mounted) return;
+    setState(() {
+      _path = selectfile.path;
+      fileup = selectfile;
+      _loadingPath = false;
+      _fileName = _path != null
+          ? _path.split('/').last
+          : _paths != null
+              ? _paths.keys.toString()
+              : 'Choose File';
+    });
+  }
+
+  // Future openCamera(String id) async {
+  //   var image = await ImagePicker.pickImage(
+  //       maxHeight: 640,
+  //       maxWidth: 480,
+  //       source: ImageSource.camera,
+  //       imageQuality: 10);
+  //   // var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  //   if (image != null)
+  //     setState(() {
+  //       newImage = image;
+  //       name = image.path.split('/').last;
+  //       path = image.path;
+  //       //   profileUpdate(id, newImage);
+  //     });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -423,6 +526,49 @@ class _JobdescriptionState extends State<Jobdescription> {
                               SizedBox(
                                 height: 15,
                               ),
+
+                              //
+                              //
+
+                              //
+                              //
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(
+                                            color: Colors.black45, width: 1),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)),
+                                      ),
+                                      margin: EdgeInsets.fromLTRB(
+                                          10.0, 10.0, 10.0, 0.0),
+                                      height: 45.0,
+                                      child: ListTile(
+                                          title: _fileName == null
+                                              ? Text("Choose File")
+                                              : Text(_fileName.length > 20
+                                                  ? _fileName
+                                                          .toString()
+                                                          .substring(0, 20) +
+                                                      "..."
+                                                  : _fileName.toString()),
+                                          trailing: ElevatedButton(
+                                            onPressed: () {
+                                              openGallery();
+                                            },
+                                            child: Text("Select"),
+                                          )),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
                               GestureDetector(
                                 child: Container(
                                   alignment: Alignment.bottomCenter,
@@ -467,11 +613,11 @@ class _JobdescriptionState extends State<Jobdescription> {
                                         textColor: Color(0xff49A5FF),
                                         backgroundColor: Colors.white);
                                   } else {
-                                    postJob(
-                                      userValue.toString(),
-                                      _descriptionController.text,
-                                      _durationController.text,
-                                    );
+                                    postJobissue(
+                                        userValue.toString(),
+                                        _descriptionController.text,
+                                        _durationController.text,
+                                        fileup);
 
                                     setState(() {
                                       _descriptionController.text = "";

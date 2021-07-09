@@ -36,7 +36,7 @@ class _MyApp extends State<ChatListScreen> {
 
   bool jobError = false;
   Future fetchData(String fromid) async {
-    var data = {'fromId': fromid, 'toId': fromid};
+    var data = {'userId': fromid};
     http.Response response;
     response = await http.post(
         'http://isow.acutrotech.com/index.php/api/Chat/chatList',

@@ -21,13 +21,19 @@ class _MyApp extends State<Contact> {
   List<dynamic> listFacts;
 
   bool jobError = false;
+  fetch() {
+    for (int i = 0; i < 10; i + 3) {}
+  }
+
   Future fetchData(String namee) async {
     var data = {
+      'limit': '3',
+      'offset': '10',
       'name': namee,
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/SearchList/searchUsers',
+        'http://isow.acutrotech.com/index.php/api/PaginationSearch/sortusers',
         body: (data));
     if (response.statusCode == 200) {
       setState(() {

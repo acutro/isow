@@ -48,6 +48,7 @@ dependencies:
   image_picker: any 
   flutter_local_notifications: any
   firebase_core: any
+  file_picker: 
   firebase_messaging: any
  
 

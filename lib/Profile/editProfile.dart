@@ -403,60 +403,6 @@ class EditProfileState extends State<EditProfile> {
                                             ),
                                           )),
                                     );
-                                    // showDialog(
-                                    //     context: context,
-                                    //     builder: (context) {
-                                    //       return AlertDialog(
-                                    //         content: Positioned(
-                                    //           bottom: 10,
-                                    //           child: Container(
-                                    //             height: 100,
-                                    //             width: 250,
-                                    //             child: Row(
-                                    //               mainAxisAlignment:
-                                    //                   MainAxisAlignment
-                                    //                       .spaceBetween,
-                                    //               children: [
-                                    //                 Column(
-                                    //                   children: [
-                                    //                     TextButton(
-                                    //                       onPressed: () {
-                                    //                         openGallery(sid);
-                                    //                         Navigator.of(
-                                    //                                 context)
-                                    //                             .pop();
-                                    //                       },
-                                    //                       child: Icon(
-                                    //                         Icons.image,
-                                    //                         size: 40,
-                                    //                       ),
-                                    //                     ),
-                                    //                     Text("Gallery"),
-                                    //                   ],
-                                    //                 ),
-                                    //                 Column(
-                                    //                   children: [
-                                    //                     TextButton(
-                                    //                       onPressed: () {
-                                    //                         openCamera(sid);
-                                    //                         Navigator.of(
-                                    //                                 context)
-                                    //                             .pop();
-                                    //                       },
-                                    //                       child: Icon(
-                                    //                         Icons.camera,
-                                    //                         size: 40,
-                                    //                       ),
-                                    //                     ),
-                                    //                     Text("Camera"),
-                                    //                   ],
-                                    //                 ),
-                                    //               ],
-                                    //             ),
-                                    //           ),
-                                    //         ),
-                                    //       );
-                                    //     },);
                                   },
                                 ),
                               ),

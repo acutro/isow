@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobHandoverList extends StatefulWidget {
   @override
@@ -16,6 +17,15 @@ class _MyApp extends State<JobHandoverList> {
   TextEditingController resonController = new TextEditingController();
   String sid;
   bool error = true;
+  _launchURL(String ur) async {
+    String url = 'http://isow.acutrotech.com/assets/files/' + ur;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   Future getValidation() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
@@ -407,43 +417,83 @@ class _MyApp extends State<JobHandoverList> {
                                                   height: 1.3,
                                                   fontSize: 14),
                                             ),
-                                            subtitle: listFacts[index]
-                                                        ["handoverStatus"] ==
-                                                    '2'
-                                                ? Text(
-                                                    "Handovered by :  " +
-                                                        '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
-                                                        "\n" +
-                                                        "Duration             :   " +
-                                                        listFacts[index]
-                                                            ["duration"] +
-                                                        " hr" +
-                                                        "\n" +
-                                                        "Handover Date:   " +
-                                                        listFacts[index]
-                                                                ["issueDate"]
-                                                            .substring(0, 10) +
-                                                        "\nReason: "
-                                                            '${listFacts[index]["reason"][0].toUpperCase()}${listFacts[index]["reason"].substring(1)}',
-                                                    style:
-                                                        TextStyle(fontSize: 11),
-                                                  )
-                                                : Text(
-                                                    "Handovered by :  " +
-                                                        '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
-                                                        "\n" +
-                                                        "Duration             :   " +
-                                                        listFacts[index]
-                                                            ["duration"] +
-                                                        " hr" +
-                                                        "\n" +
-                                                        "Handover Date:   " +
-                                                        listFacts[index]
-                                                                ["issueDate"]
-                                                            .substring(0, 10),
-                                                    style:
-                                                        TextStyle(fontSize: 11),
-                                                  ),
+                                            subtitle: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                listFacts[index][
+                                                            "handoverStatus"] ==
+                                                        '2'
+                                                    ? Text(
+                                                        "Handovered by :  " +
+                                                            '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
+                                                            "\n" +
+                                                            "Duration             :   " +
+                                                            listFacts[index]
+                                                                ["duration"] +
+                                                            " hr" +
+                                                            "\n" +
+                                                            "Handover Date:   " +
+                                                            listFacts[index][
+                                                                    "issueDate"]
+                                                                .substring(
+                                                                    0, 10) +
+                                                            "\nReason: "
+                                                                '${listFacts[index]["reason"][0].toUpperCase()}${listFacts[index]["reason"].substring(1)}',
+                                                        style: TextStyle(
+                                                            fontSize: 11),
+                                                      )
+                                                    : Text(
+                                                        "Handovered by :  " +
+                                                            '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
+                                                            "\n" +
+                                                            "Duration             :   " +
+                                                            listFacts[index]
+                                                                ["duration"] +
+                                                            " hr" +
+                                                            "\n" +
+                                                            "Handover Date:   " +
+                                                            listFacts[index][
+                                                                    "issueDate"]
+                                                                .substring(
+                                                                    0, 10),
+                                                        style: TextStyle(
+                                                            fontSize: 11),
+                                                      ),
+                                                listFacts[index]["file_url"] !=
+                                                        ""
+                                                    ? GestureDetector(
+                                                        onTap: () {
+                                                          _launchURL(
+                                                              listFacts[index]
+                                                                  ["file_url"]);
+                                                        },
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                              "Attachement",
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .blue,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                            SizedBox(
+                                                              width: 6,
+                                                            ),
+                                                            Icon(
+                                                              Icons.attachment,
+                                                              color:
+                                                                  Colors.blue,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      )
+                                                    : SizedBox(),
+                                              ],
+                                            ),
                                             trailing: listFacts[index]
                                                         ["handoverStatus"] ==
                                                     '0'

@@ -229,6 +229,8 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                   ),
                 ),
                 onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SigninScreen()));
                   //signup screen
                 },
               )),

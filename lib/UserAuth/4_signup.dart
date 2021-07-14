@@ -368,7 +368,7 @@ class SignupScreenState extends State<SignupScreen> {
                                 if (value.isEmpty) {
                                   return "Please enter  Employee Id";
                                 }
-                                if (value.length <= 6) {
+                                if (value.length != 6) {
                                   return "Please enter valid Employee Id";
                                 }
                                 return null;

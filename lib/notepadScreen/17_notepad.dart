@@ -966,6 +966,9 @@ class _NotepadState extends State<Notepad> {
                       ),
                     ],
                   ),
+                  SizedBox(
+                    height: 20,
+                  )
                 ],
               ),
             ),

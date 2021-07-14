@@ -51,7 +51,7 @@ class _ServicesState extends State<Services> {
         child: Column(
           children: <Widget>[
             SizedBox(
-              height: 20.0,
+              height: MediaQuery.of(context).size.height * 0.02,
             ),
             Row(
               children: <Widget>[
@@ -91,102 +91,108 @@ Materialistic Issue''',
               ],
             ),
             SizedBox(
-              height: 140.0,
+              height: MediaQuery.of(context).size.height * 0.1,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ServiceScreen(
-                                fromid: widget.sid,
-                                sid: '11',
-                              )),
-                    );
-                  },
-                  child: Stack(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(right: 20.0),
-                        decoration: BoxDecoration(
-                          color: Color(0xff49A5FF),
-                          borderRadius: BorderRadius.circular(50.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 10.0,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ServiceScreen(
+                                  fromid: widget.sid,
+                                  sid: '11',
+                                )),
+                      );
+                    },
+                    child: Stack(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(right: 20.0),
+                          decoration: BoxDecoration(
+                            color: Color(0xff49A5FF),
+                            borderRadius: BorderRadius.circular(50.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black38,
+                                blurRadius: 10.0,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          height: 70.0,
+                          width: 70.0,
+                          child: Icon(
+                            Icons.desktop_windows_outlined,
+                            size: 30.0,
+                            color: Colors.white,
+                          ),
                         ),
-                        height: 70.0,
-                        width: 70.0,
-                        child: Icon(
-                          Icons.desktop_windows_outlined,
-                          size: 30.0,
-                          color: Colors.white,
+                        Container(
+                          margin: EdgeInsets.only(right: 15.0),
+                          height: 110.0,
+                          width: 85.0,
+                          alignment: Alignment.bottomCenter,
+                          child: Text(''' IT Service
+                        '''),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(right: 15.0),
-                        height: 110.0,
-                        width: 85.0,
-                        alignment: Alignment.bottomCenter,
-                        child: Text(''' IT Service
-                      '''),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ServiceScreen(
-                                fromid: widget.sid,
-                                sid: '12',
-                              )),
-                    );
-                  },
-                  child: Stack(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(left: 20.0),
-                        decoration: BoxDecoration(
-                          color: Color(0xff49A5FF),
-                          borderRadius: BorderRadius.circular(100.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 10.0,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ServiceScreen(
+                                  fromid: widget.sid,
+                                  sid: '12',
+                                )),
+                      );
+                    },
+                    child: Stack(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(left: 20.0),
+                          decoration: BoxDecoration(
+                            color: Color(0xff49A5FF),
+                            borderRadius: BorderRadius.circular(100.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black38,
+                                blurRadius: 10.0,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          height: 70.0,
+                          width: 70.0,
+                          child: Icon(
+                            Icons.emoji_people_outlined,
+                            size: 30.0,
+                            color: Colors.white,
+                          ),
                         ),
-                        height: 70.0,
-                        width: 70.0,
-                        child: Icon(
-                          Icons.emoji_people_outlined,
-                          size: 30.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 20.0),
-                        height: 110.0,
-                        width: 85.0,
-                        alignment: Alignment.bottomCenter,
-                        child: Text('''    Physical
+                        Container(
+                          margin: EdgeInsets.only(left: 20.0),
+                          height: 110.0,
+                          width: 85.0,
+                          alignment: Alignment.bottomCenter,
+                          child: Text('''    Physical
 Maintanance'''),
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
             ),
             // Row(
             //   children: <Widget>[

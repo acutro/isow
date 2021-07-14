@@ -65,6 +65,9 @@ class DirectoryView extends StatelessWidget {
                       color: Colors.black,
                       fontFamily: "FSSiena",
                       fontSize: 16)),
+            ),
+            SizedBox(
+              height: 20,
             )
           ],
         ),

@@ -69,7 +69,10 @@ class NewsDetailsView extends StatelessWidget {
                       color: Colors.black,
                       fontFamily: "FSSiena",
                       fontSize: 16)),
-            )
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
+            ),
           ],
         ),
       ),

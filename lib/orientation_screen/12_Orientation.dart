@@ -77,7 +77,14 @@ class OrientationScreenState extends State<OrientationScreen> {
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Color(0xFF4fc4f2),
+                  ),
                 ],
               ),
 
@@ -121,10 +128,6 @@ class OrientationScreenState extends State<OrientationScreen> {
               //     ),
               //   ],
               // ),
-            ),
-            Divider(
-              thickness: 1,
-              color: Color(0xFF4fc4f2),
             ),
             Container(
               child: Column(
@@ -197,7 +200,7 @@ class OrientationScreenState extends State<OrientationScreen> {
                                     'Rigs',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.white,
+                                        color: Colors.blue,
                                         fontSize: 14.0),
                                   ),
                                 ],
@@ -254,7 +257,7 @@ class OrientationScreenState extends State<OrientationScreen> {
                                     "Materials",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.white,
+                                        color: Colors.blue,
                                         fontSize: 14.0),
                                   )
                                 ],

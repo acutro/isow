@@ -189,7 +189,7 @@ class _JobdescriptionState extends State<Jobdescription> {
         hint: Padding(
           padding: const EdgeInsets.only(left: 12),
           child: Text(
-            "Position",
+            "Role",
             style: TextStyle(
               fontSize: 14,
               color: Colors.black87,
@@ -246,7 +246,7 @@ class _JobdescriptionState extends State<Jobdescription> {
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                 child: Text(
-                  "Choose Person",
+                  "Select Employee",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black87,
@@ -268,7 +268,7 @@ class _JobdescriptionState extends State<Jobdescription> {
               hint: Padding(
                 padding: const EdgeInsets.only(left: 12),
                 child: Text(
-                  "Person",
+                  "Employee Name",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black87,

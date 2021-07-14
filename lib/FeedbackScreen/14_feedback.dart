@@ -152,22 +152,22 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                     // child: Container(
                     child: Column(
                       children: <Widget>[
-                        Container(
-                          alignment: Alignment.topLeft,
-                          margin: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 0.0),
-                          child: Text(
-                            'COUNTER SECTION : 20',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                          child: Divider(
-                            color: Colors.black,
-                            height: 30,
-                            thickness: 1.0,
-                          ),
-                        ),
+                        // Container(
+                        //   alignment: Alignment.topLeft,
+                        //   margin: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 0.0),
+                        //   child: Text(
+                        //     'COUNTER SECTION : 20',
+                        //     style: TextStyle(fontSize: 16.0),
+                        //   ),
+                        // ),
+                        // Container(
+                        //   margin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                        //   child: Divider(
+                        //     color: Colors.black,
+                        //     height: 30,
+                        //     thickness: 1.0,
+                        //   ),
+                        // ),
                         Expanded(
                           child: SingleChildScrollView(
                             child: Container(
@@ -175,6 +175,7 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                               margin: EdgeInsets.all(10.0),
                               child: new TextField(
                                 decoration: new InputDecoration(
+                                  hintText: 'Feedback',
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none,

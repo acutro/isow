@@ -134,7 +134,7 @@ class _WarningletterState extends State<Warningletter> {
         hint: Padding(
           padding: const EdgeInsets.only(left: 12),
           child: Text(
-            "Position",
+            "Role",
             style: TextStyle(
               fontSize: 14,
               color: Colors.black87,
@@ -181,14 +181,14 @@ class _WarningletterState extends State<Warningletter> {
       child: userResponse == null
           ? GestureDetector(
               onTap: () {
-                Toast.show("Select Position", context,
+                Toast.show("Select Employee", context,
                     duration: Toast.LENGTH_SHORT,
                     gravity: Toast.BOTTOM,
                     textColor: Colors.red,
                     backgroundColor: Colors.white);
               },
               child: Text(
-                "Choose Position",
+                "Select Employee",
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.black54,
@@ -208,7 +208,7 @@ class _WarningletterState extends State<Warningletter> {
               hint: Padding(
                 padding: const EdgeInsets.only(left: 12),
                 child: Text(
-                  "Person",
+                  "Employee Name",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black54,

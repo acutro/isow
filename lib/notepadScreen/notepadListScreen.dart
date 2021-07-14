@@ -306,29 +306,39 @@ class _MyApp extends State<NotepadList> {
                                                                 FontWeight.bold,
                                                             height: 1.5),
                                                       ),
-                                                      subtitle: Text(
-                                                        "Priority     :  " +
-                                                            priofn(listFacts[
-                                                                    index]
-                                                                ["priority"]) +
-                                                            "\nCatogory  :  " +
-                                                            listFacts[index][
-                                                                "categoryName"] +
-                                                            // "Priority :  " +
-                                                            //     listFacts[index]
-                                                            //         ["priority"] +
-                                                            //     "\n" +
-                                                            //     "Catogory   :   " +
-                                                            //     listFacts[index][
-                                                            //         "categoryName"] +
-                                                            //     "\n" +
-                                                            "\nDate          :  " +
-                                                            listFacts[index]
-                                                                    ["date"]
-                                                                .substring(
-                                                                    0, 10),
-                                                        style: TextStyle(
-                                                            fontSize: 11),
+                                                      subtitle: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            "Priority     :  " +
+                                                                priofn(listFacts[
+                                                                        index][
+                                                                    "priority"]),
+                                                            style: TextStyle(
+                                                                fontSize: 11),
+                                                          ),
+                                                          Text(
+                                                            "Catogory  :  " +
+                                                                    listFacts[index]
+                                                                            [
+                                                                            "categoryName"]
+                                                                        .toString() ??
+                                                                "",
+                                                            style: TextStyle(
+                                                                fontSize: 11),
+                                                          ),
+                                                          Text(
+                                                            "Date          :  " +
+                                                                listFacts[index]
+                                                                        ["date"]
+                                                                    .substring(
+                                                                        0, 10),
+                                                            style: TextStyle(
+                                                                fontSize: 11),
+                                                          ),
+                                                        ],
                                                       ),
                                                       trailing: Container(
                                                         width: 70,

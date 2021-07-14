@@ -111,7 +111,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: MediaQuery.of(context).size.height * 0.02,
                       ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(5.0),

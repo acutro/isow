@@ -27,13 +27,11 @@ class _MyApp extends State<Contact> {
 
   Future fetchData(String namee) async {
     var data = {
-      'limit': '3',
-      'offset': '10',
       'name': namee,
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/PaginationSearch/sortusers',
+        'http://isow.acutrotech.com/index.php/api/SearchList/searchUsers',
         body: (data));
     if (response.statusCode == 200) {
       setState(() {

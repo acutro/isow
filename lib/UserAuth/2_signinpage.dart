@@ -63,7 +63,7 @@ class SigninScreenState extends State<SigninScreen> {
     sharedPreferences.setString('position', pos);
   }
 
-  Future<bool> _onBackPressed()async {
+  Future<bool> _onBackPressed() async {
     return showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -135,19 +135,20 @@ class SigninScreenState extends State<SigninScreen> {
         //           colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
         // ),
         // ),
-        body: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/bg1.jpg"),
-                fit: BoxFit.fitHeight,
-              ),
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/bg1.jpg"),
+              fit: BoxFit.cover,
             ),
+          ),
+          child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 SizedBox(
-                  height: 120,
+                  height: MediaQuery.of(context).size.height * 0.12,
                 ),
                 Container(
                     padding: EdgeInsets.all(20),
@@ -169,7 +170,7 @@ class SigninScreenState extends State<SigninScreen> {
                       ],
                     )),
                 SizedBox(
-                  height: 80,
+                  height: MediaQuery.of(context).size.height * 0.08,
                 ),
                 Form(
                   key: _formKey,
@@ -210,7 +211,7 @@ class SigninScreenState extends State<SigninScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -255,7 +256,7 @@ class SigninScreenState extends State<SigninScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 40,
+                  height: MediaQuery.of(context).size.height * 0.04,
                 ),
                 Container(
                   height: 50.0,
@@ -301,7 +302,7 @@ class SigninScreenState extends State<SigninScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 Container(
                   child: FlatButton(
@@ -327,7 +328,7 @@ class SigninScreenState extends State<SigninScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 100,
+                  height: MediaQuery.of(context).size.height * 0.1,
                 ),
                 Container(
                     child: FlatButton(

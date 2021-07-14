@@ -78,19 +78,20 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
       // ),
       //   elevation: 0,
       // ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/bg1.jpg"),
-              fit: BoxFit.fitHeight,
-            ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg1.jpg"),
+            fit: BoxFit.cover,
           ),
+        ),
+        child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               SizedBox(
-                height: 80,
+                height: MediaQuery.of(context).size.height * 0.08,
               ),
               Container(
                   padding: EdgeInsets.all(20),
@@ -111,7 +112,7 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                     ],
                   )),
               SizedBox(
-                height: 80,
+                height: MediaQuery.of(context).size.height * 0.08,
               ),
               Container(
                 alignment: Alignment.center,
@@ -159,7 +160,7 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                 ),
               ),
               SizedBox(
-                height: 40,
+                height: MediaQuery.of(context).size.height * 0.04,
               ),
               Container(
                 height: 50.0,
@@ -202,7 +203,7 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: MediaQuery.of(context).size.height * 0.03,
               ),
               Container(
                   child: FlatButton(

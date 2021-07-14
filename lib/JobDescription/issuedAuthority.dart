@@ -10,12 +10,12 @@ import 'package:isow/JobDescription/jobExecutedList.dart';
 import 'jobHandover.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class JobDescriptionList extends StatefulWidget {
+class JobIssuedList extends StatefulWidget {
   @override
   _MyApp createState() => _MyApp();
 }
 
-class _MyApp extends State<JobDescriptionList> {
+class _MyApp extends State<JobIssuedList> {
   String sid;
   String posid;
   bool error = true;
@@ -47,33 +47,6 @@ class _MyApp extends State<JobDescriptionList> {
   List<dynamic> listFacts;
   bool jobError = false;
 
-  Future executeJob(
-    String id,
-  ) async {
-    var data = {'id': id, 'executeStatus': '1'};
-    http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobExecute/execute',
-        body: (data));
-    if (response.statusCode == 200) {
-      Toast.show("Executed Successfully", context,
-          duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          textColor: Colors.green[600],
-          backgroundColor: Colors.white);
-      Timer(
-        Duration(seconds: 1),
-        () => fetchIssued(sid),
-      );
-    } else {
-      Toast.show("Something went Wrong", context,
-          duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          textColor: Colors.red,
-          backgroundColor: Colors.white);
-    }
-  }
-
   Future<Null> refreshList() async {
     await Future.delayed(Duration(seconds: 2));
     getValidation();
@@ -81,11 +54,11 @@ class _MyApp extends State<JobDescriptionList> {
 
   Future fetchIssued(String sessId) async {
     var data = {
-      'assignedTo': sessId,
+      'assignedBy': sessId,
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobIssue/singleuserissueList',
+        'http://isow.acutrotech.com/index.php/api/JobIssue/singleList',
         body: (data));
     if (response.statusCode == 200) {
       setState(() {
@@ -113,52 +86,28 @@ class _MyApp extends State<JobDescriptionList> {
     getValidation();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  Widget _statusWidgect(String exe1, String hand2) {
+    return Column(
+      children: [
+        Text(
+          hand2 != '0' ? '' : 'Handovered',
+          style: TextStyle(
+              color: hand2 != '0' ? Colors.red : Colors.blue, fontSize: 12),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Text(exe1 == '0' ? 'Pending' : 'Executed',
+            style: TextStyle(
+                color: exe1 == '0' ? Colors.red : Colors.green, fontSize: 12)),
+      ],
+    );
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(
-      //     "Job Description",
-      //     style: TextStyle(
-      //       color: Colors.white,
-      //     ),
-      //   ),
-      //   leading: GestureDetector(
-      //     onTap: () {
-      //       Navigator.pop(context);
-      //     },
-      //     child: Icon(
-      //       Icons.arrow_back_ios,
-      //       color: Colors.white,
-      //     ),
-      //   ),
-      //   actions: [
-      //     Icon(
-      //       Icons.headset_mic,
-      //       color: Colors.white38,
-      //     ),
-      //     SizedBox(
-      //       width: 5,
-      //     ),
-      //     Icon(
-      //       Icons.logout,
-      //       color: Colors.white38,
-      //     ),
-      //     SizedBox(
-      //       width: 5,
-      //     ),
-      //     Icon(
-      //       Icons.menu,
-      //       color: Colors.white38,
-      //     ),
-      //   ],
-      // ),
       body: RefreshIndicator(
         onRefresh: refreshList,
         child: jobError == true || mapResponse == null
@@ -184,7 +133,7 @@ class _MyApp extends State<JobDescriptionList> {
                                 listFacts[index]["id"],
                                 listFacts[index]["assignedBy"],
                                 listFacts[index]["assignedTo"],
-                                listFacts[index]["sender"],
+                                listFacts[index]["receiver"],
                                 listFacts[index]["duration"],
                                 listFacts[index]["job_description"],
                               );
@@ -240,7 +189,7 @@ class _MyApp extends State<JobDescriptionList> {
                                               children: [
                                                 Text(
                                                   "Issued by :  " +
-                                                      '${listFacts[index]["sender"][0].toUpperCase()}${listFacts[index]["sender"].substring(1)}' +
+                                                      '${listFacts[index]["receiver"][0].toUpperCase()}${listFacts[index]["receiver"].substring(1)}' +
                                                       "\n" +
                                                       "Duration   :   " +
                                                       listFacts[index]
@@ -289,135 +238,11 @@ class _MyApp extends State<JobDescriptionList> {
                                               ],
                                             ),
                                             trailing: Container(
-                                              width: 110,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) =>
-                                                            AlertDialog(
-                                                          backgroundColor:
-                                                              Colors.white,
-                                                          title:
-                                                              Text("Handover?"),
-                                                          content: Text(
-                                                              "Do you want to Handover this job?"),
-                                                          actions: [
-                                                            FlatButton(
-                                                                onPressed: () {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                                child:
-                                                                    Text("No")),
-                                                            FlatButton(
-                                                                onPressed: () {
-                                                                  Navigator
-                                                                      .pushReplacement(
-                                                                    context,
-                                                                    // MaterialPageRoute(builder: (context) => Warningletter()),
-                                                                    MaterialPageRoute(
-                                                                        builder: (context) =>
-                                                                            JobHandover(
-                                                                              userId: sid,
-                                                                              jid: listFacts[index]["id"],
-                                                                              dec: listFacts[index]["job_description"],
-                                                                              dur: listFacts[index]["duration"],
-                                                                            )),
-                                                                  );
-                                                                },
-                                                                child:
-                                                                    Text("Yes"))
-                                                          ],
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: Column(
-                                                      children: [
-                                                        Icon(
-                                                          Icons
-                                                              .transfer_within_a_station,
-                                                          size: 30,
-                                                          color:
-                                                              Colors.blue[400],
-                                                        ),
-                                                        Text(
-                                                          "Handover",
-                                                          style: TextStyle(
-                                                            fontSize: 12,
-                                                            color: Colors
-                                                                .blue[400],
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) =>
-                                                            AlertDialog(
-                                                          backgroundColor:
-                                                              Colors.white,
-                                                          title:
-                                                              Text("Execute?"),
-                                                          content: Text(
-                                                              "Do you want to Execute?"),
-                                                          actions: [
-                                                            FlatButton(
-                                                                onPressed: () {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                                child:
-                                                                    Text("No")),
-                                                            FlatButton(
-                                                                onPressed: () {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                  executeJob(
-                                                                    listFacts[
-                                                                            index]
-                                                                        ["id"],
-                                                                  );
-                                                                  fetchIssued(
-                                                                      sid);
-                                                                },
-                                                                child:
-                                                                    Text("Yes"))
-                                                          ],
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: Column(
-                                                      children: [
-                                                        Icon(
-                                                          Icons
-                                                              .handyman_outlined,
-                                                          size: 30,
-                                                          color:
-                                                              Colors.green[400],
-                                                        ),
-                                                        Text(
-                                                          "Execute",
-                                                          style: TextStyle(
-                                                            fontSize: 12,
-                                                            color: Colors
-                                                                .green[400],
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                                child: _statusWidgect(
+                                                    listFacts[index]
+                                                        ["executeStatus"],
+                                                    listFacts[index]
+                                                        ["handover_status"])),
                                           ),
                                         ],
                                       ),

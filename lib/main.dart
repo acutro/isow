@@ -22,8 +22,8 @@ Future<void> _firebaseMessagingBckgroundHndler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  // SystemChrome.setPreferredOrientations(
+  //     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBckgroundHndler);
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'issuedAuthority.dart';
 import 'jobDescriptionList.dart';
 import 'jobExecutedList.dart';
 import '22_jobdescription.dart';
@@ -11,6 +13,28 @@ class JobDescriptionTab extends StatefulWidget {
 }
 
 class _JobDescriptionTabState extends State<JobDescriptionTab> {
+  String sid;
+  String posid;
+  bool error = true;
+  Future getValidation() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String id = sharedPreferences.getString('userId');
+    String pos = sharedPreferences.getString('position');
+    setState(() {
+      sid = id;
+      posid = pos;
+
+      error = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getValidation();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -75,7 +99,7 @@ class _JobDescriptionTabState extends State<JobDescriptionTab> {
         ),
         body: TabBarView(
           children: [
-            JobDescriptionList(),
+            posid == '4' ? JobIssuedList() : JobDescriptionList(),
             JobExecutedList(),
             JobHandoverList(),
 

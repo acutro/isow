@@ -294,7 +294,7 @@ class _WarningletterState extends State<Warningletter> {
                     ),
                   ),
                   SizedBox(
-                    height: 60,
+                    height: MediaQuery.of(context).size.height * 0.04,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

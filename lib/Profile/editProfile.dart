@@ -618,6 +618,9 @@ class EditProfileState extends State<EditProfile> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  )
                 ]),
               ),
             ),

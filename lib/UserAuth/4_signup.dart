@@ -265,7 +265,7 @@ class SignupScreenState extends State<SignupScreen> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: 60,
+                      height: MediaQuery.of(context).size.height * 0.06,
                     ),
                     Container(
                         padding: EdgeInsets.all(20),
@@ -286,7 +286,7 @@ class SignupScreenState extends State<SignupScreen> {
                           ],
                         )),
                     SizedBox(
-                      height: 40,
+                      height: MediaQuery.of(context).size.height * 0.04,
                     ),
                     Form(
                       key: _formKey,
@@ -332,7 +332,7 @@ class SignupScreenState extends State<SignupScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 16,
+                            height: MediaQuery.of(context).size.height * 0.016,
                           ),
                           Container(
                             decoration: BoxDecoration(
@@ -377,7 +377,7 @@ class SignupScreenState extends State<SignupScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 16,
+                            height: MediaQuery.of(context).size.height * 0.016,
                           ),
                           Container(
                             decoration: BoxDecoration(
@@ -424,7 +424,7 @@ class SignupScreenState extends State<SignupScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 16,
+                            height: MediaQuery.of(context).size.height * 0.016,
                           ),
                           Container(
                             decoration: BoxDecoration(
@@ -469,7 +469,7 @@ class SignupScreenState extends State<SignupScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 16,
+                            height: MediaQuery.of(context).size.height * 0.016,
                           ),
                           Container(
                               decoration: BoxDecoration(
@@ -481,7 +481,7 @@ class SignupScreenState extends State<SignupScreen> {
                                   new EdgeInsets.symmetric(horizontal: 20.0),
                               child: buildRoleDropDownButton()),
                           SizedBox(
-                            height: 16,
+                            height: MediaQuery.of(context).size.height * 0.016,
                           ),
                           Container(
                               decoration: BoxDecoration(
@@ -493,7 +493,7 @@ class SignupScreenState extends State<SignupScreen> {
                                   new EdgeInsets.symmetric(horizontal: 20.0),
                               child: buildRigDownButton()),
                           SizedBox(
-                            height: 16,
+                            height: MediaQuery.of(context).size.height * 0.016,
                           ),
                           Container(
                             decoration: BoxDecoration(
@@ -542,7 +542,7 @@ class SignupScreenState extends State<SignupScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 16,
+                            height: MediaQuery.of(context).size.height * 0.016,
                           ),
                           Container(
                             decoration: BoxDecoration(
@@ -595,7 +595,7 @@ class SignupScreenState extends State<SignupScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 50,
+                            height: MediaQuery.of(context).size.height * 0.05,
                           ),
                         ],
                       ),
@@ -650,7 +650,7 @@ class SignupScreenState extends State<SignupScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: MediaQuery.of(context).size.height * 0.04,
                     ),
                     Container(
                         child: FlatButton(

@@ -485,10 +485,12 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     alignment: Alignment.center,
                     child: Column(children: <Widget>[
-                      SizedBox(height: 30),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.03,
+                      ),
                       Wrap(
                         alignment: WrapAlignment.center,
-                        spacing: 30.0,
+                        spacing: 35.0,
                         runSpacing: 35.0,
                         children: [
                           GestureDetector(
@@ -1179,6 +1181,9 @@ class HomeScreenState extends State<HomeScreen> {
                           // ),
                         ],
                       ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.01,
+                      ),
                       Container(
                         margin: EdgeInsets.all(10),
                         padding: EdgeInsets.all(10),
@@ -1233,7 +1238,7 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 70,
+                        height: MediaQuery.of(context).size.height * 0.08,
                       ),
                     ]),
                   ),

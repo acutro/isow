@@ -369,11 +369,12 @@ class _RigAlert2State extends State<RigAlert2> {
                       //   ),
                       // ),
                       width: SizeConfig.safeBlockHorizontal * 40,
-                      height: SizeConfig.safeBlockVertical * 5,
+                      height: MediaQuery.of(context).size.height * 0.1,
                     ),
                     SizedBox(width: SizeConfig.safeBlockHorizontal * 5),
                     //SizedBox( height:SizeConfig.safeBlockVertical * 5),
                     Container(
+                      height: MediaQuery.of(context).size.height * 0.1,
                       margin: EdgeInsets.fromLTRB(15.0, 5.0, 0.0, 0.0),
                       alignment: Alignment.topLeft,
                       decoration: BoxDecoration(
@@ -409,7 +410,6 @@ class _RigAlert2State extends State<RigAlert2> {
                             });
                           }),
                       width: SizeConfig.safeBlockHorizontal * 40,
-                      height: SizeConfig.safeBlockVertical * 5,
                     ),
                   ],
                 ),
@@ -523,6 +523,9 @@ class _RigAlert2State extends State<RigAlert2> {
                       ),
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.1,
                 ),
               ],
             ),

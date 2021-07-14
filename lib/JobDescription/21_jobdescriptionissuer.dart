@@ -536,33 +536,40 @@ class _JobdescriptionState extends State<Jobdescription> {
                                 children: <Widget>[
                                   Expanded(
                                     child: Container(
-                                      alignment: Alignment.centerLeft,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                            color: Colors.black45, width: 1),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10)),
-                                      ),
-                                      margin: EdgeInsets.fromLTRB(
-                                          10.0, 10.0, 10.0, 0.0),
-                                      height: 45.0,
-                                      child: ListTile(
-                                          title: _fileName == null
-                                              ? Text("Choose File")
-                                              : Text(_fileName.length > 20
-                                                  ? _fileName
-                                                          .toString()
-                                                          .substring(0, 20) +
-                                                      "..."
-                                                  : _fileName.toString()),
-                                          trailing: ElevatedButton(
-                                            onPressed: () {
-                                              openGallery();
-                                            },
-                                            child: Text("Select"),
-                                          )),
-                                    ),
+                                        padding:
+                                            EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                        alignment: Alignment.centerLeft,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                              color: Colors.black45, width: 1),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                        ),
+                                        margin: EdgeInsets.fromLTRB(
+                                            10.0, 10.0, 10.0, 0.0),
+                                        height: 45.0,
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: _fileName == null
+                                                  ? Text("Choose File")
+                                                  : Text(_fileName.length > 20
+                                                      ? _fileName
+                                                              .toString()
+                                                              .substring(
+                                                                  0, 20) +
+                                                          "..."
+                                                      : _fileName.toString()),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                openGallery();
+                                              },
+                                              child: Text("Select"),
+                                            )
+                                          ],
+                                        )),
                                   ),
                                 ],
                               ),

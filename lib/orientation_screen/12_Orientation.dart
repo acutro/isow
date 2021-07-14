@@ -122,18 +122,24 @@ class OrientationScreenState extends State<OrientationScreen> {
               //   ],
               // ),
             ),
+            Divider(
+              thickness: 1,
+              color: Color(0xFF4fc4f2),
+            ),
             Container(
               child: Column(
                 children: <Widget>[
                   Card(
                     margin: const EdgeInsets.all(0.0),
-                    color: Color(0xFF4fc4f2),
+                    // color: Color(0xFF4fc4f2),
                     child: new Container(
                       alignment: Alignment.center,
-                      height: 500,
+                      height: MediaQuery.of(context).size.height * 0.5,
                       width: double.infinity,
                       child: Column(children: <Widget>[
-                        SizedBox(height: 120),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.1,
+                        ),
                         Wrap(
                           alignment: WrapAlignment.end,
                           direction: Axis.horizontal,

@@ -369,7 +369,7 @@ class SignupScreenState extends State<SignupScreen> {
                                   return "Please enter  Employee Id";
                                 }
                                 if (value.length != 6) {
-                                  return "Please enter valid Employee Id";
+                                  return "Please enter 6 Digit Employee Id";
                                 }
                                 return null;
                               },

@@ -128,10 +128,19 @@ class _MyApp extends State<NotepadList> {
     }
   }
 
+  Timer _clockTimer;
   @override
   void initState() {
     super.initState();
     getValidation("");
+    _clockTimer = Timer.periodic(
+        Duration(seconds: 6), (Timer t) => getValidation(controller.text));
+  }
+
+  @override
+  void dispose() {
+    _clockTimer.cancel();
+    super.dispose();
   }
 
   // This widget is the root of your application.

@@ -48,6 +48,30 @@ class _RecivedWarningState extends State<RecivedAlert> {
     }
   }
 
+  Future deleterig(String rigid) async {
+    var data = {
+      'id': rigid,
+    };
+    http.Response response;
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/rigalert/delete',
+        body: (data));
+    if (response.statusCode == 200) {
+      Toast.show("Rig alert Deleted Successfully", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.green[600],
+          backgroundColor: Colors.white);
+      Timer(Duration(seconds: 2), () => _rigList(""));
+    } else {
+      Toast.show("Something went Wrong", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
+    }
+  }
+
   List listResponse;
   Map mapResponse;
   List<dynamic> listFacts;
@@ -92,7 +116,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
     getValidation();
     super.initState();
     _clockTimer =
-        Timer.periodic(Duration(seconds: 8), (Timer t) => _rigList(""));
+        Timer.periodic(Duration(seconds: 6), (Timer t) => _rigList(""));
   }
 
   @override
@@ -276,36 +300,84 @@ class _RecivedWarningState extends State<RecivedAlert> {
                                           ),
                                           trailing: Container(
                                             margin: EdgeInsets.all(5.0),
-                                            child: CountdownTimer(
-                                              endTime:
-                                                  //  endT(index),
-                                                  endT(DateTime.parse(
-                                                      listFacts[index]
-                                                          ["Date"])),
-                                              widgetBuilder: (_,
-                                                  CurrentRemainingTime time) {
-                                                if (time == null) {
-                                                  return Text(
-                                                    'Rig Alert Expired',
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black54,
-                                                    ),
-                                                  );
-                                                }
-                                                return Text(
-                                                  time.days == null
-                                                      ? '${time.hours ?? 00}:${time.min ?? 00}:${time.sec}'
-                                                      : '${time.hours + (time.days * 24)}:${time.min}:${time.sec}',
-                                                  style: TextStyle(
-                                                      color: Colors.black54,
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                );
-                                              },
+                                            child: Column(
+                                              children: [
+                                                CountdownTimer(
+                                                  endTime:
+                                                      //  endT(index),
+                                                      endT(DateTime.parse(
+                                                          listFacts[index]
+                                                              ["Date"])),
+                                                  widgetBuilder: (_,
+                                                      CurrentRemainingTime
+                                                          time) {
+                                                    if (time == null) {
+                                                      return Text(
+                                                        'Rig Alert Expired',
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black54,
+                                                        ),
+                                                      );
+                                                    }
+                                                    return Text(
+                                                      time.days == null
+                                                          ? '${time.hours ?? 00}:${time.min ?? 00}:${time.sec}'
+                                                          : '${time.hours + (time.days * 24)}:${time.min}:${time.sec}',
+                                                      style: TextStyle(
+                                                          color: Colors.black54,
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    );
+                                                  },
+                                                ),
+                                                InkWell(
+                                                    onTap: () {
+                                                      // BuildAlertDialogDelete();
+
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (context) =>
+                                                            AlertDialog(
+                                                          backgroundColor:
+                                                              Colors.white,
+                                                          title:
+                                                              Text("Delete?"),
+                                                          content: Text(
+                                                              "Do you want to delete?"),
+                                                          actions: [
+                                                            FlatButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child:
+                                                                    Text("No")),
+                                                            FlatButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  deleterig(
+                                                                      listFacts[
+                                                                              index]
+                                                                          [
+                                                                          "id"]);
+                                                                  _rigList("");
+                                                                },
+                                                                child:
+                                                                    Text("Yes"))
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Icon(
+                                                      Icons.delete,
+                                                      color: Colors.red[400],
+                                                    )),
+                                              ],
                                             ),
                                           ),
                                         ),

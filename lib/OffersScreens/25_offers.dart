@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -32,11 +34,20 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
     return lis;
   }
 
+  Timer _clockTimer;
   @override
   void initState() {
     fetchData();
 
     super.initState();
+    _clockTimer =
+        Timer.periodic(Duration(seconds: 4), (Timer t) => fetchData());
+  }
+
+  @override
+  void dispose() {
+    _clockTimer.cancel();
+    super.dispose();
   }
 
   @override

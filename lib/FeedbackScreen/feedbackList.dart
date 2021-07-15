@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -26,6 +28,30 @@ class _MyApp extends State<FeedbackList> {
       fetchIssued(id);
       error = false;
     });
+  }
+
+  Future deletefeedback(String feedId) async {
+    var data = {
+      'id': feedId,
+    };
+    http.Response response;
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/Feedback/delete',
+        body: (data));
+    if (response.statusCode == 200) {
+      Toast.show("Feedback Deleted Successfully", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.green[600],
+          backgroundColor: Colors.white);
+      Timer(Duration(seconds: 2), () => fetchIssued(sid));
+    } else {
+      Toast.show("Something went Wrong", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
+    }
   }
 
   List listResponse;
@@ -63,11 +89,20 @@ class _MyApp extends State<FeedbackList> {
     getValidation();
   }
 
+  Timer _clockTimer;
   @override
   void initState() {
     getValidation();
 
     super.initState();
+    _clockTimer =
+        Timer.periodic(Duration(seconds: 6), (Timer t) => getValidation());
+  }
+
+  @override
+  void dispose() {
+    _clockTimer.cancel();
+    super.dispose();
   }
 
   // This widget is the root of your application.
@@ -194,9 +229,57 @@ class _MyApp extends State<FeedbackList> {
                                                       .substring(0, 40)
                                                   : listFacts[index]["content"],
                                             ),
-                                            trailing: Text(
-                                              listFacts[index]["created_at"]
-                                                  .substring(0, 10),
+                                            trailing: Column(
+                                              children: [
+                                                Text(
+                                                  listFacts[index]["created_at"]
+                                                      .substring(0, 10),
+                                                ),
+                                                InkWell(
+                                                    onTap: () {
+                                                      // BuildAlertDialogDelete();
+
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (context) =>
+                                                            AlertDialog(
+                                                          backgroundColor:
+                                                              Colors.white,
+                                                          title:
+                                                              Text("Delete?"),
+                                                          content: Text(
+                                                              "Do you want to delete?"),
+                                                          actions: [
+                                                            FlatButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child:
+                                                                    Text("No")),
+                                                            FlatButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  deletefeedback(
+                                                                      listFacts[
+                                                                              index]
+                                                                          [
+                                                                          "id"]);
+                                                                  fetchIssued(
+                                                                      sid);
+                                                                },
+                                                                child:
+                                                                    Text("Yes"))
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Icon(
+                                                      Icons.delete,
+                                                      color: Colors.red[400],
+                                                    )),
+                                              ],
                                             ),
                                           ),
                                         ],

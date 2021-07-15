@@ -356,10 +356,10 @@ class SignupScreenState extends State<RegScreen> {
                               ),
                               validator: (String value) {
                                 if (value.isEmpty) {
-                                  return "Please enter  Employee Id";
+                                  return "Please enter Employee Id";
                                 }
                                 if (value.length != 6) {
-                                  return "Please enter valid Employee Id";
+                                  return "Please 6 Digit Employee Id";
                                 }
                                 return null;
                               },

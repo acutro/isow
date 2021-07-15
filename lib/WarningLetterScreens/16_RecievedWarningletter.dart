@@ -19,14 +19,17 @@ class RecivedWarning extends StatefulWidget {
 
 class _RecivedWarningState extends State<RecivedWarning> {
   String sid;
+  String posiid;
   bool error = true;
   Future getValidation(String nam) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     String id = sharedPreferences.getString('userId');
+    String pos = sharedPreferences.getString('position');
     setState(() {
       sid = id;
-      _getEmployee(id, nam);
+      posiid = pos;
+      pos == '4' ? _getsupervisor(id) : _getEmployee(id, nam);
       error = false;
     });
   }
@@ -63,15 +66,50 @@ class _RecivedWarningState extends State<RecivedWarning> {
     }
   }
 
+  Future _getsupervisor(String id) async {
+    var data = {
+      'fromId': id,
+    };
+    http.Response response;
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/WarningLetter/supervisorsingleList',
+        body: (data));
+    if (response.statusCode == 200) {
+      setState(() {
+        mapResponse = jsonDecode(response.body);
+        listFacts = mapResponse['data'];
+        jobError = false;
+        print("{$listFacts}");
+      });
+    } else {
+      jobError = true;
+
+      Toast.show("No Warning Letter Found", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
+    }
+  }
+
   Future<Null> refreshList(String nam) async {
     await Future.delayed(Duration(seconds: 2));
     getValidation(nam);
   }
 
+  Timer _clockTimer;
   @override
   void initState() {
     getValidation("");
     super.initState();
+    _clockTimer = Timer.periodic(
+        Duration(seconds: 6), (Timer t) => getValidation(controller.text));
+  }
+
+  @override
+  void dispose() {
+    _clockTimer.cancel();
+    super.dispose();
   }
 
   @override
@@ -121,7 +159,8 @@ class _RecivedWarningState extends State<RecivedWarning> {
                     TextSpan(
                       children: [
                         TextSpan(
-                            text: 'Recieved  ', style: TextStyle(fontSize: 26)),
+                            text: posiid == '4' ? 'Issued  ' : 'Recieved  ',
+                            style: TextStyle(fontSize: 26)),
                         TextSpan(text: 'Warning Letter'),
                       ],
                     ),

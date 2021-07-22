@@ -326,51 +326,51 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       //         ),
                       //       ),
                       //     ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          height: 50.0,
-                          child: RaisedButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EditProfile(
-                                          name: aname,
-                                          empid: auserId,
-                                          email: aemail,
-                                          work: awork,
-                                          mob: amob_num,
-                                          roleid: aroleid,
-                                          propic: propic,
-                                        )),
-                              );
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(80.0)),
-                            padding: EdgeInsets.all(0.0),
-                            child: Ink(
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [Color(0xFF4fc4f2), Colors.blue],
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                  ),
-                                  borderRadius: BorderRadius.circular(30.0)),
-                              child: Container(
-                                constraints: BoxConstraints(
-                                    maxWidth: 170.0, minHeight: 50.0),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Edit Profile",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Align(
+                      //   alignment: Alignment.center,
+                      //   child: Container(
+                      //     height: 50.0,
+                      //     child: RaisedButton(
+                      //       onPressed: () {
+                      //         Navigator.pushReplacement(
+                      //           context,
+                      //           MaterialPageRoute(
+                      //               builder: (context) => EditProfile(
+                      //                     name: aname,
+                      //                     empid: auserId,
+                      //                     email: aemail,
+                      //                     work: awork,
+                      //                     mob: amob_num,
+                      //                     roleid: aroleid,
+                      //                     propic: propic,
+                      //                   )),
+                      //         );
+                      //       },
+                      //       shape: RoundedRectangleBorder(
+                      //           borderRadius: BorderRadius.circular(80.0)),
+                      //       padding: EdgeInsets.all(0.0),
+                      //       child: Ink(
+                      //         decoration: BoxDecoration(
+                      //             gradient: LinearGradient(
+                      //               colors: [Color(0xFF4fc4f2), Colors.blue],
+                      //               begin: Alignment.centerLeft,
+                      //               end: Alignment.centerRight,
+                      //             ),
+                      //             borderRadius: BorderRadius.circular(30.0)),
+                      //         child: Container(
+                      //           constraints: BoxConstraints(
+                      //               maxWidth: 170.0, minHeight: 50.0),
+                      //           alignment: Alignment.center,
+                      //           child: Text(
+                      //             "Edit Profile",
+                      //             textAlign: TextAlign.center,
+                      //             style: TextStyle(color: Colors.white),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       //     SizedBox(
                       //       height: 30,
                       //     )

@@ -88,8 +88,9 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => NewsListingMain(
-                                                offerList: chooseCtogory(
-                                                    listFacts, '1'),
+                                                // offerList: chooseCtogory(
+                                                //     listFacts, '1'),
+                                                catId: '1',
                                                 path:
                                                     'assets/images/health.png',
                                                 title: "Health Offers",
@@ -129,8 +130,9 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 NewsListingMain(
-                                                  offerList: chooseCtogory(
-                                                      listFacts, '2'),
+                                                  // offerList: chooseCtogory(
+                                                  //     listFacts, '2'),
+                                                  catId: '2',
                                                   path:
                                                       'assets/images/plane.png',
                                                   title: "Travel Offers",
@@ -170,8 +172,9 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 NewsListingMain(
-                                                  offerList: chooseCtogory(
-                                                      listFacts, '3'),
+                                                  // offerList: chooseCtogory(
+                                                  //     listFacts, '3'),
+                                                  catId: '3',
                                                   path:
                                                       'assets/images/shopping.png',
                                                   title: "Shoping Offers",
@@ -210,8 +213,9 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => NewsListingMain(
-                                                offerList: chooseCtogory(
-                                                    listFacts, '4'),
+                                                // offerList: chooseCtogory(
+                                                //     listFacts, '4'),
+                                                catId: '4',
                                                 path: 'assets/images/food.png',
                                                 title: "Food Offers",
                                               )),

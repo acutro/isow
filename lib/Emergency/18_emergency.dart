@@ -212,7 +212,7 @@ class _EmergencyState extends State<Emergency> {
                                   return Text('');
                                 }
                                 return Text(
-                                  ' ${time.sec}',
+                                  '${time.sec}',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 50,

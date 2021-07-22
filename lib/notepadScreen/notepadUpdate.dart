@@ -129,21 +129,21 @@ class _NotepadState extends State<UpdateNotepad> {
       onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
       },
-      iconEnabledColor: Colors.white,
+      iconEnabledColor: Colors.black45,
       value: prValue,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.black54),
       isExpanded: true,
-      dropdownColor: Color(0xff49A5FF),
+      dropdownColor: Colors.white,
       underline: Container(
         height: 0,
-        color: prError ? Colors.red : Colors.white,
+        color: prError ? Colors.red : Colors.black45,
       ),
       hint: Padding(
         padding: const EdgeInsets.only(left: 12),
         child: Text(
           "Select Priority",
           style: TextStyle(
-              color: Colors.white, fontSize: 12, fontFamily: "WorkSansLight"),
+              color: Colors.black45, fontSize: 12, fontFamily: "WorkSansLight"),
         ),
       ),
       items: (prList).map<DropdownMenuItem>((answer) {
@@ -153,7 +153,7 @@ class _NotepadState extends State<UpdateNotepad> {
             padding: EdgeInsets.only(left: 12),
             child: Text(
               answer["priority"],
-              style: TextStyle(color: Colors.white, fontSize: 14),
+              style: TextStyle(color: Colors.black54, fontSize: 14),
             ),
           ),
         );
@@ -175,11 +175,11 @@ class _NotepadState extends State<UpdateNotepad> {
       onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
       },
-      iconEnabledColor: Colors.white,
+      iconEnabledColor: Colors.black45,
       value: catValue,
       style: TextStyle(color: Colors.white),
       isExpanded: true,
-      dropdownColor: Color(0xff49A5FF),
+      dropdownColor: Colors.white,
       underline: Container(
         height: 0,
         color: catError ? Colors.red : Colors.white,
@@ -189,7 +189,7 @@ class _NotepadState extends State<UpdateNotepad> {
         child: Text(
           "Select Catogory",
           style: TextStyle(
-              color: Colors.white, fontSize: 12, fontFamily: "WorkSansLight"),
+              color: Colors.black45, fontSize: 12, fontFamily: "WorkSansLight"),
         ),
       ),
       items: (catList).map<DropdownMenuItem>((answer) {
@@ -199,7 +199,7 @@ class _NotepadState extends State<UpdateNotepad> {
             padding: EdgeInsets.only(left: 12),
             child: Text(
               answer["categoryName"],
-              style: TextStyle(color: Colors.white, fontSize: 14),
+              style: TextStyle(color: Colors.black45, fontSize: 14),
             ),
           ),
         );
@@ -458,7 +458,7 @@ class _NotepadState extends State<UpdateNotepad> {
                           child: Container(
                             margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 5.0),
                             decoration: BoxDecoration(
-                              color: Color(0xff49A5FF),
+                              color: Colors.white,
                               borderRadius: BorderRadius.circular(10.0),
                               boxShadow: [
                                 BoxShadow(
@@ -482,7 +482,7 @@ class _NotepadState extends State<UpdateNotepad> {
                                             padding: EdgeInsets.all(5),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
-                                                  color: Colors.white,
+                                                  color: Colors.black45,
                                                 ),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10))),
@@ -497,11 +497,11 @@ class _NotepadState extends State<UpdateNotepad> {
                                                           .toString()
                                                           .substring(0, 10),
                                                   style: TextStyle(
-                                                      color: Colors.white),
+                                                      color: Colors.black45),
                                                 ),
                                                 style: ElevatedButton.styleFrom(
                                                   elevation: 0,
-                                                  primary: Color(0xff49A5FF),
+                                                  primary: Colors.white,
                                                 ),
                                                 onPressed: () {
                                                   showDatePicker(
@@ -523,23 +523,23 @@ class _NotepadState extends State<UpdateNotepad> {
                                         child: Container(
                                           padding: EdgeInsets.all(5),
                                           decoration: BoxDecoration(
-                                              color: Color(0xff49A5FF),
+                                              color: Colors.white,
                                               borderRadius:
                                                   BorderRadius.circular(10.0),
                                               border: Border.all(
-                                                  color: Colors.white)),
+                                                  color: Colors.black45)),
                                           alignment: Alignment.center,
                                           margin: EdgeInsets.fromLTRB(
                                               10.0, 10.0, 10.0, 0.0),
                                           height: 40.0,
                                           child: TextField(
                                             controller: _nameController,
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            style: TextStyle(
+                                                color: Colors.black45),
                                             decoration: InputDecoration(
                                               hintText: 'Title',
                                               hintStyle: TextStyle(
-                                                  color: Colors.white),
+                                                  color: Colors.black45),
                                               border: InputBorder.none,
                                               focusedBorder: InputBorder.none,
                                               enabledBorder: InputBorder.none,
@@ -561,7 +561,7 @@ class _NotepadState extends State<UpdateNotepad> {
                                             padding: EdgeInsets.all(5),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
-                                                  color: Colors.white,
+                                                  color: Colors.black45,
                                                 ),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10))),
@@ -576,19 +576,19 @@ class _NotepadState extends State<UpdateNotepad> {
                                           width: 70,
                                           padding: EdgeInsets.all(5),
                                           decoration: BoxDecoration(
-                                              color: Color(0xff49A5FF),
+                                              color: Colors.white,
                                               borderRadius:
                                                   BorderRadius.circular(10.0),
                                               border: Border.all(
-                                                  color: Colors.white)),
+                                                  color: Colors.black45)),
                                           alignment: Alignment.center,
                                           margin: EdgeInsets.fromLTRB(
                                               10.0, 10.0, 10.0, 0.0),
                                           height: 40.0,
                                           child: Text(
                                             "Add",
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            style: TextStyle(
+                                                color: Colors.black54),
                                           ),
                                         ),
                                       ),
@@ -599,7 +599,7 @@ class _NotepadState extends State<UpdateNotepad> {
                                       padding: EdgeInsets.all(5),
                                       decoration: BoxDecoration(
                                           border: Border.all(
-                                            color: Colors.white,
+                                            color: Colors.black45,
                                           ),
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10))),
@@ -771,7 +771,7 @@ class _NotepadState extends State<UpdateNotepad> {
                                           child: Text(
                                             'Requirments',
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black45,
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -779,15 +779,15 @@ class _NotepadState extends State<UpdateNotepad> {
                                         Expanded(
                                           child: Container(
                                             decoration: BoxDecoration(
-                                                color: Color(0xff49A5FF),
+                                                color: Colors.white,
                                                 borderRadius:
                                                     BorderRadius.circular(10.0),
                                                 border: Border.all(
-                                                    color: Colors.white)),
+                                                    color: Colors.black45)),
                                             margin: EdgeInsets.all(10.0),
                                             child: new TextField(
                                               style: TextStyle(
-                                                  color: Colors.white),
+                                                  color: Colors.black54),
                                               decoration: new InputDecoration(
                                                 border: InputBorder.none,
                                                 focusedBorder: InputBorder.none,

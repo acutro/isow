@@ -3,17 +3,16 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'chatScreenMain.dart';
+import 'FirechatScreen.dart';
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'chatScreenMain.dart';
 
-class ChatListScreen extends StatefulWidget {
+class FireChatListScreen extends StatefulWidget {
   @override
-  _MyApp createState() => _MyApp();
+  _FireChatListScreenState createState() => _FireChatListScreenState();
 }
 
-class _MyApp extends State<ChatListScreen> {
+class _FireChatListScreenState extends State<FireChatListScreen> {
   TextEditingController controller = new TextEditingController();
   String sid;
 
@@ -90,7 +89,7 @@ class _MyApp extends State<ChatListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Chat list",
+          "Fire Chat",
           style: TextStyle(
             color: Colors.white,
           ),
@@ -200,7 +199,7 @@ class _MyApp extends State<ChatListScreen> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  ChatDetailScreen(
+                                                  FireChatDetailScreen(
                                                       name: listFacts[index]
                                                           ["name"],
                                                       path: getpath(

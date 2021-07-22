@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:isow/FireChatScreens/FirechatUsersList.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -585,7 +586,7 @@ class HomeScreenState extends State<HomeScreen> {
                                   margin: EdgeInsets.all(10),
                                 ),
                                 Text(
-                                  "Orientation",
+                                  "Bread/Bakery",
                                   style: TextStyle(fontSize: 12),
                                 )
                               ],
@@ -1081,7 +1082,7 @@ class HomeScreenState extends State<HomeScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ChatListScreen()),
+                                    builder: (context) => FireChatListScreen()),
                               );
                             },
                             child: Column(

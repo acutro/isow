@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:toast/toast.dart';
-import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireChatDetailScreen extends StatefulWidget {
@@ -182,6 +179,7 @@ class _FireChatDetailScreenState extends State<FireChatDetailScreen> {
 
   final FocusScopeNode _node = FocusScopeNode();
   _sendMessageArea() {
+    DocumentSnapshot document;
     return Container(
       //  padding: EdgeInsets.symmetric(horizontal: 8),
       height: 180,
@@ -213,7 +211,30 @@ class _FireChatDetailScreenState extends State<FireChatDetailScreen> {
                             controller: messageController,
                             decoration: new InputDecoration(
                               suffixIcon: GestureDetector(
-                                onTap: () {},
+                                onTap: () async {
+                                  CollectionReference add = FirebaseFirestore
+                                      .instance
+                                      .collection('isowChat');
+                                  add.add({
+                                    'createdAt': '12/20/2020',
+                                    'fromId': '4',
+                                    'message': messageController.text,
+                                    'toId': '13'
+                                  });
+
+                                  // FirebaseFirestore.instance
+                                  //     .runTransaction((transaction) async {
+                                  //   DocumentSnapshot freshSnap =
+                                  //       await transaction
+                                  //           .(document.reference);
+                                  //   transaction.update(freshSnap.reference, {
+                                  //     'createdAt': '12/20/2020',
+                                  //     'fromId': '4',
+                                  //     'message': 'gggggggggggggg',
+                                  //     'toId': '13'
+                                  //   });
+                                  // });
+                                },
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(30),

@@ -116,7 +116,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
     getValidation();
     super.initState();
     _clockTimer =
-        Timer.periodic(Duration(seconds: 2), (Timer t) => _rigList(""));
+        Timer.periodic(Duration(seconds: 3), (Timer t) => _rigList(""));
   }
 
   @override
@@ -251,16 +251,18 @@ class _RecivedWarningState extends State<RecivedAlert> {
                               return GestureDetector(
                                 onTap: () {
                                   showDialogFunc(
-                                      context,
-                                      listFacts[index]["Name"],
-                                      listFacts[index]["Position"],
-                                      listFacts[index]["Date"],
-                                      listFacts[index]["Created_Date"],
-                                      listFacts[index]["Description"],
-                                      listFacts[index]["rigName"] ?? "",
-                                      listFacts[index]["profile_pic"] ?? "",
-                                      listFacts[index]["id"] ?? "",
-                                      posid);
+                                    context,
+                                    listFacts[index]["Name"],
+                                    listFacts[index]["Position"],
+                                    listFacts[index]["Date"],
+                                    listFacts[index]["Created_Date"],
+                                    listFacts[index]["Description"],
+                                    listFacts[index]["rigName"] ?? "",
+                                    listFacts[index]["profile_pic"] ?? "",
+                                    listFacts[index]["id"] ?? "",
+                                    posid,
+                                    listFacts[index]["expire_status"] ?? "",
+                                  );
                                 },
                                 child: Card(
                                   elevation: 3,
@@ -334,49 +336,57 @@ class _RecivedWarningState extends State<RecivedAlert> {
                                                     );
                                                   },
                                                 ),
-                                                InkWell(
-                                                    onTap: () {
-                                                      // BuildAlertDialogDelete();
+                                                listFacts[index]
+                                                            ["expire_status"] ==
+                                                        '0'
+                                                    ? InkWell(
+                                                        onTap: () {
+                                                          // BuildAlertDialogDelete();
 
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) =>
-                                                            AlertDialog(
-                                                          backgroundColor:
-                                                              Colors.white,
-                                                          title:
-                                                              Text("Delete?"),
-                                                          content: Text(
-                                                              "Do you want to delete?"),
-                                                          actions: [
-                                                            FlatButton(
-                                                                onPressed: () {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                                child:
-                                                                    Text("No")),
-                                                            FlatButton(
-                                                                onPressed: () {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                  deleterig(
-                                                                      listFacts[
-                                                                              index]
-                                                                          [
-                                                                          "id"]);
-                                                                  _rigList("");
-                                                                },
-                                                                child:
-                                                                    Text("Yes"))
-                                                          ],
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: Icon(
-                                                      Icons.delete,
-                                                      color: Colors.red[400],
-                                                    )),
+                                                          showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (context) =>
+                                                                    AlertDialog(
+                                                              backgroundColor:
+                                                                  Colors.white,
+                                                              title: Text(
+                                                                  "Delete?"),
+                                                              content: Text(
+                                                                  "Do you want to delete?"),
+                                                              actions: [
+                                                                FlatButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    child: Text(
+                                                                        "No")),
+                                                                FlatButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      deleterig(
+                                                                          listFacts[index]
+                                                                              [
+                                                                              "id"]);
+                                                                      _rigList(
+                                                                          "");
+                                                                    },
+                                                                    child: Text(
+                                                                        "Yes"))
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: Icon(
+                                                          Icons.delete,
+                                                          color:
+                                                              Colors.red[400],
+                                                        ))
+                                                    : SizedBox(),
                                               ],
                                             ),
                                           ),
@@ -418,7 +428,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
 }
 
 showDialogFunc(context, person, position, date, creteDate, content, rigName,
-    path, id, posid) {
+    path, id, posid, rigStatus) {
   int endT(DateTime due) {
     int tm;
     tm = due.millisecondsSinceEpoch;
@@ -652,7 +662,7 @@ showDialogFunc(context, person, position, date, creteDate, content, rigName,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    posid == '4'
+                    rigStatus == '1'
                         ? new SizedBox(
                             width: 130.0,
                             height: 45.0,

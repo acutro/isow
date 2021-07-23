@@ -93,6 +93,18 @@ class _RigAlert2State extends State<RigAlert2> {
     }
   }
 
+  String rigStatusFn(String rigNamepass) {
+    String id;
+    for (int i = 0; i < rigList.length; i++) {
+      if (rigList[i]['rigName'] == rigNamepass) {
+        setState(() {
+          id = rigList[i]['id'].toString();
+        });
+      }
+    }
+    return id;
+  }
+
   _pickTime(TimeOfDay timme) async {
     TimeOfDay t = await showTimePicker(context: context, initialTime: timme);
     if (t != null) {
@@ -345,7 +357,7 @@ class _RigAlert2State extends State<RigAlert2> {
                       // alignment: Alignment.topLeft,
                       child: RaisedButton(
                         onPressed: () {
-                          if (rigValue == null ||
+                          if (rigName == null ||
                               _descriptionController.text == "") {
                             Toast.show("Enter all Details", context,
                                 duration: Toast.LENGTH_SHORT,
@@ -361,7 +373,7 @@ class _RigAlert2State extends State<RigAlert2> {
                           } else {
                             upAlert(
                                 widget.userId,
-                                rigValue.toString(),
+                                rigStatusFn(rigName),
                                 _descriptionController.text,
                                 _datetime.toString().substring(0, 10),
                                 time.toString().substring(10, 15));

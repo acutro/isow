@@ -40,17 +40,17 @@ class _JobdescriptionState extends State<Jobdescription> {
       setState(() {
         mapResponse = jsonDecode(response.body);
         roleList = mapResponse['data'];
-        roleFn(roleList);
+        catFn(roleList);
         print("{$roleList}");
       });
     }
   }
 
   Future fetchUsers(
-    int id,
+    String id,
   ) async {
     var data = {
-      'roleId': id.toString(),
+      'roleId': id,
     };
     http.Response response;
     response = await http.post(
@@ -60,6 +60,7 @@ class _JobdescriptionState extends State<Jobdescription> {
       setState(() {
         userResponse = jsonDecode(response.body);
         userList = userResponse['data'];
+        employeeFn(userList);
         print("{$userList}");
       });
     } else {
@@ -165,7 +166,7 @@ class _JobdescriptionState extends State<Jobdescription> {
   //   }
   // }
 
-  roleFn(List roleListt) {
+  catFn(List roleListt) {
     for (int i = 0; i < roleListt.length; i++) {
       setState(() {
         catogoryList.add(roleListt[i]['userRoles']);
@@ -173,14 +174,76 @@ class _JobdescriptionState extends State<Jobdescription> {
     }
   }
 
+  employeeFn(List employeeListt) {
+    employeeList.clear();
+    for (int i = 0; i < employeeListt.length; i++) {
+      setState(() {
+        employeeList.add(employeeListt[i]['name']);
+      });
+    }
+  }
+
+  String catStatusFn(String catoPass) {
+    String id;
+    for (int i = 0; i < roleList.length; i++) {
+      if (roleList[i]['userRoles'] == catoPass) {
+        setState(() {
+          id = roleList[i]['id'].toString();
+        });
+      }
+    }
+    return id;
+  }
+
+  String empStatusFn(String empPass) {
+    String eid;
+    for (int i = 0; i < userList.length; i++) {
+      if (userList[i]['name'] == empPass) {
+        setState(() {
+          eid = userList[i]['id'].toString();
+        });
+      }
+    }
+    return eid;
+  }
+
+  List<String> employeeList = [];
+  String employeeName;
+  String empId;
+  Widget buildEmpDropDown() {
+    return DropDownField(
+      onValueChanged: (dynamic value1) {
+        setState(() {
+          employeeName = value1;
+
+          // catStatusFn(employeeName);
+        });
+      },
+      itemsVisibleInDropdown: employeeList == null ? 0 : 3,
+      strict: true,
+      hintStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      textStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      value: employeeName,
+      // required: false,
+      hintText: 'Select Employee',
+      items: employeeList,
+    );
+  }
+
   List<String> catogoryList = [];
   String catogoryName;
-  Widget buildRoleDropDownn() {
+
+  String catogoryId;
+
+  Widget buildCatoDropDownn() {
     return DropDownField(
       onValueChanged: (dynamic value) {
         setState(() {
           catogoryName = value;
-          fetchUsers(2);
+          catogoryId = catStatusFn(value);
+          fetchUsers(catogoryId);
         });
       },
       strict: true,
@@ -190,146 +253,146 @@ class _JobdescriptionState extends State<Jobdescription> {
           fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
       value: catogoryName,
       // required: false,
-      hintText: 'Select Catogory',
+      hintText: 'Select Role',
       items: catogoryList,
     );
   }
 
-  Widget buildDropDownButton() {
-    return Container(
-      alignment: Alignment.center,
-      height: 58,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.black45, width: 1),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
+  // Widget buildDropDownButton() {
+  //   return Container(
+  //     alignment: Alignment.center,
+  //     height: 58,
+  //     decoration: BoxDecoration(
+  //       color: Colors.white,
+  //       border: Border.all(color: Colors.black45, width: 1),
+  //       borderRadius: BorderRadius.all(Radius.circular(10)),
+  //     ),
 
-      // color: Color.fromRGBO(221, 193, 135, 0.08),
-      child: DropdownButton(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        iconEnabledColor: Colors.black87,
-        value: roleValue,
-        dropdownColor: Colors.white,
-        isExpanded: true,
-        underline: Container(
-          height: 0,
-          color: roleError ? Colors.red : Colors.black87,
-        ),
-        hint: Padding(
-          padding: const EdgeInsets.only(left: 12),
-          child: Text(
-            "Role",
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.black87,
-            ),
-          ),
-        ),
-        items: (roleList).map<DropdownMenuItem>((answer) {
-          return DropdownMenuItem(
-            value: int.parse(answer["id"]),
-            child: Container(
-              padding: EdgeInsets.only(left: 12),
-              child: Text(
-                answer["userRoles"],
-                style: TextStyle(color: Colors.black87, fontSize: 14),
-              ),
-            ),
-          );
-        }).toList(),
-        onChanged: (value) {
-          setState(() {
-            fetchUsers(value);
-            roleError = false;
-            roleValue = value;
+  //     // color: Color.fromRGBO(221, 193, 135, 0.08),
+  //     child: DropdownButton(
+  //       onTap: () {
+  //         FocusScope.of(context).requestFocus(new FocusNode());
+  //       },
+  //       iconEnabledColor: Colors.black87,
+  //       value: roleValue,
+  //       dropdownColor: Colors.white,
+  //       isExpanded: true,
+  //       underline: Container(
+  //         height: 0,
+  //         color: roleError ? Colors.red : Colors.black87,
+  //       ),
+  //       hint: Padding(
+  //         padding: const EdgeInsets.only(left: 12),
+  //         child: Text(
+  //           "Role",
+  //           style: TextStyle(
+  //             fontSize: 14,
+  //             color: Colors.black87,
+  //           ),
+  //         ),
+  //       ),
+  //       items: (roleList).map<DropdownMenuItem>((answer) {
+  //         return DropdownMenuItem(
+  //           value: int.parse(answer["id"]),
+  //           child: Container(
+  //             padding: EdgeInsets.only(left: 12),
+  //             child: Text(
+  //               answer["userRoles"],
+  //               style: TextStyle(color: Colors.black87, fontSize: 14),
+  //             ),
+  //           ),
+  //         );
+  //       }).toList(),
+  //       onChanged: (value) {
+  //         setState(() {
+  //           fetchUsers(value);
+  //           roleError = false;
+  //           roleValue = value;
 
-            print("$roleValue id of compny");
-          });
-          // print(companyValue.runtimeType);
-        },
-      ),
-    );
-  }
+  //           print("$roleValue id of compny");
+  //         });
+  //         // print(companyValue.runtimeType);
+  //       },
+  //     ),
+  //   );
+  // }
 
-  Widget personDropDownButton() {
-    return Container(
-      alignment: Alignment.center,
-      height: 58,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.black45, width: 1),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
+  // Widget personDropDownButton() {
+  //   return Container(
+  //     alignment: Alignment.center,
+  //     height: 58,
+  //     decoration: BoxDecoration(
+  //       color: Colors.white,
+  //       border: Border.all(color: Colors.black45, width: 1),
+  //       borderRadius: BorderRadius.all(Radius.circular(10)),
+  //     ),
 
-      // color: Color.fromRGBO(221, 193, 135, 0.08),
-      child: userResponse == null
-          ? GestureDetector(
-              onTap: () {
-                Toast.show("Select Person", context,
-                    duration: Toast.LENGTH_SHORT,
-                    gravity: Toast.BOTTOM,
-                    textColor: Colors.red,
-                    backgroundColor: Colors.black87);
-              },
-              child: Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
-                child: Text(
-                  "Select Employee",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black87,
-                  ),
-                ),
-              ))
-          : DropdownButton(
-              onTap: () {
-                FocusScope.of(context).requestFocus(new FocusNode());
-              },
-              iconEnabledColor: Colors.black87,
-              value: userValue,
-              dropdownColor: Colors.white,
-              isExpanded: true,
-              underline: Container(
-                height: 0,
-                color: userError ? Colors.red : Colors.black87,
-              ),
-              hint: Padding(
-                padding: const EdgeInsets.only(left: 12),
-                child: Text(
-                  "Employee Name",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black87,
-                  ),
-                ),
-              ),
-              items: (userList).map<DropdownMenuItem>((answer) {
-                return DropdownMenuItem(
-                  value: int.parse(answer["id"]),
-                  child: Container(
-                    padding: EdgeInsets.only(left: 12),
-                    child: Text(
-                      answer["name"],
-                      style: TextStyle(color: Colors.black87, fontSize: 14),
-                    ),
-                  ),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  userError = false;
-                  userValue = value;
-                  print("$userValue id of compny");
-                });
-                // print(companyValue.runtimeType);
-              },
-            ),
-    );
-  }
+  //     // color: Color.fromRGBO(221, 193, 135, 0.08),
+  //     child: userResponse == null
+  //         ? GestureDetector(
+  //             onTap: () {
+  //               Toast.show("Select Person", context,
+  //                   duration: Toast.LENGTH_SHORT,
+  //                   gravity: Toast.BOTTOM,
+  //                   textColor: Colors.red,
+  //                   backgroundColor: Colors.black87);
+  //             },
+  //             child: Container(
+  //               alignment: Alignment.centerLeft,
+  //               padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+  //               child: Text(
+  //                 "Select Employee",
+  //                 style: TextStyle(
+  //                   fontSize: 14,
+  //                   color: Colors.black87,
+  //                 ),
+  //               ),
+  //             ))
+  //         : DropdownButton(
+  //             onTap: () {
+  //               FocusScope.of(context).requestFocus(new FocusNode());
+  //             },
+  //             iconEnabledColor: Colors.black87,
+  //             value: userValue,
+  //             dropdownColor: Colors.white,
+  //             isExpanded: true,
+  //             underline: Container(
+  //               height: 0,
+  //               color: userError ? Colors.red : Colors.black87,
+  //             ),
+  //             hint: Padding(
+  //               padding: const EdgeInsets.only(left: 12),
+  //               child: Text(
+  //                 "Employee Name",
+  //                 style: TextStyle(
+  //                   fontSize: 14,
+  //                   color: Colors.black87,
+  //                 ),
+  //               ),
+  //             ),
+  //             items: (userList).map<DropdownMenuItem>((answer) {
+  //               return DropdownMenuItem(
+  //                 value: int.parse(answer["id"]),
+  //                 child: Container(
+  //                   padding: EdgeInsets.only(left: 12),
+  //                   child: Text(
+  //                     answer["name"],
+  //                     style: TextStyle(color: Colors.black87, fontSize: 14),
+  //                   ),
+  //                 ),
+  //               );
+  //             }).toList(),
+  //             onChanged: (value) {
+  //               setState(() {
+  //                 userError = false;
+  //                 userValue = value;
+  //                 print("$userValue id of compny");
+  //               });
+  //               // print(companyValue.runtimeType);
+  //             },
+  //           ),
+  //   );
+  // }
 
   @override
   void initState() {
@@ -477,7 +540,7 @@ class _JobdescriptionState extends State<Jobdescription> {
                                             Radius.circular(10))),
                                     margin: EdgeInsets.fromLTRB(
                                         10.0, 10.0, 5.0, 0.0),
-                                    child: buildRoleDropDownn()),
+                                    child: buildCatoDropDownn()),
                               ),
                             ],
                           ),
@@ -497,15 +560,32 @@ class _JobdescriptionState extends State<Jobdescription> {
                           SizedBox(
                             height: 10,
                           ),
+                          // Row(
+                          //   children: <Widget>[
+                          //     Expanded(
+                          //       child: Container(
+                          //         margin: EdgeInsets.fromLTRB(
+                          //             10.0, 10.0, 10.0, 0.0),
+                          //         height: 45.0,
+                          //         child: buildEmpDropDown(),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           Row(
                             children: <Widget>[
                               Expanded(
                                 child: Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      10.0, 10.0, 10.0, 0.0),
-                                  height: 45.0,
-                                  child: personDropDownButton(),
-                                ),
+                                    alignment: Alignment.centerLeft,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.black45,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                    margin: EdgeInsets.fromLTRB(
+                                        10.0, 10.0, 5.0, 0.0),
+                                    child: buildEmpDropDown()),
                               ),
                             ],
                           ),
@@ -649,7 +729,7 @@ class _JobdescriptionState extends State<Jobdescription> {
                               ),
                             ),
                             onTap: () {
-                              if (userValue == null) {
+                              if (empStatusFn(employeeName) == null) {
                                 Toast.show("Select from Dropdown", context,
                                     duration: Toast.LENGTH_SHORT,
                                     gravity: Toast.BOTTOM,
@@ -665,7 +745,7 @@ class _JobdescriptionState extends State<Jobdescription> {
                                     backgroundColor: Colors.white);
                               } else {
                                 postJobissue(
-                                    userValue.toString(),
+                                    empStatusFn(employeeName).toString(),
                                     _descriptionController.text,
                                     _durationController.text,
                                     fileup);

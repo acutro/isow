@@ -94,15 +94,16 @@ class _FireChatDetailScreenState extends State<FireChatDetailScreen> {
                   itemBuilder: (context, index) {
                     final String msg =
                         snapshots.data.docs[index]['message'].toString();
-                    final String senddate = '12/06/2010';
+                    final String senddate =
+                        snapshots.data.docs[index]['createdAt'].toString();
                     final String pathfile = "";
 
                     final bool isMe =
-                        snapshots.data.docs[index]['fromId'] == '4'
+                        snapshots.data.docs[index]['fromId'] == widget.toid
                             ? true
                             : false;
                     //_buildListitem(context, snapshots.data.docs[index]),
-                    return _chatBubble(msg, senddate, isMe, pathfile, senddate);
+                    return _chatBubble(msg, senddate, isMe, pathfile);
                   },
                 );
               },
@@ -114,8 +115,7 @@ class _FireChatDetailScreenState extends State<FireChatDetailScreen> {
     );
   }
 
-  _chatBubble(
-      String msg, String senddate, bool isMe, String pathfile, String date) {
+  _chatBubble(String msg, String senddate, bool isMe, String pathfile) {
     return Container(
       padding: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
       child: Align(
@@ -148,7 +148,7 @@ class _FireChatDetailScreenState extends State<FireChatDetailScreen> {
               ),
             ),
             Text(
-              date.substring(10),
+              senddate.toString(),
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 10,
@@ -216,11 +216,12 @@ class _FireChatDetailScreenState extends State<FireChatDetailScreen> {
                                       .instance
                                       .collection('isowChat');
                                   add.add({
-                                    'createdAt': '12/20/2020',
-                                    'fromId': '4',
+                                    'createdAt': DateTime.now().toString(),
+                                    'fromId': widget.toid,
                                     'message': messageController.text,
-                                    'toId': '13'
+                                    'toId': widget.id
                                   });
+                                  messageController.clear();
 
                                   // FirebaseFirestore.instance
                                   //     .runTransaction((transaction) async {

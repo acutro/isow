@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
@@ -46,14 +47,17 @@ class _WarningletterState extends State<Warningletter> {
       setState(() {
         mapResponse = jsonDecode(response.body);
         roleList = mapResponse['data'];
+        catFn(roleList);
         print("{$roleList}");
       });
     }
   }
 
-  Future fetchUsers() async {
+  Future fetchUsers(
+    String id,
+  ) async {
     var data = {
-      'roleId': roleValue.toString(),
+      'roleId': id,
     };
     http.Response response;
     response = await http.post(
@@ -63,17 +67,18 @@ class _WarningletterState extends State<Warningletter> {
       setState(() {
         userResponse = jsonDecode(response.body);
         userList = userResponse['data'];
+        employeeFn(userList);
         print("{$userList}");
       });
     } else {
-      Toast.show(
-        "No persons Found",
-        context,
-        duration: Toast.LENGTH_SHORT,
-        gravity: Toast.BOTTOM,
-        backgroundColor: Colors.white,
-        textColor: Colors.red[400],
-      );
+      setState(() {
+        userList.clear();
+      });
+      Toast.show("List is Empty", context,
+          duration: Toast.LENGTH_SHORT,
+          gravity: Toast.BOTTOM,
+          textColor: Colors.red,
+          backgroundColor: Colors.white);
     }
   }
 
@@ -99,7 +104,7 @@ class _WarningletterState extends State<Warningletter> {
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
           backgroundColor: Colors.white);
-      Timer(Duration(seconds: 2), () => Navigator.pop(context));
+      Timer(Duration(seconds: 1), () => Navigator.pop(context));
     } else {
       Toast.show("Failed", context,
           duration: Toast.LENGTH_SHORT,
@@ -109,135 +114,227 @@ class _WarningletterState extends State<Warningletter> {
     }
   }
 
-  Widget buildDropDownButton() {
-    return Container(
-      alignment: Alignment.center,
-      height: 58,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.blue, width: 1),
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
+  catFn(List roleListt) {
+    for (int i = 0; i < roleListt.length; i++) {
+      setState(() {
+        catogoryList.add(roleListt[i]['userRoles']);
+      });
+    }
+  }
 
-      // color: Color.fromRGBO(221, 193, 135, 0.08),
-      child: DropdownButton(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        iconEnabledColor: Colors.black87,
-        value: roleValue,
-        isExpanded: true,
-        underline: Container(
-          height: 0,
-          color: roleError ? Colors.red : Colors.white,
-        ),
-        hint: Padding(
-          padding: const EdgeInsets.only(left: 12),
-          child: Text(
-            "Role",
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.black87,
-            ),
-          ),
-        ),
-        items: (roleList).map<DropdownMenuItem>((answer) {
-          return DropdownMenuItem(
-            value: int.parse(answer["id"]),
-            child: Container(
-              padding: EdgeInsets.only(left: 12),
-              child: Text(
-                answer["userRoles"],
-                style: TextStyle(color: Colors.black87, fontSize: 14),
-              ),
-            ),
-          );
-        }).toList(),
-        onChanged: (value) {
-          setState(() {
-            roleError = false;
-            roleValue = value;
-            fetchUsers();
-            print("$roleValue id of compny");
-          });
-          // print(companyValue.runtimeType);
-        },
-      ),
+  employeeFn(List employeeListt) {
+    employeeList.clear();
+    for (int i = 0; i < employeeListt.length; i++) {
+      setState(() {
+        employeeList.add(employeeListt[i]['name']);
+      });
+    }
+  }
+
+  String catStatusFn(String catoPass) {
+    String id;
+    for (int i = 0; i < roleList.length; i++) {
+      if (roleList[i]['userRoles'] == catoPass) {
+        setState(() {
+          id = roleList[i]['id'].toString();
+        });
+      }
+    }
+    return id;
+  }
+
+  String empStatusFn(String empPass) {
+    String eid;
+    for (int i = 0; i < userList.length; i++) {
+      if (userList[i]['name'] == empPass) {
+        setState(() {
+          eid = userList[i]['id'].toString();
+        });
+      }
+    }
+    return eid;
+  }
+
+  List<String> employeeList = [];
+  String employeeName;
+  String empId;
+  Widget buildEmpDropDown() {
+    return DropDownField(
+      onValueChanged: (dynamic value1) {
+        setState(() {
+          employeeName = value1;
+
+          // catStatusFn(employeeName);
+        });
+      },
+      itemsVisibleInDropdown: employeeList == null ? 0 : 3,
+      strict: true,
+      hintStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      textStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      value: employeeName,
+      // required: false,
+      hintText: 'Select Employee',
+      items: employeeList,
     );
   }
 
-  Widget personDropDownButton() {
-    return Container(
-      alignment: Alignment.center,
-      height: 58,
+  List<String> catogoryList = [];
+  String catogoryName;
 
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.blue, width: 1),
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
+  String catogoryId;
 
-      // color: Color.fromRGBO(221, 193, 135, 0.08),
-      child: userResponse == null
-          ? GestureDetector(
-              onTap: () {
-                Toast.show("Select Employee", context,
-                    duration: Toast.LENGTH_SHORT,
-                    gravity: Toast.BOTTOM,
-                    textColor: Colors.red,
-                    backgroundColor: Colors.white);
-              },
-              child: Text(
-                "Select Employee",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black54,
-                ),
-              ))
-          : DropdownButton(
-              onTap: () {
-                FocusScope.of(context).requestFocus(new FocusNode());
-              },
-              iconEnabledColor: Colors.black87,
-              value: userValue,
-              isExpanded: true,
-              underline: Container(
-                height: 0,
-                color: userError ? Colors.red : Colors.white,
-              ),
-              hint: Padding(
-                padding: const EdgeInsets.only(left: 12),
-                child: Text(
-                  "Employee Name",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-              items: (userList).map<DropdownMenuItem>((answer) {
-                return DropdownMenuItem(
-                  value: int.parse(answer["id"]),
-                  child: Container(
-                    padding: EdgeInsets.only(left: 12),
-                    child: Text(
-                      answer["name"],
-                      style: TextStyle(color: Colors.black87, fontSize: 14),
-                    ),
-                  ),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  userError = false;
-                  userValue = value;
-                  print("$userValue id of compny");
-                });
-                // print(companyValue.runtimeType);
-              },
-            ),
+  Widget buildCatoDropDownn() {
+    return DropDownField(
+      onValueChanged: (dynamic value) {
+        setState(() {
+          catogoryName = value;
+          catogoryId = catStatusFn(value);
+          fetchUsers(catogoryId);
+        });
+      },
+      strict: true,
+      hintStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      textStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      value: catogoryName,
+      // required: false,
+      hintText: 'Select Role',
+      items: catogoryList,
     );
   }
+
+  // Widget buildDropDownButton() {
+  //   return Container(
+  //     alignment: Alignment.center,
+  //     height: 58,
+  //     decoration: BoxDecoration(
+  //       color: Colors.white,
+  //       border: Border.all(color: Colors.blue, width: 1),
+  //       borderRadius: BorderRadius.all(Radius.circular(15)),
+  //     ),
+
+  //     // color: Color.fromRGBO(221, 193, 135, 0.08),
+  //     child: DropdownButton(
+  //       onTap: () {
+  //         FocusScope.of(context).requestFocus(new FocusNode());
+  //       },
+  //       iconEnabledColor: Colors.black87,
+  //       value: roleValue,
+  //       isExpanded: true,
+  //       underline: Container(
+  //         height: 0,
+  //         color: roleError ? Colors.red : Colors.white,
+  //       ),
+  //       hint: Padding(
+  //         padding: const EdgeInsets.only(left: 12),
+  //         child: Text(
+  //           "Role",
+  //           style: TextStyle(
+  //             fontSize: 14,
+  //             color: Colors.black87,
+  //           ),
+  //         ),
+  //       ),
+  //       items: (roleList).map<DropdownMenuItem>((answer) {
+  //         return DropdownMenuItem(
+  //           value: int.parse(answer["id"]),
+  //           child: Container(
+  //             padding: EdgeInsets.only(left: 12),
+  //             child: Text(
+  //               answer["userRoles"],
+  //               style: TextStyle(color: Colors.black87, fontSize: 14),
+  //             ),
+  //           ),
+  //         );
+  //       }).toList(),
+  //       onChanged: (value) {
+  //         setState(() {
+  //           roleError = false;
+  //           roleValue = value;
+  //           fetchUsers();
+  //           print("$roleValue id of compny");
+  //         });
+  //         // print(companyValue.runtimeType);
+  //       },
+  //     ),
+  //   );
+  // }
+
+  // Widget personDropDownButton() {
+  //   return Container(
+  //     alignment: Alignment.center,
+  //     height: 58,
+
+  //     decoration: BoxDecoration(
+  //       color: Colors.white,
+  //       border: Border.all(color: Colors.blue, width: 1),
+  //       borderRadius: BorderRadius.all(Radius.circular(15)),
+  //     ),
+
+  //     // color: Color.fromRGBO(221, 193, 135, 0.08),
+  //     child: userResponse == null
+  //         ? GestureDetector(
+  //             onTap: () {
+  //               Toast.show("Select Employee", context,
+  //                   duration: Toast.LENGTH_SHORT,
+  //                   gravity: Toast.BOTTOM,
+  //                   textColor: Colors.red,
+  //                   backgroundColor: Colors.white);
+  //             },
+  //             child: Text(
+  //               "Select Employee",
+  //               style: TextStyle(
+  //                 fontSize: 14,
+  //                 color: Colors.black54,
+  //               ),
+  //             ))
+  //         : DropdownButton(
+  //             onTap: () {
+  //               FocusScope.of(context).requestFocus(new FocusNode());
+  //             },
+  //             iconEnabledColor: Colors.black87,
+  //             value: userValue,
+  //             isExpanded: true,
+  //             underline: Container(
+  //               height: 0,
+  //               color: userError ? Colors.red : Colors.white,
+  //             ),
+  //             hint: Padding(
+  //               padding: const EdgeInsets.only(left: 12),
+  //               child: Text(
+  //                 "Employee Name",
+  //                 style: TextStyle(
+  //                   fontSize: 14,
+  //                   color: Colors.black54,
+  //                 ),
+  //               ),
+  //             ),
+  //             items: (userList).map<DropdownMenuItem>((answer) {
+  //               return DropdownMenuItem(
+  //                 value: int.parse(answer["id"]),
+  //                 child: Container(
+  //                   padding: EdgeInsets.only(left: 12),
+  //                   child: Text(
+  //                     answer["name"],
+  //                     style: TextStyle(color: Colors.black87, fontSize: 14),
+  //                   ),
+  //                 ),
+  //               );
+  //             }).toList(),
+  //             onChanged: (value) {
+  //               setState(() {
+  //                 userError = false;
+  //                 userValue = value;
+  //                 print("$userValue id of compny");
+  //               });
+  //               // print(companyValue.runtimeType);
+  //             },
+  //           ),
+  //   );
+  // }
 
   @override
   void initState() {
@@ -297,59 +394,48 @@ class _WarningletterState extends State<Warningletter> {
                     height: MediaQuery.of(context).size.height * 0.04,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.fromLTRB(20.0, 20.0, 5.0, 0.0),
-                          //width: 200.0,
-                          height: 40.0,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(50.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 6.0,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: buildDropDownButton(),
-                        ),
+                            margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black45,
+                                ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: buildCatoDropDownn()),
                       ),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.fromLTRB(5.0, 20.0, 15.0, 0.0),
-                          //width: 200.0,
-                          height: 40.0,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(50.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 6.0,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: personDropDownButton(),
-                        ),
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black45,
+                                ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                            child: buildEmpDropDown()),
                       ),
                     ],
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.all(20),
+                    margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
                     padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                     //width: 200.0,
-                    height: 45.0,
+                    height: 50.0,
 
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      border: Border.all(color: Colors.blue, width: 1),
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      border: Border.all(color: Colors.black45, width: 1),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black12,
@@ -373,7 +459,6 @@ class _WarningletterState extends State<Warningletter> {
                       keyboardType: TextInputType.text,
                     ),
                   ),
-
                   Container(
                     margin: EdgeInsets.all(10.0),
                     height: 230.0,
@@ -392,7 +477,7 @@ class _WarningletterState extends State<Warningletter> {
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
-                                border: Border.all(color: Colors.blue)),
+                                border: Border.all(color: Colors.black45)),
                             margin: EdgeInsets.all(10.0),
                             child: new TextField(
                               style: TextStyle(color: Colors.black87),
@@ -413,67 +498,6 @@ class _WarningletterState extends State<Warningletter> {
                       ],
                     ),
                   ),
-
-                  // Row(
-                  //   children: <Widget>[
-                  //     Expanded(
-                  //       child: Container(
-                  //         margin: EdgeInsets.all(20.0),
-                  //         decoration: BoxDecoration(
-                  //           color: Colors.white,
-                  //           borderRadius: BorderRadius.circular(10.0),
-                  //           boxShadow: [
-                  //             BoxShadow(
-                  //               color: Colors.black26,
-                  //               blurRadius: 6.0,
-                  //               offset: Offset(0, 2),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //         height: 230.0,
-                  //         //width: 300.0,
-                  //         //color: Colors.redAccent,
-                  //         // child: Container(
-                  //         child: Column(
-                  //           children: <Widget>[
-                  //             Container(
-                  //               alignment: Alignment.topLeft,
-                  //               margin:
-                  //                   EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 0.0),
-                  //               child: Text(
-                  //                 'Issue',
-                  //                 style: TextStyle(
-                  //                     fontSize: 16.0,
-                  //                     fontWeight: FontWeight.bold),
-                  //               ),
-                  //             ),
-                  //             Expanded(
-                  //               child: SingleChildScrollView(
-                  //                 child: Container(
-                  //                   margin: EdgeInsets.all(10.0),
-                  //                   child: new TextField(
-                  //                     decoration: new InputDecoration(
-                  //                       border: InputBorder.none,
-                  //                       focusedBorder: InputBorder.none,
-                  //                       enabledBorder: InputBorder.none,
-                  //                       errorBorder: InputBorder.none,
-                  //                       disabledBorder: InputBorder.none,
-                  //                     ),
-                  //                     autofocus: false,
-                  //                     maxLines: null,
-                  //                     controller: _reasonController,
-                  //                     keyboardType: TextInputType.text,
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -501,7 +525,7 @@ class _WarningletterState extends State<Warningletter> {
                               ),
                             ),
                             onTap: () {
-                              if (userValue == null) {
+                              if (empStatusFn(employeeName) == null) {
                                 Toast.show("Select from Dropdown", context,
                                     duration: Toast.LENGTH_SHORT,
                                     gravity: Toast.BOTTOM,
@@ -516,7 +540,7 @@ class _WarningletterState extends State<Warningletter> {
                               } else {
                                 postWarning(
                                     _reasonController.text,
-                                    userValue.toString(),
+                                    empStatusFn(employeeName).toString(),
                                     sid,
                                     issueController.text);
 

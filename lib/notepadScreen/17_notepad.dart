@@ -85,6 +85,18 @@ class _NotepadState extends State<Notepad> {
     }
   }
 
+  String notepadStatusFn(String rigNamepass) {
+    String id;
+    for (int i = 0; i < catList.length; i++) {
+      if (catList[i]['categoryName'] == rigNamepass) {
+        setState(() {
+          id = catList[i]['id'].toString();
+        });
+      }
+    }
+    return id;
+  }
+
   int catValue;
   bool catError = false;
   Map catResponse;
@@ -215,52 +227,6 @@ class _NotepadState extends State<Notepad> {
       items: catogoryList,
     );
   }
-
-  // Widget buildRoleDropDownButton() {
-  //   return DropdownButton(
-  //     onTap: () {
-  //       FocusScope.of(context).requestFocus(new FocusNode());
-  //     },
-  //     iconEnabledColor: Colors.black45,
-  //     value: catValue,
-  //     style: TextStyle(color: Colors.white),
-  //     isExpanded: true,
-  //     dropdownColor: Colors.white,
-  //     underline: Container(
-  //       height: 0,
-  //       color: catError ? Colors.red : Colors.white,
-  //     ),
-  //     hint: Padding(
-  //       padding: const EdgeInsets.only(left: 12),
-  //       child: Text(
-  //         "Select Catogory",
-  //         style: TextStyle(
-  //             color: Colors.black45, fontSize: 12, fontFamily: "WorkSansLight"),
-  //       ),
-  //     ),
-  //     items: (catList).map<DropdownMenuItem>((answer) {
-  //       return DropdownMenuItem(
-  //         value: int.parse(answer["id"]),
-  //         child: Container(
-  //           padding: EdgeInsets.only(left: 12),
-  //           child: Text(
-  //             answer["categoryName"],
-  //             style: TextStyle(color: Colors.black54, fontSize: 14),
-  //           ),
-  //         ),
-  //       );
-  //     }).toList(),
-  //     onChanged: (value) {
-  //       setState(() {
-  //         catError = false;
-  //         catValue = value;
-
-  //         print("$catValue id of compny");
-  //       });
-  //       // print(companyValue.runtimeType);
-  //     },
-  //   );
-  // }
 
   _addAlert() {
     return showDialog(
@@ -936,13 +902,14 @@ class _NotepadState extends State<Notepad> {
                                   backgroundColor: Colors.white);
                             } else {
                               upNotepad(
-                                  widget.userId,
-                                  _nameController.text,
-                                  _requirmentController.text,
-                                  _datetime.toString(),
-                                  pr.toString(),
-                                  prValue.toString(),
-                                  catValue.toString());
+                                widget.userId,
+                                _nameController.text,
+                                _requirmentController.text,
+                                _datetime.toString(),
+                                pr.toString(),
+                                prValue.toString(),
+                                notepadStatusFn(catogoryName),
+                              );
                               _nameController.text = "";
                               _requirmentController.text = "";
                             }

@@ -184,109 +184,99 @@ class _MyApp extends State<FeedbackList> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 15,
-                                  vertical: 8,
-                                ),
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.90,
-                                      padding: EdgeInsets.all(3),
-                                      child: Column(
-                                        children: <Widget>[
-                                          ListTile(
-                                            leading: CircleAvatar(
-                                              backgroundColor: Colors.blue,
-                                              child: Text(
-                                                'F',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    fontSize: 20),
-                                              ),
-                                            ),
-                                            title: Text(
-                                              listFacts[index]["opinion"]
-                                                          .length >
-                                                      21
-                                                  ? listFacts[index]["opinion"]
-                                                      .substring(0, 21)
-                                                  : listFacts[index]["opinion"],
-                                              // '${listFacts[index]["created_at"][0].toUpperCase()}${listFacts[index]["created_at"].substring(1)}',
-                                              //  listFacts[index]["name"],
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.90,
+                                    padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                                    child: Column(
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: CircleAvatar(
+                                            backgroundColor: Colors.blue,
+                                            child: Text(
+                                              'F',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  height: 1.5),
-                                            ),
-                                            subtitle: Text(
-                                              listFacts[index]["content"]
-                                                          .length >
-                                                      40
-                                                  ? listFacts[index]["content"]
-                                                      .substring(0, 40)
-                                                  : listFacts[index]["content"],
-                                            ),
-                                            trailing: Column(
-                                              children: [
-                                                Text(
-                                                  listFacts[index]["created_at"]
-                                                      .substring(0, 10),
-                                                ),
-                                                InkWell(
-                                                    onTap: () {
-                                                      // BuildAlertDialogDelete();
-
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) =>
-                                                            AlertDialog(
-                                                          backgroundColor:
-                                                              Colors.white,
-                                                          title:
-                                                              Text("Delete?"),
-                                                          content: Text(
-                                                              "Do you want to delete?"),
-                                                          actions: [
-                                                            FlatButton(
-                                                                onPressed: () {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                                child:
-                                                                    Text("No")),
-                                                            FlatButton(
-                                                                onPressed: () {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                  deletefeedback(
-                                                                      listFacts[
-                                                                              index]
-                                                                          [
-                                                                          "id"]);
-                                                                  fetchIssued(
-                                                                      sid);
-                                                                },
-                                                                child:
-                                                                    Text("Yes"))
-                                                          ],
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: Icon(
-                                                      Icons.delete,
-                                                      color: Colors.red[400],
-                                                    )),
-                                              ],
+                                                  color: Colors.white,
+                                                  fontSize: 20),
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                          title: Text(
+                                            listFacts[index]["opinion"].length >
+                                                    21
+                                                ? listFacts[index]["opinion"]
+                                                    .substring(0, 21)
+                                                : listFacts[index]["opinion"],
+                                            // '${listFacts[index]["created_at"][0].toUpperCase()}${listFacts[index]["created_at"].substring(1)}',
+                                            //  listFacts[index]["name"],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                height: 1.5),
+                                          ),
+                                          subtitle: Text(
+                                            listFacts[index]["content"].length >
+                                                    40
+                                                ? listFacts[index]["content"]
+                                                    .substring(0, 40)
+                                                : listFacts[index]["content"],
+                                          ),
+                                          trailing: Column(
+                                            children: [
+                                              Text(
+                                                listFacts[index]["created_at"]
+                                                    .substring(0, 10),
+                                              ),
+                                              InkWell(
+                                                  onTap: () {
+                                                    // BuildAlertDialogDelete();
+
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          AlertDialog(
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        title: Text("Delete?"),
+                                                        content: Text(
+                                                            "Do you want to delete?"),
+                                                        actions: [
+                                                          FlatButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child:
+                                                                  Text("No")),
+                                                          FlatButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                                deletefeedback(
+                                                                    listFacts[
+                                                                            index]
+                                                                        ["id"]);
+                                                                fetchIssued(
+                                                                    sid);
+                                                              },
+                                                              child:
+                                                                  Text("Yes"))
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Icon(
+                                                    Icons.delete,
+                                                    color: Colors.red[400],
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           );

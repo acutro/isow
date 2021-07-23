@@ -116,7 +116,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
     getValidation();
     super.initState();
     _clockTimer =
-        Timer.periodic(Duration(seconds: 6), (Timer t) => _rigList(""));
+        Timer.periodic(Duration(seconds: 2), (Timer t) => _rigList(""));
   }
 
   @override

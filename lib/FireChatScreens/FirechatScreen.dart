@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:toast/toast.dart';
 import 'package:http/http.dart' as http;
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FireChatDetailScreen extends StatefulWidget {
@@ -22,93 +21,17 @@ class FireChatDetailScreen extends StatefulWidget {
 
 class _FireChatDetailScreenState extends State<FireChatDetailScreen> {
   TextEditingController messageController = new TextEditingController();
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  CollectionReference users = FirebaseFirestore.instance.collection('isowChat');
-  List listResponse;
-  Map mapResponse;
-  List<dynamic> listFacts;
-  bool jobError = false;
-  Future chatUp(
-    String fromid,
-    String toid,
-    String message,
-  ) async {
-    var data = {
-      'fromId': fromid,
-      'toId': toid,
-      'message': message,
-    };
-    http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Chat/create',
-        body: (data));
-    if (response.statusCode == 200) {
-      // Toast.show("Executed Successfully", context,
-      //     duration: Toast.LENGTH_SHORT,
-      //     gravity: Toast.BOTTOM,
-      //     textColor: Colors.green[600],
-      //     backgroundColor: Colors.white);
-      Timer(
-        Duration(milliseconds: 10),
-        () => fetchChat(widget.toid, widget.id),
-      );
-    } else {
-      Toast.show("Something went Wrong", context,
-          duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          textColor: Colors.red,
-          backgroundColor: Colors.white);
-    }
-  }
-
-  Future fetchChat(String fromid, String toid) async {
-    var data = {'fromId': fromid, 'toId': toid};
-    http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Chat/singleList',
-        body: (data));
-    if (response.statusCode == 200) {
-      setState(() {
-        mapResponse = jsonDecode(response.body);
-        listFacts = mapResponse['data'];
-        jobError = false;
-        print("{$listFacts}");
-      });
-    } else {
-      jobError = true;
-
-      Toast.show("Something went Wrong", context,
-          duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          textColor: Colors.red,
-          backgroundColor: Colors.white);
-    }
-  }
 
   Timer _clockTimer;
   @override
   void initState() {
     super.initState();
-    getFiredata();
-
-    fetchChat(widget.toid, widget.id);
-    _clockTimer = Timer.periodic(
-        Duration(seconds: 10), (Timer t) => fetchChat(widget.toid, widget.id));
   }
 
   @override
   void dispose() {
     _clockTimer.cancel();
     super.dispose();
-  }
-
-  String name;
-  void getFiredata() async {
-    var var1 =
-        await FirebaseFirestore.instance.collection('isowChat').doc().get();
-    name = var1.data()['message'];
-    print(var1);
   }
 
   @override
@@ -160,38 +83,37 @@ class _FireChatDetailScreenState extends State<FireChatDetailScreen> {
           ),
         ],
       ),
-      body: jobError == true || mapResponse == null
-          ? Center(
-              child: SpinKitChasingDots(
-                color: Colors.blue,
-                size: 120,
-              ),
-            )
-          : SafeArea(
-              child: Column(
-              children: [
-                Expanded(
-                  child: listFacts.length == 0
-                      ? Center(child: Text("No Messages found"))
-                      : ListView.builder(
-                          itemCount: listFacts.length,
-                          padding: EdgeInsets.all(20),
-                          itemBuilder: (BuildContext context, int index) {
-                            final String msg = listFacts[index]['message'];
-                            final String senddate = listFacts[index]['date'];
-                            final String pathfile = "";
+      body: SafeArea(
+          child: Column(
+        children: [
+          Expanded(
+            child: StreamBuilder(
+              stream:
+                  FirebaseFirestore.instance.collection('isowChat').snapshots(),
+              builder: (context, snapshots) {
+                if (!snapshots.hasData) return const Text("Loading..");
+                return ListView.builder(
+                  itemCount: snapshots.data.docs.length,
+                  itemBuilder: (context, index) {
+                    final String msg =
+                        snapshots.data.docs[index]['message'].toString();
+                    final String senddate = '12/06/2010';
+                    final String pathfile = "";
 
-                            final bool isMe =
-                                listFacts[index]['send_by'] == widget.toid;
-
-                            return _chatBubble(
-                                msg, senddate, isMe, pathfile, senddate);
-                          },
-                        ),
-                ),
-                _sendMessageArea(),
-              ],
-            )),
+                    final bool isMe =
+                        snapshots.data.docs[index]['fromId'] == '4'
+                            ? true
+                            : false;
+                    //_buildListitem(context, snapshots.data.docs[index]),
+                    return _chatBubble(msg, senddate, isMe, pathfile, senddate);
+                  },
+                );
+              },
+            ),
+          ),
+          _sendMessageArea(),
+        ],
+      )),
     );
   }
 
@@ -278,52 +200,49 @@ class _FireChatDetailScreenState extends State<FireChatDetailScreen> {
                   decoration: _boxDec(),
                   child: Row(
                     children: <Widget>[
-                      Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        width: 260,
-                        child: TextFormField(
-                          focusNode: _node,
-                          controller: messageController,
-                          decoration: new InputDecoration(
-                            suffixIcon: GestureDetector(
-                              onTap: () {
-                                chatUp(widget.toid, widget.id,
-                                    messageController.text);
-                                messageController.clear();
-                                _node.unfocus();
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    border: Border.all(
-                                      color: Colors.blue,
-                                      width: 3,
-                                    )),
-                                child: Icon(
-                                  Icons.send,
-                                  color: Colors.blue,
-                                  size: 22,
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          width: 260,
+                          child: TextFormField(
+                            focusNode: _node,
+                            controller: messageController,
+                            decoration: new InputDecoration(
+                              suffixIcon: GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      border: Border.all(
+                                        color: Colors.blue,
+                                        width: 3,
+                                      )),
+                                  child: Icon(
+                                    Icons.send,
+                                    color: Colors.blue,
+                                    size: 22,
+                                  ),
                                 ),
                               ),
-                            ),
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15, bottom: 11, top: 11, right: 15),
-                            hintText: 'Type your message..',
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(
+                                  left: 15, bottom: 11, top: 11, right: 15),
+                              hintText: 'Type your message..',
 
-                            // fillColor: Colors.white24,
-                            hintStyle: TextStyle(
-                                color: Colors.black45,
-                                fontSize: 12,
-                                fontFamily: "WorkSansLight"),
+                              // fillColor: Colors.white24,
+                              hintStyle: TextStyle(
+                                  color: Colors.black45,
+                                  fontSize: 12,
+                                  fontFamily: "WorkSansLight"),
+                            ),
                           ),
                         ),
                       ),
@@ -343,6 +262,9 @@ class _FireChatDetailScreenState extends State<FireChatDetailScreen> {
                         size: 22,
                         color: Colors.white,
                       ),
+                      SizedBox(
+                        width: 5,
+                      )
                     ],
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'alertList.dart';
@@ -61,6 +62,37 @@ class _RigAlert2State extends State<RigAlert2> {
     }
   }
 
+  List<String> rigNameList = [];
+  String rigName;
+  Widget buildRigDropDownn() {
+    return DropDownField(
+      onValueChanged: (dynamic value) {
+        setState(() {
+          rigName = value;
+        });
+      },
+
+      strict: true,
+      itemsVisibleInDropdown: 5,
+      hintStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 14.0),
+      textStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 14.0),
+      value: rigName,
+      // required: false,
+      hintText: 'Select Rig Name',
+      items: rigNameList,
+    );
+  }
+
+  rigAlertFn(List rigListt) {
+    for (int i = 0; i < rigListt.length; i++) {
+      setState(() {
+        rigNameList.add(rigListt[i]['rigName']);
+      });
+    }
+  }
+
   _pickTime(TimeOfDay timme) async {
     TimeOfDay t = await showTimePicker(context: context, initialTime: timme);
     if (t != null) {
@@ -83,7 +115,7 @@ class _RigAlert2State extends State<RigAlert2> {
       setState(() {
         mapResponse = jsonDecode(response.body);
         rigList = mapResponse['data'];
-
+        rigAlertFn(rigList);
         print("{$rigList}");
       });
     }
@@ -186,21 +218,7 @@ class _RigAlert2State extends State<RigAlert2> {
                   colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
         ),
       ),
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.only(bottom: 65.0),
-      //   child: FloatingActionButton(
-      //     backgroundColor: const Color(0xfffcfafa),
-      //     foregroundColor: Colors.black54,
-      //     mini: true,
-      //     onPressed: () {
-      //       Navigator.push(
-      //         context,
-      //         MaterialPageRoute(builder: (context) => Rigalert()),
-      //       );
-      //     },
-      //     child: Icon(Icons.add),
-      //   ),
-      // ),
+
       body: mapResponse == null
           ? Center(
               child: SpinKitChasingDots(
@@ -227,162 +245,47 @@ class _RigAlert2State extends State<RigAlert2> {
                       "Rig Alert",
                       style: TextStyle(fontSize: 24),
                     ),
-
-                    //     SizedBox(width: SizeConfig.safeBlockHorizontal * 10),
-                    // Container(
-                    //   margin: EdgeInsets.all(5.0),
-                    //   decoration: BoxDecoration(
-                    //     color: Colors.white,
-                    //     borderRadius: BorderRadius.circular(10.0),
-                    //   ),
-                    //   child: Column(
-                    //     children: <Widget>[
-                    //       Container(
-                    //         alignment: Alignment.topLeft,
-                    //         margin: EdgeInsets.fromLTRB(1.0, 10.0, 0.0, 5.0),
-                    //         child: Text(
-                    //           "COUNT DOWN TIME",
-                    //           style: TextStyle(
-                    //             color: Colors.black54,
-                    //             fontSize: 13.0,
-                    //             fontWeight: FontWeight.bold,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Row(
-                    //         children: <Widget>[
-                    //           Container(
-                    //             width: 35,
-                    //             height: 35,
-                    //             alignment: Alignment.topLeft,
-                    //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
-                    //             //padding: EdgeInsets.all(5),
-
-                    //             child: Text(''),
-                    //             decoration: BoxDecoration(
-                    //                 borderRadius: BorderRadius.circular(5.0),
-                    //                 color: Colors.white,
-                    //                 border: Border.all(
-                    //                   color: Colors.black54,
-                    //                   width: 1,
-                    //                 )),
-                    //           ),
-                    //           SizedBox(width: 10.0),
-                    //           Container(
-                    //             width: 35,
-                    //             height: 35,
-                    //             alignment: Alignment.topLeft,
-                    //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
-                    //             //padding: EdgeInsets.all(5),
-
-                    //             child: Text(''),
-                    //             decoration: BoxDecoration(
-                    //                 borderRadius: BorderRadius.circular(5.0),
-                    //                 color: Colors.white,
-                    //                 border: Border.all(
-                    //                   color: Colors.black54,
-                    //                   width: 1,
-                    //                 )),
-                    //           ),
-                    //           SizedBox(width: 10.0),
-                    //           Container(
-                    //             width: 35,
-                    //             height: 35,
-                    //             alignment: Alignment.topLeft,
-                    //             margin: EdgeInsets.fromLTRB(5.0, 0.1, 5.0, 5.0),
-                    //             //padding: EdgeInsets.all(5),
-
-                    //             child: Text(''),
-                    //             decoration: BoxDecoration(
-                    //                 borderRadius: BorderRadius.circular(5.0),
-                    //                 color: Colors.white,
-                    //                 border: Border.all(
-                    //                   color: Colors.black54,
-                    //                   width: 1,
-                    //                 )),
-                    //           ),
-                    //           SizedBox(width: 10.0),
-                    //         ],
-                    //       ),
-                    //       Container(
-                    //         margin: EdgeInsets.fromLTRB(0.0, 0.1, 0.0, 0.0),
-                    //         alignment: Alignment.topLeft,
-                    //         child: Text(
-                    //           "HOURS      MINUTES      SECONDS",
-                    //           style: TextStyle(
-                    //             color: Colors.black,
-                    //             fontSize: 10.0,
-                    //             //fontWeight: FontWeight.bold,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    //  ],
                   ),
                 ),
-                // Row(
-                //   children: <Widget>[
-                //     // SizedBox(width: 20.0),
-                //     Container(
-                //       margin: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
-                //       alignment: Alignment.topLeft,
-                //       child: Text(
-                //         "RIG NAME",
-                //         style: TextStyle(
-                //           color: Colors.black,
-                //           fontWeight: FontWeight.bold,
-                //           fontSize: 12.0,
-                //         ),
-                //       ),
-                //     ),
-                //     SizedBox(width: SizeConfig.safeBlockHorizontal * 40),
-                //     Container(
-                //       alignment: Alignment.topRight,
-                //       child: Text(
-                //         "DATE AND TIME",
-                //         style: TextStyle(
-                //           color: Colors.black,
-                //           fontWeight: FontWeight.bold,
-                //           fontSize: 12.0,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
                 SizedBox(
                   height: 50,
                 ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.fromLTRB(15.0, 5.0, 0.0, 0.0),
-                      alignment: Alignment.topLeft,
-                      child: buildDropDownButton(),
-                      // TextField(
-                      //   controller: _rigNameController,
-                      //   decoration: InputDecoration(
-                      //     border: OutlineInputBorder(),
-                      //     // labelText: 'User Name',
-                      //     // hintText: 'Enter Your Name',
-                      //   ),
-                      // ),
-                      width: SizeConfig.safeBlockHorizontal * 40,
-                      height: MediaQuery.of(context).size.height * 0.05,
-                    ),
-                    SizedBox(width: SizeConfig.safeBlockHorizontal * 5),
-                    //SizedBox( height:SizeConfig.safeBlockVertical * 5),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      margin: EdgeInsets.fromLTRB(15.0, 5.0, 0.0, 0.0),
-                      alignment: Alignment.topLeft,
+                Expanded(
+                  child: Container(
+                      alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.black54)),
+                          border: Border.all(
+                            color: Colors.black45,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      margin: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 0.0),
+                      child: buildRigDropDownn()),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    // Container(
+                    //   margin: EdgeInsets.fromLTRB(15.0, 5.0, 0.0, 0.0),
+                    //   alignment: Alignment.topLeft,
+                    //   child: buildRigDropDownn(),
+                    //   width: SizeConfig.safeBlockHorizontal * 40,
+                    //   height: MediaQuery.of(context).size.height * 0.05,
+                    // ),
+
+                    //SizedBox( height:SizeConfig.safeBlockVertical * 5),
+
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black45,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      margin: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 0.0),
                       child: ElevatedButton(
                           child: Text(
                             _datetime == null
-                                ? "Date and Time"
+                                ? "Pick Date & Time"
                                 // DateTime.now().toString().substring(0, 16)
 
                                 : _datetime.toString().substring(0, 10) +
@@ -413,9 +316,6 @@ class _RigAlert2State extends State<RigAlert2> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
                 Row(
                   children: <Widget>[
                     Container(
@@ -428,7 +328,7 @@ class _RigAlert2State extends State<RigAlert2> {
                           border: OutlineInputBorder(),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.black)),
-                          labelText: "Description",
+                          hintText: "Description",
                           // hintText: 'Enter Your Name',
                         ),
                       ),
@@ -440,35 +340,6 @@ class _RigAlert2State extends State<RigAlert2> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    // Container(
-                    //   margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
-                    //   // alignment: Alignment.topLeft,
-                    //   child: RaisedButton(
-                    //     onPressed: () {},
-                    //     shape: RoundedRectangleBorder(
-                    //         borderRadius: BorderRadius.circular(80.0)),
-                    //     padding: EdgeInsets.all(0.0),
-                    //     child: Ink(
-                    //       decoration: BoxDecoration(
-                    //           color: Colors.white,
-                    //           borderRadius: BorderRadius.circular(30.0),
-                    //           border: Border.all(
-                    //             color: Colors.blue,
-                    //           )),
-                    //       child: Container(
-                    //         constraints: BoxConstraints(
-                    //             maxWidth: 200.0, minHeight: 40.0),
-                    //         alignment: Alignment.center,
-                    //         child: Text(
-                    //           "View Rig Alert List",
-                    //           textAlign: TextAlign.center,
-                    //           style: TextStyle(color: Colors.black54),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(width: SizeConfig.safeBlockHorizontal * 5),
                     Container(
                       margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
                       // alignment: Alignment.topLeft,

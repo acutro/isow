@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +17,7 @@ class Notepad extends StatefulWidget {
 
 class _NotepadState extends State<Notepad> {
   int pr = 0;
+  String catogoryName;
   Future upNotepad(
     String userIdd,
     String name,
@@ -60,6 +61,7 @@ class _NotepadState extends State<Notepad> {
     }
   }
 
+  List<String> catogoryList = [];
   List<dynamic> catList;
   Future fetchCat() async {
     http.Response response;
@@ -69,7 +71,16 @@ class _NotepadState extends State<Notepad> {
       setState(() {
         catResponse = jsonDecode(response.body);
         catList = catResponse['data'];
+        catogoryFn(catList);
         print("{$catList}");
+      });
+    }
+  }
+
+  catogoryFn(List catListt) {
+    for (int i = 0; i < catListt.length; i++) {
+      setState(() {
+        catogoryList.add(catListt[i]['categoryName']);
       });
     }
   }
@@ -184,51 +195,72 @@ class _NotepadState extends State<Notepad> {
     );
   }
 
-  Widget buildRoleDropDownButton() {
-    return DropdownButton(
-      onTap: () {
-        FocusScope.of(context).requestFocus(new FocusNode());
-      },
-      iconEnabledColor: Colors.black45,
-      value: catValue,
-      style: TextStyle(color: Colors.white),
-      isExpanded: true,
-      dropdownColor: Colors.white,
-      underline: Container(
-        height: 0,
-        color: catError ? Colors.red : Colors.white,
-      ),
-      hint: Padding(
-        padding: const EdgeInsets.only(left: 12),
-        child: Text(
-          "Select Catogory",
-          style: TextStyle(
-              color: Colors.black45, fontSize: 12, fontFamily: "WorkSansLight"),
-        ),
-      ),
-      items: (catList).map<DropdownMenuItem>((answer) {
-        return DropdownMenuItem(
-          value: int.parse(answer["id"]),
-          child: Container(
-            padding: EdgeInsets.only(left: 12),
-            child: Text(
-              answer["categoryName"],
-              style: TextStyle(color: Colors.black54, fontSize: 14),
-            ),
-          ),
-        );
-      }).toList(),
-      onChanged: (value) {
+  Widget buildRoleDropDownn() {
+    return DropDownField(
+      onValueChanged: (dynamic value) {
         setState(() {
-          catError = false;
-          catValue = value;
-
-          print("$catValue id of compny");
+          catogoryName = value;
         });
-        // print(companyValue.runtimeType);
       },
+
+      strict: true,
+
+      hintStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      textStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      value: catogoryName,
+      // required: false,
+      hintText: 'Select Catogory',
+      items: catogoryList,
     );
   }
+
+  // Widget buildRoleDropDownButton() {
+  //   return DropdownButton(
+  //     onTap: () {
+  //       FocusScope.of(context).requestFocus(new FocusNode());
+  //     },
+  //     iconEnabledColor: Colors.black45,
+  //     value: catValue,
+  //     style: TextStyle(color: Colors.white),
+  //     isExpanded: true,
+  //     dropdownColor: Colors.white,
+  //     underline: Container(
+  //       height: 0,
+  //       color: catError ? Colors.red : Colors.white,
+  //     ),
+  //     hint: Padding(
+  //       padding: const EdgeInsets.only(left: 12),
+  //       child: Text(
+  //         "Select Catogory",
+  //         style: TextStyle(
+  //             color: Colors.black45, fontSize: 12, fontFamily: "WorkSansLight"),
+  //       ),
+  //     ),
+  //     items: (catList).map<DropdownMenuItem>((answer) {
+  //       return DropdownMenuItem(
+  //         value: int.parse(answer["id"]),
+  //         child: Container(
+  //           padding: EdgeInsets.only(left: 12),
+  //           child: Text(
+  //             answer["categoryName"],
+  //             style: TextStyle(color: Colors.black54, fontSize: 14),
+  //           ),
+  //         ),
+  //       );
+  //     }).toList(),
+  //     onChanged: (value) {
+  //       setState(() {
+  //         catError = false;
+  //         catValue = value;
+
+  //         print("$catValue id of compny");
+  //       });
+  //       // print(companyValue.runtimeType);
+  //     },
+  //   );
+  // }
 
   _addAlert() {
     return showDialog(
@@ -530,12 +562,14 @@ class _NotepadState extends State<Notepad> {
                                       ),
                                     ],
                                   ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
                                   Row(
                                     children: <Widget>[
                                       Expanded(
                                         child: Container(
                                             alignment: Alignment.centerLeft,
-                                            padding: EdgeInsets.all(5),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                   color: Colors.black45,
@@ -544,13 +578,17 @@ class _NotepadState extends State<Notepad> {
                                                     Radius.circular(10))),
                                             margin: EdgeInsets.fromLTRB(
                                                 10.0, 10.0, 5.0, 0.0),
-                                            height: 40.0,
-                                            child: buildRoleDropDownButton()),
+                                            child: buildRoleDropDownn()),
                                       ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
                                       GestureDetector(
                                         onTap: _addAlert,
                                         child: Container(
-                                          width: 70,
+                                          width: 110,
                                           padding: EdgeInsets.all(5),
                                           decoration: BoxDecoration(
                                               color: Colors.white,
@@ -563,7 +601,7 @@ class _NotepadState extends State<Notepad> {
                                               10.0, 10.0, 10.0, 0.0),
                                           height: 40.0,
                                           child: Text(
-                                            "Add",
+                                            "Add Catogory",
                                             style: TextStyle(
                                                 color: Colors.black45),
                                           ),
@@ -571,6 +609,7 @@ class _NotepadState extends State<Notepad> {
                                       ),
                                     ],
                                   ),
+
                                   Container(
                                       alignment: Alignment.centerLeft,
                                       padding: EdgeInsets.all(5),

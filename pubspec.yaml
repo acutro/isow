@@ -50,7 +50,8 @@ dependencies:
   firebase_core: any
   file_picker: 
   firebase_messaging: any
-  cloud_firestore: any
+  cloud_firestore:
+  dropdownfield: ^1.0.3
  
 
 dev_dependencies:

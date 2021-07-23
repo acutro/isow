@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
@@ -39,6 +40,7 @@ class _JobdescriptionState extends State<Jobdescription> {
       setState(() {
         mapResponse = jsonDecode(response.body);
         roleList = mapResponse['data'];
+        roleFn(roleList);
         print("{$roleList}");
       });
     }
@@ -162,6 +164,36 @@ class _JobdescriptionState extends State<Jobdescription> {
   //         backgroundColor: Colors.white);
   //   }
   // }
+
+  roleFn(List roleListt) {
+    for (int i = 0; i < roleListt.length; i++) {
+      setState(() {
+        catogoryList.add(roleListt[i]['userRoles']);
+      });
+    }
+  }
+
+  List<String> catogoryList = [];
+  String catogoryName;
+  Widget buildRoleDropDownn() {
+    return DropDownField(
+      onValueChanged: (dynamic value) {
+        setState(() {
+          catogoryName = value;
+          fetchUsers(2);
+        });
+      },
+      strict: true,
+      hintStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      textStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      value: catogoryName,
+      // required: false,
+      hintText: 'Select Catogory',
+      items: catogoryList,
+    );
+  }
 
   Widget buildDropDownButton() {
     return Container(
@@ -372,279 +404,292 @@ class _JobdescriptionState extends State<Jobdescription> {
                 size: 120,
               ),
             )
-          : SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 50.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color(0xff49A5FF),
-                              borderRadius: BorderRadius.circular(50.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black38,
-                                  blurRadius: 10.0,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
+          : Container(
+              height: MediaQuery.of(context).size.height,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 50.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Stack(
+                          children: <Widget>[
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Color(0xff49A5FF),
+                                borderRadius: BorderRadius.circular(50.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black38,
+                                    blurRadius: 10.0,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              height: 80.0,
+                              width: 80.0,
+                              child: Icon(
+                                Icons.contact_mail_outlined,
+                                size: 40.0,
+                                color: Colors.white,
+                              ),
                             ),
-                            height: 80.0,
-                            width: 80.0,
-                            child: Icon(
-                              Icons.contact_mail_outlined,
-                              size: 40.0,
-                              color: Colors.white,
-                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 40.0,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 6.0,
+                            offset: Offset(0, 2),
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 40.0,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          height: 470.0,
-                          margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 6.0,
-                                offset: Offset(0, 2),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.black45,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                    margin: EdgeInsets.fromLTRB(
+                                        10.0, 10.0, 5.0, 0.0),
+                                    child: buildRoleDropDownn()),
                               ),
                             ],
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                          // Row(
+                          //   children: <Widget>[
+                          //     Expanded(
+                          //       child: Container(
+                          //         margin: EdgeInsets.fromLTRB(
+                          //             10.0, 10.0, 10.0, 0.0),
+                          //         height: 45.0,
+                          //         child: buildDropDownButton(),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
                             children: <Widget>[
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.fromLTRB(
-                                          10.0, 10.0, 10.0, 0.0),
-                                      height: 45.0,
-                                      child: buildDropDownButton(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.fromLTRB(
-                                          10.0, 10.0, 10.0, 0.0),
-                                      height: 45.0,
-                                      child: personDropDownButton(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
                               Expanded(
                                 child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(
-                                        color: Colors.black45, width: 1),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
                                   margin: EdgeInsets.fromLTRB(
                                       10.0, 10.0, 10.0, 0.0),
                                   height: 45.0,
-                                  child: TextField(
-                                    controller: _descriptionController,
-                                    style: TextStyle(color: Colors.black87),
-                                    maxLines: 8,
-                                    decoration: InputDecoration(
-                                      hintText: 'Job Description',
-                                      hintStyle:
-                                          TextStyle(color: Colors.black87),
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                      contentPadding: EdgeInsets.all(10.0),
-                                    ),
-                                  ),
+                                  child: personDropDownButton(),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(
-                                      color: Colors.black45, width: 1),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ),
-                                margin:
-                                    EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                                height: 45.0,
-                                child: TextField(
-                                  controller: _durationController,
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(color: Colors.black87),
-                                  decoration: InputDecoration(
-                                    hintText: 'Duration in Hour',
-                                    hintStyle: TextStyle(color: Colors.black87),
-                                    border: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    contentPadding: EdgeInsets.all(10.0),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-
-                              //
-                              //
-
-                              //
-                              //
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                        alignment: Alignment.centerLeft,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          border: Border.all(
-                                              color: Colors.black45, width: 1),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)),
-                                        ),
-                                        margin: EdgeInsets.fromLTRB(
-                                            10.0, 10.0, 10.0, 0.0),
-                                        height: 45.0,
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: _fileName == null
-                                                  ? Text("Choose File")
-                                                  : Text(_fileName.length > 20
-                                                      ? _fileName
-                                                              .toString()
-                                                              .substring(
-                                                                  0, 20) +
-                                                          "..."
-                                                      : _fileName.toString()),
-                                            ),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                openGallery();
-                                              },
-                                              child: Text("Select"),
-                                            )
-                                          ],
-                                        )),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              GestureDetector(
-                                child: Container(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        20.0, 0.0, 20.0, 0.0),
-                                    height: 40.0,
-                                    width: 200.0,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(30.0),
-                                      ),
-                                    ),
-
-                                    //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
-                                    child: Center(
-                                      child: Text(
-                                        'Submit',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                onTap: () {
-                                  if (userValue == null) {
-                                    Toast.show("Select from Dropdown", context,
-                                        duration: Toast.LENGTH_SHORT,
-                                        gravity: Toast.BOTTOM,
-                                        textColor: Color(0xff49A5FF),
-                                        backgroundColor: Colors.white);
-                                  } else if (_descriptionController.text ==
-                                          "" ||
-                                      _durationController.text == "") {
-                                    Toast.show("Enter Description and Duration",
-                                        context,
-                                        duration: Toast.LENGTH_SHORT,
-                                        gravity: Toast.BOTTOM,
-                                        textColor: Color(0xff49A5FF),
-                                        backgroundColor: Colors.white);
-                                  } else {
-                                    postJobissue(
-                                        userValue.toString(),
-                                        _descriptionController.text,
-                                        _durationController.text,
-                                        fileup);
-
-                                    setState(() {
-                                      _descriptionController.text = "";
-                                      _durationController.text = "";
-                                    });
-                                    // Navigator.pop(context);
-
-                                  }
-                                },
-                              ),
-                              SizedBox(
-                                height: 30.0,
                               ),
                             ],
                           ),
-                        ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border:
+                                    Border.all(color: Colors.black45, width: 1),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              ),
+                              margin:
+                                  EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                              height: 45.0,
+                              child: TextField(
+                                controller: _descriptionController,
+                                style: TextStyle(color: Colors.black87),
+                                maxLines: 8,
+                                decoration: InputDecoration(
+                                  hintText: 'Job Description',
+                                  hintStyle: TextStyle(color: Colors.black87),
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                  contentPadding: EdgeInsets.all(10.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border:
+                                  Border.all(color: Colors.black45, width: 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                            ),
+                            margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                            height: 45.0,
+                            child: TextField(
+                              controller: _durationController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(color: Colors.black87),
+                              decoration: InputDecoration(
+                                hintText: 'Duration in Hour',
+                                hintStyle: TextStyle(color: Colors.black87),
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                contentPadding: EdgeInsets.all(10.0),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+
+                          //
+                          //
+
+                          //
+                          //
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                    alignment: Alignment.centerLeft,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: Colors.black45, width: 1),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    margin: EdgeInsets.fromLTRB(
+                                        10.0, 10.0, 10.0, 0.0),
+                                    height: 45.0,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: _fileName == null
+                                              ? Text("Choose File")
+                                              : Text(_fileName.length > 20
+                                                  ? _fileName
+                                                          .toString()
+                                                          .substring(0, 20) +
+                                                      "..."
+                                                  : _fileName.toString()),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            openGallery();
+                                          },
+                                          child: Text("Select"),
+                                        )
+                                      ],
+                                    )),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          GestureDetector(
+                            child: Container(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                                height: 40.0,
+                                width: 200.0,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(30.0),
+                                  ),
+                                ),
+
+                                //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
+                                child: Center(
+                                  child: Text(
+                                    'Submit',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              if (userValue == null) {
+                                Toast.show("Select from Dropdown", context,
+                                    duration: Toast.LENGTH_SHORT,
+                                    gravity: Toast.BOTTOM,
+                                    textColor: Color(0xff49A5FF),
+                                    backgroundColor: Colors.white);
+                              } else if (_descriptionController.text == "" ||
+                                  _durationController.text == "") {
+                                Toast.show(
+                                    "Enter Description and Duration", context,
+                                    duration: Toast.LENGTH_SHORT,
+                                    gravity: Toast.BOTTOM,
+                                    textColor: Color(0xff49A5FF),
+                                    backgroundColor: Colors.white);
+                              } else {
+                                postJobissue(
+                                    userValue.toString(),
+                                    _descriptionController.text,
+                                    _durationController.text,
+                                    fileup);
+
+                                setState(() {
+                                  _descriptionController.text = "";
+                                  _durationController.text = "";
+                                });
+                                // Navigator.pop(context);
+
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    SizedBox(
+                      height: 50,
+                    )
+                  ],
+                ),
               ),
             ),
     );

@@ -9,6 +9,7 @@ import 'package:isow/NewsScreens/26_news.dart';
 import 'package:isow/main.dart';
 import 'ChatScreens/chatListScreen.dart';
 import 'UserAuth/userReg.dart';
+import 'dropdowntest.dart';
 import 'whetherScreens/27_weatherreport.dart';
 import 'orientation_screen/12_Orientation.dart';
 import 'WarningLetterScreens/16_RecievedWarningletter.dart';
@@ -586,7 +587,7 @@ class HomeScreenState extends State<HomeScreen> {
                                   margin: EdgeInsets.all(10),
                                 ),
                                 Text(
-                                  "Bread/Bakery",
+                                  "Orientation",
                                   style: TextStyle(fontSize: 12),
                                 )
                               ],
@@ -1125,6 +1126,53 @@ class HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => App()),
+                              );
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 65,
+                                  width: 65,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black54,
+                                        blurRadius: 3.0,
+                                        spreadRadius: 1.0,
+                                        offset: Offset(
+                                          0.0,
+                                          2.0,
+                                        ),
+                                      )
+                                    ],
+                                    gradient: LinearGradient(
+                                      colors: [Color(0xFF4fc4f2), Colors.blue],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                    ),
+                                  ),
+                                  child: FaIcon(
+                                    FontAwesomeIcons.facebookMessenger,
+                                    size: 40,
+                                    color: Colors.white,
+                                  ),
+                                  margin: EdgeInsets.all(10),
+                                ),
+                                Text(
+                                  "test",
+                                  style: TextStyle(fontSize: 12),
+                                )
+                              ],
+                            ),
+                          ),
 
                           // GestureDetector(
                           //   onTap: () {
@@ -1244,12 +1292,12 @@ class HomeScreenState extends State<HomeScreen> {
                     ]),
                   ),
                 ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
+          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
           floatingActionButton: posiid == '4'
               ? Container(
                   height: 40,
-                  width: double.infinity,
+                  margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                  width: MediaQuery.of(context).size.width,
                   child: FloatingActionButton.extended(
                     backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(

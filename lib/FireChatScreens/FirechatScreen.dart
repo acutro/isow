@@ -7,7 +7,6 @@ class FireChatDetailScreen extends StatefulWidget {
   final String path;
   final String id;
   final String toid;
-
   FireChatDetailScreen(
       {Key key, @required this.name, this.path, this.id, this.toid})
       : super(key: key);

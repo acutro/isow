@@ -102,6 +102,22 @@ class _RecivedWarningState extends State<RecivedAlert> {
     }
   }
 
+  Future statusChange(
+    String id,
+  ) async {
+    var data = {
+      'id': id,
+      'read_status': '1',
+    };
+    http.Response response;
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/Rigalert/read',
+        body: (data));
+    if (response.statusCode == 200) {
+      print('Success');
+    }
+  }
+
   Future<Null> refreshList(String nam) async {
     await Future.delayed(Duration(seconds: 2));
     // getValidation();
@@ -250,6 +266,9 @@ class _RecivedWarningState extends State<RecivedAlert> {
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
                                 onTap: () {
+                                  statusChange(
+                                    listFacts[index]["id"],
+                                  );
                                   showDialogFunc(
                                     context,
                                     listFacts[index]["Name"],

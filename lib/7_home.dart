@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -59,6 +60,20 @@ class HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Map statusMap;
+  List<dynamic> statusList;
+  Future fetchStatus() async {
+    http.Response response;
+    response = await http
+        .get('http://isow.acutrotech.com/index.php/api/Users/countalert');
+    if (response.statusCode == 200) {
+      setState(() {
+        statusMap = jsonDecode(response.body);
+        print(statusMap['rigalert']);
+      });
+    }
+  }
+
   void add(List listd) {
     for (int i = 0; i < listd.length; i++) {
       chartData.add(ChartData(
@@ -75,6 +90,9 @@ class HomeScreenState extends State<HomeScreen> {
       sid = id;
       posiid = pos;
       note = fetchNote(id);
+      sid == '4'
+          ? FirebaseMessaging.instance.subscribeToTopic("supervisor")
+          : FirebaseMessaging.instance.subscribeToTopic("employee");
       FirebaseMessaging.instance.getToken().then((value) => upToken(id, value));
       error = false;
     });
@@ -106,6 +124,7 @@ class HomeScreenState extends State<HomeScreen> {
             ));
       }
     });
+
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       RemoteNotification notification = message.notification;
       AndroidNotification android = message.notification?.android;
@@ -131,10 +150,20 @@ class HomeScreenState extends State<HomeScreen> {
 
     getValidation();
     fetchFlu();
+    _clockTimer =
+        Timer.periodic(Duration(seconds: 6), (Timer t) => fetchStatus());
     _tooltipBehavior = TooltipBehavior(
         enable: true,
         header: 'Price in AED',
         textStyle: TextStyle(color: Colors.white));
+  }
+
+  Timer _clockTimer;
+
+  @override
+  void dispose() {
+    _clockTimer.cancel();
+    super.dispose();
   }
 
   Future upToken(
@@ -173,6 +202,11 @@ class HomeScreenState extends State<HomeScreen> {
                       final SharedPreferences sharedPreferences =
                           await SharedPreferences.getInstance();
                       sharedPreferences.remove('userId');
+                      sid == '4'
+                          ? FirebaseMessaging.instance
+                              .unsubscribeFromTopic("supervisor")
+                          : FirebaseMessaging.instance
+                              .unsubscribeFromTopic("employee");
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                               builder: (context) => SigninScreen()),
@@ -476,7 +510,7 @@ class HomeScreenState extends State<HomeScreen> {
               // Icon(Icons.more_vert),
             ],
           ),
-          body: graphResponse == null
+          body: graphResponse == null || statusMap == null
               ? Center(
                   child: SpinKitChasingDots(
                     color: Colors.blue,
@@ -493,57 +527,90 @@ class HomeScreenState extends State<HomeScreen> {
                       Wrap(
                         alignment: WrapAlignment.center,
                         spacing: 35.0,
-                        runSpacing: 35.0,
+                        runSpacing: 25.0,
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RecivedAlert()),
-                              );
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 65,
-                                  width: 65,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    // shape: BoxShape.rectangle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black54,
-                                        blurRadius: 3.0,
-                                        spreadRadius: 1.0,
-                                        offset: Offset(
-                                          0.0,
-                                          2.0,
-                                        ),
-                                      )
-                                    ],
-
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                    gradient: LinearGradient(
-                                      colors: [Color(0xFF4fc4f2), Colors.blue],
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
+                          Stack(
+                            children: [
+                              Positioned(
+                                right: 0,
+                                top: 0,
+                                child: Center(
+                                  child: new Container(
+                                    alignment: Alignment.center,
+                                    padding: EdgeInsets.all(2),
+                                    decoration: new BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    constraints: BoxConstraints(
+                                      minWidth: 16,
+                                      minHeight: 16,
+                                    ),
+                                    child: Text(
+                                      statusMap['rigalert'].toString(),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 8,
+                                      ),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
-                                  child: FaIcon(
-                                    FontAwesomeIcons.broadcastTower,
-                                    size: 40,
-                                    color: Colors.white,
-                                  ),
-                                  margin: EdgeInsets.all(10),
                                 ),
-                                Text(
-                                  "Rig Alert",
-                                  style: TextStyle(fontSize: 12),
-                                )
-                              ],
-                            ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RecivedAlert()),
+                                  );
+                                },
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 65,
+                                      width: 65,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        // shape: BoxShape.rectangle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black54,
+                                            blurRadius: 3.0,
+                                            spreadRadius: 1.0,
+                                            offset: Offset(
+                                              0.0,
+                                              2.0,
+                                            ),
+                                          )
+                                        ],
+
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20)),
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color(0xFF4fc4f2),
+                                            Colors.blue
+                                          ],
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                        ),
+                                      ),
+                                      child: FaIcon(
+                                        FontAwesomeIcons.broadcastTower,
+                                        size: 40,
+                                        color: Colors.white,
+                                      ),
+                                      margin: EdgeInsets.all(10),
+                                    ),
+                                    Text(
+                                      "Rig Alert",
+                                      style: TextStyle(fontSize: 12),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                           GestureDetector(
                             onTap: () {
@@ -691,56 +758,89 @@ class HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => RecivedWarning(
-                                      userid: sid,
-                                      posid: posiid,
+                          Stack(
+                            children: [
+                              Positioned(
+                                right: 0,
+                                top: 0,
+                                child: Center(
+                                  child: new Container(
+                                    alignment: Alignment.center,
+                                    padding: EdgeInsets.all(2),
+                                    decoration: new BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(6),
                                     ),
-                                  ));
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 65,
-                                  width: 65,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black54,
-                                        blurRadius: 3.0,
-                                        spreadRadius: 1.0,
-                                        offset: Offset(
-                                          0.0,
-                                          2.0,
-                                        ),
-                                      )
-                                    ],
-                                    gradient: LinearGradient(
-                                      colors: [Color(0xFF4fc4f2), Colors.blue],
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
+                                    constraints: BoxConstraints(
+                                      minWidth: 16,
+                                      minHeight: 16,
+                                    ),
+                                    child: Text(
+                                      statusMap['warningletter'],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 8,
+                                      ),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
-                                  child: FaIcon(
-                                    FontAwesomeIcons.envelopeOpenText,
-                                    size: 40,
-                                    color: Colors.white,
-                                  ),
-                                  margin: EdgeInsets.all(10),
                                 ),
-                                Text(
-                                  "Warning Letter",
-                                  style: TextStyle(fontSize: 12),
-                                )
-                              ],
-                            ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => RecivedWarning(
+                                          userid: sid,
+                                          posid: posiid,
+                                        ),
+                                      ));
+                                },
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 65,
+                                      width: 65,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black54,
+                                            blurRadius: 3.0,
+                                            spreadRadius: 1.0,
+                                            offset: Offset(
+                                              0.0,
+                                              2.0,
+                                            ),
+                                          )
+                                        ],
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color(0xFF4fc4f2),
+                                            Colors.blue
+                                          ],
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                        ),
+                                      ),
+                                      child: FaIcon(
+                                        FontAwesomeIcons.envelopeOpenText,
+                                        size: 40,
+                                        color: Colors.white,
+                                      ),
+                                      margin: EdgeInsets.all(10),
+                                    ),
+                                    Text(
+                                      "Warning Letter",
+                                      style: TextStyle(fontSize: 12),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                           GestureDetector(
                             onTap: () {
@@ -1126,61 +1226,6 @@ class HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
-
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     flutterLocalNotificationsPlugin.show(
-                          //         0,
-                          //         'test',
-                          //         'android notification',
-                          //         NotificationDetails(
-                          //             android: AndroidNotificationDetails(channel.id,
-                          //                 channel.name, channel.description,
-                          //                 importance: Importance.high,
-                          //                 color: Colors.blue,
-                          //                 playSound: true,
-                          //                 icon: '@mipmap/ic_launcher')));
-                          //   },
-                          //   child: Column(
-                          //     children: [
-                          //       Container(
-                          //         height: 65,
-                          //         width: 65,
-                          //         alignment: Alignment.center,
-                          //         decoration: BoxDecoration(
-                          //           borderRadius:
-                          //               BorderRadius.all(Radius.circular(20)),
-                          //           boxShadow: [
-                          //             BoxShadow(
-                          //               color: Colors.black54,
-                          //               blurRadius: 3.0,
-                          //               spreadRadius: 1.0,
-                          //               offset: Offset(
-                          //                 0.0,
-                          //                 2.0,
-                          //               ),
-                          //             )
-                          //           ],
-                          //           gradient: LinearGradient(
-                          //             colors: [Color(0xFF4fc4f2), Colors.blue],
-                          //             begin: Alignment.centerLeft,
-                          //             end: Alignment.centerRight,
-                          //           ),
-                          //         ),
-                          //         child: FaIcon(
-                          //           FontAwesomeIcons.sun,
-                          //           size: 40,
-                          //           color: Colors.white,
-                          //         ),
-                          //         margin: EdgeInsets.all(10),
-                          //       ),
-                          //       Text(
-                          //         "Nitification",
-                          //         style: TextStyle(fontSize: 12),
-                          //       )
-                          //     ],
-                          //   ),
-                          // ),
                         ],
                       ),
                       SizedBox(

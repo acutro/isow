@@ -97,6 +97,22 @@ class _RecivedWarningState extends State<RecivedWarning> {
     getValidation(nam);
   }
 
+  Future statusChange(
+    String id,
+  ) async {
+    var data = {
+      'id': id,
+      'read_status': '1',
+    };
+    http.Response response;
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/Rigalert/read',
+        body: (data));
+    if (response.statusCode == 200) {
+      print('Success');
+    }
+  }
+
   Timer _clockTimer;
   @override
   void initState() {
@@ -226,6 +242,7 @@ class _RecivedWarningState extends State<RecivedWarning> {
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
                                 onTap: () {
+                                  statusChange(listFacts[index]['id']);
                                   showDialogFunc(
                                     context,
                                     listFacts[index]['to'],

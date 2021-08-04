@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:isow/FireChatScreens/FirechatUsersList.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
@@ -62,15 +61,22 @@ class HomeScreenState extends State<HomeScreen> {
 
   Map statusMap;
   List<dynamic> statusList;
-  Future fetchStatus() async {
+
+  Future fetchStatus(
+    String id,
+  ) async {
+    var data = {
+      'toId': id,
+    };
     http.Response response;
-    response = await http
-        .get('http://isow.acutrotech.com/index.php/api/Users/countalert');
+    response = await http.post(
+        'http://isow.acutrotech.com/index.php/api/Users/countalert',
+        body: (data));
     if (response.statusCode == 200) {
       setState(() {
         statusMap = jsonDecode(response.body);
-        print(statusMap['rigalert']);
       });
+      print('Success');
     }
   }
 
@@ -88,6 +94,8 @@ class HomeScreenState extends State<HomeScreen> {
     String pos = sharedPreferences.getString('position');
     setState(() {
       sid = id;
+      _clockTimer =
+          Timer.periodic(Duration(seconds: 6), (Timer t) => fetchStatus(sid));
       posiid = pos;
       note = fetchNote(id);
       sid == '4'
@@ -150,8 +158,7 @@ class HomeScreenState extends State<HomeScreen> {
 
     getValidation();
     fetchFlu();
-    _clockTimer =
-        Timer.periodic(Duration(seconds: 6), (Timer t) => fetchStatus());
+
     _tooltipBehavior = TooltipBehavior(
         enable: true,
         header: 'Price in AED',
@@ -202,6 +209,7 @@ class HomeScreenState extends State<HomeScreen> {
                       final SharedPreferences sharedPreferences =
                           await SharedPreferences.getInstance();
                       sharedPreferences.remove('userId');
+                      upToken(sid, "");
                       sid == '4'
                           ? FirebaseMessaging.instance
                               .unsubscribeFromTopic("supervisor")
@@ -510,7 +518,7 @@ class HomeScreenState extends State<HomeScreen> {
               // Icon(Icons.more_vert),
             ],
           ),
-          body: graphResponse == null || statusMap == null
+          body: graphResponse == null
               ? Center(
                   child: SpinKitChasingDots(
                     color: Colors.blue,
@@ -531,32 +539,35 @@ class HomeScreenState extends State<HomeScreen> {
                         children: [
                           Stack(
                             children: [
-                              Positioned(
-                                right: 0,
-                                top: 0,
-                                child: Center(
-                                  child: new Container(
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.all(2),
-                                    decoration: new BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    constraints: BoxConstraints(
-                                      minWidth: 16,
-                                      minHeight: 16,
-                                    ),
-                                    child: Text(
-                                      statusMap['rigalert'].toString(),
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 8,
+                              statusMap == null
+                                  ? SizedBox()
+                                  : Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: Center(
+                                        child: new Container(
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.all(2),
+                                          decoration: new BoxDecoration(
+                                            color: Colors.red,
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          constraints: BoxConstraints(
+                                            minWidth: 16,
+                                            minHeight: 16,
+                                          ),
+                                          child: Text(
+                                            statusMap['rigalert'].toString(),
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 8,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
                                       ),
-                                      textAlign: TextAlign.center,
                                     ),
-                                  ),
-                                ),
-                              ),
                               GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -760,32 +771,35 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                           Stack(
                             children: [
-                              Positioned(
-                                right: 0,
-                                top: 0,
-                                child: Center(
-                                  child: new Container(
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.all(2),
-                                    decoration: new BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    constraints: BoxConstraints(
-                                      minWidth: 16,
-                                      minHeight: 16,
-                                    ),
-                                    child: Text(
-                                      statusMap['warningletter'],
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 8,
+                              statusMap == null
+                                  ? SizedBox()
+                                  : Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: Center(
+                                        child: new Container(
+                                          alignment: Alignment.center,
+                                          padding: EdgeInsets.all(2),
+                                          decoration: new BoxDecoration(
+                                            color: Colors.red,
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                          constraints: BoxConstraints(
+                                            minWidth: 16,
+                                            minHeight: 16,
+                                          ),
+                                          child: Text(
+                                            statusMap['warningletter'],
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 8,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
                                       ),
-                                      textAlign: TextAlign.center,
                                     ),
-                                  ),
-                                ),
-                              ),
                               GestureDetector(
                                 onTap: () {
                                   Navigator.push(

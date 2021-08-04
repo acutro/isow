@@ -26,6 +26,7 @@ class _FireChatDetailScreenState extends State<FireChatDetailScreen> {
   @override
   void dispose() {
     _clockTimer.cancel();
+    _node.dispose();
     super.dispose();
   }
 
@@ -95,12 +96,17 @@ class _FireChatDetailScreenState extends State<FireChatDetailScreen> {
                     final String senddate =
                         snapshots.data.docs[index]['createdAt'].toString();
                     final String pathfile = "";
+                    final String from =
+                        snapshots.data.docs[index]['fromId'].toString();
+                    final String to =
+                        snapshots.data.docs[index]['toId'].toString();
 
                     final bool isMe =
                         snapshots.data.docs[index]['fromId'] == widget.toid
                             ? true
                             : false;
                     //_buildListitem(context, snapshots.data.docs[index]),
+
                     return _chatBubble(msg, senddate, isMe, pathfile);
                   },
                 );

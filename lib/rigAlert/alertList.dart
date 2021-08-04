@@ -104,9 +104,11 @@ class _RecivedWarningState extends State<RecivedAlert> {
 
   Future statusChange(
     String id,
+    String rigId,
   ) async {
     var data = {
-      'id': id,
+      'userId': id,
+      'rigalert_id': rigId,
       'read_status': '1',
     };
     http.Response response;
@@ -267,6 +269,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
                               return GestureDetector(
                                 onTap: () {
                                   statusChange(
+                                    sid,
                                     listFacts[index]["id"],
                                   );
                                   showDialogFunc(

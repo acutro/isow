@@ -405,51 +405,51 @@ class _NotepadState extends State<UpdateNotepad> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(top: 10.0),
-                    height: 50.0,
-                    child: Center(
-                        child: Text(
-                      'Update Notepad',
-                      style: TextStyle(fontSize: 28, color: Colors.black54),
-                    )),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 20.0),
-                    height: 20.0,
-                    //width: double.infinity,
-                    child: Text(
-                      '"Note down or feed all the day activities & Requirements"',
-                      style: TextStyle(fontSize: 11, color: Colors.black54),
-                    ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(20.0, 20.0, 5.0, 10.0),
-                          height: 1.0,
-                          color: Color(0xff49A5FF),
-                        ),
-                      ),
-                      Container(
-                        //margin: EdgeInsets.fromLTRB(20.0, 0.0, 10.0, 10.0),
-                        //height: 1.0,
-                        child: Icon(
-                          Icons.adb_outlined,
-                          color: Color(0xff49A5FF),
-                        ),
-                        //color: Color(0xff4fc4f2),
-                      ),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.fromLTRB(5.0, 20.0, 20.0, 10.0),
-                          height: 1.0,
-                          color: Color(0xff49A5FF),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Container(
+                  //   margin: EdgeInsets.only(top: 10.0),
+                  //   height: 50.0,
+                  //   child: Center(
+                  //       child: Text(
+                  //     'Update Notepad',
+                  //     style: TextStyle(fontSize: 28, color: Colors.black54),
+                  //   )),
+                  // ),
+                  // Container(
+                  //   margin: EdgeInsets.only(bottom: 20.0),
+                  //   height: 20.0,
+                  //   //width: double.infinity,
+                  //   child: Text(
+                  //     '"Note down or feed all the day activities & Requirements"',
+                  //     style: TextStyle(fontSize: 11, color: Colors.black54),
+                  //   ),
+                  // ),
+                  // Row(
+                  //   children: <Widget>[
+                  //     Expanded(
+                  //       child: Container(
+                  //         margin: EdgeInsets.fromLTRB(20.0, 20.0, 5.0, 10.0),
+                  //         height: 1.0,
+                  //         color: Color(0xff49A5FF),
+                  //       ),
+                  //     ),
+                  //     Container(
+                  //       //margin: EdgeInsets.fromLTRB(20.0, 0.0, 10.0, 10.0),
+                  //       //height: 1.0,
+                  //       child: Icon(
+                  //         Icons.adb_outlined,
+                  //         color: Color(0xff49A5FF),
+                  //       ),
+                  //       //color: Color(0xff4fc4f2),
+                  //     ),
+                  //     Expanded(
+                  //       child: Container(
+                  //         margin: EdgeInsets.fromLTRB(5.0, 20.0, 20.0, 10.0),
+                  //         height: 1.0,
+                  //         color: Color(0xff49A5FF),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(height: 30.0),
                   Row(
                     children: <Widget>[
@@ -823,6 +823,38 @@ class _NotepadState extends State<UpdateNotepad> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NotepadList()),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(20.0, 0.0, 2.5, 0.0),
+                            height: 40.0,
+                            decoration: BoxDecoration(
+                              color: Color(0xff4fc4f2),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(30.0),
+                              ),
+                            ),
+                            alignment: Alignment.topLeft,
+                            //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
+                            child: Center(
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
                             if (pr == 0 || catValue == 0 || prValue == 0) {
                               Toast.show("Select Priority Updations", context,
                                   duration: Toast.LENGTH_SHORT,
@@ -853,38 +885,6 @@ class _NotepadState extends State<UpdateNotepad> {
                             }
                           },
                           child: Container(
-                            margin: EdgeInsets.fromLTRB(20.0, 0.0, 2.5, 0.0),
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              color: Color(0xff4fc4f2),
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(30.0),
-                              ),
-                            ),
-                            alignment: Alignment.topLeft,
-                            //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
-                            child: Center(
-                              child: Text(
-                                'Save',
-                                style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NotepadList()),
-                            );
-                          },
-                          child: Container(
                             margin: EdgeInsets.fromLTRB(2.5, 0.0, 20.0, 0.0),
 
                             height: 40.0,
@@ -898,7 +898,7 @@ class _NotepadState extends State<UpdateNotepad> {
                             //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
                             child: Center(
                               child: Text(
-                                'Cancel',
+                                'Save',
                                 style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold,

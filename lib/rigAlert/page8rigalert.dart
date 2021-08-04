@@ -262,17 +262,15 @@ class _RigAlert2State extends State<RigAlert2> {
                 SizedBox(
                   height: 50,
                 ),
-                Expanded(
-                  child: Container(
-                      alignment: Alignment.centerLeft,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black45,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      margin: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 0.0),
-                      child: buildRigDropDownn()),
-                ),
+                Container(
+                    alignment: Alignment.centerLeft,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black45,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    margin: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 0.0),
+                    child: buildRigDropDownn()),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[

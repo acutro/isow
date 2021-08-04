@@ -148,6 +148,7 @@ class _MyApp extends State<NotepadList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           "Notepad",
           style: TextStyle(

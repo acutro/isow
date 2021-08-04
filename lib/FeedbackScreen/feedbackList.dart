@@ -408,7 +408,7 @@ showDialogFunc(context, opinion, date, description, replay) {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Replay:",
+                              "Reply:",
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   fontSize: 14,

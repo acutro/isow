@@ -106,7 +106,7 @@ class _RecivedWarningState extends State<RecivedWarning> {
     };
     http.Response response;
     response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Rigalert/read',
+        'http://isow.acutrotech.com/index.php/api/WarningLetter/read',
         body: (data));
     if (response.statusCode == 200) {
       print('Success');

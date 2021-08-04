@@ -391,10 +391,9 @@ class _MyApp extends State<JobHandoverList> {
                                         children: <Widget>[
                                           ListTile(
                                             leading: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xFF4fc4f2),
+                                              backgroundColor: Colors.blue,
                                               child: Text(
-                                                listFacts[index]["id"],
+                                                '${listFacts[index]["sender"][0].toUpperCase()}',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.white,
@@ -591,9 +590,9 @@ showDialogFunc(
                           children: <Widget>[
                             ListTile(
                               leading: CircleAvatar(
-                                backgroundColor: Color(0xFF4fc4f2),
+                                backgroundColor: Colors.blue,
                                 child: Text(
-                                  id,
+                                  '${byName[0].toUpperCase()}',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,

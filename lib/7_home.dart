@@ -539,7 +539,7 @@ class HomeScreenState extends State<HomeScreen> {
                         children: [
                           Stack(
                             children: [
-                              statusMap == null
+                              statusMap == null || sid == '4'
                                   ? SizedBox()
                                   : Positioned(
                                       right: 0,
@@ -771,7 +771,7 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                           Stack(
                             children: [
-                              statusMap == null
+                              statusMap == null || sid == '4'
                                   ? SizedBox()
                                   : Positioned(
                                       right: 0,

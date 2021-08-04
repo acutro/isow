@@ -441,13 +441,16 @@ showDialogFunc(context, opinion, date, description, replay) {
                       width: 130.0,
                       height: 45.0,
                       child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(80.0)),
+                        color: Colors.blue,
                         onPressed: () {
                           Navigator.pop(context);
                         },
                         height: 30,
                         child: Text(
                           ' OK ',
-                          style: TextStyle(),
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),

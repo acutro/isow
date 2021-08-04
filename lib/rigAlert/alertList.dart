@@ -121,7 +121,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
   }
 
   Future<Null> refreshList(String nam) async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 4));
     // getValidation();
     _rigList(nam);
   }
@@ -160,10 +160,9 @@ class _RecivedWarningState extends State<RecivedAlert> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Rig Alerts',
-          ),
+        centerTitle: true,
+        title: Text(
+          'Rig Alerts',
         ),
         actions: [
           Icon(Icons.headset_mic),

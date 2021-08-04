@@ -17,31 +17,51 @@ class DirectoryView extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-                width: MediaQuery.of(context).size.width,
-                height: 250,
-                decoration: new BoxDecoration(
-                    color: const Color(0xFF66BB6A),
-                    boxShadow: [
-                      new BoxShadow(
-                        color: Colors.black54,
-                        blurRadius: 10.0,
-                      ),
-                    ]),
-                child: path == null
-                    ? Image.asset(
-                        'assets/images/offfer.png',
-                        fit: BoxFit.fill,
-                      )
-                    : list == 0
-                        ? Image.network(
-                            'http://isow.acutrotech.com/assets/images/rigs/$path',
+            Stack(
+              children: [
+                Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 250,
+                    decoration: new BoxDecoration(
+                        color: const Color(0xFF66BB6A),
+                        boxShadow: [
+                          new BoxShadow(
+                            color: Colors.black54,
+                            blurRadius: 10.0,
+                          ),
+                        ]),
+                    child: path == null
+                        ? Image.asset(
+                            'assets/images/offfer.png',
                             fit: BoxFit.fill,
                           )
-                        : Image.network(
-                            'http://isow.acutrotech.com/assets/images/materials/$path',
-                            fit: BoxFit.fill,
-                          )),
+                        : list == 0
+                            ? Image.network(
+                                'http://isow.acutrotech.com/assets/images/rigs/$path',
+                                fit: BoxFit.fill,
+                              )
+                            : Image.network(
+                                'http://isow.acutrotech.com/assets/images/materials/$path',
+                                fit: BoxFit.fill,
+                              )),
+                Positioned(
+                    left: 0,
+                    top: 100,
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      size: 50,
+                      color: Colors.white24,
+                    )),
+                Positioned(
+                    top: 100,
+                    right: 0,
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 50,
+                      color: Colors.white24,
+                    )),
+              ],
+            ),
 
             Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),

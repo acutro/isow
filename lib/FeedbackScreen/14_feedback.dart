@@ -152,22 +152,6 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                     // child: Container(
                     child: Column(
                       children: <Widget>[
-                        // Container(
-                        //   alignment: Alignment.topLeft,
-                        //   margin: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 0.0),
-                        //   child: Text(
-                        //     'COUNTER SECTION : 20',
-                        //     style: TextStyle(fontSize: 16.0),
-                        //   ),
-                        // ),
-                        // Container(
-                        //   margin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                        //   child: Divider(
-                        //     color: Colors.black,
-                        //     height: 30,
-                        //     thickness: 1.0,
-                        //   ),
-                        // ),
                         Expanded(
                           child: SingleChildScrollView(
                             child: Container(
@@ -183,9 +167,9 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
                                   disabledBorder: InputBorder.none,
                                 ),
                                 autofocus: false,
-                                maxLines: null,
+                                maxLines: 20,
                                 controller: _feedbackController,
-                                keyboardType: TextInputType.text,
+                                keyboardType: TextInputType.multiline,
                               ),
                             ),
                           ),

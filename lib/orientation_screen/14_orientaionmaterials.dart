@@ -112,60 +112,61 @@ class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
             : Container(
                 height: MediaQuery.of(context).size.height,
                 width: double.infinity,
-                child: listFacts == null
-                    ? Center(child: Text("No Material details found"))
-                    : Container(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              height: 45,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  color: Colors.white,
-                                  border: Border.all(
-                                      width: 1, color: Colors.grey[600])),
-                              margin:
-                                  new EdgeInsets.symmetric(horizontal: 20.0),
-                              child: TextFormField(
-                                onChanged: (value) {
-                                  fetchData(controller.text);
-                                },
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                ),
-                                controller: controller,
-                                decoration: new InputDecoration(
-                                  suffixIcon: controller.text.isNotEmpty
-                                      ? new IconButton(
-                                          icon: new Icon(Icons.cancel),
-                                          onPressed: () {
-                                            controller.clear();
-                                            fetchData(controller.text);
-                                            // providerData.getContacts();
-                                            // onSearchTextChanged('');
-                                          },
-                                        )
-                                      : Icon(Icons.search),
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                  contentPadding: EdgeInsets.only(
-                                      left: 15, bottom: 11, top: 11, right: 15),
-                                  hintText: 'Search',
-                                  fillColor: Colors.white,
-                                  hintStyle: TextStyle(color: Colors.grey[600]),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                child: SingleChildScrollView(
-                                  child: ListView.builder(
+                child: Container(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 45,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: Colors.white,
+                            border:
+                                Border.all(width: 1, color: Colors.grey[600])),
+                        margin: new EdgeInsets.symmetric(horizontal: 20.0),
+                        child: TextFormField(
+                          onChanged: (value) {
+                            fetchData(controller.text);
+                          },
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                          ),
+                          controller: controller,
+                          decoration: new InputDecoration(
+                            suffixIcon: controller.text.isNotEmpty
+                                ? new IconButton(
+                                    icon: new Icon(Icons.cancel),
+                                    onPressed: () {
+                                      controller.clear();
+                                      fetchData(controller.text);
+                                      // providerData.getContacts();
+                                      // onSearchTextChanged('');
+                                    },
+                                  )
+                                : Icon(Icons.search),
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.only(
+                                left: 15, bottom: 11, top: 11, right: 15),
+                            hintText: 'Search',
+                            fillColor: Colors.white,
+                            hintStyle: TextStyle(color: Colors.grey[600]),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          child: SingleChildScrollView(
+                            child: listFacts == null
+                                ? Center(
+                                    heightFactor: 10,
+                                    child: Text("No Material found"))
+                                : ListView.builder(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount: listFacts.length,
@@ -235,12 +236,12 @@ class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
                                       );
                                     },
                                   ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
               ),
       ),
     );

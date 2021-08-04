@@ -64,26 +64,26 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
               color: Colors.white,
             ),
           ),
-          actions: [
-            Icon(
-              Icons.headset_mic,
-              color: Colors.white38,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Icon(
-              Icons.logout,
-              color: Colors.white38,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Icon(
-              Icons.menu,
-              color: Colors.white38,
-            ),
-          ],
+          // actions: [
+          //   Icon(
+          //     Icons.headset_mic,
+          //     color: Colors.white38,
+          //   ),
+          //   SizedBox(
+          //     width: 5,
+          //   ),
+          //   Icon(
+          //     Icons.logout,
+          //     color: Colors.white38,
+          //   ),
+          //   SizedBox(
+          //     width: 5,
+          //   ),
+          //   Icon(
+          //     Icons.menu,
+          //     color: Colors.white38,
+          //   ),
+          // ],
         ),
         backgroundColor: Colors.white,
         body: Stack(children: [

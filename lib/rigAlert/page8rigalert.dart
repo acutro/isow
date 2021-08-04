@@ -204,6 +204,7 @@ class _RigAlert2State extends State<RigAlert2> {
       //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         title: Center(
           child: Text(
             'Rig Alert',

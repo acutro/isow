@@ -39,7 +39,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = 'https://picsum.photos/250?image=9';
+      pathf =
+          'https://www.clipartkey.com/mpngs/m/107-1076987_user-staff-man-profile-person-icon-circle-png.png';
 
       return pathf;
     } else {
@@ -52,12 +53,11 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Profile',
-            style: TextStyle(
-              fontSize: 18,
-            ),
+        centerTitle: true,
+        title: Text(
+          'Profile',
+          style: TextStyle(
+            fontSize: 18,
           ),
         ),
         flexibleSpace: Container(

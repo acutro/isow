@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:convert';
@@ -31,7 +32,18 @@ class SignupScreenState extends State<RegScreen> {
       setState(() {
         rigResponse = jsonDecode(response.body);
         rigList = rigResponse['data'];
+
+        rigFn(rigList);
         print("{$rigList}");
+      });
+    }
+  }
+
+  List<String> rigDropList = [];
+  rigFn(List rigListt) {
+    for (int i = 0; i < rigListt.length; i++) {
+      setState(() {
+        rigDropList.add(rigListt[i]['rigName']);
       });
     }
   }
@@ -44,104 +56,183 @@ class SignupScreenState extends State<RegScreen> {
       setState(() {
         roleResponse = jsonDecode(response.body);
         roleList = roleResponse['data'];
+
+        roleFn(roleList);
         print("{$roleList}");
       });
     }
   }
 
-  Widget buildRigDownButton() {
-    return DropdownButton(
-      onTap: () {
-        FocusScope.of(context).requestFocus(new FocusNode());
-      },
-      iconEnabledColor: Colors.black45,
-      value: rigValue,
-      isExpanded: true,
-      underline: Container(
-        height: 0,
-        color: rigError ? Colors.red : Colors.white,
-      ),
-      hint: Padding(
-        padding: const EdgeInsets.only(left: 12),
-        child: Text(
-          "Select Rig",
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.black45,
-          ),
-        ),
-      ),
-      items: (rigList).map<DropdownMenuItem>((answer) {
-        return DropdownMenuItem(
-          value: int.parse(answer["id"]),
-          child: Container(
-            padding: EdgeInsets.only(left: 12),
-            child: Text(
-              answer["rigName"],
-              style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 12,
-                  fontFamily: "WorkSansLight"),
-            ),
-          ),
-        );
-      }).toList(),
-      onChanged: (value) {
-        setState(() {
-          rigError = false;
-          rigValue = value;
+  List<String> roleDList = [];
+  roleFn(List roleListt) {
+    for (int i = 0; i < roleListt.length; i++) {
+      setState(() {
+        roleDList.add(roleListt[i]['userRoles']);
+      });
+    }
+  }
 
-          print("$rigValue id of compny");
+  String roleName;
+  String rigName;
+  Widget buildRoleDropDownn() {
+    return DropDownField(
+      onValueChanged: (dynamic value) {
+        setState(() {
+          roleName = value;
         });
-        // print(companyValue.runtimeType);
       },
+
+      strict: true,
+
+      hintStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      textStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      value: roleName,
+      // required: false,
+      hintText: 'Select Role',
+      items: roleDList,
     );
   }
 
-  Widget buildRoleDropDownButton() {
-    return DropdownButton(
-      onTap: () {
-        FocusScope.of(context).requestFocus(new FocusNode());
-      },
-      iconEnabledColor: Colors.black45,
-      value: roleValue,
-      style: TextStyle(color: Colors.black87),
-      isExpanded: true,
-      underline: Container(
-        height: 0,
-        color: roleError ? Colors.red : Colors.white,
-      ),
-      hint: Padding(
-        padding: const EdgeInsets.only(left: 12),
-        child: Text(
-          "Select Role",
-          style: TextStyle(
-              color: Colors.black45, fontSize: 12, fontFamily: "WorkSansLight"),
-        ),
-      ),
-      items: (roleList).map<DropdownMenuItem>((answer) {
-        return DropdownMenuItem(
-          value: int.parse(answer["id"]),
-          child: Container(
-            padding: EdgeInsets.only(left: 12),
-            child: Text(
-              answer["userRoles"],
-              style: TextStyle(color: Colors.black87, fontSize: 14),
-            ),
-          ),
-        );
-      }).toList(),
-      onChanged: (value) {
+  Widget buildRigDropDownn() {
+    return DropDownField(
+      onValueChanged: (dynamic value) {
         setState(() {
-          roleError = false;
-          roleValue = value;
-
-          print("$roleValue id of compny");
+          rigName = value;
         });
-        // print(companyValue.runtimeType);
       },
+
+      strict: true,
+
+      hintStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      textStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      value: rigName,
+      // required: false,
+      hintText: 'Select Rig',
+      items: rigDropList,
     );
   }
+
+  String roleStatusFn(String roleNamepass) {
+    String id;
+    for (int i = 0; i < roleList.length; i++) {
+      if (roleList[i]['userRoles'] == roleNamepass) {
+        setState(() {
+          id = roleList[i]['id'].toString();
+        });
+      }
+    }
+    return id;
+  }
+
+  String rigStatusFn(String rigNamepass) {
+    String id;
+    for (int i = 0; i < rigList.length; i++) {
+      if (rigList[i]['rigName'] == rigNamepass) {
+        setState(() {
+          id = rigList[i]['id'].toString();
+        });
+      }
+    }
+    return id;
+  }
+
+  // Widget buildRigDownButton() {
+  //   return DropdownButton(
+  //     onTap: () {
+  //       FocusScope.of(context).requestFocus(new FocusNode());
+  //     },
+  //     iconEnabledColor: Colors.black45,
+  //     value: rigValue,
+  //     isExpanded: true,
+  //     underline: Container(
+  //       height: 0,
+  //       color: rigError ? Colors.red : Colors.white,
+  //     ),
+  //     hint: Padding(
+  //       padding: const EdgeInsets.only(left: 12),
+  //       child: Text(
+  //         "Select Rig",
+  //         style: TextStyle(
+  //           fontSize: 14,
+  //           color: Colors.black45,
+  //         ),
+  //       ),
+  //     ),
+  //     items: (rigList).map<DropdownMenuItem>((answer) {
+  //       return DropdownMenuItem(
+  //         value: int.parse(answer["id"]),
+  //         child: Container(
+  //           padding: EdgeInsets.only(left: 12),
+  //           child: Text(
+  //             answer["rigName"],
+  //             style: TextStyle(
+  //                 color: Colors.black87,
+  //                 fontSize: 12,
+  //                 fontFamily: "WorkSansLight"),
+  //           ),
+  //         ),
+  //       );
+  //     }).toList(),
+  //     onChanged: (value) {
+  //       setState(() {
+  //         rigError = false;
+  //         rigValue = value;
+
+  //         print("$rigValue id of compny");
+  //       });
+  //       // print(companyValue.runtimeType);
+  //     },
+  //   );
+  // }
+
+  // Widget buildRoleDropDownButton() {
+  //   return DropdownButton(
+  //     onTap: () {
+  //       FocusScope.of(context).requestFocus(new FocusNode());
+  //     },
+  //     iconEnabledColor: Colors.black45,
+  //     value: roleValue,
+  //     style: TextStyle(color: Colors.black87),
+  //     isExpanded: true,
+  //     underline: Container(
+  //       height: 0,
+  //       color: roleError ? Colors.red : Colors.white,
+  //     ),
+  //     hint: Padding(
+  //       padding: const EdgeInsets.only(left: 12),
+  //       child: Text(
+  //         "Select Role",
+  //         style: TextStyle(
+  //             color: Colors.black45, fontSize: 12, fontFamily: "WorkSansLight"),
+  //       ),
+  //     ),
+  //     items: (roleList).map<DropdownMenuItem>((answer) {
+  //       return DropdownMenuItem(
+  //         value: int.parse(answer["id"]),
+  //         child: Container(
+  //           padding: EdgeInsets.only(left: 12),
+  //           child: Text(
+  //             answer["userRoles"],
+  //             style: TextStyle(color: Colors.black87, fontSize: 14),
+  //           ),
+  //         ),
+  //       );
+  //     }).toList(),
+  //     onChanged: (value) {
+  //       setState(() {
+  //         roleError = false;
+  //         roleValue = value;
+
+  //         print("$roleValue id of compny");
+  //       });
+  //       // print(companyValue.runtimeType);
+  //     },
+  //   );
+  // }
 
   Future userReg(
     String name,
@@ -181,6 +272,7 @@ class SignupScreenState extends State<RegScreen> {
           gravity: Toast.BOTTOM,
           textColor: Colors.red,
           backgroundColor: Colors.white);
+      Timer(Duration(seconds: 1), () => Navigator.pop(context));
     }
   }
 
@@ -469,7 +561,7 @@ class SignupScreenState extends State<RegScreen> {
                                       width: 1, color: Colors.black45)),
                               margin:
                                   new EdgeInsets.symmetric(horizontal: 20.0),
-                              child: buildRoleDropDownButton()),
+                              child: buildRoleDropDownn()),
                           SizedBox(
                             height: 16,
                           ),
@@ -481,7 +573,7 @@ class SignupScreenState extends State<RegScreen> {
                                       width: 1, color: Colors.black45)),
                               margin:
                                   new EdgeInsets.symmetric(horizontal: 20.0),
-                              child: buildRigDownButton()),
+                              child: buildRigDropDownn()),
                           SizedBox(
                             height: 16,
                           ),
@@ -596,13 +688,17 @@ class SignupScreenState extends State<RegScreen> {
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             userReg(
-                                _nameController.text,
-                                _useridController.text,
-                                _emailController.text,
-                                _passwordController.text,
-                                _mobController.text,
-                                rigValue.toString(),
-                                roleValue.toString());
+                              _nameController.text,
+                              _useridController.text,
+                              _emailController.text,
+                              _passwordController.text,
+                              _mobController.text,
+                              rigStatusFn(rigName),
+                              roleStatusFn(roleName),
+
+                              // rigValue.toString(),
+                              // roleValue.toString()
+                            );
 
                             print("Successful");
                           } else {

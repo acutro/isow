@@ -60,8 +60,8 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Map statusMap;
-  List<dynamic> statusList;
 
+  List<dynamic> listFacts;
   Future fetchStatus(
     String id,
   ) async {
@@ -75,6 +75,7 @@ class HomeScreenState extends State<HomeScreen> {
     if (response.statusCode == 200) {
       setState(() {
         statusMap = jsonDecode(response.body);
+        listFacts = statusMap['data'];
       });
       print('Success');
     }
@@ -137,22 +138,11 @@ class HomeScreenState extends State<HomeScreen> {
       RemoteNotification notification = message.notification;
       AndroidNotification android = message.notification?.android;
       if (notification != null && android != null) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ChatListScreen()),
-        );
-        // showDialog(
-        //     context: context,
-        //     builder: (_) {
-        //       return AlertDialog(
-        //         title: Text(notification.title),
-        //         content: SingleChildScrollView(
-        //           child: Column(
-        //             children: [Text(notification.body)],
-        //           ),
-        //         ),
-        //       );
-        //     });
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => ChatListScreen()),
+        // );
+
       }
     });
 
@@ -251,7 +241,8 @@ class HomeScreenState extends State<HomeScreen> {
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = 'https://picsum.photos/250?image=9';
+      pathf =
+          'https://www.clipartkey.com/mpngs/m/107-1076987_user-staff-man-profile-person-icon-circle-png.png';
 
       return pathf;
     } else {
@@ -558,7 +549,7 @@ class HomeScreenState extends State<HomeScreen> {
                                             minHeight: 16,
                                           ),
                                           child: Text(
-                                            statusMap['rigalert'].toString(),
+                                            listFacts[0]['rigalert'].toString(),
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 8,
@@ -790,7 +781,8 @@ class HomeScreenState extends State<HomeScreen> {
                                             minHeight: 16,
                                           ),
                                           child: Text(
-                                            statusMap['warningletter'],
+                                            listFacts[0]['warningletter']
+                                                .toString(),
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 8,

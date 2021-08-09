@@ -265,7 +265,7 @@ class _MyApp extends State<JobDescriptionList> {
                                                         child: Row(
                                                           children: [
                                                             Text(
-                                                              "Attachement",
+                                                              "Attachment",
                                                               style: TextStyle(
                                                                   fontSize: 12,
                                                                   color: Colors

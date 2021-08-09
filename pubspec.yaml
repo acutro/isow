@@ -52,6 +52,7 @@ dependencies:
   firebase_messaging: any
   cloud_firestore:
   dropdownfield: ^1.0.3
+  readmore: ^2.1.0
  
 
 dev_dependencies:

@@ -379,7 +379,7 @@ class _RecivedWarningState extends State<RecivedWarning> {
                                                 Container(
                                                   margin: EdgeInsets.all(10.0),
                                                   child: Text(
-                                                    '${listFacts[index]['content'].toUpperCase()}${listFacts[index]['content'].substring(1)}',
+                                                    '${listFacts[index]['content'][0].toUpperCase()}${listFacts[index]['content'].substring(1)}',
                                                     // snapshot.data[index].content,
                                                     style: TextStyle(
                                                         fontSize: 13,

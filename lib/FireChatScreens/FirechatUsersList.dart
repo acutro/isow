@@ -88,8 +88,9 @@ class _FireChatListScreenState extends State<FireChatListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
-          "Fire Chat",
+          "Chat",
           style: TextStyle(
             color: Colors.white,
           ),

@@ -64,26 +64,33 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
               color: Colors.white,
             ),
           ),
-          // actions: [
-          //   Icon(
-          //     Icons.headset_mic,
-          //     color: Colors.white38,
-          //   ),
-          //   SizedBox(
-          //     width: 5,
-          //   ),
-          //   Icon(
-          //     Icons.logout,
-          //     color: Colors.white38,
-          //   ),
-          //   SizedBox(
-          //     width: 5,
-          //   ),
-          //   Icon(
-          //     Icons.menu,
-          //     color: Colors.white38,
-          //   ),
-          // ],
+          actions: [
+            GestureDetector(
+              onTap: () {
+                pageController.animateToPage(pageChanged++,
+                    duration: Duration(milliseconds: 200),
+                    curve: Curves.linear);
+              },
+              child: Icon(
+                Icons.headset_mic,
+                color: Colors.white38,
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Icon(
+              Icons.logout,
+              color: Colors.white38,
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Icon(
+              Icons.menu,
+              color: Colors.white38,
+            ),
+          ],
         ),
         backgroundColor: Colors.white,
         body: Stack(children: [
@@ -98,23 +105,92 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
             itemCount: widget.rigList.length,
             itemBuilder: (BuildContext context, int index) {
               if (widget.flag == 0) {
-                return DirectoryView(
-                  index,
-                  widget.rigList[index]["rigId"],
-                  widget.rigList[index]["rigName"],
-                  widget.rigList[index]["details"],
-                  widget.rigList[index]["rig_image"],
-                  widget.flag,
+                return Container(
+                  child: Stack(
+                    children: [
+                      DirectoryView(
+                        index,
+                        widget.rigList[index]["rigId"],
+                        widget.rigList[index]["rigName"],
+                        widget.rigList[index]["details"],
+                        widget.rigList[index]["rig_image"],
+                        widget.flag,
+                      ),
+                      Positioned(
+                          top: MediaQuery.of(context).size.height / 2,
+                          left: 10,
+                          child: GestureDetector(
+                            onTap: () {
+                              pageController.animateToPage(pageChanged--,
+                                  duration: Duration(milliseconds: 200),
+                                  curve: Curves.linear);
+                            },
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              size: 50,
+                              color: Colors.black12,
+                            ),
+                          )),
+                      Positioned(
+                          top: MediaQuery.of(context).size.height / 2,
+                          right: 10,
+                          child: GestureDetector(
+                            onTap: () {
+                              pageController.animateToPage(pageChanged++,
+                                  duration: Duration(milliseconds: 200),
+                                  curve: Curves.linear);
+                            },
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 50,
+                              color: Colors.black12,
+                            ),
+                          )),
+                    ],
+                  ),
                 );
               } else {
-                return DirectoryView(
-                  index,
-                  widget.rigList[index]["materialId"],
-                  widget.rigList[index]["name"],
-                  widget.rigList[index]["details"],
-                  widget.rigList[index]["material_image"],
-                  widget.flag,
-                );
+                return Container(
+                    child: Stack(children: [
+                  DirectoryView(
+                    index,
+                    widget.rigList[index]["materialId"],
+                    widget.rigList[index]["name"],
+                    widget.rigList[index]["details"],
+                    widget.rigList[index]["material_image"],
+                    widget.flag,
+                  ),
+                  Positioned(
+                      top: MediaQuery.of(context).size.height / 2,
+                      left: 10,
+                      child: GestureDetector(
+                        onTap: () {
+                          pageController.animateToPage(pageChanged--,
+                              duration: Duration(milliseconds: 200),
+                              curve: Curves.linear);
+                        },
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          size: 50,
+                          color: Colors.black12,
+                        ),
+                      )),
+                  Positioned(
+                      top: MediaQuery.of(context).size.height / 2,
+                      right: 10,
+                      child: GestureDetector(
+                        onTap: () {
+                          pageController.animateToPage(pageChanged++,
+                              duration: Duration(milliseconds: 200),
+                              curve: Curves.linear);
+                        },
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 50,
+                          color: Colors.black12,
+                        ),
+                      )),
+                ]));
               }
             },
           ),

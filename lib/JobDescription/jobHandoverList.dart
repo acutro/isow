@@ -470,7 +470,7 @@ class _MyApp extends State<JobHandoverList> {
                                                         child: Row(
                                                           children: [
                                                             Text(
-                                                              "Attachement",
+                                                              "Attachment",
                                                               style: TextStyle(
                                                                   fontSize: 12,
                                                                   color: Colors

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '13_OrientationRigs.dart';
 import '14_orientaionmaterials.dart';
+import 'package:readmore/readmore.dart';
 
 class OrientationScreen extends StatefulWidget {
   @override
@@ -12,6 +13,9 @@ class OrientationScreen extends StatefulWidget {
 }
 
 class OrientationScreenState extends State<OrientationScreen> {
+  String descText =
+      "Description Line 1\nDescription Line 2\nDescription Line 3\nDescription Line 4\nDescription Line 5\nDescription Line 6\nDescription Line 7\nDescription Line 8";
+  bool descTextShowFlag = false;
   Map mapResponse;
   String companyInfo;
   List<dynamic> roleList;
@@ -76,8 +80,7 @@ class OrientationScreenState extends State<OrientationScreen> {
                 children: [
                   Container(
                     padding: EdgeInsets.all(10),
-                    height: 300,
-                    decoration: BoxDecoration(color: Colors.white),
+
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -88,33 +91,43 @@ class OrientationScreenState extends State<OrientationScreen> {
                               color: Colors.blue,
                               fontSize: 20.0),
                         ),
-                        SizedBox(height: 30),
-                        Expanded(
-                          child: Container(
-                            child: Text(
-                              roleList[0]['description'].toString(),
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 12.0,
-                                  height: 1.5),
-                            ),
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: ReadMoreText(
+                            roleList[0]['description'].toString(),
+                            trimLines: 8,
+                            colorClickableText: Colors.pink,
+                            trimMode: TrimMode.Line,
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 14.0,
+                                height: 1.5),
+                            trimCollapsedText: '...Show more',
+                            trimExpandedText: ' show less',
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: RaisedButton(
-                            color: Colors.blue,
-                            textColor: Colors.white,
-                            child: Text('Read more..'),
-                            onPressed: () => {},
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // child: Container(
+                        //   child: Text(
+                        //     roleList[0]['description'].toString(),
+
+                        // ),
+                        // ),
+                        // Align(
+                        //   alignment: Alignment.centerRight,
+                        //   child: RaisedButton(
+                        //     color: Colors.blue,
+                        //     textColor: Colors.white,
+                        //     child: Text('Read more..'),
+                        //     onPressed: () => {},
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.only(
+                        //         bottomRight: Radius.circular(20),
+                        //         topRight: Radius.circular(20),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 20,
                         ),

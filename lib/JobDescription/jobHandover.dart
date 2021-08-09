@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'JobDescriptionTab.dart';
@@ -39,16 +40,17 @@ class _JobdescriptionState extends State<JobHandover> {
       setState(() {
         mapResponse = jsonDecode(response.body);
         roleList = mapResponse['data'];
+        catFn(roleList);
         print("{$roleList}");
       });
     }
   }
 
   Future fetchUsers(
-    int id,
+    String id,
   ) async {
     var data = {
-      'roleId': id.toString(),
+      'roleId': id,
     };
     http.Response response;
     response = await http.post(
@@ -58,6 +60,7 @@ class _JobdescriptionState extends State<JobHandover> {
       setState(() {
         userResponse = jsonDecode(response.body);
         userList = userResponse['data'];
+        employeeFn(userList);
         print("{$userList}");
       });
     } else {
@@ -109,139 +112,95 @@ class _JobdescriptionState extends State<JobHandover> {
     }
   }
 
-  Widget buildDropDownButton() {
-    return Container(
-      alignment: Alignment.center,
-      height: 58,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.black45, width: 1),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
+  catFn(List roleListt) {
+    for (int i = 0; i < roleListt.length; i++) {
+      setState(() {
+        catogoryList.add(roleListt[i]['userRoles']);
+      });
+    }
+  }
 
-      // color: Color.fromRGBO(221, 193, 135, 0.08),
-      child: DropdownButton(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        iconEnabledColor: Colors.black87,
-        value: roleValue,
-        dropdownColor: Colors.white,
-        isExpanded: true,
-        underline: Container(
-          height: 0,
-          color: roleError ? Colors.red : Colors.white,
-        ),
-        hint: Padding(
-          padding: const EdgeInsets.only(left: 12),
-          child: Text(
-            "To Position",
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.black87,
-            ),
-          ),
-        ),
-        items: (roleList).map<DropdownMenuItem>((answer) {
-          return DropdownMenuItem(
-            value: int.parse(answer["id"]),
-            child: Container(
-              padding: EdgeInsets.only(left: 12),
-              child: Text(
-                answer["userRoles"],
-                style: TextStyle(color: Colors.black87, fontSize: 14),
-              ),
-            ),
-          );
-        }).toList(),
-        onChanged: (value) {
-          setState(() {
-            fetchUsers(value);
-            roleError = false;
-            roleValue = value;
+  employeeFn(List employeeListt) {
+    employeeList.clear();
+    for (int i = 0; i < employeeListt.length; i++) {
+      setState(() {
+        employeeList.add(employeeListt[i]['name']);
+      });
+    }
+  }
 
-            print("$roleValue id of compny");
-          });
-          // print(companyValue.runtimeType);
-        },
-      ),
+  String catStatusFn(String catoPass) {
+    String id;
+    for (int i = 0; i < roleList.length; i++) {
+      if (roleList[i]['userRoles'] == catoPass) {
+        setState(() {
+          id = roleList[i]['id'].toString();
+        });
+      }
+    }
+    return id;
+  }
+
+  String empStatusFn(String empPass) {
+    String eid;
+    for (int i = 0; i < userList.length; i++) {
+      if (userList[i]['name'] == empPass) {
+        setState(() {
+          eid = userList[i]['id'].toString();
+        });
+      }
+    }
+    return eid;
+  }
+
+  List<String> employeeList = [];
+  String employeeName;
+  String empId;
+  Widget buildEmpDropDown() {
+    return DropDownField(
+      onValueChanged: (dynamic value1) {
+        setState(() {
+          employeeName = value1;
+
+          // catStatusFn(employeeName);
+        });
+      },
+      itemsVisibleInDropdown: employeeList == null ? 0 : 3,
+      strict: true,
+      hintStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      textStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      value: employeeName,
+      // required: false,
+      hintText: 'Select Employee',
+      items: employeeList,
     );
   }
 
-  Widget personDropDownButton() {
-    return Container(
-      alignment: Alignment.center,
-      height: 58,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.black45, width: 1),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
+  List<String> catogoryList = [];
+  String catogoryName;
 
-      // color: Color.fromRGBO(221, 193, 135, 0.08),
-      child: userResponse == null
-          ? GestureDetector(
-              onTap: () {
-                Toast.show("Select Person", context,
-                    duration: Toast.LENGTH_SHORT,
-                    gravity: Toast.BOTTOM,
-                    textColor: Colors.red,
-                    backgroundColor: Colors.white);
-              },
-              child: Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
-                child: Text(
-                  "Choose Person",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black87,
-                  ),
-                ),
-              ))
-          : DropdownButton(
-              onTap: () {
-                FocusScope.of(context).requestFocus(new FocusNode());
-              },
-              iconEnabledColor: Colors.black87,
-              value: userValue,
-              dropdownColor: Colors.white,
-              isExpanded: true,
-              underline: Container(
-                height: 0,
-                color: userError ? Colors.red : Colors.white,
-              ),
-              hint: Padding(
-                padding: const EdgeInsets.only(left: 12),
-                child: Text(
-                  "To Person",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black87,
-                  ),
-                ),
-              ),
-              items: (userList).map<DropdownMenuItem>((answer) {
-                return DropdownMenuItem(
-                  value: int.parse(answer["id"]),
-                  child: Container(
-                    padding: EdgeInsets.only(left: 12),
-                    child: Text(
-                      answer["name"],
-                      style: TextStyle(color: Colors.black87, fontSize: 14),
-                    ),
-                  ),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  userError = false;
-                  userValue = value;
-                  print("$userValue id of compny");
-                });
-                // print(companyValue.runtimeType);
-              },
-            ),
+  String catogoryId;
+
+  Widget buildCatoDropDownn() {
+    return DropDownField(
+      onValueChanged: (dynamic value) {
+        setState(() {
+          catogoryName = value;
+          catogoryId = catStatusFn(value);
+          fetchUsers(catogoryId);
+        });
+      },
+      strict: true,
+      hintStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      textStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      value: catogoryName,
+      // required: false,
+      hintText: 'Select Role',
+      items: catogoryList,
     );
   }
 
@@ -324,7 +283,7 @@ class _JobdescriptionState extends State<JobHandover> {
                     height: 40.0,
                   ),
                   Container(
-                    height: 470,
+                    height: 500,
                     padding: EdgeInsets.all(10),
                     margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                     decoration: BoxDecoration(
@@ -338,133 +297,136 @@ class _JobdescriptionState extends State<JobHandover> {
                         ),
                       ],
                     ),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                margin:
-                                    EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                                height: 45.0,
-                                child: buildDropDownButton(),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                margin:
-                                    EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                                height: 45.0,
-                                child: personDropDownButton(),
-                                //  TextField(
-                                //   decoration: InputDecoration(
-                                //     hintText: 'Name',
-                                //     hintStyle: TextStyle(color: Colors.white),
-                                //     enabledBorder: OutlineInputBorder(
-                                //       borderRadius: BorderRadius.all(
-                                //           Radius.circular(10.0)),
-                                //       borderSide:
-                                //           BorderSide(color: Colors.white),
-                                //     ),
-                                //   ),
-                                // ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Container(
-                          height: 150,
-                          padding: EdgeInsets.all(10),
-                          alignment: Alignment.topLeft,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black45),
-                              borderRadius: BorderRadius.circular(10)),
-                          margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                          child: Text(
-                            widget.dec,
-                            maxLines: 10,
-                            style: TextStyle(color: Colors.black87),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                padding: EdgeInsets.all(10),
-                                alignment: Alignment.centerLeft,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black45),
-                                    borderRadius: BorderRadius.circular(10)),
-                                margin:
-                                    EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                                child: Text(
-                                  widget.dur,
-                                  maxLines: null,
-                                  style: TextStyle(color: Colors.black87),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.black45,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                    margin: EdgeInsets.fromLTRB(
+                                        10.0, 10.0, 5.0, 0.0),
+                                    child: buildCatoDropDownn()),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.black45,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                    margin: EdgeInsets.fromLTRB(
+                                        10.0, 10.0, 5.0, 0.0),
+                                    child: buildEmpDropDown()),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Container(
+                            height: 150,
+                            padding: EdgeInsets.all(10),
+                            alignment: Alignment.topLeft,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black45),
+                                borderRadius: BorderRadius.circular(10)),
+                            margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                            child: Text(
+                              widget.dec,
+                              maxLines: 10,
+                              style: TextStyle(color: Colors.black87),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  alignment: Alignment.centerLeft,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black45),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  margin: EdgeInsets.fromLTRB(
+                                      10.0, 10.0, 10.0, 0.0),
+                                  child: Text(
+                                    widget.dur,
+                                    maxLines: null,
+                                    style: TextStyle(color: Colors.black87),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        GestureDetector(
-                          child: Container(
-                            alignment: Alignment.bottomCenter,
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          GestureDetector(
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                              height: 40.0,
-                              width: 200.0,
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(30.0),
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                margin:
+                                    EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                                height: 40.0,
+                                width: 200.0,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(30.0),
+                                  ),
                                 ),
-                              ),
 
-                              //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
-                              child: Center(
-                                child: Text(
-                                  'Submit',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
+                                //margin: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 0.0),
+                                child: Center(
+                                  child: Text(
+                                    'Submit',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
                                 ),
                               ),
                             ),
+                            onTap: () {
+                              if (employeeName == null) {
+                                Toast.show("Select from Dropdown", context,
+                                    duration: Toast.LENGTH_SHORT,
+                                    gravity: Toast.BOTTOM,
+                                    textColor: Color(0xff49A5FF),
+                                    backgroundColor: Colors.white);
+                              } else {
+                                handoverJob(
+                                    widget.userId,
+                                    empStatusFn(employeeName).toString(),
+                                    widget.jid);
+                              }
+                            },
                           ),
-                          onTap: () {
-                            if (userValue == null) {
-                              Toast.show("Select from Dropdown", context,
-                                  duration: Toast.LENGTH_SHORT,
-                                  gravity: Toast.BOTTOM,
-                                  textColor: Color(0xff49A5FF),
-                                  backgroundColor: Colors.white);
-                            } else {
-                              handoverJob(widget.userId, userValue.toString(),
-                                  widget.jid);
-                            }
-                          },
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(

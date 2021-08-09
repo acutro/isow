@@ -50,9 +50,13 @@ class _MyApp extends State<NotepadList> {
         listFacts = mapResponse['data'];
         jobError = false;
         print("{$listFacts}");
+        loading = true;
       });
     } else {
-      jobError = true;
+      setState(() {
+        loading = true;
+        jobError = true;
+      });
 
       Toast.show("Something went Wrong", context,
           duration: Toast.LENGTH_SHORT,
@@ -86,6 +90,7 @@ class _MyApp extends State<NotepadList> {
     }
   }
 
+  bool loading = true;
   Future deleteNotepad(String id, String ssid) async {
     var data = {'id': id};
     http.Response response;
@@ -93,6 +98,10 @@ class _MyApp extends State<NotepadList> {
         'http://isow.acutrotech.com/index.php/api/Notepad/delete',
         body: (data));
     if (response.statusCode == 200) {
+      setState(() {
+        loading = false;
+      });
+      Navigator.pop(context);
       Toast.show("Deleted Successfully", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
@@ -103,6 +112,9 @@ class _MyApp extends State<NotepadList> {
         () => fetchData(ssid, ""),
       );
     } else {
+      setState(() {
+        loading = false;
+      });
       Toast.show("Something went wrong", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
@@ -394,7 +406,10 @@ class _MyApp extends State<NotepadList> {
                                                                                           name: listFacts[index]["name"],
                                                                                           requirment: listFacts[index]["requirements"],
                                                                                           date: listFacts[index]["date"],
-                                                                                          pr: listFacts[index]["priorityColor"],
+                                                                                          prColor: listFacts[index]["priorityColor"],
+                                                                                          priority: listFacts[index]["priority"],
+                                                                                          catogory: listFacts[index]["categoryName"],
+                                                                                          catogoryId: listFacts[index]["category_id"],
                                                                                         )),
                                                                               );
                                                                             },
@@ -440,8 +455,30 @@ class _MyApp extends State<NotepadList> {
                                                                             onPressed:
                                                                                 () {
                                                                               Navigator.pop(context);
-                                                                              deleteNotepad(listFacts[index]["id"], sid);
-                                                                              fetchData(sid, "");
+                                                                              if (loading == true) {
+                                                                                showDialog(
+                                                                                  context: context,
+                                                                                  builder: (context) => AlertDialog(
+                                                                                    backgroundColor: Colors.transparent,
+                                                                                    content: Container(
+                                                                                      height: 100,
+                                                                                      width: 50,
+                                                                                      child: Column(
+                                                                                        children: [
+                                                                                          CircularProgressIndicator(
+                                                                                            color: Colors.red,
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                                Timer(
+                                                                                  Duration(seconds: 2),
+                                                                                  () => deleteNotepad(listFacts[index]["id"], sid),
+                                                                                );
+                                                                                fetchData(sid, "");
+                                                                              }
                                                                             },
                                                                             child:
                                                                                 Text("Yes"))

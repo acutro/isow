@@ -15,7 +15,7 @@ class FeedbackList extends StatefulWidget {
 
 class _MyApp extends State<FeedbackList> {
   String sid;
-
+  bool loading = true;
   bool error = true;
   Future getValidation() async {
     final SharedPreferences sharedPreferences =
@@ -39,6 +39,10 @@ class _MyApp extends State<FeedbackList> {
         'http://isow.acutrotech.com/index.php/api/Feedback/delete',
         body: (data));
     if (response.statusCode == 200) {
+      setState(() {
+        loading = false;
+      });
+      Navigator.pop(context);
       Toast.show("Feedback Deleted Successfully", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
@@ -46,6 +50,9 @@ class _MyApp extends State<FeedbackList> {
           backgroundColor: Colors.white);
       Timer(Duration(seconds: 2), () => fetchIssued(sid));
     } else {
+      setState(() {
+        loading = false;
+      });
       Toast.show("Something went Wrong", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
@@ -71,10 +78,14 @@ class _MyApp extends State<FeedbackList> {
         mapResponse = jsonDecode(response.body);
         listFacts = mapResponse['data'];
         jobError = false;
+        loading = true;
         print("{$listFacts}");
       });
     } else {
-      jobError = true;
+      setState(() {
+        loading = true;
+        jobError = true;
+      });
 
       Toast.show("Something went Wrong", context,
           duration: Toast.LENGTH_SHORT,
@@ -253,12 +264,46 @@ class _MyApp extends State<FeedbackList> {
                                                               onPressed: () {
                                                                 Navigator.pop(
                                                                     context);
-                                                                deletefeedback(
-                                                                    listFacts[
-                                                                            index]
-                                                                        ["id"]);
-                                                                fetchIssued(
-                                                                    sid);
+                                                                if (loading ==
+                                                                    true) {
+                                                                  showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (context) =>
+                                                                            AlertDialog(
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      content:
+                                                                          Container(
+                                                                        height:
+                                                                            100,
+                                                                        width:
+                                                                            50,
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            CircularProgressIndicator(
+                                                                              color: Colors.red,
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                  Timer(
+                                                                    Duration(
+                                                                        seconds:
+                                                                            2),
+                                                                    () => deletefeedback(
+                                                                        listFacts[index]
+                                                                            [
+                                                                            "id"]),
+                                                                  );
+                                                                  fetchIssued(
+                                                                      sid);
+                                                                }
                                                               },
                                                               child:
                                                                   Text("Yes"))

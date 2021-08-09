@@ -44,22 +44,6 @@ class DirectoryView extends StatelessWidget {
                                 'http://isow.acutrotech.com/assets/images/materials/$path',
                                 fit: BoxFit.fill,
                               )),
-                Positioned(
-                    left: 0,
-                    top: 100,
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      size: 50,
-                      color: Colors.white24,
-                    )),
-                Positioned(
-                    top: 100,
-                    right: 0,
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 50,
-                      color: Colors.white24,
-                    )),
               ],
             ),
 

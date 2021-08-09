@@ -496,7 +496,6 @@ class _NotepadState extends State<Notepad> {
                                       ),
                                       Expanded(
                                         child: Container(
-                                          padding: EdgeInsets.all(5),
                                           decoration: BoxDecoration(
                                               color: Colors.white,
                                               borderRadius:
@@ -509,6 +508,7 @@ class _NotepadState extends State<Notepad> {
                                           height: 40.0,
                                           child: TextField(
                                             controller: _nameController,
+                                            maxLines: 1,
                                             style: TextStyle(
                                                 color: Colors.black54),
                                             decoration: InputDecoration(

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +14,10 @@ class UpdateNotepad extends StatefulWidget {
   final String name;
   final String requirment;
   final String date;
-  final String pr;
+  final String prColor;
+  final String priority;
+  final String catogory;
+  final String catogoryId;
 
   UpdateNotepad(
       {Key key,
@@ -22,7 +26,10 @@ class UpdateNotepad extends StatefulWidget {
       this.name,
       this.requirment,
       this.date,
-      this.pr})
+      this.prColor,
+      this.priority,
+      this.catogory,
+      this.catogoryId})
       : super(key: key);
   @override
   _NotepadState createState() => _NotepadState();
@@ -84,7 +91,17 @@ class _NotepadState extends State<UpdateNotepad> {
       setState(() {
         catResponse = jsonDecode(response.body);
         catList = catResponse['data'];
+        catogoryFn(catList);
         print("{$catList}");
+      });
+    }
+  }
+
+  List<String> catogoryList = [];
+  catogoryFn(List catListt) {
+    for (int i = 0; i < catListt.length; i++) {
+      setState(() {
+        catogoryList.add(catListt[i]['categoryName']);
       });
     }
   }
@@ -170,6 +187,40 @@ class _NotepadState extends State<UpdateNotepad> {
     );
   }
 
+  Widget buildRoleDropDownn() {
+    return DropDownField(
+      onValueChanged: (dynamic value) {
+        setState(() {
+          catogoryName = value;
+        });
+      },
+
+      strict: true,
+
+      hintStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      textStyle: const TextStyle(
+          fontWeight: FontWeight.normal, color: Colors.black87, fontSize: 12.0),
+      value: catogoryName,
+      // required: false,
+      hintText: widget.catogory,
+      items: catogoryList,
+    );
+  }
+
+  String notepadStatusFn(String rigNamepass) {
+    String id;
+    for (int i = 0; i < catList.length; i++) {
+      if (catList[i]['categoryName'] == rigNamepass) {
+        setState(() {
+          id = catList[i]['id'].toString();
+        });
+      }
+    }
+    return id;
+  }
+
+  String catogoryName;
   Widget buildRoleDropDownButton() {
     return DropdownButton(
       onTap: () {
@@ -337,9 +388,10 @@ class _NotepadState extends State<UpdateNotepad> {
   void initState() {
     super.initState();
     date1 = widget.date;
-
+    prValue = int.parse(widget.priority);
     _nameController.text = widget.name;
     _requirmentController.text = widget.requirment;
+    pr = int.parse(widget.prColor);
     fetchCat();
   }
 
@@ -558,7 +610,6 @@ class _NotepadState extends State<UpdateNotepad> {
                                       Expanded(
                                         child: Container(
                                             alignment: Alignment.centerLeft,
-                                            padding: EdgeInsets.all(5),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                   color: Colors.black45,
@@ -567,9 +618,13 @@ class _NotepadState extends State<UpdateNotepad> {
                                                     Radius.circular(10))),
                                             margin: EdgeInsets.fromLTRB(
                                                 10.0, 10.0, 5.0, 0.0),
-                                            height: 40.0,
-                                            child: buildRoleDropDownButton()),
+                                            child: buildRoleDropDownn()),
                                       ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
                                       GestureDetector(
                                         onTap: _addAlert,
                                         child: Container(
@@ -863,25 +918,30 @@ class _NotepadState extends State<UpdateNotepad> {
                                   backgroundColor: Colors.white);
                             } else if (_datetime == null) {
                               updateNotepad(
-                                  widget.id,
-                                  widget.userId,
-                                  _nameController.text,
-                                  _requirmentController.text,
-                                  widget.date.substring(0, 10) +
-                                      " 00:00:00.000",
-                                  pr.toString(),
-                                  prValue.toString(),
-                                  catValue.toString());
+                                widget.id,
+                                widget.userId,
+                                _nameController.text,
+                                _requirmentController.text,
+                                widget.date.substring(0, 10) + " 00:00:00.000",
+                                pr.toString(),
+                                prValue.toString(),
+                                catogoryName == null
+                                    ? notepadStatusFn(widget.catogory)
+                                    : notepadStatusFn(catogoryName),
+                              );
                             } else {
                               updateNotepad(
-                                  widget.id,
-                                  widget.userId,
-                                  _nameController.text,
-                                  _requirmentController.text,
-                                  _datetime.toString(),
-                                  pr.toString(),
-                                  prValue.toString(),
-                                  catValue.toString());
+                                widget.id,
+                                widget.userId,
+                                _nameController.text,
+                                _requirmentController.text,
+                                _datetime.toString(),
+                                pr.toString(),
+                                prValue.toString(),
+                                catogoryName == null
+                                    ? notepadStatusFn(widget.catogory)
+                                    : notepadStatusFn(catogoryName),
+                              );
                             }
                           },
                           child: Container(

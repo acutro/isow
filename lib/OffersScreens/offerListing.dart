@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:isow/Widgects/alertBox.dart';
 import 'offers_detail_Screen.dart';
 
-class RigDetailScreen extends StatefulWidget {
+class OfferDetailScreen extends StatefulWidget {
   static const routeName = "rig-screen";
 
   final List<dynamic> rigList;
-
+  final String sid;
   final int id;
   final String title;
 
-  RigDetailScreen({Key key, @required this.rigList, this.id, this.title})
+  OfferDetailScreen(
+      {Key key, @required this.rigList, this.id, this.title, this.sid})
       : super(key: key);
   @override
-  _RigDetailScreenState createState() => _RigDetailScreenState();
+  _OfferDetailScreenState createState() => _OfferDetailScreenState();
 }
 
-class _RigDetailScreenState extends State<RigDetailScreen> {
+class _OfferDetailScreenState extends State<OfferDetailScreen> {
   int pageChanged;
 
   @override
@@ -39,6 +41,7 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             widget.title,
             style: TextStyle(
@@ -54,26 +57,6 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
               color: Colors.white,
             ),
           ),
-          actions: [
-            Icon(
-              Icons.headset_mic,
-              color: Colors.white38,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Icon(
-              Icons.logout,
-              color: Colors.white38,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Icon(
-              Icons.menu,
-              color: Colors.white38,
-            ),
-          ],
         ),
         backgroundColor: Colors.white,
         body: Stack(children: [

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/Widgects/alertBox.dart';
 import 'dart:convert';
 import 'package:toast/toast.dart';
 import '14_feedback.dart';
@@ -144,9 +145,16 @@ class _MyApp extends State<FeedbackList> {
           SizedBox(
             width: 10,
           ),
-          Icon(
-            Icons.logout,
-            color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              return showDialog(
+                  context: context,
+                  builder: (context) => BuildLogoutDialogclose(sid));
+            },
+            child: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
           ),
           SizedBox(
             width: 10,

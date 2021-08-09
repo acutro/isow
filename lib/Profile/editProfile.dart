@@ -74,7 +74,7 @@ class EditProfileState extends State<EditProfile> {
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = 'https://picsum.photos/250?image=9';
+      pathf = 'http://isow.acutrotech.com/assets/profilepic/default.png';
 
       return pathf;
     } else {

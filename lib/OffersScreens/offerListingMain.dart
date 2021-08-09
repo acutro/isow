@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:isow/Widgects/alertBox.dart';
 import 'package:toast/toast.dart';
 import 'offerListing.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +12,8 @@ class NewsListingMain extends StatefulWidget {
   final String path;
   final String title;
   final String catId;
-  NewsListingMain({Key key, this.path, this.title, this.catId})
+  final String sid;
+  NewsListingMain({Key key, this.path, this.title, this.catId, this.sid})
       : super(key: key);
   @override
   _MyApp createState() => _MyApp();
@@ -73,6 +75,7 @@ class _MyApp extends State<NewsListingMain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           widget.title,
           style: TextStyle(
@@ -91,21 +94,24 @@ class _MyApp extends State<NewsListingMain> {
         actions: [
           Icon(
             Icons.headset_mic,
-            color: Colors.white38,
+            color: Colors.white,
           ),
           SizedBox(
-            width: 5,
+            width: 10,
           ),
-          Icon(
-            Icons.logout,
-            color: Colors.white38,
+          GestureDetector(
+            onTap: () {
+              return showDialog(
+                  context: context,
+                  builder: (context) => BuildLogoutDialogclose(widget.sid));
+            },
+            child: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
           ),
           SizedBox(
-            width: 5,
-          ),
-          Icon(
-            Icons.menu,
-            color: Colors.white38,
+            width: 10,
           ),
         ],
       ),
@@ -132,11 +138,11 @@ class _MyApp extends State<NewsListingMain> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => RigDetailScreen(
-                                          title: widget.title,
-                                          rigList: listFacts,
-                                          id: index,
-                                        )),
+                                    builder: (context) => OfferDetailScreen(
+                                        title: widget.title,
+                                        rigList: listFacts,
+                                        id: index,
+                                        sid: widget.sid)),
                               );
                             },
                             child: Container(

@@ -4,10 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/Widgects/alertBox.dart';
 import 'dart:convert';
 import 'offerListingMain.dart';
 
 class OfferMainScreen extends StatefulWidget {
+  final String sid;
+
+  OfferMainScreen({Key key, @required this.sid}) : super(key: key);
   @override
   _OfferMainScreenState createState() => _OfferMainScreenState();
 }
@@ -58,6 +62,29 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
         backgroundColor: Color(0xff49A5FF),
         title: Text(' Offers'),
         centerTitle: true,
+        actions: [
+          Icon(
+            Icons.headset_mic,
+            color: Colors.white,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          GestureDetector(
+            onTap: () {
+              return showDialog(
+                  context: context,
+                  builder: (context) => BuildLogoutDialogclose(widget.sid));
+            },
+            child: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+        ],
       ),
       body: mapResponse == null
           ? Center(
@@ -136,6 +163,7 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
                                                   path:
                                                       'assets/images/plane.png',
                                                   title: "Travel Offers",
+                                                  sid: widget.sid,
                                                 )),
                                       );
                                     },

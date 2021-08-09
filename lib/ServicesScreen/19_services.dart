@@ -1,3 +1,5 @@
+import 'package:isow/Widgects/alertBox.dart';
+
 import 'service_list.dart';
 import 'package:flutter/material.dart';
 
@@ -38,9 +40,16 @@ class _ServicesState extends State<Services> {
           SizedBox(
             width: 10,
           ),
-          Icon(
-            Icons.logout,
-            color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              return showDialog(
+                  context: context,
+                  builder: (context) => BuildLogoutDialogclose(widget.sid));
+            },
+            child: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
           ),
           SizedBox(
             width: 10,

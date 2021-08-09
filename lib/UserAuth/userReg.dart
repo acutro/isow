@@ -1,13 +1,16 @@
 import 'dart:async';
 
 import 'package:dropdownfield/dropdownfield.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:toast/toast.dart';
-
+import 'dart:io' as file;
 import '2_signinpage.dart';
+
+import 'package:async/async.dart';
 
 class RegScreen extends StatefulWidget {
   @override
@@ -24,6 +27,34 @@ class SignupScreenState extends State<RegScreen> {
   Map regResponse;
   List<dynamic> roleList;
   List<dynamic> rigList;
+  file.File fileup;
+  String path;
+  String name;
+  String _fileName;
+  String _path;
+  Map<String, String> _paths;
+  String _extension;
+  bool _loadingPath = false;
+  bool _multiPick = false;
+  bool _hasValidMime = false;
+  FileType _pickingType;
+  void openGallery() async {
+    _paths = null;
+    var selectfile = await FilePicker.getFile(type: FileType.any);
+
+    if (!mounted) return;
+    setState(() {
+      _path = selectfile.path;
+      fileup = selectfile;
+      _loadingPath = false;
+      _fileName = _path != null
+          ? _path.split('/').last
+          : _paths != null
+              ? _paths.keys.toString()
+              : 'Choose File';
+    });
+  }
+
   Future fetchRig() async {
     http.Response response;
     response = await http
@@ -140,101 +171,7 @@ class SignupScreenState extends State<RegScreen> {
     return id;
   }
 
-  // Widget buildRigDownButton() {
-  //   return DropdownButton(
-  //     onTap: () {
-  //       FocusScope.of(context).requestFocus(new FocusNode());
-  //     },
-  //     iconEnabledColor: Colors.black45,
-  //     value: rigValue,
-  //     isExpanded: true,
-  //     underline: Container(
-  //       height: 0,
-  //       color: rigError ? Colors.red : Colors.white,
-  //     ),
-  //     hint: Padding(
-  //       padding: const EdgeInsets.only(left: 12),
-  //       child: Text(
-  //         "Select Rig",
-  //         style: TextStyle(
-  //           fontSize: 14,
-  //           color: Colors.black45,
-  //         ),
-  //       ),
-  //     ),
-  //     items: (rigList).map<DropdownMenuItem>((answer) {
-  //       return DropdownMenuItem(
-  //         value: int.parse(answer["id"]),
-  //         child: Container(
-  //           padding: EdgeInsets.only(left: 12),
-  //           child: Text(
-  //             answer["rigName"],
-  //             style: TextStyle(
-  //                 color: Colors.black87,
-  //                 fontSize: 12,
-  //                 fontFamily: "WorkSansLight"),
-  //           ),
-  //         ),
-  //       );
-  //     }).toList(),
-  //     onChanged: (value) {
-  //       setState(() {
-  //         rigError = false;
-  //         rigValue = value;
-
-  //         print("$rigValue id of compny");
-  //       });
-  //       // print(companyValue.runtimeType);
-  //     },
-  //   );
-  // }
-
-  // Widget buildRoleDropDownButton() {
-  //   return DropdownButton(
-  //     onTap: () {
-  //       FocusScope.of(context).requestFocus(new FocusNode());
-  //     },
-  //     iconEnabledColor: Colors.black45,
-  //     value: roleValue,
-  //     style: TextStyle(color: Colors.black87),
-  //     isExpanded: true,
-  //     underline: Container(
-  //       height: 0,
-  //       color: roleError ? Colors.red : Colors.white,
-  //     ),
-  //     hint: Padding(
-  //       padding: const EdgeInsets.only(left: 12),
-  //       child: Text(
-  //         "Select Role",
-  //         style: TextStyle(
-  //             color: Colors.black45, fontSize: 12, fontFamily: "WorkSansLight"),
-  //       ),
-  //     ),
-  //     items: (roleList).map<DropdownMenuItem>((answer) {
-  //       return DropdownMenuItem(
-  //         value: int.parse(answer["id"]),
-  //         child: Container(
-  //           padding: EdgeInsets.only(left: 12),
-  //           child: Text(
-  //             answer["userRoles"],
-  //             style: TextStyle(color: Colors.black87, fontSize: 14),
-  //           ),
-  //         ),
-  //       );
-  //     }).toList(),
-  //     onChanged: (value) {
-  //       setState(() {
-  //         roleError = false;
-  //         roleValue = value;
-
-  //         print("$roleValue id of compny");
-  //       });
-  //       // print(companyValue.runtimeType);
-  //     },
-  //   );
-  // }
-
-  Future userReg(
+  Future<void> userReg(
     String name,
     String userIdd,
     String email,
@@ -242,30 +179,54 @@ class SignupScreenState extends State<RegScreen> {
     String mob,
     String rigId,
     String roleId,
+    file.File images,
   ) async {
-    var data = {
-      'name': name,
-      'userId': userIdd,
-      'email': email,
-      'password': pass,
-      'cpassword': pass,
-      'roleId': roleId,
-      'rigId': rigId,
-      'work': 'Work',
-      'mob_num': mob,
-    };
-    http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/users/register',
-        body: (data));
+    var uri =
+        Uri.parse("http://isow.acutrotech.com/index.php/api/users/register");
+    print("image upload URL - $uri");
+// create multipart request
+    var request = new http.MultipartRequest("POST", uri);
+
+    if (images == null) {
+      request.fields['name'] = name;
+      request.fields['userId'] = userIdd;
+      request.fields['email'] = email;
+      request.fields['password'] = pass;
+      request.fields['cpassword'] = pass;
+      request.fields['roleId'] = roleId;
+      request.fields['rigId'] = rigId;
+      request.fields['work'] = 'work';
+      request.fields['mob_num'] = mob;
+    } else {
+      String fileName = images.path.split("/").last;
+      var stream =
+          new http.ByteStream(DelegatingStream.typed(images.openRead()));
+      var length = await images.length();
+      request.files.add(new http.MultipartFile('profile_pic', stream, length,
+          filename: fileName));
+      request.fields['name'] = name;
+      request.fields['userId'] = userIdd;
+      request.fields['email'] = email;
+      request.fields['password'] = pass;
+      request.fields['cpassword'] = pass;
+      request.fields['roleId'] = roleId;
+      request.fields['rigId'] = rigId;
+      request.fields['work'] = 'work';
+      request.fields['mob_num'] = mob;
+    }
+
+    var response = await request.send();
+    print("end ");
+    print("${response.statusCode} status code of service request");
+
     if (response.statusCode == 200) {
-      Toast.show("User added successfully", context,
+      Toast.show("Job added successfully", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
           backgroundColor: Colors.white);
+      Timer(Duration(seconds: 1), () => Navigator.pop(context));
     } else {
-      regResponse = jsonDecode(response.body);
       print(regResponse['message']);
       Toast.show(regResponse['message'], context,
           duration: Toast.LENGTH_SHORT,
@@ -275,6 +236,47 @@ class SignupScreenState extends State<RegScreen> {
       Timer(Duration(seconds: 1), () => Navigator.pop(context));
     }
   }
+  // Future userReg(
+  //   String name,
+  //   String userIdd,
+  //   String email,
+  //   String pass,
+  //   String mob,
+  //   String rigId,
+  //   String roleId,
+  // ) async {
+  //   var data = {
+  //     'name': name,
+  //     'userId': userIdd,
+  //     'email': email,
+  //     'password': pass,
+  //     'cpassword': pass,
+  //     'roleId': roleId,
+  //     'rigId': rigId,
+  //     'work': 'Work',
+  //     'mob_num': mob,
+  //   };
+  //   http.Response response;
+  //   response = await http.post(
+  //       'http://isow.acutrotech.com/index.php/api/users/register',
+  //       body: (data));
+  //   if (response.statusCode == 200) {
+  //     Toast.show("User added successfully", context,
+  //         duration: Toast.LENGTH_SHORT,
+  //         gravity: Toast.BOTTOM,
+  //         textColor: Colors.green[600],
+  //         backgroundColor: Colors.white);
+  //   } else {
+  //     regResponse = jsonDecode(response.body);
+  //     print(regResponse['message']);
+  //     Toast.show(regResponse['message'], context,
+  //         duration: Toast.LENGTH_SHORT,
+  //         gravity: Toast.BOTTOM,
+  //         textColor: Colors.red,
+  //         backgroundColor: Colors.white);
+  //     Timer(Duration(seconds: 1), () => Navigator.pop(context));
+  //   }
+  // }
 
   final _formKey = GlobalKey<FormState>();
 
@@ -677,6 +679,45 @@ class SignupScreenState extends State<RegScreen> {
                             ),
                           ),
                           SizedBox(
+                            height: 16,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                        color: Colors.transparent,
+                                        border: Border.all(
+                                            width: 1, color: Colors.black45)),
+                                    margin: new EdgeInsets.symmetric(
+                                        horizontal: 20.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: _fileName == null
+                                              ? Text("Choose File")
+                                              : Text(_fileName.length > 20
+                                                  ? _fileName
+                                                          .toString()
+                                                          .substring(0, 20) +
+                                                      "..."
+                                                  : _fileName.toString()),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            openGallery();
+                                          },
+                                          child: Text("Select"),
+                                        )
+                                      ],
+                                    )),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
                             height: 50,
                           ),
                         ],
@@ -688,17 +729,17 @@ class SignupScreenState extends State<RegScreen> {
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             userReg(
-                              _nameController.text,
-                              _useridController.text,
-                              _emailController.text,
-                              _passwordController.text,
-                              _mobController.text,
-                              rigStatusFn(rigName),
-                              roleStatusFn(roleName),
-
-                              // rigValue.toString(),
-                              // roleValue.toString()
-                            );
+                                _nameController.text,
+                                _useridController.text,
+                                _emailController.text,
+                                _passwordController.text,
+                                _mobController.text,
+                                rigStatusFn(rigName),
+                                roleStatusFn(roleName),
+                                fileup
+                                // rigValue.toString(),
+                                // roleValue.toString()
+                                );
 
                             print("Successful");
                           } else {

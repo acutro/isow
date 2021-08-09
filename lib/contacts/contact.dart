@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/Widgects/alertBox.dart';
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'contact_details.dart';
@@ -80,6 +81,7 @@ class _MyApp extends State<Contact> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           "Contacts",
           style: TextStyle(
@@ -103,9 +105,16 @@ class _MyApp extends State<Contact> {
           SizedBox(
             width: 10,
           ),
-          Icon(
-            Icons.logout,
-            color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              return showDialog(
+                  context: context,
+                  builder: (context) => BuildLogoutDialogclose(widget.sid));
+            },
+            child: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
           ),
           SizedBox(
             width: 10,

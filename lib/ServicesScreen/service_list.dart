@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:isow/ChatScreens/chatScreenMain.dart';
+import 'package:isow/Widgects/alertBox.dart';
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
@@ -105,9 +106,16 @@ class _MyApp extends State<ServiceScreen> {
             SizedBox(
               width: 10,
             ),
-            Icon(
-              Icons.logout,
-              color: Colors.white,
+            GestureDetector(
+              onTap: () {
+                return showDialog(
+                    context: context,
+                    builder: (context) => BuildLogoutDialogclose(widget.sid));
+              },
+              child: Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
             ),
             SizedBox(
               width: 10,
@@ -178,7 +186,8 @@ class _MyApp extends State<ServiceScreen> {
                           child: SingleChildScrollView(
                             child: listFacts == null
                                 ? Center(
-                                    heightFactor: 10, child: Text("Not found"))
+                                    heightFactor: 10,
+                                    child: Text("No Services found"))
                                 : ListView.builder(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,

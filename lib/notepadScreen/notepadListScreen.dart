@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/Widgects/alertBox.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '17_notepad.dart';
@@ -184,9 +185,16 @@ class _MyApp extends State<NotepadList> {
           SizedBox(
             width: 10,
           ),
-          Icon(
-            Icons.logout,
-            color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              return showDialog(
+                  context: context,
+                  builder: (context) => BuildLogoutDialogclose(sid));
+            },
+            child: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
           ),
           SizedBox(
             width: 10,

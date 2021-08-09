@@ -40,8 +40,8 @@ class _ContactDetail extends State<ContactDetail> {
       onWillPop: () => Future.value(true),
       child: Scaffold(
         appBar: AppBar(
+          // centerTitle: true,
           title: Text(widget.name),
-          actions: [],
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);

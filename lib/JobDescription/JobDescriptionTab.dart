@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:isow/Widgects/alertBox.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'issuedAuthority.dart';
 import 'jobDescriptionList.dart';
@@ -66,9 +67,16 @@ class _JobDescriptionTabState extends State<JobDescriptionTab> {
             SizedBox(
               width: 10,
             ),
-            Icon(
-              Icons.logout,
-              color: Colors.white,
+            GestureDetector(
+              onTap: () {
+                return showDialog(
+                    context: context,
+                    builder: (context) => BuildLogoutDialogclose(sid));
+              },
+              child: Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
             ),
             SizedBox(
               width: 10,

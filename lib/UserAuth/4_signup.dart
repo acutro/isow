@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'dart:io' as file;
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:convert';
@@ -7,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:toast/toast.dart';
 
 import '2_signinpage.dart';
+
+import 'package:async/async.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -23,6 +26,34 @@ class SignupScreenState extends State<SignupScreen> {
   Map regResponse;
   List<dynamic> roleList;
   List<dynamic> rigList;
+  file.File fileup;
+  String path;
+  String name;
+  String _fileName;
+  String _path;
+  Map<String, String> _paths;
+  String _extension;
+  bool _loadingPath = false;
+  bool _multiPick = false;
+  bool _hasValidMime = false;
+  FileType _pickingType;
+  void openGallery() async {
+    _paths = null;
+    var selectfile = await FilePicker.getFile(type: FileType.any);
+
+    if (!mounted) return;
+    setState(() {
+      _path = selectfile.path;
+      fileup = selectfile;
+      _loadingPath = false;
+      _fileName = _path != null
+          ? _path.split('/').last
+          : _paths != null
+              ? _paths.keys.toString()
+              : 'Choose File';
+    });
+  }
+
   Future fetchRig() async {
     http.Response response;
     response = await http
@@ -145,7 +176,7 @@ class SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Future userReg(
+  Future<void> userReg(
     String name,
     String userIdd,
     String email,
@@ -153,24 +184,48 @@ class SignupScreenState extends State<SignupScreen> {
     String mob,
     String rigId,
     String roleId,
+    file.File images,
   ) async {
-    var data = {
-      'name': name,
-      'userId': userIdd,
-      'email': email,
-      'password': pass,
-      'cpassword': pass,
-      'roleId': roleId,
-      'rigId': rigId,
-      'work': 'Work',
-      'mob_num': mob,
-    };
-    http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/users/register',
-        body: (data));
+    var uri =
+        Uri.parse("http://isow.acutrotech.com/index.php/api/users/register");
+    print("image upload URL - $uri");
+// create multipart request
+    var request = new http.MultipartRequest("POST", uri);
+
+    if (images == null) {
+      request.fields['name'] = name;
+      request.fields['userId'] = userIdd;
+      request.fields['email'] = email;
+      request.fields['password'] = pass;
+      request.fields['cpassword'] = pass;
+      request.fields['roleId'] = roleId;
+      request.fields['rigId'] = rigId;
+      request.fields['work'] = 'work';
+      request.fields['mob_num'] = mob;
+    } else {
+      String fileName = images.path.split("/").last;
+      var stream =
+          new http.ByteStream(DelegatingStream.typed(images.openRead()));
+      var length = await images.length();
+      request.files.add(new http.MultipartFile('profile_pic', stream, length,
+          filename: fileName));
+      request.fields['name'] = name;
+      request.fields['userId'] = userIdd;
+      request.fields['email'] = email;
+      request.fields['password'] = pass;
+      request.fields['cpassword'] = pass;
+      request.fields['roleId'] = roleId;
+      request.fields['rigId'] = rigId;
+      request.fields['work'] = 'work';
+      request.fields['mob_num'] = mob;
+    }
+
+    var response = await request.send();
+    print("end ");
+    print("${response.statusCode} status code of service request");
+
     if (response.statusCode == 200) {
-      Toast.show("User added successfully", context,
+      Toast.show("Job added successfully", context,
           duration: Toast.LENGTH_SHORT,
           gravity: Toast.BOTTOM,
           textColor: Colors.green[600],
@@ -182,7 +237,6 @@ class SignupScreenState extends State<SignupScreen> {
                 MaterialPageRoute(builder: (context) => SigninScreen()),
               ));
     } else {
-      regResponse = jsonDecode(response.body);
       print(regResponse['message']);
       Toast.show(regResponse['message'], context,
           duration: Toast.LENGTH_SHORT,
@@ -191,6 +245,53 @@ class SignupScreenState extends State<SignupScreen> {
           backgroundColor: Colors.white);
     }
   }
+
+  // Future userReg(
+  //   String name,
+  //   String userIdd,
+  //   String email,
+  //   String pass,
+  //   String mob,
+  //   String rigId,
+  //   String roleId,
+  // ) async {
+  //   var data = {
+  //     'name': name,
+  //     'userId': userIdd,
+  //     'email': email,
+  //     'password': pass,
+  //     'cpassword': pass,
+  //     'roleId': roleId,
+  //     'rigId': rigId,
+  //     'work': 'Work',
+  //     'mob_num': mob,
+  //   };
+  //   http.Response response;
+  //   response = await http.post(
+  //       'http://isow.acutrotech.com/index.php/api/users/register',
+  //       body: (data));
+  //   if (response.statusCode == 200) {
+  //     Toast.show("User added successfully", context,
+  //         duration: Toast.LENGTH_SHORT,
+  //         gravity: Toast.BOTTOM,
+  //         textColor: Colors.green[600],
+  //         backgroundColor: Colors.white);
+  //     Timer(
+  //         Duration(seconds: 1),
+  //         () => Navigator.pushReplacement(
+  //               context,
+  //               MaterialPageRoute(builder: (context) => SigninScreen()),
+  //             ));
+  //   } else {
+  //     regResponse = jsonDecode(response.body);
+  //     print(regResponse['message']);
+  //     Toast.show(regResponse['message'], context,
+  //         duration: Toast.LENGTH_SHORT,
+  //         gravity: Toast.BOTTOM,
+  //         textColor: Colors.red,
+  //         backgroundColor: Colors.white);
+  //   }
+  // }
 
   final _formKey = GlobalKey<FormState>();
 
@@ -595,7 +696,61 @@ class SignupScreenState extends State<SignupScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05,
+                            height: MediaQuery.of(context).size.height * 0.016,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                        color: Colors.transparent,
+                                        border: Border.all(
+                                            width: 1, color: Colors.white60)),
+                                    margin: new EdgeInsets.symmetric(
+                                        horizontal: 20.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: _fileName == null
+                                              ? Text(
+                                                  "Choose File",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 12,
+                                                      fontFamily:
+                                                          "WorkSansLight"),
+                                                )
+                                              : Text(
+                                                  _fileName.length > 20
+                                                      ? _fileName
+                                                              .toString()
+                                                              .substring(
+                                                                  0, 20) +
+                                                          "..."
+                                                      : _fileName.toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 12,
+                                                      fontFamily:
+                                                          "WorkSansLight"),
+                                                ),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            openGallery();
+                                          },
+                                          child: Text("Select"),
+                                        )
+                                      ],
+                                    )),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.03,
                           ),
                         ],
                       ),
@@ -612,7 +767,8 @@ class SignupScreenState extends State<SignupScreen> {
                                 _passwordController.text,
                                 _mobController.text,
                                 rigValue.toString(),
-                                roleValue.toString());
+                                roleValue.toString(),
+                                fileup);
                             AlertDialog(
                               title: Text("Successful"),
                             );

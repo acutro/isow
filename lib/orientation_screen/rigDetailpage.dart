@@ -64,33 +64,6 @@ class _RigDetailScreenState extends State<RigDetailScreen> {
               color: Colors.white,
             ),
           ),
-          actions: [
-            GestureDetector(
-              onTap: () {
-                pageController.animateToPage(pageChanged++,
-                    duration: Duration(milliseconds: 200),
-                    curve: Curves.linear);
-              },
-              child: Icon(
-                Icons.headset_mic,
-                color: Colors.white38,
-              ),
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Icon(
-              Icons.logout,
-              color: Colors.white38,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Icon(
-              Icons.menu,
-              color: Colors.white38,
-            ),
-          ],
         ),
         backgroundColor: Colors.white,
         body: Stack(children: [

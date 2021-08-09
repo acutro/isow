@@ -45,21 +45,10 @@ class OrientationScreenState extends State<OrientationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Orientation',
-          ),
+        centerTitle: true,
+        title: Text(
+          'Orientation',
         ),
-        actions: [
-          Icon(Icons.headset_mic),
-          SizedBox(
-            width: 10,
-          ),
-          Icon(Icons.logout),
-          SizedBox(
-            width: 10,
-          )
-        ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(

@@ -2,6 +2,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:isow/Widgects/alertBox.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'dart:convert';
@@ -142,10 +143,20 @@ class _RecivedWarningState extends State<RecivedWarning> {
           SizedBox(
             width: 10,
           ),
-          Icon(Icons.logout),
+          GestureDetector(
+            onTap: () {
+              return showDialog(
+                  context: context,
+                  builder: (context) => BuildLogoutDialogclose(sid));
+            },
+            child: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+          ),
           SizedBox(
             width: 10,
-          )
+          ),
         ],
         flexibleSpace: Container(
           decoration: BoxDecoration(

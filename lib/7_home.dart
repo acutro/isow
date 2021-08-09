@@ -241,8 +241,7 @@ class HomeScreenState extends State<HomeScreen> {
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf =
-          'https://www.clipartkey.com/mpngs/m/107-1076987_user-staff-man-profile-person-icon-circle-png.png';
+      pathf = 'http://isow.acutrotech.com/assets/profilepic/default.png';
 
       return pathf;
     } else {

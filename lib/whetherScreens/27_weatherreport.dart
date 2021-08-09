@@ -73,10 +73,9 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Weather Report',
-          ),
+        centerTitle: true,
+        title: Text(
+          'Weather Report',
         ),
         backgroundColor: Colors.blue,
       ),
@@ -182,11 +181,12 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
                       Row(
                         children: <Widget>[
                           Expanded(
+                            flex: 3,
                             child: Column(
                               children: <Widget>[
                                 Container(
                                     padding: EdgeInsets.fromLTRB(
-                                        30.0, 30.0, 0.0, 0.0),
+                                        20.0, 20.0, 0.0, 0.0),
                                     child: Icon(
                                       Icons.wb_sunny_rounded,
                                       color: Colors.white,
@@ -196,6 +196,7 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
                             ),
                           ),
                           Expanded(
+                            flex: 7,
                             child: Column(
                               children: <Widget>[
                                 Row(
@@ -209,7 +210,7 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 24.0),
+                                            fontSize: 18.0),
                                       ),
                                     )
                                   ],

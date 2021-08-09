@@ -159,6 +159,7 @@ class _EmergencyState extends State<Emergency> {
   @override
   void dispose() {
     super.dispose();
+    controller.disposeTimer();
   }
 
   void onEnd(String txt) {

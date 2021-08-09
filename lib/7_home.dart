@@ -138,11 +138,7 @@ class HomeScreenState extends State<HomeScreen> {
       RemoteNotification notification = message.notification;
       AndroidNotification android = message.notification?.android;
       if (notification != null && android != null) {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => ChatListScreen()),
-        // );
-
+        //  navigation(notification.title);
       }
     });
 
@@ -156,6 +152,33 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Timer _clockTimer;
+  // void navigation(String title) {
+  //   if (title == 'Job Issue' || title == 'Job Handover') {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => JobDescriptionTab()),
+  //     );
+  //   } else if (title == 'Rig Alert') {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => RecivedAlert()),
+  //     );
+  //   } else if (title == 'Warning Letter') {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => RecivedWarning(
+  //                 userid: sid,
+  //                 posid: posiid,
+  //               )),
+  //     );
+  //   } else if (title == 'Feedback') {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => FeedbackList()),
+  //     );
+  //   }
+  // }
 
   @override
   void dispose() {

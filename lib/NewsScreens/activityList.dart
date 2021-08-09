@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/Widgects/alertBox.dart';
 import 'dart:convert';
 import 'newsListingMain.dart';
 
 class ActivityListing extends StatefulWidget {
   final String cat;
+  final String sid;
 
-  ActivityListing({
-    Key key,
-    @required this.cat,
-  }) : super(key: key);
+  ActivityListing({Key key, @required this.cat, this.sid}) : super(key: key);
   @override
   _MyApp createState() => _MyApp();
 }
@@ -83,21 +82,24 @@ class _MyApp extends State<ActivityListing> {
         actions: [
           Icon(
             Icons.headset_mic,
-            color: Colors.white38,
+            color: Colors.white,
           ),
           SizedBox(
-            width: 5,
+            width: 10,
           ),
-          Icon(
-            Icons.logout,
-            color: Colors.white38,
+          GestureDetector(
+            onTap: () {
+              return showDialog(
+                  context: context,
+                  builder: (context) => BuildLogoutDialogclose(widget.sid));
+            },
+            child: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
           ),
           SizedBox(
-            width: 5,
-          ),
-          Icon(
-            Icons.menu,
-            color: Colors.white38,
+            width: 10,
           ),
         ],
       ),

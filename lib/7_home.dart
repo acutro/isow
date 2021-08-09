@@ -1044,7 +1044,8 @@ class HomeScreenState extends State<HomeScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => OfferMainScreen()),
+                                    builder: (context) =>
+                                        OfferMainScreen(sid: sid)),
                               );
                             },
                             child: Column(
@@ -1091,7 +1092,10 @@ class HomeScreenState extends State<HomeScreen> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => News()),
+                                MaterialPageRoute(
+                                    builder: (context) => News(
+                                          sid: sid,
+                                        )),
                               );
                             },
                             child: Column(

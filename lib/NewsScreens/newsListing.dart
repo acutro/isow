@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:isow/Widgects/alertBox.dart';
 import 'newsListingMain.dart';
 
 class NewsListing extends StatefulWidget {
   final List<dynamic> newsList;
+  final String sid;
 
-  NewsListing({
-    Key key,
-    @required this.newsList,
-  }) : super(key: key);
+  NewsListing({Key key, @required this.newsList, this.sid}) : super(key: key);
   @override
   _MyApp createState() => _MyApp();
 }
@@ -53,21 +52,24 @@ class _MyApp extends State<NewsListing> {
         actions: [
           Icon(
             Icons.headset_mic,
-            color: Colors.white38,
+            color: Colors.white,
           ),
           SizedBox(
-            width: 5,
+            width: 10,
           ),
-          Icon(
-            Icons.logout,
-            color: Colors.white38,
+          GestureDetector(
+            onTap: () {
+              return showDialog(
+                  context: context,
+                  builder: (context) => BuildLogoutDialogclose(widget.sid));
+            },
+            child: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
           ),
           SizedBox(
-            width: 5,
-          ),
-          Icon(
-            Icons.menu,
-            color: Colors.white38,
+            width: 10,
           ),
         ],
       ),

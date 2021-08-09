@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:isow/Widgects/alertBox.dart';
 import 'package:isow/orientation_screen/13_OrientationRigs.dart';
 import 'newsListingDetail.dart';
 
@@ -9,8 +10,15 @@ class NewsScreen extends StatefulWidget {
   final int list;
   final int id;
   final String title;
+  final String sid;
 
-  NewsScreen({Key key, @required this.rigList, this.list, this.id, this.title})
+  NewsScreen(
+      {Key key,
+      @required this.rigList,
+      this.list,
+      this.id,
+      this.title,
+      this.sid})
       : super(key: key);
   @override
   _RigDetailScreenState createState() => _RigDetailScreenState();
@@ -58,21 +66,24 @@ class _RigDetailScreenState extends State<NewsScreen> {
           actions: [
             Icon(
               Icons.headset_mic,
-              color: Colors.white38,
+              color: Colors.white,
             ),
             SizedBox(
-              width: 5,
+              width: 10,
             ),
-            Icon(
-              Icons.logout,
-              color: Colors.white38,
+            GestureDetector(
+              onTap: () {
+                return showDialog(
+                    context: context,
+                    builder: (context) => BuildLogoutDialogclose(widget.sid));
+              },
+              child: Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
             ),
             SizedBox(
-              width: 5,
-            ),
-            Icon(
-              Icons.menu,
-              color: Colors.white38,
+              width: 10,
             ),
           ],
         ),

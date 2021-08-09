@@ -6,6 +6,9 @@ import 'dart:convert';
 import 'activityList.dart';
 
 class News extends StatefulWidget {
+  final String sid;
+
+  News({Key key, @required this.sid}) : super(key: key);
   @override
   _NewsState createState() => _NewsState();
 }
@@ -210,8 +213,7 @@ class _NewsState extends State<News> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => NewsListing(
-                                    newsList: listFacts,
-                                  )),
+                                  newsList: listFacts, sid: widget.sid)),
                         ),
                       },
                       shape: RoundedRectangleBorder(
@@ -277,8 +279,8 @@ class _NewsState extends State<News> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            ActivityListing(cat: '1')));
+                                        builder: (context) => ActivityListing(
+                                            cat: '1', sid: widget.sid)));
                               },
                               child: Stack(
                                 children: <Widget>[
@@ -312,8 +314,7 @@ class _NewsState extends State<News> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ActivityListing(
-                                              cat: '2',
-                                            )));
+                                            cat: '2', sid: widget.sid)));
                               },
                               child: Stack(
                                 children: <Widget>[
@@ -347,8 +348,7 @@ class _NewsState extends State<News> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ActivityListing(
-                                              cat: '3',
-                                            )));
+                                            cat: '3', sid: widget.sid)));
                               },
                               child: Stack(
                                 children: <Widget>[
@@ -386,9 +386,8 @@ class _NewsState extends State<News> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ActivityListing(
-                                    cat: '0',
-                                  )),
+                              builder: (context) =>
+                                  ActivityListing(cat: '0', sid: widget.sid)),
                         ),
                       },
                       shape: RoundedRectangleBorder(

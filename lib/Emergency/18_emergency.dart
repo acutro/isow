@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'package:telephony/telephony.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:flutter/services.dart';
 
 class Emergency extends StatefulWidget {
   @override
@@ -182,11 +183,12 @@ class _EmergencyState extends State<Emergency> {
               // type: MaterialType.card,
               child: new Container(
                   width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.9,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SizedBox(
-                        height: 200,
+                        height: MediaQuery.of(context).size.height * 0.2,
                       ),
                       Stack(
                         alignment: Alignment.center,
@@ -548,13 +550,18 @@ class _EmergencyState extends State<Emergency> {
                       children: [
                         GestureDetector(
                           onDoubleTap: () {
+                            SystemChannels.textInput
+                                .invokeMethod('TextInput.hide');
                             controller = CountdownTimerController(
                                 endTime: DateTime.now().millisecondsSinceEpoch +
                                     1000 * 10,
                                 onEnd: () {
                                   onEnd(_requirmentController.text);
                                 });
-                            showDialo(_requirmentController.text);
+                            Timer(
+                              Duration(seconds: 1),
+                              () => showDialo(_requirmentController.text),
+                            );
                           },
                           child: Container(
                               alignment: Alignment.center,

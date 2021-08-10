@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:isow/Widgects/alertBox.dart';
 import 'dart:convert';
 import 'page8rigalert.dart';
 import 'package:toast/toast.dart';
@@ -169,7 +170,17 @@ class _RecivedWarningState extends State<RecivedAlert> {
           SizedBox(
             width: 10,
           ),
-          Icon(Icons.logout),
+          GestureDetector(
+            onTap: () {
+              return showDialog(
+                  context: context,
+                  builder: (context) => BuildLogoutDialogclose(sid));
+            },
+            child: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+          ),
           SizedBox(
             width: 10,
           )

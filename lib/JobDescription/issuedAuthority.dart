@@ -326,7 +326,7 @@ showDialogFunc(context, id, by, to, byName, duration, description) {
                               ),
                               title: Text(
                                 "By " +
-                                    '${byName.toUpperCase()}${byName.substring(1)}',
+                                    '${byName[0].toUpperCase()}${byName.substring(1)}',
                                 // title,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, height: 1.5),

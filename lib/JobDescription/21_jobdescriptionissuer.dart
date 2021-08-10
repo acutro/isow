@@ -48,10 +48,9 @@ class _JobdescriptionState extends State<Jobdescription> {
 
   Future fetchUsers(
     String id,
+    String uid,
   ) async {
-    var data = {
-      'roleId': id,
-    };
+    var data = {'roleId': id, 'id': uid};
     http.Response response;
     response = await http.post(
         'http://isow.acutrotech.com/index.php/api/UserRoles/usersList',
@@ -207,7 +206,7 @@ class _JobdescriptionState extends State<Jobdescription> {
         setState(() {
           catogoryName = value;
           catogoryId = catStatusFn(value);
-          fetchUsers(catogoryId);
+          fetchUsers(catogoryId, widget.userId);
         });
       },
       strict: true,

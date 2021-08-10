@@ -68,16 +68,19 @@ class HomeScreenState extends State<HomeScreen> {
     var data = {
       'toId': id,
     };
+
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Users/countalert',
-        body: (data));
-    if (response.statusCode == 200) {
-      setState(() {
-        statusMap = jsonDecode(response.body);
-        listFacts = statusMap['data'];
-      });
-      print('Success');
+    if (id != null) {
+      response = await http.post(
+          'http://isow.acutrotech.com/index.php/api/Users/countalert',
+          body: (data));
+      if (response.statusCode == 200) {
+        setState(() {
+          statusMap = jsonDecode(response.body);
+          listFacts = statusMap['data'];
+        });
+        print(listFacts);
+      }
     }
   }
 
@@ -95,8 +98,7 @@ class HomeScreenState extends State<HomeScreen> {
     String pos = sharedPreferences.getString('position');
     setState(() {
       sid = id;
-      _clockTimer =
-          Timer.periodic(Duration(seconds: 6), (Timer t) => fetchStatus(sid));
+
       posiid = pos;
       note = fetchNote(id);
       sid == '4'
@@ -138,7 +140,7 @@ class HomeScreenState extends State<HomeScreen> {
       RemoteNotification notification = message.notification;
       AndroidNotification android = message.notification?.android;
       if (notification != null && android != null) {
-        //  navigation(notification.title);
+        navigation(notification.title);
       }
     });
 
@@ -149,36 +151,38 @@ class HomeScreenState extends State<HomeScreen> {
         enable: true,
         header: 'Price in AED',
         textStyle: TextStyle(color: Colors.white));
+    _clockTimer =
+        Timer.periodic(Duration(seconds: 8), (Timer t) => fetchStatus(sid));
   }
 
   Timer _clockTimer;
-  // void navigation(String title) {
-  //   if (title == 'Job Issue' || title == 'Job Handover') {
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => JobDescriptionTab()),
-  //     );
-  //   } else if (title == 'Rig Alert') {
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => RecivedAlert()),
-  //     );
-  //   } else if (title == 'Warning Letter') {
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //           builder: (context) => RecivedWarning(
-  //                 userid: sid,
-  //                 posid: posiid,
-  //               )),
-  //     );
-  //   } else if (title == 'Feedback') {
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => FeedbackList()),
-  //     );
-  //   }
-  // }
+  void navigation(String title) {
+    if (title == 'Job Issue' || title == 'Job Handover') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => JobDescriptionTab()),
+      );
+    } else if (title == 'Rig Alert') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RecivedAlert()),
+      );
+    } else if (title == 'Warning Letter') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => RecivedWarning(
+                  userid: sid,
+                  posid: posiid,
+                )),
+      );
+    } else if (title == 'Feedback') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => FeedbackList()),
+      );
+    }
+  }
 
   @override
   void dispose() {

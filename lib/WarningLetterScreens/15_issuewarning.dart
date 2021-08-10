@@ -53,12 +53,8 @@ class _WarningletterState extends State<Warningletter> {
     }
   }
 
-  Future fetchUsers(
-    String id,
-  ) async {
-    var data = {
-      'roleId': id,
-    };
+  Future fetchUsers(String id, String uid) async {
+    var data = {'roleId': id, 'id': uid};
     http.Response response;
     response = await http.post(
         'http://isow.acutrotech.com/index.php/api/UserRoles/usersList',
@@ -191,7 +187,7 @@ class _WarningletterState extends State<Warningletter> {
         setState(() {
           catogoryName = value;
           catogoryId = catStatusFn(value);
-          fetchUsers(catogoryId);
+          fetchUsers(catogoryId, sid);
         });
       },
       strict: true,

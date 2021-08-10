@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:isow/Widgects/alertBox.dart';
 
 import 'alertList.dart';
 import 'package:flutter/material.dart';
@@ -216,9 +217,17 @@ class _RigAlert2State extends State<RigAlert2> {
           SizedBox(
             width: 10,
           ),
-
-          Icon(Icons.logout),
-          // Icon(Icons.more_vert),
+          GestureDetector(
+            onTap: () {
+              return showDialog(
+                  context: context,
+                  builder: (context) => BuildLogoutDialogclose(widget.userId));
+            },
+            child: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+          ),
           SizedBox(
             width: 10,
           )

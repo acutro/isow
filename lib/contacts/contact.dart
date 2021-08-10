@@ -26,10 +26,8 @@ class _MyApp extends State<Contact> {
     for (int i = 0; i < 10; i + 3) {}
   }
 
-  Future fetchData(String namee) async {
-    var data = {
-      'name': namee,
-    };
+  Future fetchData(String namee, String uid) async {
+    var data = {'name': namee, 'id': uid};
     http.Response response;
     response = await http.post(
         'http://isow.acutrotech.com/index.php/api/SearchList/searchUsers',
@@ -54,13 +52,13 @@ class _MyApp extends State<Contact> {
 
   Future<Null> refreshList(String namee) async {
     await Future.delayed(Duration(seconds: 2));
-    fetchData(namee);
+    fetchData(namee, widget.sid);
   }
 
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = 'https://picsum.photos/250?image=9';
+      pathf = 'http://isow.acutrotech.com/assets/profilepic/default.png';
 
       return pathf;
     } else {
@@ -71,7 +69,7 @@ class _MyApp extends State<Contact> {
 
   @override
   void initState() {
-    fetchData("");
+    fetchData("", widget.sid);
 
     super.initState();
   }
@@ -147,7 +145,7 @@ class _MyApp extends State<Contact> {
                       margin: new EdgeInsets.symmetric(horizontal: 20.0),
                       child: TextFormField(
                         onChanged: (value) {
-                          fetchData(controller.text);
+                          fetchData(controller.text, widget.sid);
                         },
                         style: TextStyle(
                           color: Colors.grey[600],
@@ -159,7 +157,7 @@ class _MyApp extends State<Contact> {
                                   icon: new Icon(Icons.cancel),
                                   onPressed: () {
                                     controller.clear();
-                                    fetchData(controller.text);
+                                    fetchData(controller.text, widget.sid);
                                     // providerData.getContacts();
                                     // onSearchTextChanged('');
                                   },

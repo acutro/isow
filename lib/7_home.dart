@@ -143,6 +143,13 @@ class HomeScreenState extends State<HomeScreen> {
         navigation(notification.title);
       }
     });
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage message) {
+      if (message != null) {
+        navigation(message.notification.title);
+      }
+    });
 
     getValidation();
     fetchFlu();

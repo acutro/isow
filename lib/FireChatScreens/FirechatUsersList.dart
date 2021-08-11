@@ -247,7 +247,8 @@ class _FireChatListScreenState extends State<FireChatListScreen> {
                                                       ),
                                                       trailing: Text(
                                                           listFacts[index]
-                                                              ["empId"])),
+                                                                  ["empId"]
+                                                              .toString())),
                                                   Divider(),
                                                 ],
                                               ),

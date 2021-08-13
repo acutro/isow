@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'dart:convert';
 import 'package:toast/toast.dart';
 
@@ -20,7 +21,7 @@ class _MyApp extends State<FaqScreen> {
   Future faqFetch() async {
     http.Response response;
     response = await http.get(
-      'http://isow.acutrotech.com/index.php/api/FAQ/list',
+      ApiUtils.faqApi,
     );
     if (response.statusCode == 200) {
       setState(() {

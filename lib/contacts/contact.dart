@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/Widgects/alertBox.dart';
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'contact_details.dart';
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../ChatScreens/chatScreenMain.dart';
 
 class Contact extends StatefulWidget {
   final String sid;
@@ -29,9 +29,7 @@ class _MyApp extends State<Contact> {
   Future fetchData(String namee, String uid) async {
     var data = {'name': namee, 'id': uid};
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/SearchList/searchUsers',
-        body: (data));
+    response = await http.post(ApiUtils.contactApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
@@ -55,14 +53,19 @@ class _MyApp extends State<Contact> {
     fetchData(namee, widget.sid);
   }
 
+  _textMe(String number) async {
+    String uri = 'sms:' + number;
+    await launch(uri);
+  }
+
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = 'http://isow.acutrotech.com/assets/profilepic/default.png';
+      pathf = ApiUtils.imageUrl + 'profilepic/default.png';
 
       return pathf;
     } else {
-      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
+      pathf = ApiUtils.imageUrl + 'profilepic/' + path;
       return pathf;
     }
   }
@@ -256,19 +259,10 @@ class _MyApp extends State<Contact> {
                                                         children: [
                                                           GestureDetector(
                                                             onTap: () {
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                    builder: (context) => ChatDetailScreen(
-                                                                        name: listFacts[index]["name"],
-                                                                        path: getpath(
-                                                                          listFacts[index]
-                                                                              [
-                                                                              "profile_pic"],
-                                                                        ),
-                                                                        id: listFacts[index]['id'],
-                                                                        toid: widget.sid),
-                                                                  ));
+                                                              _textMe(
+                                                                listFacts[index]
+                                                                    ["mob_num"],
+                                                              );
                                                             },
                                                             child: Icon(
                                                               Icons.chat_sharp,

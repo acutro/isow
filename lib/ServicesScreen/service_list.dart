@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:isow/ChatScreens/chatScreenMain.dart';
+import 'package:isow/FireChatScreens/FirechatScreen.dart';
 import 'package:isow/Widgects/alertBox.dart';
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,9 +9,10 @@ import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ServiceScreen extends StatefulWidget {
+  final String serviceCatId;
   final String sid;
-  final String fromid;
-  ServiceScreen({Key key, @required this.sid, this.fromid}) : super(key: key);
+  ServiceScreen({Key key, @required this.serviceCatId, this.sid})
+      : super(key: key);
   @override
   _MyApp createState() => _MyApp();
 }
@@ -24,7 +26,7 @@ class _MyApp extends State<ServiceScreen> {
   bool jobError = false;
   Future fetchData(String namee) async {
     var data = {
-      'roleId': widget.sid,
+      'roleId': widget.serviceCatId,
     };
     http.Response response;
     response = await http.post(
@@ -51,6 +53,19 @@ class _MyApp extends State<ServiceScreen> {
   Future<Null> refreshList(String namee) async {
     await Future.delayed(Duration(seconds: 2));
     fetchData(namee);
+  }
+
+  getChatid(String sFromId, String sToId) {
+    int fromId = int.parse(sFromId);
+    String chatId;
+    int toId = int.parse(sToId);
+    if (fromId < toId) {
+      chatId = toId.toString() + fromId.toString();
+      return chatId;
+    } else {
+      chatId = fromId.toString() + toId.toString();
+      return chatId;
+    }
   }
 
   getpath(String path) {
@@ -110,7 +125,8 @@ class _MyApp extends State<ServiceScreen> {
               onTap: () {
                 return showDialog(
                     context: context,
-                    builder: (context) => BuildLogoutDialogclose(widget.sid));
+                    builder: (context) =>
+                        BuildLogoutDialogclose(widget.serviceCatId));
               },
               child: Icon(
                 Icons.logout,
@@ -242,24 +258,18 @@ class _MyApp extends State<ServiceScreen> {
                                                                 Navigator.push(
                                                                     context,
                                                                     MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
-                                                                              ChatDetailScreen(
-                                                                        name: listFacts[index]
-                                                                            [
-                                                                            "name"],
-                                                                        path:
-                                                                            getpath(
-                                                                          listFacts[index]
-                                                                              [
-                                                                              "profile_pic"],
-                                                                        ),
-                                                                        id: listFacts[index]
-                                                                            [
-                                                                            'id'],
-                                                                        toid: widget
-                                                                            .fromid,
-                                                                      ),
+                                                                      builder: (context) => FireChatDetailScreen(
+                                                                          name: listFacts[index]["name"],
+                                                                          path: getpath(
+                                                                            listFacts[index]["profile_pic"],
+                                                                          ),
+                                                                          fromid: widget.sid,
+                                                                          toid: listFacts[index]['userId'],
+                                                                          chatId: getChatid(
+                                                                            widget.sid,
+                                                                            listFacts[index]['userId'],
+                                                                          ),
+                                                                          navFrom: 1),
                                                                     ));
                                                               },
                                                               child: Icon(

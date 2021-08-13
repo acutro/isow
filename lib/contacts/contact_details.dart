@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactDetail extends StatefulWidget {
@@ -25,11 +26,11 @@ class _ContactDetail extends State<ContactDetail> {
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = 'https://picsum.photos/250?image=9';
+      pathf = ApiUtils.imageUrl + 'profilepic/default.png';
 
       return pathf;
     } else {
-      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
+      pathf = pathf = ApiUtils.imageUrl + 'profilepic/' + path;
       return pathf;
     }
   }

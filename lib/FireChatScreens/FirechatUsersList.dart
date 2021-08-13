@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'FirechatScreen.dart';
 import 'dart:convert';
+import 'dart:async';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class FireChatListScreen extends StatefulWidget {
@@ -63,14 +66,27 @@ class _FireChatListScreenState extends State<FireChatListScreen> {
     fetchData(namee);
   }
 
+  getChatid(String sFromId, String sToId) {
+    int fromId = int.parse(sFromId);
+    String chatId;
+    int toId = int.parse(sToId);
+    if (fromId < toId) {
+      chatId = toId.toString() + fromId.toString();
+      return chatId;
+    } else {
+      chatId = fromId.toString() + toId.toString();
+      return chatId;
+    }
+  }
+
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = 'https://picsum.photos/250?image=9';
+      pathf = ApiUtils.imageUrl + 'profilepic/default.png';
 
       return pathf;
     } else {
-      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
+      pathf = ApiUtils.imageUrl + 'profilepic/' + path;
       return pathf;
     }
   }
@@ -201,15 +217,20 @@ class _FireChatListScreenState extends State<FireChatListScreen> {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   FireChatDetailScreen(
-                                                      name: listFacts[index]
-                                                          ["name"],
-                                                      path: getpath(
-                                                        listFacts[index]
-                                                            ["profile_pic"],
-                                                      ),
-                                                      id: listFacts[index]
-                                                          ['toId'],
-                                                      toid: sid),
+                                                name: listFacts[index]["name"],
+                                                path: getpath(
+                                                  listFacts[index]
+                                                      ["profile_pic"],
+                                                ),
+                                                fromid: listFacts[index]
+                                                    ['toId'],
+                                                toid: sid,
+                                                chatId: getChatid(
+                                                  listFacts[index]['fromId'],
+                                                  listFacts[index]['toId'],
+                                                ),
+                                                navFrom: 0,
+                                              ),
                                             ));
                                       },
                                       child: Container(

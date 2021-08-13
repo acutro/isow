@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:http/http.dart' as http;
@@ -39,9 +40,7 @@ class _EmergencyState extends State<Emergency> {
       'id': id,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/SOS/delete',
-        body: (data));
+    response = await http.post(ApiUtils.sosDeleteApi, body: (data));
     if (response.statusCode == 200) {
       Toast.show("Deleted Successfully", context,
           duration: Toast.LENGTH_SHORT,
@@ -72,9 +71,7 @@ class _EmergencyState extends State<Emergency> {
       'sos_content': content,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/SOS/create',
-        body: (data));
+    response = await http.post(ApiUtils.sosCreateApi, body: (data));
     if (response.statusCode == 200) {
       Toast.show("SOS Added Successfully", context,
           duration: Toast.LENGTH_SHORT,
@@ -106,9 +103,7 @@ class _EmergencyState extends State<Emergency> {
       'userId': siid,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/SOS/singleList',
-        body: (data));
+    response = await http.post(ApiUtils.sosListApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);

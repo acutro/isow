@@ -113,8 +113,8 @@ Materialistic Issue''',
                         context,
                         MaterialPageRoute(
                             builder: (context) => ServiceScreen(
-                                  fromid: widget.sid,
-                                  sid: '11',
+                                  sid: widget.sid,
+                                  serviceCatId: '11',
                                 )),
                       );
                     },
@@ -158,8 +158,8 @@ Materialistic Issue''',
                         context,
                         MaterialPageRoute(
                             builder: (context) => ServiceScreen(
-                                  fromid: widget.sid,
-                                  sid: '12',
+                                  sid: widget.sid,
+                                  serviceCatId: '12',
                                 )),
                       );
                     },
@@ -203,69 +203,6 @@ Maintanance'''),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.1,
             ),
-            // Row(
-            //   children: <Widget>[
-            //     Expanded(
-            //       child: Container(
-            //         decoration: BoxDecoration(
-            //           color: Color(0xff49A5FF),
-            //           borderRadius: BorderRadius.circular(50.0),
-            //           boxShadow: [
-            //             BoxShadow(
-            //               color: Colors.black26,
-            //               blurRadius: 6.0,
-            //               offset: Offset(0, 2),
-            //             ),
-            //           ],
-            //         ),
-            //         // height: 100.0,
-            //         margin: EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 0.0),
-            //         child: Center(
-            //           child: TextFormField(
-            //             onChanged: (value) {
-            //               fetchData(controller.text);
-            //             },
-            //             style: TextStyle(
-            //               color: Colors.white,
-            //             ),
-            //             controller: controller,
-            //             decoration: new InputDecoration(
-            //               suffixIcon: controller.text.isNotEmpty
-            //                   ? new IconButton(
-            //                       icon: new Icon(
-            //                         Icons.cancel,
-            //                         color: Colors.white,
-            //                       ),
-            //                       onPressed: () {
-            //                         controller.clear();
-            //                         fetchData(controller.text);
-            //                         // providerData.getContacts();
-            //                         // onSearchTextChanged('');
-            //                       },
-            //                     )
-            //                   : Icon(
-            //                       Icons.search,
-            //                       color: Colors.white,
-            //                     ),
-
-            //               border: InputBorder.none,
-            //               focusedBorder: InputBorder.none,
-            //               enabledBorder: InputBorder.none,
-            //               errorBorder: InputBorder.none,
-            //               disabledBorder: InputBorder.none,
-            //               contentPadding: EdgeInsets.only(
-            //                   left: 15, bottom: 11, top: 11, right: 15),
-            //               hintText: 'Search',
-
-            //               // fillColor: Colors.white24,
-            //               hintStyle: TextStyle(color: Colors.white),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
           ],
         ),
       ),

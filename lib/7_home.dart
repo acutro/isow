@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/FireChatScreens/FirechatUsersList.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
@@ -47,8 +48,7 @@ class HomeScreenState extends State<HomeScreen> {
   List<dynamic> graphList;
   Future fetchFlu() async {
     http.Response response;
-    response = await http
-        .get('http://isow.acutrotech.com/index.php/api/OilPrice/list');
+    response = await http.get(OthersApi.oilFluctationApi);
     if (response.statusCode == 200) {
       setState(() {
         graphResponse = jsonDecode(response.body);
@@ -71,9 +71,7 @@ class HomeScreenState extends State<HomeScreen> {
 
     http.Response response;
     if (id != null) {
-      response = await http.post(
-          'http://isow.acutrotech.com/index.php/api/Users/countalert',
-          body: (data));
+      response = await http.post(OthersApi.counterApi, body: (data));
       if (response.statusCode == 200) {
         setState(() {
           statusMap = jsonDecode(response.body);
@@ -206,9 +204,7 @@ class HomeScreenState extends State<HomeScreen> {
       'token': token,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Token/update',
-        body: (data));
+    response = await http.post(FirebaseApi.fireTokenUpdateApi, body: (data));
     if (response.statusCode == 200) {
       print('Success');
     }
@@ -275,11 +271,11 @@ class HomeScreenState extends State<HomeScreen> {
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = 'http://isow.acutrotech.com/assets/profilepic/default.png';
+      pathf = ApiUtils.imageUrl + 'default.png';
 
       return pathf;
     } else {
-      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
+      pathf = ApiUtils.imageUrl + path;
       return pathf;
     }
   }

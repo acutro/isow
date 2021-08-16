@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:isow/Widgects/alertBox.dart';
 import 'offers_detail_Screen.dart';
 
 class OfferDetailScreen extends StatefulWidget {
-  static const routeName = "rig-screen";
-
   final List<dynamic> rigList;
   final String sid;
   final int id;

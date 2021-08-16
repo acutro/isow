@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:isow/7_home.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import '3_forgotpswd.dart';
 import '4_signup.dart';
 import 'package:http/http.dart' as http;
@@ -23,9 +24,7 @@ class SigninScreenState extends State<SigninScreen> {
   Future getLogin(String uname, String pass) async {
     var data = {'email': uname, 'password': pass};
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/users/login',
-        body: (data));
+    response = await http.post(UserAuthApi.userLoginApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);

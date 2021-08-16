@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:toast/toast.dart';
 import '2_signinpage.dart';
 
@@ -21,9 +22,7 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
       'password': pass,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/ResetPassword/resetpassword',
-        body: (data));
+    response = await http.post(UserAuthApi.resetPasswordApi, body: (data));
     if (response.statusCode == 200) {
       Toast.show("Password Reseted successfully", context,
           duration: Toast.LENGTH_SHORT,

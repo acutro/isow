@@ -2,6 +2,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/Widgects/alertBox.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
@@ -46,8 +47,7 @@ class _RecivedWarningState extends State<RecivedWarning> {
       'issue': namee,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/SearchList/searchWarningLetter',
+    response = await http.post(WarningNotepadApi.searchwarningLetterCreate,
         body: (data));
     if (response.statusCode == 200) {
       setState(() {
@@ -72,9 +72,7 @@ class _RecivedWarningState extends State<RecivedWarning> {
       'fromId': id,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/WarningLetter/supervisorsingleList',
-        body: (data));
+    response = await http.post(WarningNotepadApi.supervisorList, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
@@ -106,9 +104,8 @@ class _RecivedWarningState extends State<RecivedWarning> {
       'read_status': '1',
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/WarningLetter/read',
-        body: (data));
+    response =
+        await http.post(WarningNotepadApi.warningReadStatusApi, body: (data));
     if (response.statusCode == 200) {
       print('Success');
     }

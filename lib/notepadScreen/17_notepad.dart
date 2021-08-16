@@ -4,6 +4,7 @@ import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'notepadListScreen.dart';
 import 'package:toast/toast.dart';
 
@@ -37,9 +38,8 @@ class _NotepadState extends State<Notepad> {
       'category_id': cato
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Notepad/create',
-        body: (data));
+    response =
+        await http.post(WarningNotepadApi.notepadCreateApi, body: (data));
     if (response.statusCode == 200) {
       Toast.show("Added Successfully", context,
           duration: Toast.LENGTH_SHORT,
@@ -65,8 +65,7 @@ class _NotepadState extends State<Notepad> {
   List<dynamic> catList;
   Future fetchCat() async {
     http.Response response;
-    response = await http
-        .get('http://isow.acutrotech.com/index.php/api/Notepad/categorylist');
+    response = await http.get(WarningNotepadApi.notepadCatogoryListApi);
     if (response.statusCode == 200) {
       setState(() {
         catResponse = jsonDecode(response.body);
@@ -135,8 +134,7 @@ class _NotepadState extends State<Notepad> {
       'categoryName': catName,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Notepad/categorycreate',
+    response = await http.post(WarningNotepadApi.notepadCatogoryCreateApi,
         body: (data));
     if (response.statusCode == 200) {
       // Toast.show("Status changed Successfully", context,

@@ -4,6 +4,7 @@ import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'dart:convert';
 import 'package:toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,8 +42,7 @@ class _WarningletterState extends State<Warningletter> {
   List<dynamic> userList;
   Future fetchData() async {
     http.Response response;
-    response = await http
-        .get('http://isow.acutrotech.com/index.php/api/userRoles/rolesList');
+    response = await http.get(ListingApi.roleListApi);
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
@@ -56,9 +56,7 @@ class _WarningletterState extends State<Warningletter> {
   Future fetchUsers(String id, String uid) async {
     var data = {'roleId': id, 'id': uid};
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/UserRoles/usersList',
-        body: (data));
+    response = await http.post(ListingApi.userRoleListApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         userResponse = jsonDecode(response.body);
@@ -91,9 +89,8 @@ class _WarningletterState extends State<Warningletter> {
       'issue': issue,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/WarningLetter/create',
-        body: (data));
+    response =
+        await http.post(WarningNotepadApi.warningLetterCreate, body: (data));
     if (response.statusCode == 200) {
       Toast.show("Warning Letter sends successfull", context,
           duration: Toast.LENGTH_SHORT,

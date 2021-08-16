@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/Widgects/alertBox.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -42,9 +43,8 @@ class _MyApp extends State<NotepadList> {
       'name': name,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/SearchList/searchNotepad',
-        body: (data));
+    response =
+        await http.post(WarningNotepadApi.notepadSearchListApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
@@ -95,9 +95,8 @@ class _MyApp extends State<NotepadList> {
   Future deleteNotepad(String id, String ssid) async {
     var data = {'id': id};
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Notepad/delete',
-        body: (data));
+    response =
+        await http.post(WarningNotepadApi.notepadDeleteApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         loading = false;
@@ -543,9 +542,8 @@ showDialogFunc(context, title, date, requirment, id, color) {
   ) async {
     var data = {'id': id};
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Notepad/delete',
-        body: (data));
+    response =
+        await http.post(WarningNotepadApi.notepadDeleteApi, body: (data));
     if (response.statusCode == 200) {
       Toast.show("Deleted Successfully", context,
           duration: Toast.LENGTH_SHORT,

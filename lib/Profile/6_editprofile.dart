@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'editProfile.dart';
 
@@ -39,11 +40,11 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = 'http://isow.acutrotech.com/assets/profilepic/default.png';
+      pathf = UserAuthApi.profileImageApi + 'default.png';
 
       return pathf;
     } else {
-      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
+      pathf = UserAuthApi.profileImageApi + path;
       return pathf;
     }
   }
@@ -402,9 +403,7 @@ Future<Note> fetchNote(String sidd) async {
     Map<String, String> body = {
       'id': sidd,
     };
-    var response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/users/profile',
-        body: body);
+    var response = await http.post(UserAuthApi.userProfileApi, body: body);
     print(json.decode(response.body));
 
     if (response.statusCode == 200) {

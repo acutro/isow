@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/UserAuth/passresetScreen.dart';
 import 'package:toast/toast.dart';
 import '2_signinpage.dart';
@@ -22,9 +23,8 @@ class OtpScreenState extends State<OtpScreen> {
       'email': email,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/ResetPassword/CheckverificationCode',
-        body: (data));
+    response =
+        await http.post(UserAuthApi.checkVerificationCodeApi, body: (data));
     if (response.statusCode == 200) {
       Toast.show("OTP Verified successfully", context,
           duration: Toast.LENGTH_SHORT,

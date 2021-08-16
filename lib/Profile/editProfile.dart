@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'dart:io' as file;
 import '6_editprofile.dart';
 import 'package:flutter/material.dart';
@@ -74,11 +75,11 @@ class EditProfileState extends State<EditProfile> {
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = 'http://isow.acutrotech.com/assets/profilepic/default.png';
+      pathf = UserAuthApi.profileImageApi + 'default.png';
 
       return pathf;
     } else {
-      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
+      pathf = UserAuthApi.profileImageApi + path;
       return pathf;
     }
   }

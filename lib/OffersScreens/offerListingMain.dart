@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/Widgects/alertBox.dart';
 import 'package:toast/toast.dart';
 import 'offerListing.dart';
@@ -29,9 +30,7 @@ class _MyApp extends State<NewsListingMain> {
       'category_id': siid,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Offers/singleList',
-        body: (data));
+    response = await http.post(OffersApi.offersListByIdApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);

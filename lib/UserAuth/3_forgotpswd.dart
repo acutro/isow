@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:isow/UserAuth/passresetScreen.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:toast/toast.dart';
 import '2_signinpage.dart';
 import 'otpScreen.dart';
@@ -19,9 +19,7 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
       'email': email,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/ResetPassword/ForgotPassword',
-        body: (data));
+    response = await http.post(UserAuthApi.forgotPassApi, body: (data));
     if (response.statusCode == 200) {
       Toast.show("OTP Sent successfully", context,
           duration: Toast.LENGTH_SHORT,
@@ -48,36 +46,6 @@ class ForgotpswdScreenState extends State<ForgotpswdScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.blueAccent,
-      //   centerTitle: true,
-      //   leading: GestureDetector(
-      //     onTap: () {
-      //       Navigator.pop(context);
-      //     },
-      //     child: Icon(
-      //       Icons.arrow_back_ios,
-      //       color: Colors.white,
-      //     ),
-      //   ),
-      //   title: Text(
-      //     'Forget password',
-      //   ),
-      // actions: [
-      //   Padding(
-      //     padding: EdgeInsets.symmetric(horizontal: 16),
-      //     child: Icon(Icons.more_vert),
-      //   ),
-      // ],
-      // flexibleSpace: Container(
-      //   decoration: BoxDecoration(
-      //       gradient: LinearGradient(
-      //           begin: Alignment.topLeft,
-      //           end: Alignment.bottomRight,
-      //           colors: <Color>[Color(0xFF4fc4f2), Colors.blue])),
-      // ),
-      //   elevation: 0,
-      // ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,

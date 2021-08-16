@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/Widgects/alertBox.dart';
 import 'dart:convert';
 import 'offerListingMain.dart';
@@ -22,8 +23,7 @@ class _OfferMainScreenState extends State<OfferMainScreen> {
   List<dynamic> listFacts;
   Future fetchData() async {
     http.Response response;
-    response =
-        await http.get('http://isow.acutrotech.com/index.php/api/Offers/list');
+    response = await http.get(OffersApi.offersListApi);
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);

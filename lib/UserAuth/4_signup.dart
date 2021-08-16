@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:toast/toast.dart';
 
 import '2_signinpage.dart';
@@ -56,8 +57,7 @@ class SignupScreenState extends State<SignupScreen> {
 
   Future fetchRig() async {
     http.Response response;
-    response = await http
-        .get('http://isow.acutrotech.com/index.php/api/orientation/rigList');
+    response = await http.get(ListingApi.rigListApi);
     if (response.statusCode == 200) {
       setState(() {
         rigResponse = jsonDecode(response.body);
@@ -69,8 +69,7 @@ class SignupScreenState extends State<SignupScreen> {
 
   Future fetchRole() async {
     http.Response response;
-    response = await http
-        .get('http://isow.acutrotech.com/index.php/api/userRoles/rolesList');
+    response = await http.get(ListingApi.roleListApi);
     if (response.statusCode == 200) {
       setState(() {
         roleResponse = jsonDecode(response.body);
@@ -186,8 +185,7 @@ class SignupScreenState extends State<SignupScreen> {
     String roleId,
     file.File images,
   ) async {
-    var uri =
-        Uri.parse("http://isow.acutrotech.com/index.php/api/users/register");
+    var uri = Uri.parse(UserAuthApi.userRegisterApi);
     print("image upload URL - $uri");
 // create multipart request
     var request = new http.MultipartRequest("POST", uri);
@@ -245,53 +243,6 @@ class SignupScreenState extends State<SignupScreen> {
           backgroundColor: Colors.white);
     }
   }
-
-  // Future userReg(
-  //   String name,
-  //   String userIdd,
-  //   String email,
-  //   String pass,
-  //   String mob,
-  //   String rigId,
-  //   String roleId,
-  // ) async {
-  //   var data = {
-  //     'name': name,
-  //     'userId': userIdd,
-  //     'email': email,
-  //     'password': pass,
-  //     'cpassword': pass,
-  //     'roleId': roleId,
-  //     'rigId': rigId,
-  //     'work': 'Work',
-  //     'mob_num': mob,
-  //   };
-  //   http.Response response;
-  //   response = await http.post(
-  //       'http://isow.acutrotech.com/index.php/api/users/register',
-  //       body: (data));
-  //   if (response.statusCode == 200) {
-  //     Toast.show("User added successfully", context,
-  //         duration: Toast.LENGTH_SHORT,
-  //         gravity: Toast.BOTTOM,
-  //         textColor: Colors.green[600],
-  //         backgroundColor: Colors.white);
-  //     Timer(
-  //         Duration(seconds: 1),
-  //         () => Navigator.pushReplacement(
-  //               context,
-  //               MaterialPageRoute(builder: (context) => SigninScreen()),
-  //             ));
-  //   } else {
-  //     regResponse = jsonDecode(response.body);
-  //     print(regResponse['message']);
-  //     Toast.show(regResponse['message'], context,
-  //         duration: Toast.LENGTH_SHORT,
-  //         gravity: Toast.BOTTOM,
-  //         textColor: Colors.red,
-  //         backgroundColor: Colors.white);
-  //   }
-  // }
 
   final _formKey = GlobalKey<FormState>();
 

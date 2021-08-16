@@ -1,10 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'FirechatContactList.dart';
 import 'FirechatScreen.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -120,25 +119,9 @@ class _FireChatListScreenState extends State<FireChatListScreen> {
             color: Colors.white,
           ),
         ),
-        actions: [
-          Icon(
-            Icons.headset_mic,
-            color: Colors.white,
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Icon(
-            Icons.logout,
-            color: Colors.white,
-          ),
-          SizedBox(
-            width: 10,
-          ),
-        ],
       ),
       body: RefreshIndicator(
-        onRefresh: () {
+        onRefresh: () async {
           refreshList(sid);
         },
         child: jobError == true || mapResponse == null
@@ -287,6 +270,14 @@ class _FireChatListScreenState extends State<FireChatListScreen> {
                 ),
               ),
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ChatAllContact(sid: sid)),
+            );
+          },
+          child: Icon(Icons.message)),
     );
   }
 }

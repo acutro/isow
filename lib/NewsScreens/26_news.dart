@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'newsListing.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -19,8 +20,7 @@ class _NewsState extends State<News> {
   List<dynamic> listFacts;
   Future fetchData() async {
     http.Response response;
-    response =
-        await http.get('http://isow.acutrotech.com/index.php/api/News/list');
+    response = await http.get(ApifeedbackNews.newsListApi);
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);

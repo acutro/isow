@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/Widgects/alertBox.dart';
 import 'newsListingMain.dart';
 
@@ -20,7 +21,7 @@ class _MyApp extends State<NewsListing> {
 
       return pathf;
     } else {
-      pathf = 'http://isow.acutrotech.com/assets/images/news/' + path;
+      pathf = ApifeedbackNews.newsImageApi + path;
       return pathf;
     }
   }

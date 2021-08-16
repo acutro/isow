@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'JobDescriptionTab.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -34,8 +35,7 @@ class _JobdescriptionState extends State<JobHandover> {
   List<dynamic> userList;
   Future fetchData() async {
     http.Response response;
-    response = await http
-        .get('http://isow.acutrotech.com/index.php/api/userRoles/rolesList');
+    response = await http.get(ListingApi.roleListApi);
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
@@ -49,9 +49,7 @@ class _JobdescriptionState extends State<JobHandover> {
   Future fetchUsers(String id, String uid) async {
     var data = {'roleId': id, 'id': uid};
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/UserRoles/usersList',
-        body: (data));
+    response = await http.post(ListingApi.userRoleListApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         userResponse = jsonDecode(response.body);
@@ -78,9 +76,8 @@ class _JobdescriptionState extends State<JobHandover> {
   ) async {
     var data = {'jobId': jobid, 'fromId': fromId, 'toId': toid};
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobHandover/handovercreate',
-        body: (data));
+    response =
+        await http.post(ApiJobDescription.jobHandoverCreateApi, body: (data));
     if (response.statusCode == 200) {
       Toast.show("Job Handoverd successfully", context,
           duration: Toast.LENGTH_SHORT,

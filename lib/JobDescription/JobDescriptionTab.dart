@@ -4,8 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'issuedAuthority.dart';
 import 'jobDescriptionList.dart';
 import 'jobExecutedList.dart';
-import '22_jobdescription.dart';
-import '21_jobdescriptionissuer.dart';
 import 'jobHandoverList.dart';
 
 class JobDescriptionTab extends StatefulWidget {

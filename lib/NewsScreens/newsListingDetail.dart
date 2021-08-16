@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 
 // ignore: must_be_immutable
 class NewsDetailsView extends StatelessWidget {
@@ -36,11 +37,11 @@ class NewsDetailsView extends StatelessWidget {
                       )
                     : list == 1
                         ? Image.network(
-                            'http://isow.acutrotech.com/assets/images/activities/$path',
+                            ApifeedbackNews.activityImageApi + path,
                             fit: BoxFit.fill,
                           )
                         : Image.network(
-                            'http://isow.acutrotech.com/assets/images/news/$path',
+                            ApifeedbackNews.newsImageApi + path,
                             fit: BoxFit.fill,
                           )),
             Container(

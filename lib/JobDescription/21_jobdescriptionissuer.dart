@@ -2,11 +2,10 @@ import 'dart:async';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'JobDescriptionTab.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:async';
 import 'package:toast/toast.dart';
 import 'dart:io' as file;
 import 'package:async/async.dart';
@@ -34,8 +33,7 @@ class _JobdescriptionState extends State<Jobdescription> {
   List<dynamic> userList;
   Future fetchData() async {
     http.Response response;
-    response = await http
-        .get('http://isow.acutrotech.com/index.php/api/userRoles/rolesList');
+    response = await http.get(ListingApi.roleListApi);
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
@@ -52,9 +50,7 @@ class _JobdescriptionState extends State<Jobdescription> {
   ) async {
     var data = {'roleId': id, 'id': uid};
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/UserRoles/usersList',
-        body: (data));
+    response = await http.post(ListingApi.userRoleListApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         userResponse = jsonDecode(response.body);
@@ -80,8 +76,7 @@ class _JobdescriptionState extends State<Jobdescription> {
     String duration,
     file.File images,
   ) async {
-    var uri =
-        Uri.parse("http://isow.acutrotech.com/index.php/api/JobIssue/create");
+    var uri = Uri.parse(ApiJobDescription.jobCreateApi);
     print("image upload URL - $uri");
 // create multipart request
     var request = new http.MultipartRequest("POST", uri);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/Widgects/alertBox.dart';
 import 'dart:convert';
 import 'newsListingMain.dart';
@@ -21,7 +22,7 @@ class _MyApp extends State<ActivityListing> {
   Future fetchData() async {
     http.Response response;
     response = await http
-        .get('http://isow.acutrotech.com/index.php/api/Activities/list');
+        .get(ApifeedbackNews.activityListApi);
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
@@ -48,7 +49,7 @@ class _MyApp extends State<ActivityListing> {
 
       return pathf;
     } else {
-      pathf = 'http://isow.acutrotech.com/assets/images/activities/' + path;
+      pathf = ApifeedbackNews.activityImageApi + path;
       return pathf;
     }
   }

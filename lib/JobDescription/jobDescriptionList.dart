@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -6,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:toast/toast.dart';
 import '21_jobdescriptionissuer.dart';
-import 'package:isow/JobDescription/jobExecutedList.dart';
 import 'jobHandover.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,7 +20,7 @@ class _MyApp extends State<JobDescriptionList> {
   String posid;
   bool error = true;
   _launchURL(String ur) async {
-    String url = 'http://isow.acutrotech.com/assets/files/' + ur;
+    String url = ApiJobDescription.jobFilesApi + ur;
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -52,9 +52,7 @@ class _MyApp extends State<JobDescriptionList> {
   ) async {
     var data = {'id': id, 'executeStatus': '1'};
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobExecute/execute',
-        body: (data));
+    response = await http.post(ApiJobDescription.jobExecuteApi, body: (data));
     if (response.statusCode == 200) {
       Toast.show("Executed Successfully", context,
           duration: Toast.LENGTH_SHORT,
@@ -84,9 +82,7 @@ class _MyApp extends State<JobDescriptionList> {
       'assignedTo': sessId,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/JobIssue/singleuserissueList',
-        body: (data));
+    response = await http.post(ApiJobDescription.jobIssuedApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);

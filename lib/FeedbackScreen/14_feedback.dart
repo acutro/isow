@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'dart:convert';
 import 'package:toast/toast.dart';
 import 'feedbackList.dart';
@@ -25,9 +26,7 @@ class _FeedbackCounterState extends State<FeedbackCounter> {
       'userId': widget.userId,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Feedback/create',
-        body: (data));
+    response = await http.post(ApifeedbackNews.feedbackCreateApi, body: (data));
     if (response.statusCode == 200) {
       Toast.show("Feedback Added Successfully", context,
           duration: Toast.LENGTH_SHORT,

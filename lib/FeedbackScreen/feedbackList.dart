@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/Widgects/alertBox.dart';
 import 'dart:convert';
 import 'package:toast/toast.dart';
@@ -36,9 +37,7 @@ class _MyApp extends State<FeedbackList> {
       'id': feedId,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Feedback/delete',
-        body: (data));
+    response = await http.post(ApifeedbackNews.feedBackDeleteApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         loading = false;
@@ -71,9 +70,7 @@ class _MyApp extends State<FeedbackList> {
       'userId': siid,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Feedback/singleList',
-        body: (data));
+    response = await http.post(ApifeedbackNews.feedBackListApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);

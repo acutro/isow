@@ -4,18 +4,19 @@ import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/Widgects/alertBox.dart';
 import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'contact_details.dart';
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class Contact extends StatefulWidget {
+import 'FirechatScreen.dart';
+
+class ChatAllContact extends StatefulWidget {
   final String sid;
-  Contact({Key key, @required this.sid}) : super(key: key);
+  ChatAllContact({Key key, @required this.sid}) : super(key: key);
   @override
   _MyApp createState() => _MyApp();
 }
 
-class _MyApp extends State<Contact> {
+class _MyApp extends State<ChatAllContact> {
   TextEditingController controller = new TextEditingController();
   List listResponse;
   Map mapResponse;
@@ -24,6 +25,19 @@ class _MyApp extends State<Contact> {
   bool jobError = false;
   fetch() {
     for (int i = 0; i < 10; i + 3) {}
+  }
+
+  getChatid(String sFromId, String sToId) {
+    int fromId = int.parse(sFromId);
+    String chatId;
+    int toId = int.parse(sToId);
+    if (fromId < toId) {
+      chatId = toId.toString() + fromId.toString();
+      return chatId;
+    } else {
+      chatId = fromId.toString() + toId.toString();
+      return chatId;
+    }
   }
 
   Future fetchData(String namee, String uid) async {
@@ -84,7 +98,7 @@ class _MyApp extends State<Contact> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Contacts",
+          "Select Contact",
           style: TextStyle(
             color: Colors.white,
           ),
@@ -197,26 +211,26 @@ class _MyApp extends State<Contact> {
                                     // final Message chat = chats[index];
                                     return GestureDetector(
                                       onTap: () {
+                                        Navigator.pop(context);
                                         Navigator.push(
-                                          context,
-                                          new MaterialPageRoute(
+                                            context,
+                                            MaterialPageRoute(
                                               builder: (context) =>
-                                                  ContactDetail(
-                                                    email: listFacts[index]
-                                                        ["email"],
-                                                    mob: listFacts[index]
-                                                        ["mob_num"],
-                                                    name: listFacts[index]
-                                                        ["name"],
-                                                    id: listFacts[index]
-                                                            ["userId"]
-                                                        .toString(),
-                                                    work: listFacts[index]
-                                                        ["work"],
-                                                    ppath: listFacts[index]
-                                                        ["profile_pic"],
-                                                  )),
-                                        );
+                                                  FireChatDetailScreen(
+                                                name: listFacts[index]["name"],
+                                                path: getpath(
+                                                  listFacts[index]
+                                                      ["profile_pic"],
+                                                ),
+                                                fromid: widget.sid,
+                                                toid: listFacts[index]['id'],
+                                                chatId: getChatid(
+                                                  widget.sid,
+                                                  listFacts[index]['id'],
+                                                ),
+                                                navFrom: 0,
+                                              ),
+                                            ));
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
@@ -250,48 +264,8 @@ class _MyApp extends State<Contact> {
                                                     subtitle: Text(
                                                       '${listFacts[index]["work"][0].toUpperCase()}${listFacts[index]["work"].substring(1)}',
                                                     ),
-                                                    trailing: Container(
-                                                      width: 75,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          GestureDetector(
-                                                            onTap: () {
-                                                              _textMe(
-                                                                listFacts[index]
-                                                                    ["mob_num"],
-                                                              );
-                                                            },
-                                                            child: Icon(
-                                                              Icons.chat_sharp,
-                                                              size: 25,
-                                                              color: Colors
-                                                                  .blue[400],
-                                                            ),
-                                                          ),
-                                                          GestureDetector(
-                                                            onTap: () {
-                                                              launch(
-                                                                "tel:" +
-                                                                    listFacts[
-                                                                            index]
-                                                                        [
-                                                                        "mob_num"],
-                                                              );
-                                                            },
-                                                            child: Icon(
-                                                              Icons.call,
-                                                              size: 25,
-                                                              color: Colors
-                                                                  .green[400],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
                                                   ),
+                                                  Divider(),
                                                 ],
                                               ),
                                             ),

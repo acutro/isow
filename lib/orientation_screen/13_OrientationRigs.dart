@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:toast/toast.dart';
 import 'dart:convert';
 import 'rigDetailpage.dart';
@@ -36,9 +37,8 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
       'rigName': name,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/SearchList/searchRigs',
-        body: (data));
+    response =
+        await http.post(OrientationRigApi.searchRigListApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
@@ -173,7 +173,7 @@ class _OrientationRigScreenState extends State<OrientationRigScreen> {
                                       return Container(
                                         child: ListTile(
                                             leading: Image.network(
-                                              'http://isow.acutrotech.com/assets/images/rigs/' +
+                                              OrientationRigApi.rigImageApi +
                                                   listFacts[index]['rig_image'],
                                               width: 150.0,
                                               height: 150.0,

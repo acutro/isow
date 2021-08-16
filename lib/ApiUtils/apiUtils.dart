@@ -1,7 +1,7 @@
 class ApiUtils {
   static String baseUrl = 'http://isow.acutrotech.com/';
   static String apiUrl = baseUrl + 'index.php/api/';
-  static String imageUrl = 'http://isow.acutrotech.com/assets/';
+
   static String contactApi = apiUrl + 'SearchList/searchUsers';
   static String sosCreateApi = apiUrl + 'SOS/create';
   static String sosDeleteApi = apiUrl + 'SOS/delete';
@@ -50,6 +50,7 @@ class OthersApi {
 
 class FirebaseApi {
   static String fireTokenUpdateApi = ApiUtils.apiUrl + 'Token/update';
+  static String chatListApi = ApiUtils.apiUrl + 'Chat/list';
 }
 
 class UserAuthApi {
@@ -87,4 +88,14 @@ class OffersApi {
   static String offersListApi = ApiUtils.apiUrl + 'Offers/list';
   static String offersListByIdApi = ApiUtils.apiUrl + 'Offers/singleList';
   static String offersImageApi = ApiUtils.baseUrl + 'assets/images/offers/';
+}
+
+class OrientationRigApi {
+  static String companyListApi = ApiUtils.apiUrl + 'company/list';
+  static String searchRigListApi = ApiUtils.apiUrl + 'SearchList/searchRigs';
+  static String rigImageApi = ApiUtils.baseUrl + 'assets/images/rigs/';
+  static String searchMaterialListApi =
+      ApiUtils.apiUrl + 'SearchList/searchMaterials';
+  static String materialImageApi =
+      ApiUtils.baseUrl + 'assets/images/materials/';
 }

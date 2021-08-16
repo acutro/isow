@@ -8,9 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:isow/NewsScreens/26_news.dart';
 import 'package:isow/main.dart';
-import 'ChatScreens/chatListScreen.dart';
 import 'UserAuth/userReg.dart';
-import 'dropdowntest.dart';
 import 'whetherScreens/27_weatherreport.dart';
 import 'orientation_screen/12_Orientation.dart';
 import 'WarningLetterScreens/16_RecievedWarningletter.dart';
@@ -271,11 +269,11 @@ class HomeScreenState extends State<HomeScreen> {
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = ApiUtils.imageUrl + 'default.png';
+      pathf = UserAuthApi.profileImageApi + 'default.png';
 
       return pathf;
     } else {
-      pathf = ApiUtils.imageUrl + path;
+      pathf = UserAuthApi.profileImageApi + path;
       return pathf;
     }
   }

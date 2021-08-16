@@ -61,11 +61,11 @@ class _MyApp extends State<Contact> {
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = ApiUtils.imageUrl + 'profilepic/default.png';
+      pathf = UserAuthApi.profileImageApi + 'default.png';
 
       return pathf;
     } else {
-      pathf = ApiUtils.imageUrl + 'profilepic/' + path;
+      pathf = UserAuthApi.profileImageApi + path;
       return pathf;
     }
   }

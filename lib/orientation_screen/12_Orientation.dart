@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import '13_OrientationRigs.dart';
 import '14_orientaionmaterials.dart';
 import 'package:readmore/readmore.dart';
@@ -21,8 +22,7 @@ class OrientationScreenState extends State<OrientationScreen> {
   List<dynamic> roleList;
   Future fetchData() async {
     http.Response response;
-    response =
-        await http.get('http://isow.acutrotech.com/index.php/api/company/list');
+    response = await http.get(OrientationRigApi.companyListApi);
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);

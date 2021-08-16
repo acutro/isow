@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 
 class DirectoryView extends StatelessWidget {
   final int index;
@@ -37,11 +38,11 @@ class DirectoryView extends StatelessWidget {
                           )
                         : list == 0
                             ? Image.network(
-                                'http://isow.acutrotech.com/assets/images/rigs/$path',
+                                OrientationRigApi.rigImageApi + path,
                                 fit: BoxFit.fill,
                               )
                             : Image.network(
-                                'http://isow.acutrotech.com/assets/images/materials/$path',
+                                OrientationRigApi.materialImageApi + path,
                                 fit: BoxFit.fill,
                               )),
               ],

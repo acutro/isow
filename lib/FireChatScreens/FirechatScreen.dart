@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:isow/Widgects/messageArea.dart';
@@ -64,7 +65,7 @@ class _FireChatDetailScreenState extends State<FireChatDetailScreen> {
       docRef.docs.length != 0
           ? firedocumentId = docRef.docs[0].id
           : createDocument(chatId);
-      // createCollection(firedocumentId, widget.chatId);
+      createCollection(firedocumentId, widget.chatId);
     });
 
     print(firedocumentId);

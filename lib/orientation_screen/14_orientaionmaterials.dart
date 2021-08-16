@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:toast/toast.dart';
 import 'dart:convert';
 import 'rigDetailpage.dart';
@@ -37,9 +38,8 @@ class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
       'name': name,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/SearchList/searchMaterials',
-        body: (data));
+    response =
+        await http.post(OrientationRigApi.searchMaterialListApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
@@ -164,7 +164,8 @@ class _OrientationMaterialScreenState extends State<OrientationMaterialScreen> {
                                       return Container(
                                         child: ListTile(
                                             leading: Image.network(
-                                              'http://isow.acutrotech.com/assets/images/materials/' +
+                                              OrientationRigApi
+                                                      .materialImageApi +
                                                   listFacts[index]
                                                       ['material_image'],
                                               width: 150.0,

@@ -21,11 +21,30 @@ class _MyApp extends State<ChatAllContact> {
   List listResponse;
   Map mapResponse;
   List<dynamic> listFacts;
-
+  Map catResponse;
   bool jobError = false;
-  fetch() {
-    for (int i = 0; i < 10; i + 3) {}
+  List<String> catogoryList = [];
+  List<dynamic> catList;
+  Future fetchCat() async {
+    http.Response response;
+    response = await http.get(FirebaseApi.chatListApi);
+    if (response.statusCode == 200) {
+      setState(() {
+        catResponse = jsonDecode(response.body);
+        catList = catResponse['data'];
+
+        print("{$catList}");
+      });
+    }
   }
+
+//   checkChat(List chatListt, String chatId) {
+//     for (int i = 0; i < chatListt.length; i++) {
+//       if(chatListt[i]['chatId']==chatId){
+// return 0;
+//       }
+//     }
+//   }
 
   getChatid(String sFromId, String sToId) {
     int fromId = int.parse(sFromId);
@@ -75,11 +94,11 @@ class _MyApp extends State<ChatAllContact> {
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = ApiUtils.imageUrl + 'profilepic/default.png';
+      pathf = UserAuthApi.profileImageApi + 'default.png';
 
       return pathf;
     } else {
-      pathf = ApiUtils.imageUrl + 'profilepic/' + path;
+      pathf = UserAuthApi.profileImageApi + path;
       return pathf;
     }
   }
@@ -87,7 +106,7 @@ class _MyApp extends State<ChatAllContact> {
   @override
   void initState() {
     fetchData("", widget.sid);
-
+    fetchCat();
     super.initState();
   }
 
@@ -212,6 +231,14 @@ class _MyApp extends State<ChatAllContact> {
                                     return GestureDetector(
                                       onTap: () {
                                         Navigator.pop(context);
+                                        // checkChat(
+                                        //   catList,
+                                        //   getChatid(
+                                        //     widget.sid,
+                                        //     listFacts[index]['id'],
+                                        //   ),
+                                        // );
+
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(

@@ -26,11 +26,11 @@ class _ContactDetail extends State<ContactDetail> {
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = ApiUtils.imageUrl + 'profilepic/default.png';
+      pathf = UserAuthApi.profileImageApi + 'default.png';
 
       return pathf;
     } else {
-      pathf = pathf = ApiUtils.imageUrl + 'profilepic/' + path;
+      pathf = pathf = UserAuthApi.profileImageApi + path;
       return pathf;
     }
   }

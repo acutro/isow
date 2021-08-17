@@ -1,14 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:isow/UserAuth/2_signinpage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:isow/Widgects/messageArea.dart';
-import 'package:isow/Widgects/messageAreaService.dart';
 
 class SendChatArea extends StatelessWidget {
   final String docId;

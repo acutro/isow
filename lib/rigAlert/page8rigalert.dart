@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/Widgects/alertBox.dart';
 
 import 'alertList.dart';
@@ -39,9 +40,7 @@ class _RigAlert2State extends State<RigAlert2> {
       'date': updatte,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Rigalert/create',
-        body: (data));
+    response = await http.post(RigAlertApi.rigAlertCreateApi, body: (data));
     if (response.statusCode == 200) {
       Toast.show("Added Successfully", context,
           duration: Toast.LENGTH_SHORT,
@@ -122,8 +121,7 @@ class _RigAlert2State extends State<RigAlert2> {
   List<dynamic> rigList;
   Future fetchData() async {
     http.Response response;
-    response = await http
-        .get('http://isow.acutrotech.com/index.php/api/orientation/rigList');
+    response = await http.get(ListingApi.rigListApi);
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);

@@ -51,6 +51,7 @@ class OthersApi {
 class FirebaseApi {
   static String fireTokenUpdateApi = ApiUtils.apiUrl + 'Token/update';
   static String chatListApi = ApiUtils.apiUrl + 'Chat/list';
+  static String fireChatListApi = ApiUtils.apiUrl + 'Chat/chatList';
 }
 
 class UserAuthApi {
@@ -98,4 +99,16 @@ class OrientationRigApi {
       ApiUtils.apiUrl + 'SearchList/searchMaterials';
   static String materialImageApi =
       ApiUtils.baseUrl + 'assets/images/materials/';
+}
+
+class RigAlertApi {
+  static String rigDeleteApi = ApiUtils.apiUrl + 'rigalert/delete';
+  static String dateUpdateApi = ApiUtils.apiUrl + 'Rigalert/dateupdate';
+  static String rigAlertReadApi = ApiUtils.baseUrl + 'Rigalert/read';
+  static String rigAlertListApi = ApiUtils.apiUrl + 'SearchList/searchRigalert';
+  static String rigAlertCreateApi = ApiUtils.baseUrl + 'Rigalert/create';
+}
+
+class ServiceApi {
+  static String serviceListApi = ApiUtils.apiUrl + 'Services/singlelist';
 }

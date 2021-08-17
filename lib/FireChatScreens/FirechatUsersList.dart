@@ -39,9 +39,7 @@ class _FireChatListScreenState extends State<FireChatListScreen> {
   Future fetchData(String fromid) async {
     var data = {'userId': fromid};
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Chat/chatList',
-        body: (data));
+    response = await http.post(FirebaseApi.fireChatListApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);

@@ -27,7 +27,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'rigAlert/alertList.dart';
 import 'Faq/faqMainScreen.dart';
 import 'package:http/http.dart' as http;
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 

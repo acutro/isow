@@ -250,22 +250,6 @@ class _JobdescriptionState extends State<Jobdescription> {
     });
   }
 
-  // Future openCamera(String id) async {
-  //   var image = await ImagePicker.pickImage(
-  //       maxHeight: 640,
-  //       maxWidth: 480,
-  //       source: ImageSource.camera,
-  //       imageQuality: 10);
-  //   // var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-  //   if (image != null)
-  //     setState(() {
-  //       newImage = image;
-  //       name = image.path.split('/').last;
-  //       path = image.path;
-  //       //   profileUpdate(id, newImage);
-  //     });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

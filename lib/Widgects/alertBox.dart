@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/UserAuth/2_signinpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -21,9 +22,7 @@ class BuildLogoutDialogclose extends StatelessWidget {
       'token': token,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Token/update',
-        body: (data));
+    response = await http.post(FirebaseApi.fireTokenUpdateApi, body: (data));
     if (response.statusCode == 200) {
       print('Success');
     }

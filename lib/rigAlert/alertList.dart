@@ -55,9 +55,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
       'id': rigid,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/rigalert/delete',
-        body: (data));
+    response = await http.post(RigAlertApi.rigDeleteApi, body: (data));
     if (response.statusCode == 200) {
       Toast.show("Rig alert Deleted Successfully", context,
           duration: Toast.LENGTH_SHORT,
@@ -83,9 +81,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
       'rigName': namee,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/SearchList/searchRigalert',
-        body: (data));
+    response = await http.post(RigAlertApi.rigAlertListApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
@@ -114,9 +110,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
       'read_status': '1',
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Rigalert/read',
-        body: (data));
+    response = await http.post(RigAlertApi.rigAlertReadApi, body: (data));
     if (response.statusCode == 200) {
       print('Success');
     }
@@ -136,7 +130,7 @@ class _RecivedWarningState extends State<RecivedAlert> {
     getValidation();
     super.initState();
     _clockTimer =
-        Timer.periodic(Duration(seconds: 3), (Timer t) => _rigList(""));
+        Timer.periodic(Duration(seconds: 5), (Timer t) => _rigList(""));
   }
 
   @override
@@ -488,9 +482,7 @@ showDialogFunc(context, person, position, date, creteDate, content, rigName,
       'date': date,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Rigalert/dateupdate',
-        body: (data));
+    response = await http.post(RigAlertApi.dateUpdateApi, body: (data));
     if (response.statusCode == 200) {
       // Toast.show("Status changed Successfully", context,
       //     duration: Toast.LENGTH_SHORT,

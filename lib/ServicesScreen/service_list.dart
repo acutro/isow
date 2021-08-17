@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:isow/ApiUtils/apiUtils.dart';
 import 'package:isow/ChatScreens/chatScreenMain.dart';
 import 'package:isow/FireChatScreens/FirechatScreen.dart';
 import 'package:isow/Widgects/alertBox.dart';
@@ -29,9 +30,7 @@ class _MyApp extends State<ServiceScreen> {
       'roleId': widget.serviceCatId,
     };
     http.Response response;
-    response = await http.post(
-        'http://isow.acutrotech.com/index.php/api/Services/singlelist',
-        body: (data));
+    response = await http.post(ServiceApi.serviceListApi, body: (data));
     if (response.statusCode == 200) {
       setState(() {
         mapResponse = jsonDecode(response.body);
@@ -71,11 +70,11 @@ class _MyApp extends State<ServiceScreen> {
   getpath(String path) {
     var pathf;
     if (path == "") {
-      pathf = 'http://isow.acutrotech.com/assets/profilepic/default.png';
+      pathf = UserAuthApi.profileImageApi + 'default.png';
 
       return pathf;
     } else {
-      pathf = 'http://isow.acutrotech.com/assets/profilepic/' + path;
+      pathf = UserAuthApi.profileImageApi + path;
       return pathf;
     }
   }

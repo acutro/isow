@@ -6,7 +6,6 @@ import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
 import 'FirechatScreen.dart';
 
 class ChatAllContact extends StatefulWidget {
@@ -38,13 +37,19 @@ class _MyApp extends State<ChatAllContact> {
     }
   }
 
-//   checkChat(List chatListt, String chatId) {
-//     for (int i = 0; i < chatListt.length; i++) {
-//       if(chatListt[i]['chatId']==chatId){
-// return 0;
-//       }
-//     }
-//   }
+  checkChat(List chatListt, String chatId) {
+    int flag = 1;
+    for (int i = 0; i < chatListt.length; i++) {
+      if (chatListt[i]['chatId'] == chatId) {
+        setState(() {
+          flag = 0;
+          return flag;
+        });
+      } else {
+        return flag;
+      }
+    }
+  }
 
   getChatid(String sFromId, String sToId) {
     int fromId = int.parse(sFromId);
@@ -244,6 +249,13 @@ class _MyApp extends State<ChatAllContact> {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   FireChatDetailScreen(
+                                                existFlag: checkChat(
+                                                  catList,
+                                                  getChatid(
+                                                    widget.sid,
+                                                    listFacts[index]['id'],
+                                                  ),
+                                                ).toString(),
                                                 name: listFacts[index]["name"],
                                                 path: getpath(
                                                   listFacts[index]

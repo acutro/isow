@@ -4,10 +4,15 @@ import 'package:flutter/material.dart';
 class SendChatAreaService extends StatelessWidget {
   final String docId;
   final String collectionId;
-  final String fromId;
   final String toId;
+  final String fromId;
 
-  SendChatAreaService(this.docId, this.collectionId, this.fromId, this.toId);
+  SendChatAreaService(
+    this.docId,
+    this.collectionId,
+    this.toId,
+    this.fromId,
+  );
 
   _textSt() {
     return TextStyle(

@@ -52,6 +52,7 @@ class FirebaseApi {
   static String fireTokenUpdateApi = ApiUtils.apiUrl + 'Token/update';
   static String chatListApi = ApiUtils.apiUrl + 'Chat/list';
   static String fireChatListApi = ApiUtils.apiUrl + 'Chat/chatList';
+  static String fireChatCreateApi = ApiUtils.apiUrl + 'Chat/create';
 }
 
 class UserAuthApi {

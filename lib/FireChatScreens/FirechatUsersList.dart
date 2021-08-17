@@ -27,8 +27,18 @@ class _FireChatListScreenState extends State<FireChatListScreen> {
     setState(() {
       sid = id;
       fetchData(id);
+      _clockTimer =
+          Timer.periodic(Duration(seconds: 30), (Timer t) => fetchData(id));
+
       error = false;
     });
+  }
+
+  Timer _clockTimer;
+  @override
+  void dispose() {
+    _clockTimer.cancel();
+    super.dispose();
   }
 
   List listResponse;
@@ -198,14 +208,14 @@ class _FireChatListScreenState extends State<FireChatListScreen> {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   FireChatDetailScreen(
+                                                existFlag: '0',
                                                 name: listFacts[index]["name"],
                                                 path: getpath(
                                                   listFacts[index]
                                                       ["profile_pic"],
                                                 ),
-                                                fromid: listFacts[index]
-                                                    ['toId'],
-                                                toid: sid,
+                                                fromid: sid,
+                                                toid: listFacts[index]['toId'],
                                                 chatId: getChatid(
                                                   listFacts[index]['fromId'],
                                                   listFacts[index]['toId'],

@@ -53,6 +53,7 @@ dependencies:
   cloud_firestore:
   dropdownfield: ^1.0.3
   readmore: ^2.1.0
+  permission_handler: 
  
 
 dev_dependencies:

@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class SendChatArea extends StatelessWidget {
   final String docId;
   final String collectionId;
-  final String fromId;
   final String toId;
+  final String fromId;
 
-  SendChatArea(this.docId, this.collectionId, this.fromId, this.toId);
+  SendChatArea(this.docId, this.collectionId, this.toId, this.fromId);
   TextEditingController messageController = new TextEditingController();
   @override
   Widget build(BuildContext context) {

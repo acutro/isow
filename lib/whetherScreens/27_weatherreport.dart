@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -21,15 +22,31 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
   double long;
   String pin;
   String country;
-
+  bool status = false;
   getLocation() async {
-    final geoposition = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      long = geoposition.longitude;
-      lat = geoposition.latitude;
-      getAddresslocation(long, lat);
-    });
+    if (await Permission.locationWhenInUse.serviceStatus.isEnabled) {
+      final geoposition = await Geolocator()
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      setState(() {
+        long = geoposition.longitude;
+        lat = geoposition.latitude;
+        getAddresslocation(long, lat);
+      });
+    } else {
+      setState(() {
+        status = true;
+      });
+      Timer(Duration(seconds: 1), () {
+        Toast.show(
+          "Your location is Disabled, \nPlease enable location",
+          context,
+          duration: Toast.LENGTH_LONG,
+          gravity: Toast.BOTTOM,
+          backgroundColor: Colors.white,
+          textColor: Colors.red[400],
+        );
+      });
+    }
   }
 
   getAddresslocation(double longi, double lati) async {
@@ -79,7 +96,7 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
         ),
         backgroundColor: Colors.blue,
       ),
-      body: mapResponse == null
+      body: mapResponse == null && status == false
           ? Center(
               child: SpinKitChasingDots(
                 color: Colors.blue,
@@ -205,7 +222,10 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
                                       padding: EdgeInsets.fromLTRB(
                                           30.0, 0.0, 0.0, 0.0),
                                       child: Text(
-                                        mapResponse['name'],
+                                        mapResponse == null
+                                            ? ''
+                                            : mapResponse['name'],
+
                                         // 'Middle East',
                                         style: TextStyle(
                                             color: Colors.white,
@@ -223,10 +243,13 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
                                         padding: EdgeInsets.fromLTRB(
                                             30.0, 0.0, 0.0, 0.0),
                                         child: Text(
-                                          (mapResponse['main']['temp'] - 273.15)
-                                                  .toInt()
-                                                  .toString() +
-                                              "\u2103",
+                                          (mapResponse == null
+                                              ? '00'
+                                              : (mapResponse['main']['temp'] -
+                                                          273.15)
+                                                      .toInt()
+                                                      .toString() +
+                                                  "\u2103"),
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold,
@@ -242,7 +265,10 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
                                       padding: EdgeInsets.fromLTRB(
                                           30.0, 5.0, 0.0, 0.0),
                                       child: Text(
-                                        wheatherList[0]['description'],
+                                        mapResponse == null
+                                            ? ''
+                                            : wheatherList[0]['description'] ??
+                                                '---',
                                         // 'Light Cloud',
                                         style: TextStyle(
                                             color: Colors.white,
@@ -267,7 +293,7 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
                                 Timer(Duration(seconds: 1), () {
                                   getLocation();
                                   Toast.show(
-                                    "Updated",
+                                    "Updating...",
                                     context,
                                     duration: Toast.LENGTH_SHORT,
                                     gravity: Toast.BOTTOM,
@@ -291,9 +317,12 @@ class WeatherreportScreenState extends State<WeatherreportScreen> {
                                     margin: EdgeInsets.only(top: 55.0),
                                     child: Center(
                                         child: Text(
-                                      (mapResponse['main']['temp'] - 273.15)
-                                          .toInt()
-                                          .toString(),
+                                      mapResponse == null
+                                          ? '00'
+                                          : (mapResponse['main']['temp'] -
+                                                  273.15)
+                                              .toInt()
+                                              .toString(),
                                       style: TextStyle(
                                           fontSize: 50,
                                           color: Colors.white,

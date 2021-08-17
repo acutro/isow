@@ -258,6 +258,7 @@ class _MyApp extends State<ServiceScreen> {
                                                                     context,
                                                                     MaterialPageRoute(
                                                                       builder: (context) => FireChatDetailScreen(
+                                                                          existFlag: '0',
                                                                           name: listFacts[index]["name"],
                                                                           path: getpath(
                                                                             listFacts[index]["profile_pic"],
